@@ -3,7 +3,7 @@ module github.com/beauxarts/fedorov
 go 1.19
 
 require (
-	github.com/beauxarts/litres_integration v0.1.3
+	github.com/beauxarts/litres_integration v0.1.6
 	github.com/boggydigital/coost v0.3.8
 	github.com/boggydigital/match_node v0.1.5
 	github.com/boggydigital/nod v0.1.20

@@ -6,11 +6,11 @@ import (
 )
 
 const (
-	relReduxDir              = "_redux"
-	relDetailedDataRemoteDir = "detailed_data_remote"
-	relDetailedDataLocalDir  = "detailed_data_local"
-	relMyBookFreshDir        = "my_books_fresh"
-	relCoversDir             = "covers"
+	relReduxDir         = "_redux"
+	relDetailedDataDir  = "detailed_data"
+	relMyBookFreshDir   = "my_books_fresh"
+	relMyBookDetailsDir = "my_books_details"
+	relCoversDir        = "covers"
 
 	relCookiesFilename = "cookies.txt"
 
@@ -26,16 +26,17 @@ func ChRoot(d string) {
 func Pwd() string {
 	return rootDir
 }
-func AbsDetailedDataRemoteDir() string {
-	return filepath.Join(rootDir, relDetailedDataRemoteDir)
-}
 
-func AbsDetailedDataLocalDir() string {
-	return filepath.Join(rootDir, relDetailedDataLocalDir)
-}
+//func AbsDetailedDataDir() string {
+//	return filepath.Join(rootDir, relDetailedDataDir)
+//}
 
 func AbsMyBooksFreshDir() string {
 	return filepath.Join(rootDir, relMyBookFreshDir)
+}
+
+func AbsMyBooksDetailsDir() string {
+	return filepath.Join(rootDir, relMyBookDetailsDir)
 }
 
 func AbsReduxDir() string {

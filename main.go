@@ -15,4 +15,5 @@ func main() {
 	if err := cli.Sync(); err != nil {
 		panic(err)
 	}
+
 }

@@ -13,9 +13,9 @@ const (
 	artsPerPage = 42
 )
 
-func ExtractMyBooksIds() error {
+func ReduceMyBooksFresh() error {
 
-	embia := nod.NewProgress("extracting my books ids...")
+	embia := nod.NewProgress("reducing my books...")
 	defer embia.End()
 
 	kv, err := kvas.ConnectLocal(data.AbsMyBooksFreshDir(), kvas.HtmlExt)
@@ -24,7 +24,8 @@ func ExtractMyBooksIds() error {
 	}
 
 	keys := kv.Keys()
-	myBooksIds := make([]string, 0, len(keys)*artsPerPage)
+	myBooks := make(map[string][]string, len(keys)*artsPerPage)
+	hrefs := make(map[string][]string, len(keys)*artsPerPage)
 
 	for _, key := range keys {
 
@@ -45,25 +46,50 @@ func ExtractMyBooksIds() error {
 				if img == nil {
 					continue
 				}
-				for _, attr := range img.Attr {
-					if attr.Key == "data-art" {
-						myBooksIds = append(myBooksIds, attr.Val)
-					}
-				}
+				id, href := idHref(img)
+				myBooks[data.MyBooksIdsProperty] = append(myBooks[data.MyBooksIdsProperty], id)
+				hrefs[id] = []string{href}
 			}
 		}
 	}
 
-	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), nil, data.MyBooksIdsProperty)
+	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), nil,
+		data.MyBooksIdsProperty,
+		data.HrefProperty,
+	)
 	if err != nil {
 		embia.EndWithError(err)
 	}
 
-	if err := rxa.ReplaceValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty, myBooksIds...); err != nil {
+	sra := nod.Begin(" saving redux...")
+	defer sra.End()
+
+	if err := rxa.BatchReplaceValues(data.MyBooksIdsProperty, myBooks); err != nil {
 		embia.EndWithError(err)
 	}
 
+	if err := rxa.BatchReplaceValues(data.HrefProperty, hrefs); err != nil {
+		embia.EndWithError(err)
+	}
+
+	sra.EndWithResult("done")
 	embia.EndWithResult("done")
 
 	return nil
+}
+
+func idHref(node *html.Node) (string, string) {
+	id, href := "", ""
+	for _, attr := range node.Attr {
+		if attr.Key == "data-art" {
+			id = attr.Val
+		}
+		if attr.Key == "href" {
+			href = attr.Val
+		}
+		if id != "" && href != "" {
+			break
+		}
+	}
+	return id, href
 }
