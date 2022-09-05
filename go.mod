@@ -13,6 +13,7 @@ require (
 )
 
 require (
+	github.com/boggydigital/middleware v0.1.3 // indirect
 	github.com/boggydigital/wits v0.2.3 // indirect
 	golang.org/x/exp v0.0.0-20220318154914-8dddf5d87bd8 // indirect
 )

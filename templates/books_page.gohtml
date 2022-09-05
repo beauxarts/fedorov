@@ -1,0 +1,14 @@
+{{define "books-page"}}
+    <!doctype html>
+    <html lang="en" id="_top">
+    {{template "head"}}
+    <head>
+        {{template "css-books-list"}}
+    </head>
+    <body>
+    {{template "books-list" .}}
+    <div class="footer-spacer"></div>
+    {{template "footer"}}
+    </body>
+    </html>
+{{end}}

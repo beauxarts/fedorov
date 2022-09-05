@@ -1,0 +1,13 @@
+{{define "books-list"}}
+    <section id="books">
+        {{range .Books}}
+            <a href="/book?id={{.Id}}" class="list-book">
+                <ul>
+                    <li class="title">{{.Title}}</li>
+                    <li class="authors">{{.Authors}}</li>
+                    <li class="date-created">{{.DateCreated}}</li>
+                </ul>
+            </a>
+        {{end}}
+    </section>
+{{end}}

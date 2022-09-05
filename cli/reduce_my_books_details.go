@@ -50,8 +50,6 @@ func ReduceMyBooksDetails() error {
 			return rmbda.EndWithError(err)
 		}
 
-		//fmt.Println(id)
-
 		rdx := reduceDetails(body)
 		for p, vals := range rdx {
 			reductions[p][id] = vals
