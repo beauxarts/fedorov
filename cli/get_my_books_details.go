@@ -4,20 +4,15 @@ import (
 	"errors"
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/litres_integration"
-	"github.com/boggydigital/coost"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
+	"net/http"
 )
 
-func GetMyBooksDetails() error {
+func GetMyBooksDetails(hc *http.Client) error {
 
 	gmbda := nod.NewProgress("getting my books details...")
 	defer gmbda.End()
-
-	hc, err := coost.NewHttpClientFromFile(data.AbsCookiesFilename(), litres_integration.LitResHost)
-	if err != nil {
-		return gmbda.EndWithError(err)
-	}
 
 	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), nil,
 		data.MyBooksIdsProperty,
@@ -46,7 +41,7 @@ func GetMyBooksDetails() error {
 			return gmbda.EndWithError(err)
 		}
 
-		resp, err := hc.Get(litres_integration.MyBookDetails(href).String())
+		resp, err := hc.Get(litres_integration.HrefUrl(href).String())
 		if err != nil {
 			resp.Body.Close()
 			return gmbda.EndWithError(err)

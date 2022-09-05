@@ -10,6 +10,7 @@ const (
 	relDetailedDataDir  = "detailed_data"
 	relMyBookFreshDir   = "my_books_fresh"
 	relMyBookDetailsDir = "my_books_details"
+	relDownloadsDir     = "downloads"
 	relCoversDir        = "covers"
 
 	relCookiesFilename = "cookies.txt"
@@ -37,6 +38,10 @@ func AbsMyBooksFreshDir() string {
 
 func AbsMyBooksDetailsDir() string {
 	return filepath.Join(rootDir, relMyBookDetailsDir)
+}
+
+func AbsDownloadsDir() string {
+	return filepath.Join(rootDir, relDownloadsDir)
 }
 
 func AbsReduxDir() string {

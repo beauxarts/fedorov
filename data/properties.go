@@ -7,6 +7,7 @@ const (
 	// reduced from detail page
 	TitleProperty          = "title"
 	AuthorsProperty        = "authors"
+	DownloadLinksProperty  = "download-links"
 	TranslatorsProperty    = "translators"
 	ReadersProperty        = "readers"
 	GenresProperty         = "genres"
@@ -22,6 +23,7 @@ func ReduxProperties() []string {
 		MyBooksIdsProperty,
 		HrefProperty,
 		TitleProperty,
+		DownloadLinksProperty,
 		AuthorsProperty,
 		TranslatorsProperty,
 		ReadersProperty,

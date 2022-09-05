@@ -3,7 +3,6 @@ package cli
 import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/litres_integration"
-	"github.com/boggydigital/coost"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/match_node"
 	"github.com/boggydigital/nod"
@@ -15,15 +14,10 @@ import (
 
 const maxSupportedPages = 1000
 
-func GetMyBooksFresh() error {
+func GetMyBooksFresh(hc *http.Client) error {
 
 	gmba := nod.NewProgress("fetching my books fresh...")
 	defer gmba.End()
-
-	hc, err := coost.NewHttpClientFromFile(data.AbsCookiesFilename(), litres_integration.LitResHost)
-	if err != nil {
-		return gmba.EndWithError(err)
-	}
 
 	kv, err := kvas.ConnectLocal(data.AbsMyBooksFreshDir(), kvas.HtmlExt)
 	if err != nil {
