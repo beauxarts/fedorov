@@ -5,17 +5,33 @@ const (
 	MyBooksIdsProperty = "my-books-ids"
 	HrefProperty       = "href"
 	// reduced from detail page
-	TitleProperty          = "title"
-	AuthorsProperty        = "authors"
-	DownloadLinksProperty  = "download-links"
-	TranslatorsProperty    = "translators"
-	ReadersProperty        = "readers"
-	GenresProperty         = "genres"
-	PublisherProperty      = "publisher"
-	ISBNPropertyProperty   = "isbn"
-	YearProperty           = "year"
-	SequenceNameProperty   = "sequence-name"
-	SequenceNumberProperty = "sequence-number"
+	TitleProperty            = "title"
+	AuthorsProperty          = "authors"
+	CoauthorsProperty        = "coauthors"
+	DownloadLinksProperty    = "download-links"
+	SequenceNameProperty     = "sequence-name"
+	SequenceNumberProperty   = "sequence-number"
+	DateReleasedProperty     = "date-released"
+	DateTranslatedProperty   = "date-translated"
+	DateCreatedProperty      = "date-created"
+	AgeRatingProperty        = "age-rating"
+	VolumeProperty           = "volume"
+	DurationProperty         = "duration"
+	ISBNPropertyProperty     = "isbn"
+	TranslatorsProperty      = "translators"
+	ReadersProperty          = "readers"
+	IllustratorsProperty     = "illustrators"
+	CopyrightHoldersProperty = "copyright-holders"
+	ComposersProperty        = "composers"
+	AdapterProperty          = "adapter"
+	PerformersProperty       = "performers"
+	DirectorsProperty        = "directors"
+	SoundDirectorsProperty   = "sound-directors"
+	PublishersProperty       = "publishers"
+	TotalSizeProperty        = "total-size"
+	TotalPagesProperty       = "total-pages"
+
+	//GenresProperty         = "genres"
 )
 
 func ReduxProperties() []string {
@@ -25,13 +41,27 @@ func ReduxProperties() []string {
 		TitleProperty,
 		DownloadLinksProperty,
 		AuthorsProperty,
-		TranslatorsProperty,
-		ReadersProperty,
-		GenresProperty,
-		PublisherProperty,
-		ISBNPropertyProperty,
-		YearProperty,
+		CoauthorsProperty,
 		SequenceNameProperty,
 		SequenceNumberProperty,
+		DateReleasedProperty,
+		DateTranslatedProperty,
+		DateCreatedProperty,
+		AgeRatingProperty,
+		DurationProperty,
+		VolumeProperty,
+		ISBNPropertyProperty,
+		TranslatorsProperty,
+		ReadersProperty,
+		IllustratorsProperty,
+		CopyrightHoldersProperty,
+		ComposersProperty,
+		AdapterProperty,
+		PerformersProperty,
+		DirectorsProperty,
+		SoundDirectorsProperty,
+		PublishersProperty,
+		TotalSizeProperty,
+		TotalPagesProperty,
 	}
 }

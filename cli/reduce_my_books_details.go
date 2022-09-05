@@ -7,6 +7,7 @@ import (
 	"github.com/boggydigital/nod"
 	"golang.org/x/net/html"
 	"golang.org/x/net/html/atom"
+	"strings"
 )
 
 func ReduceMyBooksDetails() error {
@@ -48,6 +49,8 @@ func ReduceMyBooksDetails() error {
 			det.Close()
 			return rmbda.EndWithError(err)
 		}
+
+		//fmt.Println(id)
 
 		rdx := reduceDetails(body)
 		for p, vals := range rdx {
@@ -132,6 +135,81 @@ func reduceDetails(body *html.Node) map[string][]string {
 		}
 	}
 
+	sequenceNames := make([]string, 0)
+	sequenceNumbers := make([]string, 0)
+
+	sequencesEtc := match_node.NewEtc(atom.Div, "biblio_book_sequences")
+	for _, bbsn := range match_node.Matches(body, sequencesEtc, -1) {
+
+		nameEtc := match_node.NewEtc(atom.A, "biblio_book_sequences__link")
+		if nan := match_node.Match(bbsn, nameEtc); nan != nil {
+			sequenceNames = append(sequenceNames, nan.FirstChild.Data)
+		}
+		numberEtc := match_node.NewEtc(atom.Span, "number")
+		if nun := match_node.Match(bbsn, numberEtc); nun != nil {
+			sequenceNumbers = append(sequenceNumbers, strings.TrimSpace(nun.FirstChild.Data))
+		} else {
+			sequenceNumbers = append(sequenceNumbers, "")
+		}
+	}
+
+	rdx[data.SequenceNameProperty] = sequenceNames
+	rdx[data.SequenceNumberProperty] = sequenceNumbers
+
+	detailedInfoLeftEtc := match_node.NewEtc(atom.Ul, "biblio_book_info_detailed_left")
+	if din := match_node.Match(body, detailedInfoLeftEtc); din != nil {
+		for n := din.FirstChild; n != nil; n = n.NextSibling {
+			if n.FirstChild == nil {
+				continue
+			}
+			strong := n.FirstChild
+			property := propertyByStrongTitle(strong.FirstChild.Data)
+			if property == "" {
+				continue
+			}
+
+			values := make([]string, 0)
+
+			linksEtc := match_node.NewEtc(atom.Span, "biblio_info_detailed__link")
+			for _, link := range match_node.Matches(n, linksEtc, -1) {
+				values = append(values, link.FirstChild.Data)
+			}
+
+			if len(values) == 0 {
+				values = []string{strings.TrimSpace(strong.NextSibling.Data)}
+			}
+
+			rdx[property] = append(rdx[property], values...)
+		}
+	}
+
+	detailedInfoRightEtc := match_node.NewEtc(atom.Ul, "biblio_book_info_detailed_right")
+	if din := match_node.Match(body, detailedInfoRightEtc); din != nil {
+		for n := din.FirstChild; n != nil; n = n.NextSibling {
+			if n.FirstChild == nil {
+				continue
+			}
+			strong := n.FirstChild
+			property := propertyByStrongTitle(strong.FirstChild.Data)
+			if property == "" {
+				continue
+			}
+
+			values := make([]string, 0)
+
+			linksEtc := match_node.NewEtc(atom.Span, "biblio_info_detailed__link")
+			for _, link := range match_node.Matches(n, linksEtc, -1) {
+				values = append(values, link.FirstChild.Data)
+			}
+
+			if len(values) == 0 {
+				values = []string{strings.TrimSpace(strong.NextSibling.Data)}
+			}
+
+			rdx[property] = append(rdx[property], values...)
+		}
+	}
+
 	return rdx
 }
 
@@ -142,4 +220,72 @@ func getAttribute(node *html.Node, attrName string) string {
 		}
 	}
 	return ""
+}
+
+func propertyByStrongTitle(key string) string {
+	property := ""
+	switch key {
+	case "Соавтор:":
+		property = data.CoauthorsProperty
+	case "Возрастное ограничение:":
+		property = data.AgeRatingProperty
+	case "Объем:":
+		property = data.VolumeProperty
+	case "Длительность:":
+		property = data.DurationProperty
+	case "Дата выхода на ЛитРес:":
+		property = data.DateReleasedProperty
+	case "Дата перевода:":
+		property = data.DateTranslatedProperty
+	case "Дата написания:":
+		property = data.DateCreatedProperty
+	case "ISBN:":
+		property = data.ISBNPropertyProperty
+	case "Переводчики:":
+		fallthrough
+	case "Переводчик:":
+		property = data.TranslatorsProperty
+	case "Чтецы:":
+		fallthrough
+	case "Чтец:":
+		property = data.ReadersProperty
+	case "Художники:":
+		fallthrough
+	case "Художник:":
+		property = data.IllustratorsProperty
+	case "Правообладатели:":
+		fallthrough
+	case "Правообладатель:":
+		property = data.CopyrightHoldersProperty
+	case "Композиторы:":
+		fallthrough
+	case "Композитор:":
+		property = data.ComposersProperty
+	case "Адаптация:":
+		property = data.AdapterProperty
+	case "Исполнители:":
+		property = data.PerformersProperty
+	case "Режиссер:":
+		property = data.DirectorsProperty
+	case "Звукорежиссер:":
+		property = data.SoundDirectorsProperty
+	case "Издатели:":
+		fallthrough
+	case "Издатель:":
+		property = data.PublishersProperty
+	case "Общий размер:":
+		property = data.TotalSizeProperty
+	case "Общее кол-во страниц:":
+		property = data.TotalPagesProperty
+
+	case "Оглавление":
+		// do nothing
+	case "Размер страницы:":
+		// do nothing
+
+	default:
+		nod.Log("unknown detailed info key: %s", key)
+		return ""
+	}
+	return property
 }
