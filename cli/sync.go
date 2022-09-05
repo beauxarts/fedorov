@@ -33,5 +33,9 @@ func Sync() error {
 		return err
 	}
 
+	if err := GetCovers(); err != nil {
+		return err
+	}
+
 	return nil
 }
