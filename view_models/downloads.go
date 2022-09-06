@@ -44,12 +44,14 @@ var formatDescriptors = map[string]string{
 }
 
 type Downloads struct {
+	Id           string
 	Links        []string
 	Availability map[string]bool
 }
 
-func NewDownloads(links []string, availability map[string]bool) *Downloads {
+func NewDownloads(id string, links []string, availability map[string]bool) *Downloads {
 	return &Downloads{
+		Id:           id,
 		Links:        links,
 		Availability: availability,
 	}

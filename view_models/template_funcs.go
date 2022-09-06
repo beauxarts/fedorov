@@ -8,7 +8,7 @@ import (
 func FuncMap() template.FuncMap {
 	return template.FuncMap{
 		"propertyTitle": propertyTitle,
-		"linkFormat":    linkFormat,
+		"linkFormat":    LinkFormat,
 		"formatDesc":    formatDesc,
 	}
 }
@@ -17,7 +17,7 @@ func propertyTitle(p string) string {
 	return propertyTitles[p]
 }
 
-func linkFormat(link string) string {
+func LinkFormat(link string) string {
 	if strings.HasSuffix(link, ".fb2.zip") {
 		return FormatFB2
 	} else if strings.HasSuffix(link, ".ios.epub") {

@@ -5,8 +5,11 @@
     <head>
         {{template "css-downloads"}}
     </head>
-    <body id="downloads-content">
+    <body id="downloads">
+    {{template "script-iframe-post-message"}}
+    <div id="downloads-content">
     {{template "downloads" .}}
+    </div>
     </body>
     </html>
 {{end}}

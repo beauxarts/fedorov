@@ -3,6 +3,7 @@ package cli
 import (
 	"errors"
 	"github.com/beauxarts/fedorov/data"
+	"github.com/beauxarts/fedorov/view_models"
 	"github.com/beauxarts/litres_integration"
 	"github.com/boggydigital/dolo"
 	"github.com/boggydigital/kvas"
@@ -12,16 +13,22 @@ import (
 	"strings"
 )
 
-var unsupportedDownloadSuffixes = map[string]bool{
-	".a4.pdf":   true,
-	".a6.pdf":   true,
-	".fb2.zip":  true,
-	".txt":      true,
-	".mp3.zip":  true,
-	".fb3":      true,
-	".rtf.zip":  true,
-	".txt.zip":  true,
-	".ios.epub": true,
+var skipFormatDownloads = map[string]bool{
+	// download
+	view_models.FormatEPUB: false,
+	view_models.FormatFB2:  true,
+	view_models.FormatMOBI: false,
+	view_models.FormatMP4:  false,
+	view_models.FormatZIP:  false,
+	// don't download
+	view_models.FormatPDFA4:   true,
+	view_models.FormatPDFA6:   true,
+	view_models.FormatTXT:     true,
+	view_models.FormatFB3:     true,
+	view_models.FormatRTF:     true,
+	view_models.FormatTXTZIP:  true,
+	view_models.FormatIOSEPUB: true,
+	view_models.FormatMP3:     true,
 }
 
 func Download(hc *http.Client) error {
@@ -63,7 +70,8 @@ func Download(hc *http.Client) error {
 		bdla := nod.Begin("%s - %s", strings.Join(authors, ","), title)
 
 		for _, link := range dls {
-			if unsupportedLink(link) {
+
+			if f := view_models.LinkFormat(link); skipFormatDownloads[f] {
 				continue
 			}
 
@@ -86,13 +94,4 @@ func Download(hc *http.Client) error {
 	da.EndWithResult("done")
 
 	return nil
-}
-
-func unsupportedLink(link string) bool {
-	for slp := range unsupportedDownloadSuffixes {
-		if strings.HasSuffix(link, slp) {
-			return true
-		}
-	}
-	return false
 }

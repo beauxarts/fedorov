@@ -20,7 +20,6 @@ var detailsPropertyOrder = []string{
 	data.SoundDirectorsProperty,
 	data.CopyrightHoldersProperty,
 	data.PublishersProperty,
-	data.HrefProperty,
 	data.SequenceNameProperty,
 	data.SequenceNumberProperty,
 	data.DateReleasedProperty,
@@ -32,6 +31,7 @@ var detailsPropertyOrder = []string{
 	data.ISBNPropertyProperty,
 	data.TotalSizeProperty,
 	data.TotalPagesProperty,
+	data.HrefProperty,
 }
 
 var propertyTitles = map[string]string{
@@ -48,13 +48,13 @@ var propertyTitles = map[string]string{
 	data.SoundDirectorsProperty:   "Звукорежиссер(ы)",
 	data.CopyrightHoldersProperty: "Правообладатели",
 	data.PublishersProperty:       "Издатели",
-	data.HrefProperty:             "ЛитРес",
+	data.HrefProperty:             "Ссылки",
 	data.SequenceNameProperty:     "Серия",
 	data.SequenceNumberProperty:   "Номер в серии",
 	data.DateReleasedProperty:     "Опубликовано",
 	data.DateTranslatedProperty:   "Переведено",
 	data.DateCreatedProperty:      "Написано",
-	data.AgeRatingProperty:        "Возрастной рейтинг",
+	data.AgeRatingProperty:        "Для возраста",
 	data.DurationProperty:         "Длительность",
 	data.VolumeProperty:           "Объем",
 	data.ISBNPropertyProperty:     "ISBN",
@@ -116,7 +116,7 @@ func formatPropertyLinkTitle(property, link string) string {
 
 	switch property {
 	case data.HrefProperty:
-		title = "Ссылка"
+		title = "ЛитРес"
 	default:
 		// do nothing
 	}
@@ -128,6 +128,12 @@ func formatPropertyLinkHref(property, link string) string {
 	switch property {
 	case data.HrefProperty:
 		return litres_integration.HrefUrl(link).String()
+	case data.ISBNPropertyProperty:
+		fallthrough
+	case data.VolumeProperty:
+		fallthrough
+	case data.DurationProperty:
+		return ""
 	default:
 		// do nothing
 	}

@@ -33,7 +33,7 @@ func GetDownloads(w http.ResponseWriter, r *http.Request) {
 		availability[link] = err == nil
 	}
 
-	dvm := view_models.NewDownloads(links, availability)
+	dvm := view_models.NewDownloads(id, links, availability)
 
 	if err := tmpl.ExecuteTemplate(w, "downloads-page", dvm); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)

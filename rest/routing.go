@@ -19,6 +19,7 @@ func HandleFuncs() {
 		"/cover":     GetOnly(Log(http.HandlerFunc(GetCover))),
 		"/search":    Gzip(GetOnly(Log(http.HandlerFunc(GetSearch)))),
 		"/downloads": Gzip(GetOnly(Log(http.HandlerFunc(GetDownloads)))),
+		"/file":      GetOnly(Log(http.HandlerFunc(GetFile))),
 	}
 
 	for p, h := range patternHandlers {

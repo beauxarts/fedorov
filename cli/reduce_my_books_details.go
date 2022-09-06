@@ -201,7 +201,12 @@ func reduceDetails(body *html.Node) map[string][]string {
 			}
 
 			if len(values) == 0 {
-				values = []string{strings.TrimSpace(strong.NextSibling.Data)}
+				val := strong.NextSibling.Data
+				if property == data.ISBNPropertyProperty {
+					val = strong.NextSibling.NextSibling.FirstChild.Data
+				}
+
+				values = []string{strings.TrimSpace(val)}
 			}
 
 			rdx[property] = append(rdx[property], values...)
