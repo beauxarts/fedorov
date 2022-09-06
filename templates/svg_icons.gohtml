@@ -1,0 +1,29 @@
+{{define "svg-icons"}}
+    <svg class="icons" xmlns="http://www.w3.org/2000/svg" style="display: none">
+         <symbol id="star" viewBox="0 0 100 100" style="fill:currentColor">
+            <polygon
+                    points="50,5 63.22,31.79 92.79,36.09 71.39,56.95 76.45,86.40 50,72.5 23.54,86.40 28.60,56.95 7.20,36.09 36.77,31.79 "/>
+        </symbol>
+        <symbol id="stack" viewBox="0 0 100 100"
+                style="stroke: currentColor; fill: transparent">
+            <path style="stroke-width: var(--small);" d="M 20.00 90.00 L 20.00 90.00 17.41 89.66 15.00 88.66 12.93 87.07 11.34 85.00 10.34 82.59 10.00 80.00 L 10.00 50.00 L 10.00 50.00 10.34 47.41 11.34 45.00 12.93 42.93 15.00 41.34 17.41 40.34 20.00 40.00 L 80.00 40.00 L 80.00 40.00 82.59 40.34 85.00 41.34 87.07 42.93 88.66 45.00 89.66 47.41 90.00 50.00 L 90.00 80.00 L 90.00 80.00 89.66 82.59 88.66 85.00 87.07 87.07 85.00 88.66 82.59 89.66 80.00 90.00 z"/>
+            <path style="stroke-width: calc(3*var(--xx-small));" d="M 20.00 40.00 L 20.00 28.00 L 20.00 28.00 20.17 26.71 20.67 25.50 21.46 24.46 22.50 23.67 23.71 23.17 25.00 23.00 L 75.00 23.00 L 75.00 23.00 76.29 23.17 77.50 23.67 78.54 24.46 79.33 25.50 79.83 26.71 80.00 28.00 L 80.00 40.00 z"/>
+            <path style="stroke-width: var(--x-small);" d="M 30.00 23.00 L 30.00 14.00 L 30.00 14.00 30.14 12.96 30.54 12.00 31.17 11.17 32.00 10.54 32.96 10.14 34.00 10.00 L 66.00 10.00 L 66.00 10.00 67.04 10.14 68.00 10.54 68.83 11.17 69.46 12.00 69.86 12.96 70.00 14.00 L 70.00 23.00 z"/>
+        </symbol>
+        <symbol id="search" viewBox="0 0 100 100" style="stroke: currentColor; fill: transparent">
+            <circle cx="40" cy="40" r="30" style="stroke-width: var(--small);"/>
+            <line x1="61.21" y1="61.21" x2="82.42" y2="82.42" style="stroke-width: var(--normal)"/>
+        </symbol>
+        <symbol id="back-to-top" viewBox="0 0 100 100"
+                style="stroke: var(--subtle-color);stroke-width: var(--small); fill:transparent">
+            <path d="M 50.00 15.00 L 50.00 70.00 L 50.00 70.00 49.87 72.19 49.46 74.34 48.78 76.43 47.83 78.40 46.63 80.24 45.21 81.91 43.58 83.38 41.78 84.63 39.83 85.63 37.76 86.38 35.62 86.85 33.44 87.04 31.25 86.95 29.09 86.57 26.99 85.92 25.00 85.00 M 25.00 35.00 L 50.00 15.00 75.00 35.00"/>
+        </symbol>
+    </svg>
+{{end}}
+{{define "svg-icon-show-more-less"}}
+    <svg class="show-more-less" viewBox="0 0 100 100"
+         style="stroke: var(--subtle-color);stroke-width: var(--small);fill: transparent;">
+        <path id="more" d="M 30.00 10.00 L 70.00 50.00 30.00 90.00"/>
+        <path id="less" d="M 90.00 70.00 L 50.00 30.00 10.00 70.00"/>
+    </svg>
+{{end}}

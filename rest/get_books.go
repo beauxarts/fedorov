@@ -13,35 +13,28 @@ var booksListProperties = []string{
 	data.DateCreatedProperty,
 }
 
-type ListBookViewModel struct {
+type ListBook struct {
 	Id          string
 	Title       string
 	Authors     string
 	DateCreated string
 }
 
-type BooksViewModel struct {
-	Books []*ListBookViewModel
+type Shelf struct {
+	Books []*ListBook
 }
 
-func GetBooks(w http.ResponseWriter, r *http.Request) {
-
-	myBooks, ok := rxa.GetAllValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty)
-	if !ok {
-		http.Error(w, nod.ErrorStr("no my books found"), http.StatusInternalServerError)
-		return
+func NewShelf(ids []string) *Shelf {
+	shelf := &Shelf{
+		Books: make([]*ListBook, 0, len(ids)),
 	}
 
-	bvm := &BooksViewModel{
-		Books: make([]*ListBookViewModel, 0, len(myBooks)),
-	}
-
-	for _, id := range myBooks {
+	for _, id := range ids {
 		title, _ := rxa.GetFirstVal(data.TitleProperty, id)
 		authors, _ := rxa.GetAllUnchangedValues(data.AuthorsProperty, id)
 		created, _ := rxa.GetFirstVal(data.DateCreatedProperty, id)
 
-		bvm.Books = append(bvm.Books, &ListBookViewModel{
+		shelf.Books = append(shelf.Books, &ListBook{
 			Id:          id,
 			Title:       title,
 			Authors:     strings.Join(authors, ","),
@@ -49,7 +42,22 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
 		})
 	}
 
-	if err := tmpl.ExecuteTemplate(w, "books-page", bvm); err != nil {
+	return shelf
+}
+
+func GetBooks(w http.ResponseWriter, r *http.Request) {
+
+	// GET /books
+
+	myBooks, ok := rxa.GetAllValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty)
+	if !ok {
+		http.Error(w, nod.ErrorStr("no my books found"), http.StatusInternalServerError)
+		return
+	}
+
+	shelf := NewShelf(myBooks)
+
+	if err := tmpl.ExecuteTemplate(w, "books-page", shelf); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return
 	}

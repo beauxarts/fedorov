@@ -12,6 +12,8 @@ const (
 	relCoversDir        = "covers"
 
 	relCookiesFilename = "cookies.txt"
+
+	CoverExt = ".jpg"
 )
 
 var rootDir = ""

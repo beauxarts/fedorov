@@ -1,28 +1,100 @@
 {{define "css-books-list"}}
     <style id="css-books-list">
 
-        .list-book {
+        .books-count {
+            display: flex;
+            justify-content: center;
+            color: var(--subtle-color);
+            font-size: var(--fs-x-smaller);
+            padding: var(--x-small);
+        }
+
+        .books {
+            padding: var(--large) 0;
+            display: grid;
+            grid-template-columns: repeat(3, var(--product-card-width));
+            grid-column-gap: var(--normal);
+            grid-row-gap: var(--normal);
+            justify-content: center;
+        }
+
+        @media only screen and (max-width: 1200px) {
+            .books {
+                grid-template-columns: repeat(2, var(--product-card-width));
+            }
+        }
+
+        @media only screen and (max-width: 700px) {
+            .books {
+                grid-template-columns: 1fr;
+                justify-content: start;
+            }
+        }
+
+        @media only screen and (min-width: 1400px) {
+            .books {
+                grid-template-columns: repeat(4, var(--product-card-width));
+            }
+        }
+
+        @media only screen and (min-width: 1800px) {
+            .books {
+                grid-template-columns: repeat(5, var(--product-card-width));
+            }
+        }
+
+        @media only screen and (min-width: 2200px) {
+            .books {
+                grid-template-columns: repeat(6, var(--product-card-width));
+            }
+        }
+
+        @media only screen and (min-width: 2600px) {
+            .books {
+                grid-template-columns: repeat(7, var(--product-card-width));
+            }
+        }
+
+        .book {
+            color: inherit;
+            padding: var(--normal);
+            padding-block-start: var(--small);
             text-decoration: none;
-            color: var(--color);
+            background-color: var(--highlight-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
             content-visibility: auto;
+            /* 123px is the average size of the element in "Products > all" section */
+            contain-intrinsic-size: var(--product-card-width) 83px;
+            overflow: hidden;
         }
 
-        .list-book ul {
+        @media only screen and (max-width: 700px) {
+            .books .book {
+                max-width: calc(100% - 2 * var(--normal));
+                margin: 0 var(--normal);
+            }
+        }
+
+        .book ul {
             list-style: none;
+            padding-inline-start: 0;
+            margin: 0;
         }
 
-        .list-book .title {
+        .book .title {
+            margin: var(--x-small) 0 var(--normal);
             font-size: var(--fs-larger);
             font-weight: bold;
-            margin-block-end: var(--small);
         }
 
-        .list-book .authors {
-            margin-block-end: var(--small);
-        }
-
-        .list-book .date-created {
+        .book .authors {
             font-size: var(--fs-smaller);
+            margin-block-end: var(--small);
+        }
+
+        .book .date-created {
+            font-size: var(--fs-x-smaller);
             color: var(--subtle-color);
         }
 

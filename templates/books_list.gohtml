@@ -1,13 +1,17 @@
 {{define "books-list"}}
     <section id="books">
+        {{$count := len .Books}}
+        <div class="books-count">{{$count}} книг{{if eq $count 1}}a{{end}}</div>
+        <div class="books">
         {{range .Books}}
-            <a href="/book?id={{.Id}}" class="list-book">
+            <a href="/book?id={{.Id}}" class="book">
                 <ul>
                     <li class="title">{{.Title}}</li>
-                    <li class="authors">{{.Authors}}</li>
-                    <li class="date-created">{{.DateCreated}}</li>
+                    <li class="authors text-property">{{.Authors}}</li>
+                    <li class="date-created text-property">{{.DateCreated}}</li>
                 </ul>
             </a>
         {{end}}
+        </div>
     </section>
 {{end}}

@@ -1,14 +1,14 @@
-{{define "books-page"}}
+{{define "book-page"}}
     <!doctype html>
     <html lang="en" id="_top">
     {{template "head"}}
     <head>
-        {{template "css-books-list"}}
+        {{template "css-book"}}
     </head>
     <body>
     {{template "svg-icons"}}
-    {{template "nav" "books"}}
-    {{template "books-list" .}}
+    {{template "nav"}}
+    {{template "book" .}}
     <div class="footer-spacer"></div>
     {{template "footer"}}
     </body>

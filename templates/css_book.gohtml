@@ -1,0 +1,41 @@
+{{define "css-book"}}
+    <style id="css-book">
+    #book {
+        max-width: 800px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    img {
+        max-height: 320px;
+        max-width: 320px;
+        border-radius: var(--border-radius-large);
+    }
+
+    .additional-details {
+        list-style: none;
+
+    }
+
+    .additional-details li {
+        display: grid;
+        grid-template-columns: 120px auto;
+    }
+
+    .additional-details .values {
+        list-style: none;
+        display: inline-flex;
+    }
+
+    .additional-details .values a {
+        text-decoration: none;
+        color: var(--color);
+        font-weight: bold;
+    }
+
+
+
+    </style>
+{{end}}

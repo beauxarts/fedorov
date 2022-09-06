@@ -16,6 +16,7 @@ func HandleFuncs() {
 	patternHandlers := map[string]http.Handler{
 		"/books": Gzip(GetOnly(Log(http.HandlerFunc(GetBooks)))),
 		"/book":  Gzip(GetOnly(Log(http.HandlerFunc(GetBook)))),
+		"/cover": GetOnly(Log(http.HandlerFunc(GetCover))),
 	}
 
 	for p, h := range patternHandlers {
