@@ -1,0 +1,3 @@
+root
+ # root fedorov state directory
+ /var/lib/vangogh

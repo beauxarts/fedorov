@@ -17,6 +17,9 @@
 # go.work
 go.work
 
+# Fedorov directories settigns
+directories.txt
+
 # Local configuration files
 cookies.txt
 
