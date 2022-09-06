@@ -79,6 +79,82 @@
             position: relative;
         }
 
+        html {
+            min-height: 100%;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        details {
+            content-visibility: auto;
+        }
+
+        details summary {
+            list-style: none;
+            display: flex;
+            align-items: center;
+        }
+
+        details summary::-webkit-details-marker {
+            display: none;
+        }
+
+        details > summary > svg #less {
+            display: none;
+        }
+
+        details[open] > summary > svg #less {
+            display: initial;
+        }
+
+        details[open] > summary > svg #more {
+            display: none;
+        }
+
+        .shortcuts {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            row-gap: var(--small);
+            margin-block-start: var(--normal);
+        }
+
+        .shortcuts ul {
+            font-size: var(--fs-x-smaller);
+            list-style: none;
+            margin-inline: var(--normal);
+            margin-block: 0;
+            display: flex;
+            column-gap: var(--small);
+            flex-direction: row;
+            flex-wrap: wrap;
+            background-color: var(--highlight-color);
+            padding: calc(3*var(--xx-small));
+            border-radius: var(--border-radius-large);
+            justify-content: center;
+            box-shadow: var(--box-shadow);
+            max-width: var(--product-details-width);
+        }
+
+        .shortcuts a {
+            display: block;
+            color: var(--color);
+            text-decoration: none;
+            /*font-weight: bold;*/
+            padding: var(--small);
+        }
+
+        .action {
+            display: flex;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--system-blue-color);
+            text-decoration: none;
+        }
+
         .footer-spacer {
             margin-block-end: calc(3 * var(--large));
         }

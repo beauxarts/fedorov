@@ -14,9 +14,10 @@ var (
 
 func HandleFuncs() {
 	patternHandlers := map[string]http.Handler{
-		"/books": Gzip(GetOnly(Log(http.HandlerFunc(GetBooks)))),
-		"/book":  Gzip(GetOnly(Log(http.HandlerFunc(GetBook)))),
-		"/cover": GetOnly(Log(http.HandlerFunc(GetCover))),
+		"/books":  Gzip(GetOnly(Log(http.HandlerFunc(GetBooks)))),
+		"/book":   Gzip(GetOnly(Log(http.HandlerFunc(GetBook)))),
+		"/cover":  GetOnly(Log(http.HandlerFunc(GetCover))),
+		"/search": Gzip(GetOnly(Log(http.HandlerFunc(GetSearch)))),
 	}
 
 	for p, h := range patternHandlers {

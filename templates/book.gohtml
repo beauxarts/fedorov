@@ -1,18 +1,14 @@
 {{define "book"}}
     <section id="book" data-id="{{.Id}}">
-        <img class="cover" src="/cover?id={{.Id}}"/>
-        <h1 class="title">{{.Title}}</h1>
-        <ul class="additional-details">
-            {{range $property, $values := .AdditionalDetails}}
-                <li>
-                    <span class="property">{{$property}}</span>
-                    <ul class="values">
-                        {{range $values}}
-                            <li><a href="/search?{{$property}}={{.}}">{{.}}</a></li>
-                        {{end}}
-                    </ul>
-                </li>
-            {{end}}
-        </ul>
+        <div class="cover-image">
+            <img src="/cover?id={{.Id}}"/>
+        </div>
+        <div class="book-details">
+            <h1 class="title">{{.Title}}</h1>
+            <section class="text-properties">
+                {{template "book-properties" .}}
+            </section>
+
+        </div>
     </section>
 {{end}}
