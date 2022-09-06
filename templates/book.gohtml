@@ -1,14 +1,21 @@
 {{define "book"}}
     <section id="book" data-id="{{.Id}}">
+
         <div class="cover-image">
             <img src="/cover?id={{.Id}}"/>
         </div>
+
         <div class="book-details">
+
             <h1 class="title">{{.Title}}</h1>
+
             <section class="text-properties">
                 {{template "book-properties" .}}
             </section>
 
+            {{template "book-sections" .}}
+
         </div>
-    </section>
+
+        </section>
 {{end}}

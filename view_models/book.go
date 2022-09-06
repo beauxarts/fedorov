@@ -63,13 +63,17 @@ var propertyTitles = map[string]string{
 }
 
 type Book struct {
-	Id    string
+	Id string
+	// Title
 	Title string
-
+	// Text properties
 	Properties      map[string]map[string]string
 	PropertyOrder   []string
 	PropertyTitles  map[string]string
 	PropertyClasses map[string]string
+	// Sections
+	Sections      []string
+	SectionTitles map[string]string
 }
 
 func NewBook(id string, rxa kvas.ReduxAssets) *Book {
@@ -79,6 +83,8 @@ func NewBook(id string, rxa kvas.ReduxAssets) *Book {
 		Properties:     make(map[string]map[string]string),
 		PropertyOrder:  detailsPropertyOrder,
 		PropertyTitles: propertyTitles,
+		Sections:       []string{DownloadsSection},
+		SectionTitles:  sectionTitles,
 	}
 
 	bvm.Title, _ = rxa.GetFirstVal(data.TitleProperty, id)

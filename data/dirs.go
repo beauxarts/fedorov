@@ -38,6 +38,11 @@ func AbsDownloadsDir() string {
 	return filepath.Join(rootDir, relDownloadsDir)
 }
 
+func AbsDownloadPath(id, link string) string {
+	_, filename := filepath.Split(link)
+	return filepath.Join(AbsDownloadsDir(), id, filename)
+}
+
 func AbsReduxDir() string {
 	return filepath.Join(rootDir, relReduxDir)
 }

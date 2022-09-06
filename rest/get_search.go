@@ -5,6 +5,7 @@ import (
 	"github.com/boggydigital/nod"
 	"golang.org/x/exp/maps"
 	"net/http"
+	"strings"
 )
 
 func GetSearch(w http.ResponseWriter, r *http.Request) {
@@ -43,6 +44,10 @@ func GetSearch(w http.ResponseWriter, r *http.Request) {
 	}
 
 	svm := view_models.NewSearchProducts(ids, rxa)
+
+	for k, v := range query {
+		svm.Query[k] = strings.Join(v, " ")
+	}
 
 	//digests, cached, err := getDigests(dc, view_models.DigestProperties...)
 
