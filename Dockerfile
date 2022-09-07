@@ -8,9 +8,9 @@ RUN go build -o fdrv main.go
 FROM alpine
 COPY --from=build /go/src/app/fdrv /usr/bin/fdrv
 
-EXPOSE 1520
+EXPOSE 1510
 #root folder
 VOLUME /var/lib/fedorov
 
 ENTRYPOINT ["/usr/bin/fdrv"]
-CMD ["serve","-port", "1520", "-stderr"]
+CMD ["serve","-port", "1510", "-stderr"]
