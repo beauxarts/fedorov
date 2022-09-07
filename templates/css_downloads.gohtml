@@ -32,18 +32,20 @@
         }
 
         .downloads .link {
+            display: block;
             margin-block-end: var(--normal);
+            color: var(--color);
+            text-decoration: none;
+            padding: var(--normal);
+            margin: var(--normal);
+            border: 2px solid var(--background-color);
+            border-radius: var(--border-radius);
         }
 
         .downloads .link .format {
-            color: var(--subtle-color);
             font-size: var(--fs-larger);
-        }
-
-        .downloads .link a.format {
-            color: var(--color);
-            text-decoration: none;
             font-weight: bold;
+            margin-block-end: var(--small);
         }
 
         .downloads .link .desc {

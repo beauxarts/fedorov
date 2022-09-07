@@ -18,37 +18,41 @@ func propertyTitle(p string) string {
 }
 
 func LinkFormat(link string) string {
+	format := FormatUnknown
+
 	if strings.HasSuffix(link, ".fb2.zip") {
-		return FormatFB2
+		format = FormatFB2
 	} else if strings.HasSuffix(link, ".ios.epub") {
-		return FormatIOSEPUB
+		format = FormatIOSEPUB
 	} else if strings.HasSuffix(link, ".epub") {
-		return FormatEPUB
+		format = FormatEPUB
 	} else if strings.HasSuffix(link, ".txt.zip") {
-		return FormatTXTZIP
+		format = FormatTXTZIP
 	} else if strings.HasSuffix(link, ".rtf.zip") {
-		return FormatRTF
+		format = FormatRTF
 	} else if strings.HasSuffix(link, ".a4.pdf") {
-		return FormatPDFA4
+		format = FormatPDFA4
 	} else if strings.HasSuffix(link, ".a6.pdf") {
-		return FormatPDFA6
+		format = FormatPDFA6
 	} else if strings.HasSuffix(link, ".pdf") {
-		return FormatPDF
+		format = FormatPDF
 	} else if strings.HasSuffix(link, ".mobi.prc") {
-		return FormatMOBI
+		format = FormatMOBI
 	} else if strings.HasSuffix(link, ".fb3") {
-		return FormatFB3
+		format = FormatFB3
 	} else if strings.HasSuffix(link, ".txt") {
-		return FormatTXT
+		format = FormatTXT
 	} else if strings.HasSuffix(link, ".mp3.zip") {
-		return FormatMP3
+		format = FormatMP3
 	} else if strings.HasSuffix(link, ".m4b") {
-		return FormatMP4
+		format = FormatMP4
 	} else if strings.HasSuffix(link, ".zip") {
-		return FormatZIP
+		format = FormatZIP
+	} else if strings.HasSuffix(link, ".azw3") {
+		format = FormatAZW3
 	}
 
-	return FormatUnknown
+	return format
 }
 
 func formatDesc(format string) string {

@@ -5,14 +5,12 @@
         {{range .Links}}
             {{$available := index $availability .}}
             {{if $available}}
-                <li class="link {{if $available}}available{{else}}unavailable{{end}}">
-                    {{$format := linkFormat .}}
-                    {{if $available}}
-                        <a class="format" href="/file?id={{$id}}&href={{.}}">{{$format}}</a>
-                    {{else}}
-                        <div class="format">{{$format}} (недоступен)</div>
-                    {{end}}
-                    <div class="desc">{{formatDesc $format}}</div>
+                <li>
+                    <a class="link" href="href=/file?id={{$id}}&href={{.}}">
+                        {{$format := linkFormat .}}
+                        <div class="format">{{$format}}</div>
+                        <div class="desc">{{formatDesc $format}}</div>
+                    </a>
                 </li>
             {{end}}
         {{end}}
