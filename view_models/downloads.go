@@ -23,14 +23,14 @@ const (
 )
 
 var formatDescriptors = map[string]string{
-	FormatFB2:     "Подходит для смартфонов, планшетов на Android, электронных книг (кроме Kindle) и многих программ",
-	FormatEPUB:    "Подходит для устройств на iOS (iPhone, iPad, iMac) и большинства приложений для чтения",
+	FormatFB2:     "Читается всеми российскими электронными книгами и многими программами",
+	FormatEPUB:    "Подходит для Apple Books и большинства приложений для чтения",
 	FormatTXTZIP:  "Можно открыть на любом компьютере",
 	FormatRTF:     "Можно открыть на любом компьютере",
-	FormatPDFA4:   "Открывается в программе Adobe Reader",
-	FormatMOBI:    "Подходит для электронных книг Kindle и Android-приложений",
-	FormatIOSEPUB: "Идеально подойдет для iPhone и iPad",
-	FormatPDFA6:   "Оптимизирован и подойдет для смартфонов",
+	FormatPDFA4:   "Открывается в программах Adobe Reader, Preview.app",
+	FormatMOBI:    "Подходит для электронных книг Amazon Kindle",
+	FormatIOSEPUB: "EPUB, адаптированный для iPhone и iPad",
+	FormatPDFA6:   "Оптимизирован под небольшие экраны",
 	FormatFB3:     "Развитие формата FB2",
 	FormatTXT:     "Можно открыть почти на любом устройстве",
 	// PDF books

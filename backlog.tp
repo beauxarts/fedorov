@@ -1,8 +1,8 @@
 Polish:
 - Hide sequence number if empty
 - Better format sequence name/number
-- Update format desc from mobile version
-- Add clo cmds - sync, serve
+- Update format desc from mobile version @done(2022-09-06)
+- Add clo cmds - sync, serve @done(2022-09-06)
 
 Features:
 - Add book description
