@@ -1,12 +1,15 @@
 package main
 
 import (
+	"bytes"
 	"embed"
 	"github.com/beauxarts/fedorov/cli"
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/rest"
+	"github.com/boggydigital/clo"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/wits"
+	"log"
 	"os"
 	"sync"
 )
@@ -19,7 +22,11 @@ var (
 	once = sync.Once{}
 	//go:embed "templates/*.gohtml"
 	templates embed.FS
-	rootDir   = "/var/lib/fedorov"
+	//go:embed "cli-commands.txt"
+	cliCommands []byte
+	//go:embed "cli-help.txt"
+	cliHelp []byte
+	rootDir = "/var/lib/fedorov"
 )
 
 func main() {
@@ -40,13 +47,27 @@ func main() {
 
 	data.ChRoot(rootDir)
 
-	if err := cli.Serve(1520, true); err != nil {
-		panic(err)
+	defs, err := clo.Load(
+		bytes.NewBuffer(cliCommands),
+		bytes.NewBuffer(cliHelp),
+		nil)
+	if err != nil {
+		log.Fatalln(err)
 	}
 
-	//if err := cli.Sync(); err != nil {
-	//	panic(err)
-	//}
+	clo.HandleFuncs(map[string]clo.Handler{
+		"serve":   cli.ServeHandler,
+		"sync":    cli.SyncHandler,
+		"version": cli.VersionHandler,
+	})
+
+	if err := defs.AssertCommandsHaveHandlers(); err != nil {
+		log.Fatalln(err)
+	}
+
+	if err := defs.Serve(os.Args[1:]); err != nil {
+		log.Fatalln(err)
+	}
 }
 
 func readUserDirectories() error {

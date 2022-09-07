@@ -7,6 +7,7 @@ import (
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
 	"net/http"
+	"time"
 )
 
 func GetMyBooksDetails(hc *http.Client) error {
@@ -43,8 +44,8 @@ func GetMyBooksDetails(hc *http.Client) error {
 
 		resp, err := hc.Get(litres_integration.HrefUrl(href).String())
 		if err != nil {
-			resp.Body.Close()
-			return gmbda.EndWithError(err)
+			nod.Log(err.Error())
+			continue
 		}
 
 		if err := kv.Set(id, resp.Body); err != nil {
@@ -53,6 +54,10 @@ func GetMyBooksDetails(hc *http.Client) error {
 		}
 
 		resp.Body.Close()
+
+		// sleep for 15 seconds to throttle server requests
+		time.Sleep(time.Second * 15)
+
 		gmbda.Increment()
 	}
 

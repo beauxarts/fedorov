@@ -1,0 +1,34 @@
+Polish:
+- Hide sequence number if empty
+- Better format sequence name/number
+- Update format desc from mobile version
+- Add clo cmds - sync, serve
+
+Features:
+- Add book description
+- Add tags / genres 
+- Add sorting options and sort some book properties links
+- Add digests
+- Reduce audiobooks / PDF type
+- Add read property and action
+
+Archive:
+	- Hide inactive downloads @done(2022-09-06)
+	Bugs: @done(2022-09-06)
+	- Text book / Audio book issue (Доктор Гарин) @done(2022-09-06)
+	- ISBN extraction @done(2022-09-06)
+	- Implement files endpoint to complete download ability @done(2022-09-06)
+	- iframe autosizing from gaugin @done(2022-09-06)
+	- Review book details properties - remove links @done(2022-09-06)
+	- move LitRes link to the bottom @done(2022-09-06)
+	- Add FB2 download @done(2022-09-06)
+	Serve data: @done(2022-09-06)
+		- books list @done(2022-09-06)
+		- book details @done(2022-09-06)
+		- search @done(2022-09-06)
+	Reductions: @done(2022-09-04)
+		- Download links: @done(2022-09-04)
+			- ebooks @done(2022-09-04)
+			- PDF @done(2022-09-04)
+			- audiobooks @done(2022-09-04)
+			- additional materials @done(2022-09-04)

@@ -5,7 +5,19 @@ import (
 	"github.com/beauxarts/fedorov/rest"
 	"github.com/boggydigital/nod"
 	"net/http"
+	"net/url"
+	"strconv"
 )
+
+func ServeHandler(u *url.URL) error {
+	portstr := u.Query().Get("port")
+	if port, err := strconv.ParseInt(portstr, 10, 32); err == nil {
+		stderr := u.Query().Has("stderr")
+		return Serve(int(port), stderr)
+	} else {
+		return err
+	}
+}
 
 func Serve(port int, stderr bool) error {
 

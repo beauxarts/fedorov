@@ -4,8 +4,12 @@ import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/litres_integration"
 	"github.com/boggydigital/coost"
+	"net/url"
 )
 
+func SyncHandler(u *url.URL) error {
+	return Sync()
+}
 func Sync() error {
 
 	hc, err := coost.NewHttpClientFromFile(data.AbsCookiesFilename(), litres_integration.LitResHost)

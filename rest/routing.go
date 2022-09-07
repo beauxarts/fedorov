@@ -20,6 +20,8 @@ func HandleFuncs() {
 		"/search":    Gzip(GetOnly(Log(http.HandlerFunc(GetSearch)))),
 		"/downloads": Gzip(GetOnly(Log(http.HandlerFunc(GetDownloads)))),
 		"/file":      GetOnly(Log(http.HandlerFunc(GetFile))),
+		// root redirect
+		"/": http.RedirectHandler("/books", http.StatusPermanentRedirect),
 	}
 
 	for p, h := range patternHandlers {
