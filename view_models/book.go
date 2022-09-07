@@ -146,6 +146,8 @@ func formatPropertyLinkHref(property, link string) string {
 	switch property {
 	case data.HrefProperty:
 		return litres_integration.HrefUrl(link).String()
+	case data.AgeRatingProperty:
+		fallthrough
 	case data.ISBNPropertyProperty:
 		fallthrough
 	case data.TotalPagesProperty:

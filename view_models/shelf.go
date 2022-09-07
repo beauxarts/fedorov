@@ -36,7 +36,7 @@ func NewShelf(ids []string, rxa kvas.ReduxAssets) *Shelf {
 		shelf.Books = append(shelf.Books, &ListBook{
 			Id:          id,
 			Title:       title,
-			Authors:     strings.Join(authors, ","),
+			Authors:     strings.Join(authors, ", "),
 			DateCreated: created,
 		})
 	}
