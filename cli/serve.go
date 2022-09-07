@@ -10,6 +10,15 @@ import (
 )
 
 func ServeHandler(u *url.URL) error {
+
+	username := u.Query().Get("username")
+	password := u.Query().Get("password")
+
+	if username != "" && password != "" {
+		rest.SetUsername(username)
+		rest.SetPassword(password)
+	}
+
 	portstr := u.Query().Get("port")
 	if port, err := strconv.ParseInt(portstr, 10, 32); err == nil {
 		stderr := u.Query().Has("stderr")

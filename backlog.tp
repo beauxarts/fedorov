@@ -1,12 +1,7 @@
-Bugs:
-	- RefreshReduxAssets
-	- check for auth and error if not
 
 Polish:
 - Hide sequence number if empty
 - Better format sequence name/number
-- Update format desc from mobile version @done(2022-09-06)
-- Add clo cmds - sync, serve @done(2022-09-06)
 
 Features:
 - Add book description
@@ -17,6 +12,12 @@ Features:
 - Add read property and action
 
 Archive:
+	Bugs: @done(2022-09-07)
+		- RefreshReduxAssets @done(2022-09-07)
+		- check for auth and error if not @done(2022-09-07)
+	- Update format desc from mobile version @done(2022-09-06)
+	- Add clo cmds - sync, serve @done(2022-09-06)
+	- Add password protection @done(2022-09-07)
 	- Hide inactive downloads @done(2022-09-06)
 	Bugs: @done(2022-09-06)
 	- Text book / Audio book issue (Доктор Гарин) @done(2022-09-06)
