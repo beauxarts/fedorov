@@ -27,6 +27,8 @@ func ReduceMyBooksDetails() error {
 		reductions[p] = make(map[string][]string)
 	}
 
+	missingDetails := make([]string, 0)
+
 	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), nil, reduxProps...)
 	if err != nil {
 		return rmbda.EndWithError(err)
@@ -56,6 +58,11 @@ func ReduceMyBooksDetails() error {
 		}
 
 		rdx := reduceDetails(body)
+
+		if isEmpty(rdx) {
+			missingDetails = append(missingDetails, id)
+		}
+
 		for p, vals := range rdx {
 			reductions[p][id] = vals
 		}
@@ -69,6 +76,10 @@ func ReduceMyBooksDetails() error {
 
 	sra.TotalInt(len(reductions))
 
+	if err := rxa.ReplaceValues(data.MissingDetailsIdsProperty, data.MissingDetailsIdsProperty, missingDetails...); err != nil {
+		rmbda.EndWithError(err)
+	}
+
 	for prop, rdx := range reductions {
 		if err := rxa.BatchReplaceValues(prop, rdx); err != nil {
 			return rmbda.EndWithError(err)
@@ -80,6 +91,16 @@ func ReduceMyBooksDetails() error {
 	rmbda.EndWithResult("done")
 
 	return nil
+}
+
+func isEmpty(rdx map[string][]string) bool {
+	isEmpty := true
+
+	for _, vals := range rdx {
+		isEmpty = isEmpty && len(vals) == 0
+	}
+
+	return isEmpty
 }
 
 func reduceDetails(body *html.Node) map[string][]string {

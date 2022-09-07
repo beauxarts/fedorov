@@ -1,7 +1,7 @@
 {{define "books-list"}}
     <section id="books">
         {{$count := len .Books}}
-        <div class="books-count">{{$count}} книг{{if eq $count 1}}a{{end}}</div>
+        <div class="books-count">Найдено книг: {{$count}}</div>
         <div class="books">
         {{range .Books}}
             <a href="/book?id={{.Id}}" class="book">
