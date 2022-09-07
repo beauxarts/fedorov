@@ -1,3 +1,7 @@
+Bugs:
+	- RefreshReduxAssets
+	- check for auth and error if not
+
 Polish:
 - Hide sequence number if empty
 - Better format sequence name/number

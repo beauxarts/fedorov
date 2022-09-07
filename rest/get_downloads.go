@@ -19,6 +19,12 @@ func GetDownloads(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var err error
+	if rxa, err = rxa.RefreshReduxAssets(); err != nil {
+		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
+		return
+	}
+
 	links, ok := rxa.GetAllUnchangedValues(data.DownloadLinksProperty, id)
 
 	if !ok {

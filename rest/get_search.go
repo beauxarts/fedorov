@@ -39,6 +39,12 @@ func GetSearch(w http.ResponseWriter, r *http.Request) {
 
 	var ids []string
 
+	var err error
+	if rxa, err = rxa.RefreshReduxAssets(); err != nil {
+		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
+		return
+	}
+
 	if len(query) > 0 {
 		ids = maps.Keys(rxa.Match(query, true))
 	}

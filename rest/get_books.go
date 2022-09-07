@@ -11,6 +11,12 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
 
 	// GET /books
 
+	var err error
+	if rxa, err = rxa.RefreshReduxAssets(); err != nil {
+		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
+		return
+	}
+
 	myBooks, ok := rxa.GetAllValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty)
 	if !ok {
 		http.Error(w, nod.ErrorStr("no my books found"), http.StatusInternalServerError)

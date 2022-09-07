@@ -17,6 +17,12 @@ func GetBook(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var err error
+	if rxa, err = rxa.RefreshReduxAssets(); err != nil {
+		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
+		return
+	}
+
 	bvm := view_models.NewBook(id, rxa)
 
 	if err := tmpl.ExecuteTemplate(w, "book-page", bvm); err != nil {
