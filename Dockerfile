@@ -13,4 +13,4 @@ EXPOSE 1520
 VOLUME /var/lib/fedorov
 
 ENTRYPOINT ["/usr/bin/fdrv"]
-CMD ["serve","-p", "1520", "-stderr"]
+CMD ["serve","-port", "1520", "-stderr"]
