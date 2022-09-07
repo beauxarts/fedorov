@@ -56,9 +56,14 @@ func main() {
 	}
 
 	clo.HandleFuncs(map[string]clo.Handler{
-		"serve":   cli.ServeHandler,
-		"sync":    cli.SyncHandler,
-		"version": cli.VersionHandler,
+		"get-covers":              cli.GetCoversHandler,
+		"get-my-books-details":    cli.GetMyBooksDetailsHandler,
+		"get-my-books-fresh":      cli.GetMyBooksFreshHandler,
+		"reduce-my-books-details": cli.ReduceMyBooksDetailsHandler,
+		"reduce-my-books-fresh":   cli.ReduceMyBooksFreshHandler,
+		"serve":                   cli.ServeHandler,
+		"sync":                    cli.SyncHandler,
+		"version":                 cli.VersionHandler,
 	})
 
 	if err := defs.AssertCommandsHaveHandlers(); err != nil {

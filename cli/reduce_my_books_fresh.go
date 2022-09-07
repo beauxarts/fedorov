@@ -7,11 +7,16 @@ import (
 	"github.com/boggydigital/nod"
 	"golang.org/x/net/html"
 	"golang.org/x/net/html/atom"
+	"net/url"
 )
 
 const (
 	artsPerPage = 42
 )
+
+func ReduceMyBooksFreshHandler(_ *url.URL) error {
+	return ReduceMyBooksFresh()
+}
 
 func ReduceMyBooksFresh() error {
 

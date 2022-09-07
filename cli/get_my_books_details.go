@@ -4,12 +4,25 @@ import (
 	"errors"
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/litres_integration"
+	"github.com/boggydigital/coost"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
 	"net/http"
+	"net/url"
+	"strings"
 )
 
-func GetMyBooksDetails(hc *http.Client) error {
+func GetMyBooksDetailsHandler(u *url.URL) error {
+	hc, err := coost.NewHttpClientFromFile(data.AbsCookiesFilename(), litres_integration.LitResHost)
+	if err != nil {
+		return err
+	}
+
+	ids := strings.Split(u.Query().Get("id"), ",")
+	return GetMyBooksDetails(ids, hc)
+}
+
+func GetMyBooksDetails(ids []string, hc *http.Client) error {
 
 	gmbda := nod.NewProgress("getting my books details...")
 	defer gmbda.End()
@@ -26,10 +39,13 @@ func GetMyBooksDetails(hc *http.Client) error {
 		return gmbda.EndWithError(err)
 	}
 
-	ids, ok := rxa.GetAllValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty)
-	if !ok {
-		err = errors.New("no my books found")
-		return gmbda.EndWithError(err)
+	if len(ids) == 0 {
+		var ok bool
+		ids, ok = rxa.GetAllValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty)
+		if !ok {
+			err = errors.New("no my books found")
+			return gmbda.EndWithError(err)
+		}
 	}
 
 	gmbda.TotalInt(len(ids))

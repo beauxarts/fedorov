@@ -6,6 +6,18 @@
 # {} - placeholder values
 # {^} - placeholder values, first value is default
 
+get-covers
+    id^&
+
+get-my-books-details
+    id^&
+
+get-my-books-fresh
+
+reduce-my-books-details
+
+reduce-my-books-fresh
+
 sync
 
 serve

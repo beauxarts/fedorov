@@ -25,7 +25,7 @@ func Sync() error {
 		return err
 	}
 
-	if err := GetMyBooksDetails(hc); err != nil {
+	if err := GetMyBooksDetails(nil, hc); err != nil {
 		return err
 	}
 
@@ -37,7 +37,7 @@ func Sync() error {
 		return err
 	}
 
-	if err := GetCovers(); err != nil {
+	if err := GetCovers(nil); err != nil {
 		return err
 	}
 

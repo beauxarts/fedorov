@@ -3,16 +3,27 @@ package cli
 import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/litres_integration"
+	"github.com/boggydigital/coost"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/match_node"
 	"github.com/boggydigital/nod"
 	"golang.org/x/net/html"
 	"golang.org/x/net/html/atom"
 	"net/http"
+	"net/url"
 	"strconv"
 )
 
 const maxSupportedPages = 1000
+
+func GetMyBooksFreshHandler(u *url.URL) error {
+	hc, err := coost.NewHttpClientFromFile(data.AbsCookiesFilename(), litres_integration.LitResHost)
+	if err != nil {
+		return err
+	}
+
+	return GetMyBooksFresh(hc)
+}
 
 func GetMyBooksFresh(hc *http.Client) error {
 

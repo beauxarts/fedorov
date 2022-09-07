@@ -7,8 +7,13 @@ import (
 	"github.com/boggydigital/nod"
 	"golang.org/x/net/html"
 	"golang.org/x/net/html/atom"
+	"net/url"
 	"strings"
 )
+
+func ReduceMyBooksDetailsHandler(_ *url.URL) error {
+	return ReduceMyBooksDetails()
+}
 
 func ReduceMyBooksDetails() error {
 
