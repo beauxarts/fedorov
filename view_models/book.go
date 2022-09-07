@@ -66,6 +66,7 @@ type Book struct {
 	Id string
 	// Title
 	Title string
+	Type  string
 	// Text properties
 	Properties      map[string]map[string]string
 	PropertyOrder   []string
@@ -88,6 +89,7 @@ func NewBook(id string, rxa kvas.ReduxAssets) *Book {
 	}
 
 	bvm.Title, _ = rxa.GetFirstVal(data.TitleProperty, id)
+	bvm.Type, _ = rxa.GetFirstVal(data.BookTypeProperty, id)
 
 	for _, p := range detailsPropertyOrder {
 		// sequence name needs to be formatted in a special way, see below

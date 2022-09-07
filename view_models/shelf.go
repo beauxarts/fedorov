@@ -16,6 +16,7 @@ type ListBook struct {
 	Id          string
 	Title       string
 	Authors     string
+	Type        string
 	DateCreated string
 }
 
@@ -32,11 +33,13 @@ func NewShelf(ids []string, rxa kvas.ReduxAssets) *Shelf {
 		title, _ := rxa.GetFirstVal(data.TitleProperty, id)
 		authors, _ := rxa.GetAllUnchangedValues(data.AuthorsProperty, id)
 		created, _ := rxa.GetFirstVal(data.DateCreatedProperty, id)
+		bookType, _ := rxa.GetFirstVal(data.BookTypeProperty, id)
 
 		shelf.Books = append(shelf.Books, &ListBook{
 			Id:          id,
 			Title:       title,
 			Authors:     strings.Join(authors, ", "),
+			Type:        bookType,
 			DateCreated: created,
 		})
 	}

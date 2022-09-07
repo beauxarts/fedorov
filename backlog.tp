@@ -1,5 +1,8 @@
+Polish:
+- properly align authors, year in a book card
+
 Features:
-- Reduce text / audio / PDF book type
+- Reduce text / audio / PDF book type @done(2022-09-07)
 - Add book description
 - Add tags / genres 
 - Add sorting options and sort some book properties links
