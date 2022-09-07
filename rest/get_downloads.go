@@ -6,6 +6,7 @@ import (
 	"github.com/boggydigital/nod"
 	"net/http"
 	"os"
+	"path/filepath"
 )
 
 func GetDownloads(w http.ResponseWriter, r *http.Request) {
@@ -32,14 +33,15 @@ func GetDownloads(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	availability := make(map[string]bool)
+	files := make([]string, 0, len(links))
 	for _, link := range links {
-		path := data.AbsDownloadPath(id, link)
-		_, err := os.Stat(path)
-		availability[link] = err == nil
+		_, filename := filepath.Split(link)
+		if _, err := os.Stat(data.AbsDownloadPath(id, filename)); err == nil {
+			files = append(files, filename)
+		}
 	}
 
-	dvm := view_models.NewDownloads(id, links, availability)
+	dvm := view_models.NewDownloads(id, files)
 
 	if err := tmpl.ExecuteTemplate(w, "downloads-page", dvm); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)

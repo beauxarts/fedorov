@@ -1,5 +1,7 @@
 package view_models
 
+import "path/filepath"
+
 const (
 	// Text books
 	FormatFB2     = "FB2"
@@ -46,15 +48,19 @@ var formatDescriptors = map[string]string{
 }
 
 type Downloads struct {
-	Id           string
-	Links        []string
-	Availability map[string]bool
+	Id    string
+	Files []string
 }
 
-func NewDownloads(id string, links []string, availability map[string]bool) *Downloads {
-	return &Downloads{
-		Id:           id,
-		Links:        links,
-		Availability: availability,
+func NewDownloads(id string, links []string) *Downloads {
+	dvm := &Downloads{
+		Id:    id,
+		Files: make([]string, 0, len(links)),
 	}
+
+	for _, link := range links {
+		_, filename := filepath.Split(link)
+		dvm.Files = append(dvm.Files, filename)
+	}
+	return dvm
 }

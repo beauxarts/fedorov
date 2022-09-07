@@ -1,18 +1,14 @@
 {{define "downloads"}}
     <ul class="downloads">
-        {{$availability := .Availability}}
         {{$id := .Id}}
-        {{range .Links}}
-            {{$available := index $availability .}}
-            {{if $available}}
-                <li>
-                    <a class="link" href="href=/file?id={{$id}}&href={{.}}">
-                        {{$format := linkFormat .}}
-                        <div class="format">{{$format}}</div>
-                        <div class="desc">{{formatDesc $format}}</div>
-                    </a>
-                </li>
-            {{end}}
+        {{range .Files}}
+            <li>
+                <a class="link" href="/file?id={{$id}}&file={{.}}">
+                    {{$format := linkFormat .}}
+                    <div class="format">{{$format}}</div>
+                    <div class="desc">{{formatDesc $format}}</div>
+                </a>
+            </li>
         {{end}}
     </ul>
 {{end}}

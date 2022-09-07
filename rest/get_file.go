@@ -6,7 +6,6 @@ import (
 	"github.com/boggydigital/nod"
 	"net/http"
 	"os"
-	"path/filepath"
 )
 
 func GetFile(w http.ResponseWriter, r *http.Request) {
@@ -20,21 +19,20 @@ func GetFile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	href := r.URL.Query().Get("href")
+	file := r.URL.Query().Get("file")
 
-	if href == "" {
-		http.Error(w, nod.ErrorStr("missing required file href"), http.StatusInternalServerError)
+	if file == "" {
+		http.Error(w, nod.ErrorStr("missing file"), http.StatusInternalServerError)
 		return
 	}
 
-	filePath := data.AbsDownloadPath(id, href)
-	_, filename := filepath.Split(filePath)
-	if _, err := os.Stat(filePath); err == nil {
+	localFilepath := data.AbsDownloadPath(id, file)
+	if _, err := os.Stat(localFilepath); err == nil {
 		w.Header().Set("Cache-Control", "max-age=31536000")
-		w.Header().Set("Content-Disposition", "attachment; filename=\""+filename+"\"")
-		http.ServeFile(w, r, filePath)
+		w.Header().Set("Content-Disposition", "attachment; filename=\""+file+"\"")
+		http.ServeFile(w, r, localFilepath)
 	} else {
-		_ = nod.Error(fmt.Errorf("no file for id %s, href %s", id, href))
+		_ = nod.Error(fmt.Errorf("no file for id %s, file %s", id, file))
 		http.NotFound(w, r)
 	}
 
