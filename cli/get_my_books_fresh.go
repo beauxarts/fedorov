@@ -63,6 +63,9 @@ func GetMyBooksFresh(hc *http.Client) error {
 			return gmba.EndWithError(err)
 		}
 
+		// sleep for 5 seconds to throttle server requests
+		//time.Sleep(time.Second * 5)
+
 		gmba.Increment()
 	}
 

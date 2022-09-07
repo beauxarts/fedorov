@@ -7,7 +7,6 @@ import (
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
 	"net/http"
-	"time"
 )
 
 func GetMyBooksDetails(hc *http.Client) error {
@@ -55,8 +54,8 @@ func GetMyBooksDetails(hc *http.Client) error {
 
 		resp.Body.Close()
 
-		// sleep for 15 seconds to throttle server requests
-		time.Sleep(time.Second * 15)
+		// sleep for 5 seconds to throttle server requests
+		//time.Sleep(time.Second * 5)
 
 		gmbda.Increment()
 	}

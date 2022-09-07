@@ -16,8 +16,9 @@ import (
 var skipFormatDownloads = map[string]bool{
 	// download
 	view_models.FormatEPUB: false,
-	view_models.FormatFB2:  true,
-	view_models.FormatMOBI: false,
+	view_models.FormatAZW3: false,
+	view_models.FormatMOBI: false, // should be replaced by AZW3 - hasn't happened yet
+	view_models.FormatFB2:  false,
 	view_models.FormatMP4:  false,
 	view_models.FormatZIP:  false,
 	// don't download

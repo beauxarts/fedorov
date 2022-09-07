@@ -8,6 +8,7 @@ const (
 	FormatRTF     = "RTF"
 	FormatPDFA4   = "PDF A4"
 	FormatMOBI    = "MOBI"
+	FormatAZW3    = "AZW3"
 	FormatIOSEPUB = "iOS.EPUB"
 	FormatPDFA6   = "PDF A6"
 	FormatFB3     = "FB3"
@@ -29,6 +30,7 @@ var formatDescriptors = map[string]string{
 	FormatRTF:     "Можно открыть на любом компьютере",
 	FormatPDFA4:   "Открывается в программах Adobe Reader, Preview.app",
 	FormatMOBI:    "Подходит для электронных книг Amazon Kindle",
+	FormatAZW3:    "Подходит для электронных книг Amazon Kindle",
 	FormatIOSEPUB: "EPUB, адаптированный для iPhone и iPad",
 	FormatPDFA6:   "Оптимизирован под небольшие экраны",
 	FormatFB3:     "Развитие формата FB2",
