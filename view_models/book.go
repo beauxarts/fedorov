@@ -21,7 +21,7 @@ var detailsPropertyOrder = []string{
 	data.CopyrightHoldersProperty,
 	data.PublishersProperty,
 	data.SequenceNameProperty,
-	data.SequenceNumberProperty,
+	//data.SequenceNumberProperty,
 	data.DateReleasedProperty,
 	data.DateTranslatedProperty,
 	data.DateCreatedProperty,
@@ -90,7 +90,25 @@ func NewBook(id string, rxa kvas.ReduxAssets) *Book {
 	bvm.Title, _ = rxa.GetFirstVal(data.TitleProperty, id)
 
 	for _, p := range detailsPropertyOrder {
+		// sequence name needs to be formatted in a special way, see below
+		if p == data.SequenceNameProperty {
+			continue
+		}
 		bvm.Properties[p] = getPropertyLinks(id, p, rxa)
+	}
+
+	seqNames, _ := rxa.GetAllUnchangedValues(data.SequenceNameProperty, id)
+	seqNumbers, _ := rxa.GetAllUnchangedValues(data.SequenceNumberProperty, id)
+
+	if len(seqNames) == len(seqNumbers) {
+		// to format sequence name we need to append sequence relevant number
+		// and use the regular link href that points to the series overall
+		bvm.Properties[data.SequenceNameProperty] = make(map[string]string)
+		for i, name := range seqNames {
+			nameNumber := fmt.Sprintf("%s %s", name, seqNumbers[i])
+			bvm.Properties[data.SequenceNameProperty][nameNumber] =
+				formatPropertyLinkHref(data.SequenceNameProperty, name)
+		}
 	}
 
 	return bvm
@@ -129,6 +147,10 @@ func formatPropertyLinkHref(property, link string) string {
 	case data.HrefProperty:
 		return litres_integration.HrefUrl(link).String()
 	case data.ISBNPropertyProperty:
+		fallthrough
+	case data.TotalPagesProperty:
+		fallthrough
+	case data.TotalSizeProperty:
 		fallthrough
 	case data.VolumeProperty:
 		fallthrough
