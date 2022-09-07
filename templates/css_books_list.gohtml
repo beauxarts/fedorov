@@ -80,6 +80,9 @@
             list-style: none;
             padding-inline-start: 0;
             margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
         .book .title {
@@ -100,6 +103,7 @@
         .book .authors {
             font-size: var(--fs-smaller);
             margin-block-end: var(--small);
+            margin-block-start: auto;
         }
 
         .book .date-created {
