@@ -11,11 +11,11 @@ import (
 	"strings"
 )
 
-func ReduceMyBooksDetailsHandler(_ *url.URL) error {
-	return ReduceMyBooksDetails()
+func ReduceDetailsHandler(_ *url.URL) error {
+	return ReduceDetails()
 }
 
-func ReduceMyBooksDetails() error {
+func ReduceDetails() error {
 
 	rmbda := nod.NewProgress("reducing my books details...")
 	defer rmbda.End()
@@ -113,6 +113,10 @@ func reduceDetails(body *html.Node) map[string][]string {
 			if n.DataAtom == atom.H1 {
 				rdx[data.TitleProperty] = []string{n.FirstChild.Data}
 			}
+		}
+		labelEtc := match_node.NewEtc(atom.Span, "label")
+		if label := match_node.Match(bbn, labelEtc); label != nil {
+			rdx[data.BookTypeProperty] = []string{strings.ToLower(label.FirstChild.Data)}
 		}
 	}
 

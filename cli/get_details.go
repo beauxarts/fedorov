@@ -12,17 +12,17 @@ import (
 	"strings"
 )
 
-func GetMyBooksDetailsHandler(u *url.URL) error {
+func GetDetailsHandler(u *url.URL) error {
 	hc, err := coost.NewHttpClientFromFile(data.AbsCookiesFilename(), litres_integration.LitResHost)
 	if err != nil {
 		return err
 	}
 
 	ids := strings.Split(u.Query().Get("id"), ",")
-	return GetMyBooksDetails(ids, hc)
+	return GetDetails(ids, hc)
 }
 
-func GetMyBooksDetails(ids []string, hc *http.Client) error {
+func GetDetails(ids []string, hc *http.Client) error {
 
 	gmbda := nod.NewProgress("getting my books details...")
 	defer gmbda.End()

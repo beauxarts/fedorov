@@ -16,16 +16,16 @@ import (
 
 const maxSupportedPages = 1000
 
-func GetMyBooksFreshHandler(u *url.URL) error {
+func GetMyBooksHandler(u *url.URL) error {
 	hc, err := coost.NewHttpClientFromFile(data.AbsCookiesFilename(), litres_integration.LitResHost)
 	if err != nil {
 		return err
 	}
 
-	return GetMyBooksFresh(hc)
+	return GetMyBooks(hc)
 }
 
-func GetMyBooksFresh(hc *http.Client) error {
+func GetMyBooks(hc *http.Client) error {
 
 	gmba := nod.NewProgress("fetching my books fresh...")
 	defer gmba.End()

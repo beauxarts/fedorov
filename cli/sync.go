@@ -17,19 +17,19 @@ func Sync() error {
 		return err
 	}
 
-	if err := GetMyBooksFresh(hc); err != nil {
+	if err := GetMyBooks(hc); err != nil {
 		return err
 	}
 
-	if err := ReduceMyBooksFresh(); err != nil {
+	if err := ReduceMyBooks(); err != nil {
 		return err
 	}
 
-	if err := GetMyBooksDetails(nil, hc); err != nil {
+	if err := GetDetails(nil, hc); err != nil {
 		return err
 	}
 
-	if err := ReduceMyBooksDetails(); err != nil {
+	if err := ReduceDetails(); err != nil {
 		return err
 	}
 

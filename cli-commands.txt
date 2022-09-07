@@ -9,14 +9,14 @@
 get-covers
     id^&
 
-get-my-books-details
+get-details
     id^&
 
-get-my-books-fresh
+get-my-books
 
-reduce-my-books-details
+reduce-details
 
-reduce-my-books-fresh
+reduce-my-books
 
 sync
 

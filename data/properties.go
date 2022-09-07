@@ -31,6 +31,7 @@ const (
 	TotalSizeProperty         = "total-size"
 	TotalPagesProperty        = "total-pages"
 	MissingDetailsIdsProperty = "missing-details-ids"
+	BookTypeProperty          = "book-type"
 
 	//GenresProperty         = "genres"
 )
@@ -65,5 +66,6 @@ func ReduxProperties() []string {
 		TotalSizeProperty,
 		TotalPagesProperty,
 		MissingDetailsIdsProperty,
+		BookTypeProperty,
 	}
 }

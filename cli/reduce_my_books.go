@@ -14,11 +14,11 @@ const (
 	artsPerPage = 42
 )
 
-func ReduceMyBooksFreshHandler(_ *url.URL) error {
-	return ReduceMyBooksFresh()
+func ReduceMyBooksHandler(_ *url.URL) error {
+	return ReduceMyBooks()
 }
 
-func ReduceMyBooksFresh() error {
+func ReduceMyBooks() error {
 
 	embia := nod.NewProgress("reducing my books...")
 	defer embia.End()
