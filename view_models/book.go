@@ -118,6 +118,10 @@ func formatPropertyLinkTitle(property, link string) string {
 
 func formatPropertyLinkHref(property, link string) string {
 	switch property {
+	case data.AuthorsProperty:
+		return fmt.Sprintf("/search?%s=%s&sort=date-created&desc=true", property, link)
+	case data.TranslatorsProperty:
+		return fmt.Sprintf("/search?%s=%s&sort=date-translated&desc=true", property, link)
 	case data.HrefProperty:
 		return litres_integration.HrefUrl(link).String()
 	case data.AgeRatingProperty:

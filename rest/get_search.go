@@ -1,11 +1,12 @@
 package rest
 
 import (
+	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/view_models"
 	"github.com/boggydigital/nod"
 	"golang.org/x/exp/maps"
 	"net/http"
-	"strings"
+	"sort"
 )
 
 func GetSearch(w http.ResponseWriter, r *http.Request) {
@@ -14,14 +15,13 @@ func GetSearch(w http.ResponseWriter, r *http.Request) {
 
 	q := r.URL.Query()
 
-	//svm := view_models.NewSearchProducts([]string{}, rxa)
-	query := make(map[string][]string)
+	query := make(map[string]string)
 
 	shortQuery := false
 	queryProperties := view_models.SearchProperties
 	for _, p := range queryProperties {
 		if v := q.Get(p); v != "" {
-			query[p] = []string{v}
+			query[p] = v
 		} else {
 			if q.Has(p) {
 				q.Del(p)
@@ -46,35 +46,69 @@ func GetSearch(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if len(query) > 0 {
-		ids = maps.Keys(rxa.Match(query, true))
+
+		mq := make(map[string][]string)
+		for k, v := range query {
+			if k == data.SortProperty ||
+				k == data.DescendingProperty {
+				continue
+			}
+			mq[k] = []string{v}
+		}
+
+		ids = maps.Keys(rxa.Match(mq, true))
+
+		if sort := r.URL.Query().Get(data.SortProperty); sort != "" {
+			desc := r.URL.Query().Get(data.DescendingProperty) == "true"
+			ids, err = rxa.Sort(ids, sort, desc)
+			if err != nil {
+				http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
+				return
+			}
+		}
 	}
 
 	svm := view_models.NewSearchProducts(ids, rxa)
+	svm.Query = query
 
-	for k, v := range query {
-		svm.Query[k] = strings.Join(v, " ")
-	}
+	svm.Digests = getDigests(view_models.DigestProperties...)
 
-	//digests, cached, err := getDigests(dc, view_models.DigestProperties...)
+	svm.Digests[data.SortProperty] = []string{
+		data.TitleProperty,
+		data.DateCreatedProperty,
+		data.DateTranslatedProperty,
+		data.DateReleasedProperty}
 
-	//digests[vangogh_local_data.SortProperty] = []string{
-	//	vangogh_local_data.GlobalReleaseDateProperty,
-	//	vangogh_local_data.GOGReleaseDateProperty,
-	//	vangogh_local_data.GOGOrderDateProperty,
-	//	vangogh_local_data.TitleProperty,
-	//	vangogh_local_data.RatingProperty,
-	//	vangogh_local_data.DiscountPercentageProperty}
-	//
-	//digests[vangogh_local_data.DescendingProperty] = []string{
-	//	vangogh_local_data.TrueValue,
-	//	vangogh_local_data.FalseValue}
+	svm.Digests[data.DescendingProperty] = []string{
+		"true",
+		"false"}
 
-	//spvm.Digests = digests
+	svm.DigestsTitles = view_models.DigestTitles
 
-	//gaugin_middleware.DefaultHeaders(st, w)
+	DefaultHeaders(w)
 
 	if err := tmpl.ExecuteTemplate(w, "search-page", svm); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return
 	}
+}
+
+func getDigests(properties ...string) map[string][]string {
+	digests := make(map[string][]string)
+	for _, p := range properties {
+		dv := make(map[string]interface{})
+		for _, id := range rxa.Keys(p) {
+			values, ok := rxa.GetAllValues(p, id)
+			if !ok {
+				continue
+			}
+			for _, v := range values {
+				dv[v] = nil
+			}
+		}
+		sortedDv := maps.Keys(dv)
+		sort.Strings(sortedDv)
+		digests[p] = sortedDv
+	}
+	return digests
 }

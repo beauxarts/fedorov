@@ -25,6 +25,8 @@ func GetBook(w http.ResponseWriter, r *http.Request) {
 
 	bvm := view_models.NewBook(id, rxa)
 
+	DefaultHeaders(w)
+
 	if err := tmpl.ExecuteTemplate(w, "book-page", bvm); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return

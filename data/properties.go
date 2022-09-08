@@ -34,6 +34,9 @@ const (
 	MissingDetailsIdsProperty = "missing-details-ids"
 	BookTypeProperty          = "book-type"
 
+	// sorting
+	SortProperty       = "sort"
+	DescendingProperty = "desc"
 	//GenresProperty         = "genres"
 )
 

@@ -30,4 +30,7 @@ var propertyTitles = map[string]string{
 	data.ISBNPropertyProperty:     "ISBN",
 	data.TotalSizeProperty:        "Общий размер",
 	data.TotalPagesProperty:       "Всего страниц",
+	// sorting properties
+	data.SortProperty:       "Порядок",
+	data.DescendingProperty: "По убыванию",
 }

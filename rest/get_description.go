@@ -33,6 +33,8 @@ func GetDescription(w http.ResponseWriter, r *http.Request) {
 
 	dvm := view_models.NewDescription(id, desc)
 
+	DefaultHeaders(w)
+
 	if err := tmpl.ExecuteTemplate(w, "description-page", dvm); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return

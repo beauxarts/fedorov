@@ -43,6 +43,8 @@ func GetDownloads(w http.ResponseWriter, r *http.Request) {
 
 	dvm := view_models.NewDownloads(id, files)
 
+	DefaultHeaders(w)
+
 	if err := tmpl.ExecuteTemplate(w, "downloads-page", dvm); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return

@@ -37,6 +37,8 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
 
 	shelf := view_models.NewShelf(myBooks, rxa)
 
+	DefaultHeaders(w)
+
 	if err := tmpl.ExecuteTemplate(w, "books-page", shelf); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return
