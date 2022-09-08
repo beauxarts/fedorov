@@ -9,7 +9,7 @@
 
             <h1 class="title">{{.Title}}</h1>
             <div class="labels">
-                <span class="type {{.Type}}">{{.Type}}</span></div>
+                <a class="type {{.Type}}" href="/search?book-type={{.Type}}">{{.Type}}</a></div>
 
             <section class="text-properties">
                 {{template "book-properties" .}}
