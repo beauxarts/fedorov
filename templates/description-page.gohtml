@@ -1,14 +1,14 @@
-{{define "downloads-page"}}
+{{define "description-page"}}
     <!doctype html>
     <html lang="en" id="_top">
     {{template "head"}}
     <head>
         {{template "css-iframe"}}
     </head>
-    <body id="downloads">
+    <body id="description">
     {{template "script-iframe-post-message"}}
-    <div id="downloads-content">
-    {{template "downloads" .}}
+    <div id="description-content">
+        {{.Content}}
     </div>
     </body>
     </html>

@@ -1,15 +1,14 @@
-Polish:
-- properly align authors, year in a book card
-
 Features:
-- Reduce text / audio / PDF book type @done(2022-09-07)
-- Add book description
+- Add book description @done(2022-09-07)
 - Add tags / genres 
 - Add sorting options and sort some book properties links
 - Add digests
 - Add read property and action
 
 Archive:
+	Polish: @done(2022-09-07)
+	- properly align authors, year in a book card @done(2022-09-07)
+	- Reduce text / audio / PDF book type @done(2022-09-07)
 	Polish: @done(2022-09-07)
 	- Hide sequence number if empty @done(2022-09-07)
 	- Better format sequence name/number @done(2022-09-07)

@@ -16,11 +16,12 @@ var (
 func HandleFuncs() {
 	patternHandlers := map[string]http.Handler{
 		// unauthenticated endpoints
-		"/books":     Gzip(GetOnly(Log(http.HandlerFunc(GetBooks)))),
-		"/book":      Gzip(GetOnly(Log(http.HandlerFunc(GetBook)))),
-		"/cover":     GetOnly(Log(http.HandlerFunc(GetCover))),
-		"/search":    Gzip(GetOnly(Log(http.HandlerFunc(GetSearch)))),
-		"/downloads": Gzip(GetOnly(Log(http.HandlerFunc(GetDownloads)))),
+		"/books":       Gzip(GetOnly(Log(http.HandlerFunc(GetBooks)))),
+		"/book":        Gzip(GetOnly(Log(http.HandlerFunc(GetBook)))),
+		"/cover":       GetOnly(Log(http.HandlerFunc(GetCover))),
+		"/search":      Gzip(GetOnly(Log(http.HandlerFunc(GetSearch)))),
+		"/downloads":   Gzip(GetOnly(Log(http.HandlerFunc(GetDownloads)))),
+		"/description": Gzip(GetOnly(Log(http.HandlerFunc(GetDescription)))),
 		// authenticated endpoints
 		"/file": Auth(GetOnly(Log(http.HandlerFunc(GetFile)))),
 		// start at the books

@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"bytes"
 	"github.com/beauxarts/fedorov/data"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/match_node"
@@ -57,7 +58,11 @@ func ReduceDetails() error {
 			return rmbda.EndWithError(err)
 		}
 
-		rdx := reduceDetails(body)
+		rdx, err := reduceDetails(body)
+		if err != nil {
+			det.Close()
+			return rmbda.EndWithError(err)
+		}
 
 		if isEmpty(rdx) {
 			missingDetails = append(missingDetails, id)
@@ -103,7 +108,7 @@ func isEmpty(rdx map[string][]string) bool {
 	return isEmpty
 }
 
-func reduceDetails(body *html.Node) map[string][]string {
+func reduceDetails(body *html.Node) (map[string][]string, error) {
 
 	rdx := make(map[string][]string)
 
@@ -243,7 +248,17 @@ func reduceDetails(body *html.Node) map[string][]string {
 		}
 	}
 
-	return rdx
+	bookDescrEtc := match_node.NewEtc(atom.Div, "biblio_book_descr")
+	if bd := match_node.Match(body, bookDescrEtc); bd != nil {
+
+		buf := new(bytes.Buffer)
+		if err := html.Render(buf, bd); err != nil {
+			return rdx, err
+		}
+		rdx[data.DescriptionProperty] = append(rdx[data.DescriptionProperty], buf.String())
+	}
+
+	return rdx, nil
 }
 
 func getAttribute(node *html.Node, attrName string) string {

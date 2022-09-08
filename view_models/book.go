@@ -34,34 +34,6 @@ var detailsPropertyOrder = []string{
 	data.HrefProperty,
 }
 
-var propertyTitles = map[string]string{
-	data.TitleProperty:            "Название",
-	data.AuthorsProperty:          "Автор(ы)",
-	data.CoauthorsProperty:        "Cоавтор(ы)",
-	data.TranslatorsProperty:      "Переводчик(и)",
-	data.ReadersProperty:          "Чтец(ы)",
-	data.IllustratorsProperty:     "Иллюстратор(ы)",
-	data.ComposersProperty:        "Композитор(ы)",
-	data.AdapterProperty:          "Адаптация",
-	data.PerformersProperty:       "Исполнители",
-	data.DirectorsProperty:        "Режиссер(ы)",
-	data.SoundDirectorsProperty:   "Звукорежиссер(ы)",
-	data.CopyrightHoldersProperty: "Правообладатели",
-	data.PublishersProperty:       "Издатели",
-	data.HrefProperty:             "Ссылки",
-	data.SequenceNameProperty:     "Серия",
-	data.SequenceNumberProperty:   "Номер в серии",
-	data.DateReleasedProperty:     "Опубликовано",
-	data.DateTranslatedProperty:   "Переведено",
-	data.DateCreatedProperty:      "Написано",
-	data.AgeRatingProperty:        "Для возраста",
-	data.DurationProperty:         "Длительность",
-	data.VolumeProperty:           "Объем",
-	data.ISBNPropertyProperty:     "ISBN",
-	data.TotalSizeProperty:        "Общий размер",
-	data.TotalPagesProperty:       "Всего страниц",
-}
-
 type Book struct {
 	Id string
 	// Title
@@ -84,7 +56,7 @@ func NewBook(id string, rxa kvas.ReduxAssets) *Book {
 		Properties:     make(map[string]map[string]string),
 		PropertyOrder:  detailsPropertyOrder,
 		PropertyTitles: propertyTitles,
-		Sections:       []string{DownloadsSection},
+		Sections:       []string{DescriptionSection, DownloadsSection},
 		SectionTitles:  sectionTitles,
 	}
 

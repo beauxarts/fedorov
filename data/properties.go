@@ -8,6 +8,7 @@ const (
 	TitleProperty             = "title"
 	AuthorsProperty           = "authors"
 	CoauthorsProperty         = "coauthors"
+	DescriptionProperty       = "description"
 	DownloadLinksProperty     = "download-links"
 	SequenceNameProperty      = "sequence-name"
 	SequenceNumberProperty    = "sequence-number"
@@ -41,6 +42,7 @@ func ReduxProperties() []string {
 		MyBooksIdsProperty,
 		HrefProperty,
 		TitleProperty,
+		DescriptionProperty,
 		DownloadLinksProperty,
 		AuthorsProperty,
 		CoauthorsProperty,

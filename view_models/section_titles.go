@@ -1,9 +1,11 @@
 package view_models
 
 const (
-	DownloadsSection = "downloads"
+	DescriptionSection = "description"
+	DownloadsSection   = "downloads"
 )
 
 var sectionTitles = map[string]string{
-	DownloadsSection: "Скачать книги",
+	DescriptionSection: "Описание",
+	DownloadsSection:   "Скачать книги",
 }
