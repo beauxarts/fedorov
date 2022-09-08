@@ -8,6 +8,8 @@ import (
 	"golang.org/x/net/html"
 	"golang.org/x/net/html/atom"
 	"net/url"
+	"sort"
+	"strconv"
 )
 
 const (
@@ -32,9 +34,19 @@ func ReduceMyBooks() error {
 	myBooks := make(map[string][]string, len(keys)*artsPerPage)
 	hrefs := make(map[string][]string, len(keys)*artsPerPage)
 
-	for _, key := range keys {
+	// sort my-books keys (page numbers) before iterating through them
+	// to enforce last bought - shown at the top order
+	iks := make([]int, 0, len(keys))
+	for _, k := range keys {
+		if ik, err := strconv.ParseInt(k, 10, 64); err == nil {
+			iks = append(iks, int(ik))
+		}
+	}
+	sort.Ints(iks)
 
-		page, err := kv.Get(key)
+	for _, ik := range iks {
+
+		page, err := kv.Get(strconv.Itoa(ik))
 		if err != nil {
 			return embia.EndWithError(err)
 		}
