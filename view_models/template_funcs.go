@@ -44,6 +44,8 @@ func LinkFormat(link string) string {
 		format = FormatTXT
 	} else if strings.HasSuffix(link, ".mp3.zip") {
 		format = FormatMP3
+	} else if strings.HasSuffix(link, ".mp3") {
+		format = FormatMP3
 	} else if strings.HasSuffix(link, ".m4b") {
 		format = FormatMP4
 	} else if strings.HasSuffix(link, ".zip") {
