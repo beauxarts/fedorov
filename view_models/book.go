@@ -5,6 +5,8 @@ import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/litres_integration"
 	"github.com/boggydigital/kvas"
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 )
 
 var detailsPropertyOrder = []string{
@@ -20,6 +22,8 @@ var detailsPropertyOrder = []string{
 	data.SoundDirectorsProperty,
 	data.CopyrightHoldersProperty,
 	data.PublishersProperty,
+	data.GenresProperty,
+	data.TagsProperty,
 	data.SequenceNameProperty,
 	//data.SequenceNumberProperty,
 	data.DateReleasedProperty,
@@ -103,10 +107,16 @@ func getPropertyLinks(id string, property string, rxa kvas.ReduxAssets) map[stri
 	return propertyLinks
 }
 
+var caser = cases.Title(language.Russian)
+
 func formatPropertyLinkTitle(property, link string) string {
 	title := link
 
 	switch property {
+	case data.GenresProperty:
+		fallthrough
+	case data.TagsProperty:
+		title = caser.String(title)
 	case data.HrefProperty:
 		title = "ЛитРес"
 	default:

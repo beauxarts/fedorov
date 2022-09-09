@@ -112,6 +112,42 @@
         }
     }
 
+    .book-details .text-properties svg.icon {
+        width: calc(5 * var(--x-small));
+        height: calc(5 * var(--x-small));
+    }
+
+    .book-details .text-properties .text-property ul {
+        list-style: none;
+        margin: 0;
+        padding-inline-start: 0;
+        display: flex;
+        flex-wrap: wrap;
+        row-gap: var(--normal);
+        column-gap: var(--normal);
+    }
+
+    .book-details .text-properties .text-property ul.vertical {
+        flex-direction: column;
+        background-color: var(--highlight-color);
+        border-radius: var(--border-radius-large);
+        padding: var(--normal);
+    }
+
+    .book-details .text-properties .text-property details[open] summary {
+        margin-block-end: var(--normal);
+    }
+
+    .book-details .text-properties .text-property details summary {
+        cursor: pointer;
+    }
+
+    .book-details .text-properties .text-property details summary svg {
+        width: var(--small);
+        height: var(--small);
+        margin-inline-start: var(--small);
+    }
+
     .book-details .text-properties .text-property h2 {
         font-size: inherit;
         margin: 0;

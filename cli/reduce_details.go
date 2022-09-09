@@ -18,7 +18,7 @@ func ReduceDetailsHandler(_ *url.URL) error {
 
 func ReduceDetails() error {
 
-	rmbda := nod.NewProgress("reducing my books details...")
+	rmbda := nod.NewProgress("reducing details...")
 	defer rmbda.End()
 
 	reduxProps := data.ReduxProperties()
@@ -112,22 +112,22 @@ func reduceDetails(body *html.Node) (map[string][]string, error) {
 
 	rdx := make(map[string][]string)
 
-	bookNameEtc := match_node.NewEtc(atom.Div, "biblio_book_name")
+	bookNameEtc := match_node.NewEtc(atom.Div, "biblio_book_name biblio-book__title-block", true)
 	if bbn := match_node.Match(body, bookNameEtc); bbn != nil {
 		for n := bbn.FirstChild; n != nil; n = n.NextSibling {
 			if n.DataAtom == atom.H1 {
 				rdx[data.TitleProperty] = []string{n.FirstChild.Data}
 			}
 		}
-		labelEtc := match_node.NewEtc(atom.Span, "label")
+		labelEtc := match_node.NewEtc(atom.Span, "label", false)
 		if label := match_node.Match(bbn, labelEtc); label != nil {
 			rdx[data.BookTypeProperty] = []string{strings.ToLower(label.FirstChild.Data)}
 		}
 	}
 
-	authorsEtc := match_node.NewEtc(atom.Div, "biblio_book_author")
+	authorsEtc := match_node.NewEtc(atom.Div, "biblio_book_author", true)
 	if an := match_node.Match(body, authorsEtc); an != nil {
-		authorEtc := match_node.NewEtc(atom.A, "biblio_book_author__link")
+		authorEtc := match_node.NewEtc(atom.A, "biblio_book_author__link", true)
 		authorLinks := match_node.Matches(an, authorEtc, -1)
 		authors := make([]string, 0, len(authorLinks))
 		for _, al := range authorLinks {
@@ -138,9 +138,9 @@ func reduceDetails(body *html.Node) (map[string][]string, error) {
 		rdx[data.AuthorsProperty] = authors
 	}
 
-	downloadsEtc := match_node.NewEtc(atom.Div, "book_download")
+	downloadsEtc := match_node.NewEtc(atom.Div, "book_download", true)
 	if bdn := match_node.Match(body, downloadsEtc); bdn != nil {
-		downloadLinkEtc := match_node.NewEtc(atom.A, "biblio_book_download_file__link")
+		downloadLinkEtc := match_node.NewEtc(atom.A, "biblio_book_download_file__link", true)
 		downloadLinks := match_node.Matches(bdn, downloadLinkEtc, -1)
 		links := make([]string, 0, len(downloadLinks))
 		for _, dl := range downloadLinks {
@@ -151,7 +151,7 @@ func reduceDetails(body *html.Node) (map[string][]string, error) {
 
 	if len(rdx[data.DownloadLinksProperty]) == 0 {
 		// check for PDF links
-		newButtonEtc := match_node.NewEtc(atom.Div, "bb_newbutton")
+		newButtonEtc := match_node.NewEtc(atom.Div, "bb_newbutton", true)
 		for _, nb := range match_node.Matches(body, newButtonEtc, -1) {
 			if getAttribute(nb, "data-type") == "pdf" {
 				rdx[data.DownloadLinksProperty] = []string{getAttribute(nb.FirstChild, "href")}
@@ -160,25 +160,35 @@ func reduceDetails(body *html.Node) (map[string][]string, error) {
 	}
 
 	// check for additional materials
-	additionalMaterialsEtc := match_node.NewEtc(atom.Div, "bb_newbutton bb_newbutton_add-materials")
+	additionalMaterialsEtc := match_node.NewEtc(atom.Div, "bb_newbutton bb_newbutton_add-materials", true)
 	if amn := match_node.Match(body, additionalMaterialsEtc); amn != nil {
-		linkEtc := match_node.NewEtc(atom.A, "bb_newbutton_inner_link")
+		linkEtc := match_node.NewEtc(atom.A, "bb_newbutton_inner_link", true)
 		if link := match_node.Match(amn, linkEtc); link != nil {
 			rdx[data.DownloadLinksProperty] = append(rdx[data.DownloadLinksProperty], getAttribute(link, "href"))
 		}
 	}
 
+	bookDescrEtc := match_node.NewEtc(atom.Div, "biblio_book_descr", true)
+	if bd := match_node.Match(body, bookDescrEtc); bd != nil {
+
+		buf := new(bytes.Buffer)
+		if err := html.Render(buf, bd); err != nil {
+			return rdx, err
+		}
+		rdx[data.DescriptionProperty] = append(rdx[data.DescriptionProperty], buf.String())
+	}
+
 	sequenceNames := make([]string, 0)
 	sequenceNumbers := make([]string, 0)
 
-	sequencesEtc := match_node.NewEtc(atom.Div, "biblio_book_sequences")
+	sequencesEtc := match_node.NewEtc(atom.Div, "biblio_book_sequences", true)
 	for _, bbsn := range match_node.Matches(body, sequencesEtc, -1) {
 
-		nameEtc := match_node.NewEtc(atom.A, "biblio_book_sequences__link")
+		nameEtc := match_node.NewEtc(atom.A, "biblio_book_sequences__link", true)
 		if nan := match_node.Match(bbsn, nameEtc); nan != nil {
 			sequenceNames = append(sequenceNames, nan.FirstChild.Data)
 		}
-		numberEtc := match_node.NewEtc(atom.Span, "number")
+		numberEtc := match_node.NewEtc(atom.Span, "number", true)
 		if nun := match_node.Match(bbsn, numberEtc); nun != nil {
 			sequenceNumbers = append(sequenceNumbers, strings.TrimSpace(nun.FirstChild.Data))
 		} else {
@@ -189,7 +199,7 @@ func reduceDetails(body *html.Node) (map[string][]string, error) {
 	rdx[data.SequenceNameProperty] = sequenceNames
 	rdx[data.SequenceNumberProperty] = sequenceNumbers
 
-	detailedInfoLeftEtc := match_node.NewEtc(atom.Ul, "biblio_book_info_detailed_left")
+	detailedInfoLeftEtc := match_node.NewEtc(atom.Ul, "biblio_book_info_detailed_left", true)
 	if din := match_node.Match(body, detailedInfoLeftEtc); din != nil {
 		for n := din.FirstChild; n != nil; n = n.NextSibling {
 			if n.FirstChild == nil {
@@ -203,7 +213,7 @@ func reduceDetails(body *html.Node) (map[string][]string, error) {
 
 			values := make([]string, 0)
 
-			linksEtc := match_node.NewEtc(atom.Span, "biblio_info_detailed__link")
+			linksEtc := match_node.NewEtc(atom.Span, "biblio_info_detailed__link", false)
 			for _, link := range match_node.Matches(n, linksEtc, -1) {
 				values = append(values, link.FirstChild.Data)
 			}
@@ -216,7 +226,7 @@ func reduceDetails(body *html.Node) (map[string][]string, error) {
 		}
 	}
 
-	detailedInfoRightEtc := match_node.NewEtc(atom.Ul, "biblio_book_info_detailed_right")
+	detailedInfoRightEtc := match_node.NewEtc(atom.Ul, "biblio_book_info_detailed_right", true)
 	if din := match_node.Match(body, detailedInfoRightEtc); din != nil {
 		for n := din.FirstChild; n != nil; n = n.NextSibling {
 			if n.FirstChild == nil {
@@ -230,7 +240,7 @@ func reduceDetails(body *html.Node) (map[string][]string, error) {
 
 			values := make([]string, 0)
 
-			linksEtc := match_node.NewEtc(atom.Span, "biblio_info_detailed__link")
+			linksEtc := match_node.NewEtc(atom.Span, "biblio_info_detailed__link", false)
 			for _, link := range match_node.Matches(n, linksEtc, -1) {
 				values = append(values, link.FirstChild.Data)
 			}
@@ -248,14 +258,25 @@ func reduceDetails(body *html.Node) (map[string][]string, error) {
 		}
 	}
 
-	bookDescrEtc := match_node.NewEtc(atom.Div, "biblio_book_descr")
-	if bd := match_node.Match(body, bookDescrEtc); bd != nil {
-
-		buf := new(bytes.Buffer)
-		if err := html.Render(buf, bd); err != nil {
-			return rdx, err
+	bookInfoProperties := []string{data.GenresProperty, data.TagsProperty}
+	bookInfoEtc := match_node.NewEtc(atom.Div, "biblio_book_info", true)
+	if bin := match_node.Match(body, bookInfoEtc); bin != nil {
+		liEtc := match_node.NewEtc(atom.Li, "", true)
+		bilEtc := match_node.NewEtc(atom.A, "biblio_info__link", true)
+		pi := 0
+		for _, li := range match_node.Matches(bin, liEtc, -1) {
+			ans := match_node.Matches(li, bilEtc, -1)
+			property := bookInfoProperties[pi]
+			for _, n := range ans {
+				rdx[property] = append(rdx[property], bookInfoLinkTextContent(n))
+			}
+			if len(ans) > 0 {
+				pi++
+			}
+			if pi >= len(bookInfoProperties) {
+				break
+			}
 		}
-		rdx[data.DescriptionProperty] = append(rdx[data.DescriptionProperty], buf.String())
 	}
 
 	return rdx, nil
@@ -336,4 +357,21 @@ func propertyByStrongTitle(key string) string {
 		return ""
 	}
 	return property
+}
+
+func bookInfoLinkTextContent(biln *html.Node) string {
+	tc := ""
+	i := 0
+	for n := biln.FirstChild; n != nil; n = n.NextSibling {
+		switch i {
+		case 0:
+			tc = n.FirstChild.Data
+		case 1:
+			tc += n.Data
+		default:
+			break
+		}
+		i++
+	}
+	return tc
 }

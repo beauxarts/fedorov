@@ -74,9 +74,6 @@ func GetMyBooks(hc *http.Client) error {
 			return gmba.EndWithError(err)
 		}
 
-		// sleep for 5 seconds to throttle server requests
-		//time.Sleep(time.Second * 5)
-
 		gmba.Increment()
 	}
 
@@ -90,7 +87,7 @@ func getTotalPages(kv kvas.KeyValues) (int, error) {
 			return -1, err
 		}
 
-		bcEtc := match_node.NewEtc(atom.Div, "books_container mgrid_wrapper_loader_container")
+		bcEtc := match_node.NewEtc(atom.Div, "books_container mgrid_wrapper_loader_container", true)
 		if bc := match_node.Match(body, bcEtc); bc != nil {
 			for _, attr := range bc.Attr {
 				if attr.Key == "data-pages" {

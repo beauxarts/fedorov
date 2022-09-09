@@ -17,4 +17,6 @@ var DigestProperties = []string{
 	data.TranslatorsProperty,
 	data.CoauthorsProperty,
 	data.AuthorsProperty,
+	data.GenresProperty,
+	data.TagsProperty,
 }

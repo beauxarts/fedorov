@@ -33,11 +33,12 @@ const (
 	TotalPagesProperty        = "total-pages"
 	MissingDetailsIdsProperty = "missing-details-ids"
 	BookTypeProperty          = "book-type"
+	GenresProperty            = "genres"
+	TagsProperty              = "tags"
 
 	// sorting
 	SortProperty       = "sort"
 	DescendingProperty = "desc"
-	//GenresProperty         = "genres"
 )
 
 func ReduxProperties() []string {
@@ -72,5 +73,7 @@ func ReduxProperties() []string {
 		TotalPagesProperty,
 		MissingDetailsIdsProperty,
 		BookTypeProperty,
+		GenresProperty,
+		TagsProperty,
 	}
 }

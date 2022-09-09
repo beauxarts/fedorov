@@ -15,6 +15,8 @@ var SearchProperties = []string{
 	data.PerformersProperty,
 	data.DirectorsProperty,
 	data.SoundDirectorsProperty,
+	data.GenresProperty,
+	data.TagsProperty,
 	data.DescriptionProperty,
 	data.CopyrightHoldersProperty,
 	data.PublishersProperty,

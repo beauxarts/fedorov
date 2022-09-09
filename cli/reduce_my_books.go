@@ -56,9 +56,9 @@ func ReduceMyBooks() error {
 			return embia.EndWithError(err)
 		}
 
-		bcEtc := match_node.NewEtc(atom.Div, "books_container mgrid_wrapper_loader_container")
+		bcEtc := match_node.NewEtc(atom.Div, "books_container mgrid_wrapper_loader_container", true)
 		if bc := match_node.Match(body, bcEtc); bc != nil {
-			imgEtc := match_node.NewEtc(atom.A, "img-a")
+			imgEtc := match_node.NewEtc(atom.A, "img-a", true)
 			for _, img := range match_node.Matches(bc, imgEtc, -1) {
 				if img == nil {
 					continue
