@@ -32,7 +32,16 @@ func InitTemplates(templatesFS fs.FS) {
 }
 
 func Init() error {
+
+	fbr := &kvas.ReduxFabric{
+		Aggregates: map[string][]string{
+			data.AnyTextProperty: data.AnyTextProperties(),
+		},
+		Transitives: nil,
+		Atomics:     nil,
+	}
+
 	var err error
-	rxa, err = kvas.ConnectReduxAssets(data.AbsReduxDir(), nil, data.ReduxProperties()...)
+	rxa, err = kvas.ConnectReduxAssets(data.AbsReduxDir(), fbr, data.ReduxProperties()...)
 	return err
 }

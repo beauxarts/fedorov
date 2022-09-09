@@ -35,7 +35,8 @@ const (
 	BookTypeProperty          = "book-type"
 	GenresProperty            = "genres"
 	TagsProperty              = "tags"
-
+	// aggregate
+	AnyTextProperty = "any-text"
 	// sorting
 	SortProperty       = "sort"
 	DescendingProperty = "desc"
@@ -73,6 +74,28 @@ func ReduxProperties() []string {
 		TotalPagesProperty,
 		MissingDetailsIdsProperty,
 		BookTypeProperty,
+		GenresProperty,
+		TagsProperty,
+	}
+}
+
+func AnyTextProperties() []string {
+	return []string{
+		TitleProperty,
+		AuthorsProperty,
+		CoauthorsProperty,
+		DescriptionProperty,
+		SequenceNameProperty,
+		TranslatorsProperty,
+		ReadersProperty,
+		IllustratorsProperty,
+		CopyrightHoldersProperty,
+		ComposersProperty,
+		AdapterProperty,
+		PerformersProperty,
+		DirectorsProperty,
+		SoundDirectorsProperty,
+		PublishersProperty,
 		GenresProperty,
 		TagsProperty,
 	}

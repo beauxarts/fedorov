@@ -3,6 +3,7 @@ package view_models
 import "github.com/beauxarts/fedorov/data"
 
 var SearchProperties = []string{
+	data.AnyTextProperty,
 	data.TitleProperty,
 	data.BookTypeProperty,
 	data.AuthorsProperty,
@@ -20,7 +21,6 @@ var SearchProperties = []string{
 	data.DescriptionProperty,
 	data.CopyrightHoldersProperty,
 	data.PublishersProperty,
-	data.HrefProperty,
 	data.SequenceNameProperty,
 	data.DateReleasedProperty,
 	data.DateTranslatedProperty,
