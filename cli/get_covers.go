@@ -56,9 +56,14 @@ func GetCovers(ids []string) error {
 		cu := litres_integration.CoverUrl(idn)
 
 		if err := dc.Download(cu, nil, data.AbsCoverDir()); err != nil {
-			gca.Error(err)
-			gca.Increment()
-			continue
+			// if the full size cover request results in a 440 status from the server
+			// try smaller size that might be available
+			c330u := litres_integration.Cover330Url(idn)
+			if err := dc.Download(c330u, nil, data.AbsCoverDir()); err != nil {
+				gca.Error(err)
+				gca.Increment()
+				continue
+			}
 		}
 
 		gca.Increment()
