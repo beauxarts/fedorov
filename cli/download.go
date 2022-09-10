@@ -40,7 +40,11 @@ func DownloadHandler(u *url.URL) error {
 		return err
 	}
 
-	ids := strings.Split(u.Query().Get("id"), ",")
+	var ids []string
+	if idstr := u.Query().Get("id"); idstr != "" {
+		ids = strings.Split(idstr, ",")
+	}
+
 	return Download(ids, hc)
 }
 

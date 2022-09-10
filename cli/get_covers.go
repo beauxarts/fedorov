@@ -13,7 +13,11 @@ import (
 )
 
 func GetCoversHandler(u *url.URL) error {
-	ids := strings.Split(u.Query().Get("id"), ",")
+	var ids []string
+	if idstr := u.Query().Get("id"); idstr != "" {
+		ids = strings.Split(idstr, ",")
+	}
+
 	return GetCovers(ids)
 }
 
