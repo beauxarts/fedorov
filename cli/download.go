@@ -5,10 +5,12 @@ import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/view_models"
 	"github.com/beauxarts/litres_integration"
+	"github.com/boggydigital/coost"
 	"github.com/boggydigital/dolo"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
 	"net/http"
+	"net/url"
 	"path/filepath"
 	"strings"
 )
@@ -32,7 +34,17 @@ var skipFormatDownloads = map[string]bool{
 	view_models.FormatMP3:     true,
 }
 
-func Download(hc *http.Client) error {
+func DownloadHandler(u *url.URL) error {
+	hc, err := coost.NewHttpClientFromFile(data.AbsCookiesFilename(), litres_integration.LitResHost)
+	if err != nil {
+		return err
+	}
+
+	ids := strings.Split(u.Query().Get("id"), ",")
+	return Download(ids, hc)
+}
+
+func Download(ids []string, hc *http.Client) error {
 
 	da := nod.NewProgress("downloading books...")
 	defer da.End()
@@ -47,10 +59,13 @@ func Download(hc *http.Client) error {
 		return da.EndWithError(err)
 	}
 
-	ids, ok := rxa.GetAllUnchangedValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty)
-	if !ok {
-		err = errors.New("no my books found")
-		return da.EndWithError(err)
+	if ids == nil {
+		var ok bool
+		ids, ok = rxa.GetAllUnchangedValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty)
+		if !ok {
+			err = errors.New("no my books found")
+			return da.EndWithError(err)
+		}
 	}
 
 	da.TotalInt(len(ids))

@@ -33,7 +33,7 @@ func Sync() error {
 		return err
 	}
 
-	if err := Download(hc); err != nil {
+	if err := Download(nil, hc); err != nil {
 		return err
 	}
 

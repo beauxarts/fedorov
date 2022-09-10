@@ -56,6 +56,7 @@ func main() {
 	}
 
 	clo.HandleFuncs(map[string]clo.Handler{
+		"download":        cli.DownloadHandler,
 		"get-covers":      cli.GetCoversHandler,
 		"get-details":     cli.GetDetailsHandler,
 		"get-my-books":    cli.GetMyBooksHandler,

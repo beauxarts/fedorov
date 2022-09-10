@@ -6,6 +6,9 @@
 # {} - placeholder values
 # {^} - placeholder values, first value is default
 
+download
+    id^&
+
 get-covers
     id^&
 
