@@ -1,8 +1,8 @@
 Features:
-- Add tags / genres @done(2022-09-08)
 - Add read property and action
 
 Archive:
+	- Add tags / genres @done(2022-09-08)
 	Polish: @done(2022-09-08)
 		- Sort my books by recently purchased (last bought - first shown) @done(2022-09-08)
 	- Add book description @done(2022-09-07)
