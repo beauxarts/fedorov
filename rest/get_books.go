@@ -2,7 +2,6 @@ package rest
 
 import (
 	"github.com/beauxarts/fedorov/data"
-	"github.com/beauxarts/fedorov/view_models"
 	"github.com/boggydigital/nod"
 	"golang.org/x/exp/slices"
 	"net/http"
@@ -35,11 +34,9 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
 		myBooks = filteredBooks
 	}
 
-	shelf := view_models.NewShelf(myBooks, rxa)
-
 	DefaultHeaders(w)
 
-	if err := tmpl.ExecuteTemplate(w, "books-page", shelf); err != nil {
+	if err := app.RenderList("Книги", myBooks, w); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return
 	}

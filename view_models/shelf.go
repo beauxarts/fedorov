@@ -8,6 +8,7 @@ import (
 
 var booksListProperties = []string{
 	data.TitleProperty,
+	data.BookTypeProperty,
 	data.AuthorsProperty,
 	data.DateCreatedProperty,
 }

@@ -18,7 +18,9 @@
                         {{if $digests}}
                             <datalist id="{{$property}}">
                                 {{range $digests}}
-                                <option value="{{.}}">
+                                {{$digestTitle := index $digestsTitles .}}
+                                {{if eq $digestTitle ""}}{{$digestTitle = .}}{{end}}
+                                <option value="{{$digestTitle}}">
                                     {{end}}
                             </datalist>
                         {{end}}

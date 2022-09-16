@@ -22,6 +22,8 @@ var (
 	once = sync.Once{}
 	//go:embed "templates/*.gohtml"
 	templates embed.FS
+	//go:embed "app_css/app_css.gohtml"
+	appTemplates embed.FS
 	//go:embed "cli-commands.txt"
 	cliCommands []byte
 	//go:embed "cli-help.txt"
@@ -34,7 +36,7 @@ func main() {
 	nod.EnableStdOutPresenter()
 
 	once.Do(func() {
-		rest.InitTemplates(templates)
+		rest.InitTemplates(templates, appTemplates)
 	})
 
 	ns := nod.NewProgress("fedorov is serving your DRM-free books")
