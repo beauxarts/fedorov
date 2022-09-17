@@ -70,7 +70,14 @@ func Init() error {
 			"Книги": "/books",
 			"Поиск": "/search",
 		})
-	app.SetListParams("/book?id=", booksListProperties)
+
+	app.SetTitles(view_models.PropertyTitles, view_models.DigestTitles)
+
+	if err := app.SetListParams("/book?id=", booksListProperties); err != nil {
+		return err
+	}
+
+	app.SetSearchParams(view_models.SearchProperties)
 
 	return err
 }

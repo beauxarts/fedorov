@@ -14,7 +14,7 @@ func FuncMap() template.FuncMap {
 }
 
 func propertyTitle(p string) string {
-	return propertyTitles[p]
+	return PropertyTitles[p]
 }
 
 func LinkFormat(link string) string {

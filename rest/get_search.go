@@ -87,10 +87,15 @@ func GetSearch(w http.ResponseWriter, r *http.Request) {
 
 	DefaultHeaders(w)
 
-	if err := tmpl.ExecuteTemplate(w, "search-page", svm); err != nil {
+	if err := app.RenderSearch("Поиск", ids, w); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return
 	}
+
+	//if err := tmpl.ExecuteTemplate(w, "search-page", svm); err != nil {
+	//	http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
+	//	return
+	//}
 }
 
 func getDigests(properties ...string) map[string][]string {

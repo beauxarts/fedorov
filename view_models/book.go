@@ -59,7 +59,7 @@ func NewBook(id string, rxa kvas.ReduxAssets) *Book {
 		Id:             id,
 		Properties:     make(map[string]map[string]string),
 		PropertyOrder:  detailsPropertyOrder,
-		PropertyTitles: propertyTitles,
+		PropertyTitles: PropertyTitles,
 		Sections:       []string{DescriptionSection, DownloadsSection},
 		SectionTitles:  sectionTitles,
 	}

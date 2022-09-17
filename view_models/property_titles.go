@@ -2,7 +2,7 @@ package view_models
 
 import "github.com/beauxarts/fedorov/data"
 
-var propertyTitles = map[string]string{
+var PropertyTitles = map[string]string{
 	data.AnyTextProperty:          "Любой текст",
 	data.TitleProperty:            "Название",
 	data.BookTypeProperty:         "Тип",

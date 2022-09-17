@@ -20,13 +20,13 @@ var skipFormatDownloads = map[string]bool{
 	view_models.FormatEPUB: false,
 	view_models.FormatAZW3: false,
 	view_models.FormatMOBI: false, // should be replaced by AZW3 - hasn't happened yet
-	view_models.FormatFB2:  false,
 	view_models.FormatMP4:  false,
 	view_models.FormatZIP:  false,
 	// don't download
 	view_models.FormatPDFA4:   true,
 	view_models.FormatPDFA6:   true,
 	view_models.FormatTXT:     true,
+	view_models.FormatFB2:     true,
 	view_models.FormatFB3:     true,
 	view_models.FormatRTF:     true,
 	view_models.FormatTXTZIP:  true,
