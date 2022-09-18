@@ -1,5 +1,14 @@
-Features:
-- Add read property and action
+Stencil:
+- Complete search migration
+- Complete details migration
+- Remove templates, view_models, etc
+
+Bug:
+- Downloads show double .mp4 on iPhone
+
+Mark as read:
+- Add to labels
+- Add action
 
 Archive:
 	- Add tags / genres @done(2022-09-08)

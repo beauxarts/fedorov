@@ -7,6 +7,7 @@ import (
 	"golang.org/x/exp/maps"
 	"net/http"
 	"sort"
+	"strings"
 )
 
 func GetSearch(w http.ResponseWriter, r *http.Request) {
@@ -15,13 +16,13 @@ func GetSearch(w http.ResponseWriter, r *http.Request) {
 
 	q := r.URL.Query()
 
-	query := make(map[string]string)
+	query := make(map[string][]string)
 
 	shortQuery := false
 	queryProperties := view_models.SearchProperties
 	for _, p := range queryProperties {
 		if v := q.Get(p); v != "" {
-			query[p] = v
+			query[p] = strings.Split(v, ",")
 		} else {
 			if q.Has(p) {
 				q.Del(p)
@@ -47,16 +48,7 @@ func GetSearch(w http.ResponseWriter, r *http.Request) {
 
 	if len(query) > 0 {
 
-		mq := make(map[string][]string)
-		for k, v := range query {
-			if k == data.SortProperty ||
-				k == data.DescendingProperty {
-				continue
-			}
-			mq[k] = []string{v}
-		}
-
-		ids = maps.Keys(rxa.Match(mq, true))
+		ids = maps.Keys(rxa.Match(query, true))
 
 		if sort := r.URL.Query().Get(data.SortProperty); sort != "" {
 			desc := r.URL.Query().Get(data.DescendingProperty) == "true"
@@ -68,34 +60,24 @@ func GetSearch(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	svm := view_models.NewSearchProducts(ids, rxa)
-	svm.Query = query
+	digests := getDigests(view_models.DigestProperties...)
 
-	svm.Digests = getDigests(view_models.DigestProperties...)
-
-	svm.Digests[data.SortProperty] = []string{
+	digests[data.SortProperty] = []string{
 		data.TitleProperty,
 		data.DateCreatedProperty,
 		data.DateTranslatedProperty,
 		data.DateReleasedProperty}
 
-	svm.Digests[data.DescendingProperty] = []string{
+	digests[data.DescendingProperty] = []string{
 		"true",
 		"false"}
 
-	svm.DigestsTitles = view_models.DigestTitles
-
 	DefaultHeaders(w)
 
-	if err := app.RenderSearch("Поиск", ids, w); err != nil {
+	if err := app.RenderSearch("Поиск", query, ids, digests, w); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return
 	}
-
-	//if err := tmpl.ExecuteTemplate(w, "search-page", svm); err != nil {
-	//	http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
-	//	return
-	//}
 }
 
 func getDigests(properties ...string) map[string][]string {
