@@ -1,8 +1,3 @@
-Stencil:
-- Complete search migration
-- Complete details migration
-- Remove templates, view_models, etc
-
 Bug:
 - Downloads show double .mp4 on iPhone
 
@@ -11,6 +6,10 @@ Mark as read:
 - Add action
 
 Archive:
+	Stencil: @done(2022-09-18)
+	- Complete search migration @done(2022-09-18)
+	- Complete details migration @done(2022-09-18)
+	- Remove templates, view_models, etc @done(2022-09-18)
 	- Add tags / genres @done(2022-09-08)
 	Polish: @done(2022-09-08)
 		- Sort my books by recently purchased (last bought - first shown) @done(2022-09-08)
