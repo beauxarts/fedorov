@@ -4,9 +4,9 @@ import "github.com/beauxarts/fedorov/data"
 
 var DigestTitles = map[string]string{
 	// book-type
-	"pdf":   "PDF",
-	"аудио": "Аудио",
-	"текст": "Текст",
+	BookTypePDF:   BookTypeTitles[BookTypePDF],
+	BookTypeAudio: BookTypeTitles[BookTypeAudio],
+	BookTypeText:  BookTypeTitles[BookTypeText],
 	// sort
 	data.TitleProperty:          PropertyTitles[data.TitleProperty],
 	data.DateCreatedProperty:    PropertyTitles[data.DateCreatedProperty],

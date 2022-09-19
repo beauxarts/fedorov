@@ -2,6 +2,7 @@ package rest
 
 import (
 	"github.com/beauxarts/fedorov/data"
+	"github.com/beauxarts/fedorov/stencil_app"
 	"github.com/boggydigital/nod"
 	"golang.org/x/exp/slices"
 	"net/http"
@@ -34,9 +35,16 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
 		myBooks = filteredBooks
 	}
 
+	booksByType := make(map[string][]string)
+
+	for _, id := range myBooks {
+		bt, _ := rxa.GetFirstVal(data.BookTypeProperty, id)
+		booksByType[bt] = append(booksByType[bt], id)
+	}
+
 	DefaultHeaders(w)
 
-	if err := rapp.RenderList("Книги", myBooks, w); err != nil {
+	if err := rapp.RenderGroup("Книги", stencil_app.BookTypeOrder, booksByType, stencil_app.BookTypeTitles, w); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return
 	}

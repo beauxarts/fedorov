@@ -33,11 +33,7 @@ func Init(rxa kvas.ReduxAssets) (*stencil.ReduxApp, error) {
 
 	rf := &rdxFormatter{rxa: rxa}
 
-	app.SetLinkParams(
-		"/book",
-		"/cover",
-		rf.fmtTitle,
-		rf.fmtHref)
+	app.SetLinkParams("/book", "/cover", rf.fmtTitle, rf.fmtHref)
 
 	if err := app.SetListParams(BooksProperties); err != nil {
 		return app, err
