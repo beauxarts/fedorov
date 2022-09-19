@@ -12,7 +12,7 @@ import (
 
 func Init(rxa kvas.ReduxAssets) (*stencil.ReduxApp, error) {
 
-	app := stencil.NewApp("fedorov", "📇", rxa)
+	app := stencil.NewApp("fedorov", "gray", rxa)
 
 	app.SetNavigation(
 		[]string{"Книги", "Поиск"},
