@@ -6,6 +6,7 @@ var SearchProperties = []string{
 	data.AnyTextProperty,
 	data.TitleProperty,
 	data.BookTypeProperty,
+	data.BookCompletedProperty,
 	data.AuthorsProperty,
 	data.CoauthorsProperty,
 	data.TranslatorsProperty,

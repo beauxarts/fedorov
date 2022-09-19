@@ -6,6 +6,7 @@ var PropertyTitles = map[string]string{
 	data.AnyTextProperty:          "Любой текст",
 	data.TitleProperty:            "Название",
 	data.BookTypeProperty:         "Тип",
+	data.BookCompletedProperty:    "Прочитано",
 	data.AuthorsProperty:          "Автор(ы)",
 	data.CoauthorsProperty:        "Cоавтор(ы)",
 	data.TranslatorsProperty:      "Переводчик(и)",

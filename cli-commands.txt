@@ -6,6 +6,10 @@
 # {} - placeholder values
 # {^} - placeholder values, first value is default
 
+complete
+    id^&
+    action=set^,clear
+
 download
     id^&
 

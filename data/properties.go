@@ -35,6 +35,7 @@ const (
 	BookTypeProperty          = "book-type"
 	GenresProperty            = "genres"
 	TagsProperty              = "tags"
+	BookCompletedProperty     = "book-completed"
 	// aggregate
 	AnyTextProperty = "any-text"
 	// sorting
@@ -74,6 +75,7 @@ func ReduxProperties() []string {
 		TotalPagesProperty,
 		MissingDetailsIdsProperty,
 		BookTypeProperty,
+		BookCompletedProperty,
 		GenresProperty,
 		TagsProperty,
 	}

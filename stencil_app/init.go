@@ -14,6 +14,8 @@ func Init(rxa kvas.ReduxAssets) (*stencil.ReduxApp, error) {
 
 	app := stencil.NewApp("fedorov", "gray", rxa)
 
+	app.SetFooter("New York, 🇺🇸", "https://github.com/beauxarts")
+
 	app.SetNavigation(
 		[]string{"Книги", "Поиск"},
 		map[string]string{
@@ -76,6 +78,12 @@ func (rf *rdxFormatter) fmtTitle(id, property, link string) string {
 	title := link
 
 	switch property {
+	case data.BookCompletedProperty:
+		if link == "true" {
+			title = "Прочитано"
+		} else {
+			title = "Не прочитано"
+		}
 	case data.SequenceNameProperty:
 		title = rf.fmtSequenceNameNumber(id, link)
 	case data.GenresProperty:

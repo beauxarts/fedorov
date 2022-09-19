@@ -4,6 +4,7 @@ import "github.com/beauxarts/fedorov/data"
 
 var DigestProperties = []string{
 	data.BookTypeProperty,
+	data.BookCompletedProperty,
 	data.CopyrightHoldersProperty,
 	data.PublishersProperty,
 	data.SequenceNameProperty,
