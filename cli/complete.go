@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"errors"
 	"github.com/beauxarts/fedorov/data"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
@@ -37,13 +38,17 @@ func Complete(ids []string, action string) error {
 
 	for _, id := range ids {
 
-		value := "true"
-		if action == ClearComplete {
-			value = "false"
-		}
-
-		if err := rxa.ReplaceValues(data.BookCompletedProperty, id, value); err != nil {
-			return err
+		switch action {
+		case SetComplete:
+			if err := rxa.ReplaceValues(data.BookCompletedProperty, id, "true"); err != nil {
+				return err
+			}
+		case ClearComplete:
+			if err := rxa.CutVal(data.BookCompletedProperty, id, "true"); err != nil {
+				return err
+			}
+		default:
+			return errors.New("unknown compelte action " + action)
 		}
 
 		ca.Increment()
