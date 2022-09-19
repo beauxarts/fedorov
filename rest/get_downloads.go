@@ -2,11 +2,13 @@ package rest
 
 import (
 	"github.com/beauxarts/fedorov/data"
+	"github.com/beauxarts/fedorov/stencil_app"
 	"github.com/beauxarts/fedorov/view_models"
 	"github.com/boggydigital/nod"
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 func GetDownloads(w http.ResponseWriter, r *http.Request) {
@@ -41,11 +43,17 @@ func GetDownloads(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	sb := &strings.Builder{}
 	dvm := view_models.NewDownloads(id, files)
+
+	if err := tmpl.ExecuteTemplate(sb, "downloads", dvm); err != nil {
+		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
+		return
+	}
 
 	DefaultHeaders(w)
 
-	if err := tmpl.ExecuteTemplate(w, "downloads-page", dvm); err != nil {
+	if err := rapp.RenderSection(id, stencil_app.DownloadsSection, sb.String(), w); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return
 	}
