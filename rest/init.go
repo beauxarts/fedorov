@@ -3,6 +3,7 @@ package rest
 import (
 	"crypto/sha256"
 	"github.com/beauxarts/fedorov/data"
+	"github.com/beauxarts/fedorov/stencil_app"
 	"github.com/beauxarts/fedorov/view_models"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/middleware"
@@ -32,14 +33,7 @@ func InitTemplates(templatesFS fs.FS, appTemplates fs.FS) {
 			Funcs(view_models.FuncMap()).
 			ParseFS(templatesFS, "templates/*.gohtml"))
 
-	stencil.InitAppTemplates(appTemplates, "app_css/app_css.gohtml")
-}
-
-var booksListProperties = []string{
-	data.TitleProperty,
-	data.BookTypeProperty,
-	data.AuthorsProperty,
-	data.DateCreatedProperty,
+	stencil.InitAppTemplates(appTemplates, "stencil_app/templates/css.gohtml")
 }
 
 func Init() error {
@@ -53,31 +47,13 @@ func Init() error {
 	}
 
 	var err error
-	rxa, err = kvas.ConnectReduxAssets(data.AbsReduxDir(), fbr, data.ReduxProperties()...)
-	if err != nil {
+	if rxa, err = kvas.ConnectReduxAssets(data.AbsReduxDir(), fbr, data.ReduxProperties()...); err != nil {
 		return err
 	}
 
-	app = stencil.NewApp("fedorov", "📇", rxa)
-
-	app.SetNavigation(
-		[]string{"Книги", "Поиск"},
-		map[string]string{
-			"Книги": "stack",
-			"Поиск": "search",
-		},
-		map[string]string{
-			"Книги": "/books",
-			"Поиск": "/search",
-		})
-
-	app.SetTitles(view_models.PropertyTitles, view_models.DigestTitles)
-
-	if err := app.SetListParams("/book?id=", booksListProperties); err != nil {
+	if app, err = stencil_app.Init(rxa); err != nil {
 		return err
 	}
-
-	app.SetSearchParams(view_models.SearchProperties)
 
 	return err
 }

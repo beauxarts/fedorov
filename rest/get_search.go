@@ -2,7 +2,7 @@ package rest
 
 import (
 	"github.com/beauxarts/fedorov/data"
-	"github.com/beauxarts/fedorov/view_models"
+	"github.com/beauxarts/fedorov/stencil_app"
 	"github.com/boggydigital/nod"
 	"golang.org/x/exp/maps"
 	"net/http"
@@ -19,7 +19,7 @@ func GetSearch(w http.ResponseWriter, r *http.Request) {
 	query := make(map[string][]string)
 
 	shortQuery := false
-	queryProperties := view_models.SearchProperties
+	queryProperties := stencil_app.SearchProperties
 	for _, p := range queryProperties {
 		if v := q.Get(p); v != "" {
 			query[p] = strings.Split(v, ",")
@@ -60,7 +60,7 @@ func GetSearch(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	digests := getDigests(view_models.DigestProperties...)
+	digests := getDigests(stencil_app.DigestProperties...)
 
 	digests[data.SortProperty] = []string{
 		data.TitleProperty,

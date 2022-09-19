@@ -1,7 +1,6 @@
 package rest
 
 import (
-	"github.com/beauxarts/fedorov/view_models"
 	"github.com/boggydigital/nod"
 	"net/http"
 )
@@ -23,12 +22,17 @@ func GetBook(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	bvm := view_models.NewBook(id, rxa)
+	//bvm := view_models.NewBook(id, rxa)
 
 	DefaultHeaders(w)
 
-	if err := tmpl.ExecuteTemplate(w, "book-page", bvm); err != nil {
+	if err := app.RenderItem(id, w); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return
 	}
+
+	//if err := tmpl.ExecuteTemplate(w, "book-page", bvm); err != nil {
+	//	http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
+	//	return
+	//}
 }

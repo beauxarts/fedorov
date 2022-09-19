@@ -7,14 +7,9 @@ import (
 
 func FuncMap() template.FuncMap {
 	return template.FuncMap{
-		"propertyTitle": propertyTitle,
-		"linkFormat":    LinkFormat,
-		"formatDesc":    formatDesc,
+		"linkFormat": LinkFormat,
+		"formatDesc": formatDesc,
 	}
-}
-
-func propertyTitle(p string) string {
-	return PropertyTitles[p]
 }
 
 func LinkFormat(link string) string {

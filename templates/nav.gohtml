@@ -1,8 +1,0 @@
-{{define "nav"}}
-    <nav>
-        <a class="{{if eq . "books"}}{{`current`}}{{end}}" accesskey="b" href="/books"
-           rel="prefetch prerender">{{template "svg-icon" "stack"}}<span class="title">Книги</span></a>
-        <a class="{{if eq . "search"}}{{`current`}}{{end}}" accesskey="s" href="/search"
-           rel="prefetch prerender">{{template "svg-icon" "search"}}<span class="title">Поиск</span></a>
-    </nav>
-{{end}}

@@ -1,11 +1,11 @@
-package view_models
+package stencil_app
 
 const (
 	DescriptionSection = "description"
 	DownloadsSection   = "downloads"
 )
 
-var sectionTitles = map[string]string{
+var SectionTitles = map[string]string{
 	DescriptionSection: "Описание",
 	DownloadsSection:   "Скачать книги",
 }

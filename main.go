@@ -22,7 +22,7 @@ var (
 	once = sync.Once{}
 	//go:embed "templates/*.gohtml"
 	templates embed.FS
-	//go:embed "app_css/app_css.gohtml"
+	//go:embed "stencil_app/templates/css.gohtml"
 	appTemplates embed.FS
 	//go:embed "cli-commands.txt"
 	cliCommands []byte
