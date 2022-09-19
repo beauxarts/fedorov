@@ -2,7 +2,7 @@ package rest
 
 import (
 	"github.com/beauxarts/fedorov/data"
-	"github.com/beauxarts/fedorov/view_models"
+	"github.com/beauxarts/fedorov/stencil_app"
 	"github.com/boggydigital/nod"
 	"net/http"
 )
@@ -31,11 +31,9 @@ func GetDescription(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	dvm := view_models.NewDescription(id, desc)
-
 	DefaultHeaders(w)
 
-	if err := tmpl.ExecuteTemplate(w, "description-page", dvm); err != nil {
+	if err := rapp.RenderSection(id, stencil_app.DescriptionSection, desc, w); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return
 	}

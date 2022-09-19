@@ -22,17 +22,10 @@ func GetBook(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	//bvm := view_models.NewBook(id, rxa)
-
 	DefaultHeaders(w)
 
-	if err := app.RenderItem(id, w); err != nil {
+	if err := rapp.RenderItem(id, w); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return
 	}
-
-	//if err := tmpl.ExecuteTemplate(w, "book-page", bvm); err != nil {
-	//	http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
-	//	return
-	//}
 }

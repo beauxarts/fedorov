@@ -36,7 +36,7 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
 
 	DefaultHeaders(w)
 
-	if err := app.RenderList("Книги", myBooks, w); err != nil {
+	if err := rapp.RenderList("Книги", myBooks, w); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return
 	}

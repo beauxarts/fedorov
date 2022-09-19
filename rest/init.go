@@ -15,7 +15,7 @@ import (
 var (
 	rxa  kvas.ReduxAssets
 	tmpl *template.Template
-	app  *stencil.ReduxApp
+	rapp *stencil.ReduxApp
 )
 
 func SetUsername(u string) {
@@ -51,7 +51,7 @@ func Init() error {
 		return err
 	}
 
-	if app, err = stencil_app.Init(rxa); err != nil {
+	if rapp, err = stencil_app.Init(rxa); err != nil {
 		return err
 	}
 
