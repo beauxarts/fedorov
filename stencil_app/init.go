@@ -10,32 +10,25 @@ import (
 	"golang.org/x/text/language"
 )
 
+const (
+	appTitle       = "fedorov"
+	appAccentColor = "gray"
+)
+
 func Init(rxa kvas.ReduxAssets) (*stencil.ReduxApp, error) {
 
-	app := stencil.NewApp("fedorov", "gray", rxa)
+	app := stencil.NewApp(appTitle, appAccentColor, rxa)
 
-	app.SetFooter("New York, 🇺🇸", "https://github.com/beauxarts")
-
-	app.SetNavigation(
-		[]string{"Книги", "Поиск"},
-		map[string]string{
-			"Книги": "stack",
-			"Поиск": "search",
-		},
-		map[string]string{
-			"Книги": "/books",
-			"Поиск": "/search",
-		})
+	app.SetNavigation(NavItems, NavIcons, NavHrefs)
+	app.SetFooter(FooterLocation, FooterRepoUrl)
 
 	app.SetTitles(data.TitleProperty, PropertyTitles, SectionTitles, DigestTitles)
-
 	if err := app.SetLabels(BookLabels); err != nil {
 		return app, err
 	}
 
 	rf := &rdxFormatter{rxa: rxa}
-
-	app.SetLinkParams("/book", "/cover", rf.fmtTitle, rf.fmtHref)
+	app.SetLinkParams(BookPath, CoverPath, rf.fmtTitle, rf.fmtHref)
 
 	if err := app.SetListParams(BooksProperties); err != nil {
 		return app, err
@@ -43,8 +36,7 @@ func Init(rxa kvas.ReduxAssets) (*stencil.ReduxApp, error) {
 	if err := app.SetItemParams(BookProperties, BookSections); err != nil {
 		return app, err
 	}
-
-	app.SetSearchParams(SearchProperties)
+	app.SetSearchParams(SearchScopes, SearchScopeUrls(), SearchProperties)
 
 	return app, nil
 }
@@ -56,7 +48,9 @@ type rdxFormatter struct {
 }
 
 func (rf *rdxFormatter) fmtSequenceNameNumber(id, name string) string {
-	if err := rf.rxa.IsSupported(data.SequenceNameProperty, data.SequenceNumberProperty); err != nil {
+	if err := rf.rxa.IsSupported(
+		data.SequenceNameProperty,
+		data.SequenceNumberProperty); err != nil {
 		return name
 	}
 
