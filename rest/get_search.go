@@ -52,7 +52,7 @@ func GetSearch(w http.ResponseWriter, r *http.Request) {
 
 		if sort := r.URL.Query().Get(data.SortProperty); sort != "" {
 			desc := r.URL.Query().Get(data.DescendingProperty) == "true"
-			ids, err = rxa.Sort(ids, sort, desc)
+			ids, err = rxa.Sort(ids, desc, sort, data.TitleProperty)
 			if err != nil {
 				http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 				return
