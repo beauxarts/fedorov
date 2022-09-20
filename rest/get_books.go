@@ -6,6 +6,8 @@ import (
 	"github.com/boggydigital/nod"
 	"golang.org/x/exp/slices"
 	"net/http"
+	"strconv"
+	"time"
 )
 
 func GetBooks(w http.ResponseWriter, r *http.Request) {
@@ -44,7 +46,20 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
 
 	DefaultHeaders(w)
 
-	if err := rapp.RenderGroup("Книги", stencil_app.BookTypeOrder, booksByType, stencil_app.BookTypeTitles, w); err != nil {
+	updated := "recently"
+	if scu, ok := rxa.GetFirstVal(data.SyncCompletedProperty, data.SyncCompletedProperty); ok {
+		if scui, err := strconv.ParseInt(scu, 10, 64); err == nil {
+			updated = time.Unix(scui, 0).Format(time.RFC1123)
+		}
+	}
+
+	if err := rapp.RenderGroup(
+		"Книги",
+		stencil_app.BookTypeOrder,
+		booksByType,
+		stencil_app.BookTypeTitles,
+		updated,
+		w); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return
 	}

@@ -41,6 +41,8 @@ const (
 	// sorting
 	SortProperty       = "sort"
 	DescendingProperty = "desc"
+	// sync events
+	SyncCompletedProperty = "sync-completed"
 )
 
 func ReduxProperties() []string {
@@ -78,6 +80,7 @@ func ReduxProperties() []string {
 		BookCompletedProperty,
 		GenresProperty,
 		TagsProperty,
+		SyncCompletedProperty,
 	}
 }
 

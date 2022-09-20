@@ -4,7 +4,10 @@ import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/litres_integration"
 	"github.com/boggydigital/coost"
+	"github.com/boggydigital/kvas"
 	"net/url"
+	"strconv"
+	"time"
 )
 
 func SyncHandler(u *url.URL) error {
@@ -41,5 +44,12 @@ func Sync() error {
 		return err
 	}
 
-	return nil
+	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), nil, data.SyncCompletedProperty)
+	if err != nil {
+		return err
+	}
+
+	tnu := time.Now().UTC().Unix()
+
+	return rxa.ReplaceValues(data.SyncCompletedProperty, data.SyncCompletedProperty, strconv.FormatInt(tnu, 10))
 }
