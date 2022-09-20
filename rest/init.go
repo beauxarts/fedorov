@@ -33,7 +33,7 @@ func InitTemplates(templatesFS fs.FS, appTemplates fs.FS) {
 			Funcs(view_models.FuncMap()).
 			ParseFS(templatesFS, "templates/*.gohtml"))
 
-	stencil.InitAppTemplates(appTemplates, "stencil_app/templates/css.gohtml")
+	stencil.InitAppTemplates(appTemplates, "stencil_app/styles/css.gohtml")
 }
 
 func Init() error {
