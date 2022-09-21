@@ -53,7 +53,7 @@ func GetDownloads(w http.ResponseWriter, r *http.Request) {
 
 	DefaultHeaders(w)
 
-	if err := rapp.RenderSection(id, stencil_app.DownloadsSection, sb.String(), w); err != nil {
+	if err := app.RenderSection(id, stencil_app.DownloadsSection, sb.String(), w); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return
 	}

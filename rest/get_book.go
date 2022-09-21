@@ -24,7 +24,7 @@ func GetBook(w http.ResponseWriter, r *http.Request) {
 
 	DefaultHeaders(w)
 
-	if err := rapp.RenderItem(id, w); err != nil {
+	if err := app.RenderItem(id, rxa, w); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return
 	}

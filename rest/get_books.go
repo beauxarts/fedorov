@@ -53,12 +53,13 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	if err := rapp.RenderGroup(
+	if err := app.RenderGroup(
 		"Книги",
 		stencil_app.BookTypeOrder,
 		booksByType,
 		stencil_app.BookTypeTitles,
 		updated,
+		rxa,
 		w); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return

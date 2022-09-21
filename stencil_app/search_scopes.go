@@ -18,7 +18,7 @@ var SearchScopes = []string{
 	ScopeKidsBooks,
 }
 
-func SearchScopeUrls() map[string]string {
+func SearchScopeQueries() map[string]string {
 	scopeUrls := make(map[string]string, len(SearchScopes))
 
 	scopeUrls[ScopeNewSearch] = ""

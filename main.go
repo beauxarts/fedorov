@@ -23,7 +23,7 @@ var (
 	//go:embed "templates/*.gohtml"
 	templates embed.FS
 	//go:embed "stencil_app/styles/css.gohtml"
-	appTemplates embed.FS
+	stencilAppStyles embed.FS
 	//go:embed "cli-commands.txt"
 	cliCommands []byte
 	//go:embed "cli-help.txt"
@@ -36,7 +36,7 @@ func main() {
 	nod.EnableStdOutPresenter()
 
 	once.Do(func() {
-		rest.InitTemplates(templates, appTemplates)
+		rest.InitTemplates(templates, stencilAppStyles)
 	})
 
 	ns := nod.NewProgress("fedorov is serving your DRM-free books")

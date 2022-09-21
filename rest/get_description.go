@@ -33,7 +33,7 @@ func GetDescription(w http.ResponseWriter, r *http.Request) {
 
 	DefaultHeaders(w)
 
-	if err := rapp.RenderSection(id, stencil_app.DescriptionSection, desc, w); err != nil {
+	if err := app.RenderSection(id, stencil_app.DescriptionSection, desc, w); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return
 	}

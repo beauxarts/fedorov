@@ -15,28 +15,30 @@ const (
 	appAccentColor = "gray"
 )
 
-func Init(rxa kvas.ReduxAssets) (*stencil.ReduxApp, error) {
+func Init(rxa kvas.ReduxAssets) (*stencil.App, error) {
 
-	app := stencil.NewApp(appTitle, appAccentColor, rxa)
+	app := stencil.NewApp(appTitle, appAccentColor)
 
 	app.SetNavigation(NavItems, NavIcons, NavHrefs)
 	app.SetFooter(FooterLocation, FooterRepoUrl)
 
 	app.SetTitles(data.TitleProperty, PropertyTitles, SectionTitles, DigestTitles)
-	if err := app.SetLabels(BookLabels); err != nil {
+	if err := app.SetLabels(BookLabels, rxa); err != nil {
 		return app, err
 	}
 
 	rf := &rdxFormatter{rxa: rxa}
 	app.SetLinkParams(BookPath, CoverPath, rf.fmtTitle, rf.fmtHref)
 
-	if err := app.SetListParams(BooksProperties); err != nil {
+	if err := app.SetListParams(BooksProperties, rxa); err != nil {
 		return app, err
 	}
-	if err := app.SetItemParams(BookProperties, BookSections); err != nil {
+	if err := app.SetItemParams(BookProperties, BookSections, rxa); err != nil {
 		return app, err
 	}
-	app.SetSearchParams(SearchScopes, SearchScopeUrls(), SearchProperties)
+	if err := app.SetSearchParams(SearchScopes, SearchScopeQueries(), SearchProperties); err != nil {
+		return app, err
+	}
 
 	return app, nil
 }

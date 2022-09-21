@@ -15,7 +15,7 @@ import (
 var (
 	rxa  kvas.ReduxAssets
 	tmpl *template.Template
-	rapp *stencil.ReduxApp
+	app  *stencil.App
 )
 
 func SetUsername(u string) {
@@ -26,14 +26,14 @@ func SetPassword(p string) {
 	middleware.SetPassword(sha256.Sum256([]byte(p)))
 }
 
-func InitTemplates(templatesFS fs.FS, appTemplates fs.FS) {
+func InitTemplates(templatesFS fs.FS, stencilAppStyles fs.FS) {
 	tmpl = template.Must(
 		template.
 			New("").
 			Funcs(view_models.FuncMap()).
 			ParseFS(templatesFS, "templates/*.gohtml"))
 
-	stencil.InitAppTemplates(appTemplates, "stencil_app/styles/css.gohtml")
+	stencil.InitAppTemplates(stencilAppStyles, "stencil_app/styles/css.gohtml")
 }
 
 func Init() error {
@@ -51,7 +51,7 @@ func Init() error {
 		return err
 	}
 
-	if rapp, err = stencil_app.Init(rxa); err != nil {
+	if app, err = stencil_app.Init(rxa); err != nil {
 		return err
 	}
 
