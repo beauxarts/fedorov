@@ -1,5 +1,7 @@
 package stencil_app
 
+import "github.com/boggydigital/stencil"
+
 const (
 	NavBooks  = "Книги"
 	NavSearch = "Поиск"
@@ -8,8 +10,8 @@ const (
 var NavItems = []string{NavBooks, NavSearch}
 
 var NavIcons = map[string]string{
-	NavBooks:  "stack",
-	NavSearch: "search",
+	NavBooks:  stencil.IconStack,
+	NavSearch: stencil.IconSearch,
 }
 
 var NavHrefs = map[string]string{
