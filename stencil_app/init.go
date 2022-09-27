@@ -27,10 +27,9 @@ func Init(rxa kvas.ReduxAssets) (*stencil.App, error) {
 		return app, err
 	}
 
-	rf := &rdxFormatter{rxa: rxa}
-	app.SetLinkParams(BookPath, CoverPath, rf.fmtTitle, rf.fmtHref)
+	app.SetLinkParams(BookPath, CoverPath, fmtTitle, fmtHref, nil)
 
-	if err := app.SetListParams(data.IdProperty, BooksProperties, rxa); err != nil {
+	if err := app.SetListParams(data.IdProperty, BooksProperties, nil, rxa); err != nil {
 		return app, err
 	}
 	if err := app.SetItemParams(BookProperties, BookSections, rxa); err != nil {
@@ -45,19 +44,15 @@ func Init(rxa kvas.ReduxAssets) (*stencil.App, error) {
 
 var caser = cases.Title(language.Russian)
 
-type rdxFormatter struct {
-	rxa kvas.ReduxAssets
-}
-
-func (rf *rdxFormatter) fmtSequenceNameNumber(id, name string) string {
-	if err := rf.rxa.IsSupported(
+func fmtSequenceNameNumber(id, name string, rxa kvas.ReduxAssets) string {
+	if err := rxa.IsSupported(
 		data.SequenceNameProperty,
 		data.SequenceNumberProperty); err != nil {
 		return name
 	}
 
-	names, _ := rf.rxa.GetAllUnchangedValues(data.SequenceNameProperty, id)
-	numbers, _ := rf.rxa.GetAllUnchangedValues(data.SequenceNumberProperty, id)
+	names, _ := rxa.GetAllUnchangedValues(data.SequenceNameProperty, id)
+	numbers, _ := rxa.GetAllUnchangedValues(data.SequenceNumberProperty, id)
 
 	for ii, sn := range names {
 		if sn == name {
@@ -70,7 +65,7 @@ func (rf *rdxFormatter) fmtSequenceNameNumber(id, name string) string {
 	return name
 }
 
-func (rf *rdxFormatter) fmtTitle(id, property, link string) string {
+func fmtTitle(id, property, link string, rxa kvas.ReduxAssets) string {
 	title := link
 
 	switch property {
@@ -81,7 +76,7 @@ func (rf *rdxFormatter) fmtTitle(id, property, link string) string {
 			title = "Не прочитано"
 		}
 	case data.SequenceNameProperty:
-		title = rf.fmtSequenceNameNumber(id, link)
+		title = fmtSequenceNameNumber(id, link, rxa)
 	case data.GenresProperty:
 		fallthrough
 	case data.TagsProperty:
@@ -95,7 +90,7 @@ func (rf *rdxFormatter) fmtTitle(id, property, link string) string {
 	return title
 }
 
-func (rf *rdxFormatter) fmtHref(id, property, link string) string {
+func fmtHref(id, property, link string, rxa kvas.ReduxAssets) string {
 	switch property {
 	case data.AuthorsProperty:
 		return fmt.Sprintf("/search?%s=%s&sort=date-created&desc=true", property, link)
