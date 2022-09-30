@@ -2,6 +2,7 @@ package data
 
 import (
 	"path/filepath"
+	"strconv"
 )
 
 const (
@@ -38,12 +39,16 @@ func AbsDownloadsDir() string {
 	return filepath.Join(rootDir, relDownloadsDir)
 }
 
-func AbsDownloadPath(id, file string) string {
-	return filepath.Join(AbsDownloadsDir(), id, file)
+func AbsDownloadPath(id int64, file string) string {
+	return filepath.Join(AbsDownloadsDir(), strconv.FormatInt(id, 10), file)
 }
 
 func AbsReduxDir() string {
 	return filepath.Join(rootDir, relReduxDir)
+}
+
+func AbsCoverPath(id int64) string {
+	return filepath.Join(AbsCoverDir(), strconv.FormatInt(id, 10)+CoverExt)
 }
 
 func AbsCoverDir() string {

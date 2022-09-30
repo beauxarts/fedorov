@@ -36,17 +36,17 @@ func ReduceMyBooks() error {
 
 	// sort my-books keys (page numbers) before iterating through them
 	// to enforce last bought - shown at the top order
-	iks := make([]int, 0, len(keys))
+	iks := make([]int64, 0, len(keys))
 	for _, k := range keys {
 		if ik, err := strconv.ParseInt(k, 10, 64); err == nil {
-			iks = append(iks, int(ik))
+			iks = append(iks, ik)
 		}
 	}
-	sort.Ints(iks)
+	sort.Slice(iks, func(i, j int) bool { return iks[i] < iks[j] })
 
 	for _, ik := range iks {
 
-		page, err := kv.Get(strconv.Itoa(ik))
+		page, err := kv.Get(strconv.FormatInt(ik, 10))
 		if err != nil {
 			return embia.EndWithError(err)
 		}

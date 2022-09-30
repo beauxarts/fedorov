@@ -6,27 +6,32 @@ import (
 	"github.com/boggydigital/nod"
 	"net/http"
 	"os"
-	"path/filepath"
+	"strconv"
 )
 
 func GetCover(w http.ResponseWriter, r *http.Request) {
 
 	// GET /cover?id
 
-	id := r.URL.Query().Get("id")
+	idstr := r.URL.Query().Get("id")
 
-	if id == "" {
+	if idstr == "" {
 		http.Error(w, nod.ErrorStr("missing required book id"), http.StatusInternalServerError)
 		return
 	}
 
-	coverPath := filepath.Join(data.AbsCoverDir(), id+data.CoverExt)
-	if _, err := os.Stat(coverPath); err == nil {
-		w.Header().Set("Cache-Control", "max-age=31536000")
-		http.ServeFile(w, r, coverPath)
+	if id, err := strconv.ParseInt(idstr, 10, 64); err == nil {
+		coverPath := data.AbsCoverPath(id)
+		if _, err := os.Stat(coverPath); err == nil {
+			w.Header().Set("Cache-Control", "max-age=31536000")
+			http.ServeFile(w, r, coverPath)
+		} else {
+			_ = nod.Error(fmt.Errorf("no cover for id %s", idstr))
+			http.NotFound(w, r)
+		}
 	} else {
-		_ = nod.Error(fmt.Errorf("no cover for id %s", id))
-		http.NotFound(w, r)
+		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
+		return
 	}
 
 }
