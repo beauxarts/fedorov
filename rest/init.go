@@ -15,7 +15,7 @@ import (
 var (
 	rxa  kvas.ReduxAssets
 	tmpl *template.Template
-	app  *stencil.App
+	app  *stencil.AppConfiguration
 )
 
 func SetUsername(u string) {

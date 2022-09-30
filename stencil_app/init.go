@@ -15,27 +15,48 @@ const (
 	appAccentColor = "gray"
 )
 
-func Init(rxa kvas.ReduxAssets) (*stencil.App, error) {
+func Init(rxa kvas.ReduxAssets) (*stencil.AppConfiguration, error) {
 
-	app := stencil.NewApp(appTitle, appAccentColor)
+	app := stencil.NewAppConfig(appTitle, appAccentColor)
 
 	app.SetNavigation(NavItems, NavIcons, NavHrefs)
 	app.SetFooter(FooterLocation, FooterRepoUrl)
 
-	app.SetTitles(data.TitleProperty, PropertyTitles, SectionTitles, DigestTitles)
-	if err := app.SetLabels(BookLabels, rxa); err != nil {
+	if err := app.SetCommonConfiguration(
+		BookLabels,
+		nil,
+		data.TitleProperty,
+		PropertyTitles,
+		SectionTitles,
+		DigestTitles,
+		rxa); err != nil {
 		return app, err
 	}
 
-	app.SetLinkParams(BookPath, CoverPath, fmtTitle, fmtHref, nil)
+	if err := app.SetListConfiguration(
+		BooksProperties,
+		BookPath,
+		data.IdProperty,
+		CoverPath,
+		nil,
+		rxa); err != nil {
+		return app, err
+	}
 
-	if err := app.SetListParams(data.IdProperty, BooksProperties, nil, rxa); err != nil {
+	if err := app.SetItemConfiguration(
+		BookProperties,
+		BookSections,
+		data.IdProperty,
+		CoverPath,
+		fmtTitle, fmtHref, nil,
+		rxa); err != nil {
 		return app, err
 	}
-	if err := app.SetItemParams(BookProperties, BookSections, rxa); err != nil {
-		return app, err
-	}
-	if err := app.SetSearchParams(SearchScopes, SearchScopeQueries(), SearchProperties); err != nil {
+
+	if err := app.SetSearchConfiguration(
+		SearchProperties,
+		SearchScopes,
+		SearchScopeQueries()); err != nil {
 		return app, err
 	}
 
