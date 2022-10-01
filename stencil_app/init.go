@@ -45,6 +45,7 @@ func Init(rxa kvas.ReduxAssets) (*stencil.AppConfiguration, error) {
 
 	if err := app.SetItemConfiguration(
 		BookProperties,
+		nil,
 		BookSections,
 		data.IdProperty,
 		CoverPath,
