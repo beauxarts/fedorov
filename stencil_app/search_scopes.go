@@ -30,7 +30,7 @@ func SearchScopeQueries() map[string]string {
 	scopeUrls[ScopeCompletedBooks] = q.Encode()
 
 	q = url.Values{}
-	q.Set(data.GenresProperty, "детские")
+	q.Set(data.GenresProperty, "детские,сказки")
 	q.Set(data.BookTypeProperty, strings.Join([]string{BookTypeText, BookTypePDF}, ","))
 	q.Set(data.SortProperty, "date-created")
 	q.Set(data.DescendingProperty, "true")
