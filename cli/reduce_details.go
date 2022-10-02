@@ -138,7 +138,7 @@ func reduceDetails(body *html.Node) (map[string][]string, error) {
 		rdx[data.AuthorsProperty] = authors
 	}
 
-	downloadsEtc := match_node.NewEtc(atom.Div, "book_download", true)
+	downloadsEtc := match_node.NewEtc(atom.Div, "book_download", false)
 	if bdn := match_node.Match(body, downloadsEtc); bdn != nil {
 		downloadLinkEtc := match_node.NewEtc(atom.A, "biblio_book_download_file__link", true)
 		downloadLinks := match_node.Matches(bdn, downloadLinkEtc, -1)
