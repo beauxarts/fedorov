@@ -25,6 +25,7 @@ func Init(rxa kvas.ReduxAssets) (*stencil.AppConfiguration, error) {
 	if err := app.SetCommonConfiguration(
 		BookLabels,
 		nil,
+		nil,
 		data.TitleProperty,
 		PropertyTitles,
 		SectionTitles,
@@ -35,7 +36,7 @@ func Init(rxa kvas.ReduxAssets) (*stencil.AppConfiguration, error) {
 
 	if err := app.SetListConfiguration(
 		BooksProperties,
-		nil,
+		BooksLabels,
 		BookPath,
 		data.IdProperty,
 		CoverPath,
@@ -46,14 +47,15 @@ func Init(rxa kvas.ReduxAssets) (*stencil.AppConfiguration, error) {
 	if err := app.SetItemConfiguration(
 		BookProperties,
 		nil,
-		nil,
+		BookLabels,
 		BookSections,
 		data.IdProperty,
 		CoverPath,
-		fmtTitle, fmtHref, nil,
 		rxa); err != nil {
 		return app, err
 	}
+
+	app.SetFormatterConfiguration(fmtTitle, fmtHref, nil, nil)
 
 	if err := app.SetSearchConfiguration(
 		SearchProperties,
