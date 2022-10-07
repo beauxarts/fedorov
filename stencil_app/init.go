@@ -51,7 +51,8 @@ func Init(rxa kvas.ReduxAssets) (*stencil.AppConfiguration, error) {
 		return app, err
 	}
 
-	app.SetFormatterConfiguration(fmtLabel, fmtTitle, fmtHref, nil, nil)
+	app.SetFormatterConfiguration(
+		fmtLabel, fmtTitle, fmtHref, nil, nil, nil)
 
 	if err := app.SetSearchConfiguration(
 		SearchProperties,
