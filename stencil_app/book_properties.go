@@ -3,9 +3,9 @@ package stencil_app
 import "github.com/beauxarts/fedorov/data"
 
 var BookProperties = []string{
-	data.AuthorsProperty,
 	data.BookTypeProperty,
 	data.BookCompletedProperty,
+	data.AuthorsProperty,
 	data.CoauthorsProperty,
 	data.TranslatorsProperty,
 	data.ReadersProperty,
@@ -35,4 +35,8 @@ var BookProperties = []string{
 var BookLabels = []string{
 	data.BookTypeProperty,
 	data.BookCompletedProperty,
+}
+
+var BookHiddenProperties = []string{
+	data.BookTypeProperty,
 }

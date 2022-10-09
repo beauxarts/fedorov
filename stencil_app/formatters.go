@@ -37,9 +37,9 @@ func fmtLabel(_, property, link string, _ kvas.ReduxAssets) string {
 	switch property {
 	case data.BookCompletedProperty:
 		if link == "true" {
-			label = "Прочитано"
+			return "Прочитано"
 		} else {
-			label = "Не прочитано"
+			return "Не прочитано"
 		}
 	}
 	return label
@@ -57,6 +57,12 @@ func fmtTitle(id, property, link string, rxa kvas.ReduxAssets) string {
 		title = caser.String(title)
 	case data.HrefProperty:
 		title = "ЛитРес"
+	case data.BookCompletedProperty:
+		if link == "true" {
+			return "Да"
+		} else {
+			return "Нет"
+		}
 	default:
 		// do nothing
 	}
@@ -64,7 +70,7 @@ func fmtTitle(id, property, link string, rxa kvas.ReduxAssets) string {
 	return title
 }
 
-func fmtHref(id, property, link string, rxa kvas.ReduxAssets) string {
+func fmtHref(_, property, link string, _ kvas.ReduxAssets) string {
 	switch property {
 	case data.AuthorsProperty:
 		return fmt.Sprintf("/search?%s=%s&sort=date-created&desc=true", property, link)
@@ -88,4 +94,29 @@ func fmtHref(id, property, link string, rxa kvas.ReduxAssets) string {
 		// do nothing
 	}
 	return fmt.Sprintf("/search?%s=%s", property, link)
+}
+
+func fmtAction(id, property, link string, rxa kvas.ReduxAssets) string {
+	switch property {
+	case data.BookCompletedProperty:
+		if link == "true" {
+			return "Очистить"
+		} else {
+			return "Отметить"
+		}
+	}
+	return ""
+}
+
+func fmtActionHref(id, property, link string, _ kvas.ReduxAssets) string {
+	switch property {
+	case data.BookCompletedProperty:
+		switch link {
+		case "Очистить":
+			return "/completed/clear?id=" + id
+		case "Отметить":
+			return "/completed/set?id=" + id
+		}
+	}
+	return ""
 }
