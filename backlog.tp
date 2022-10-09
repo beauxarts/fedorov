@@ -1,4 +1,8 @@
 Archive:
+	Completed action: @done(2022-10-08)
+		- add action formatter @done(2022-10-08)
+		- add action href formatter @done(2022-10-08)
+		- add rest endpoints @done(2022-10-08)
 	Bug: @done(2022-09-19)
 	- Downloads show double .mp4 on iPhone @done(2022-09-19)
 	Mark as read: @done(2022-09-19)

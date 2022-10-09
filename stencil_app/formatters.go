@@ -72,6 +72,8 @@ func fmtTitle(id, property, link string, rxa kvas.ReduxAssets) string {
 
 func fmtHref(_, property, link string, _ kvas.ReduxAssets) string {
 	switch property {
+	case data.SequenceNameProperty:
+		fallthrough
 	case data.AuthorsProperty:
 		return fmt.Sprintf("/search?%s=%s&sort=date-created&desc=true", property, link)
 	case data.TranslatorsProperty:
