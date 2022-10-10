@@ -2,48 +2,39 @@ package rest
 
 import (
 	"github.com/beauxarts/fedorov/data"
-	"github.com/beauxarts/fedorov/stencil_app"
 	"github.com/boggydigital/nod"
-	"golang.org/x/exp/maps"
 	"net/http"
 )
 
-func GetLocalTagsEdit(w http.ResponseWriter, r *http.Request) {
+func GetLocalTagsApply(w http.ResponseWriter, r *http.Request) {
 
-	// GET /local-tags/edit?id
+	// GET /local-tags/apply
 
-	id := r.URL.Query().Get("id")
-
-	allValues := make(map[string]bool)
-	for _, id := range rxa.Keys(data.LocalTagsProperty) {
-		if values, ok := rxa.GetAllUnchangedValues(data.LocalTagsProperty, id); ok {
-			for _, v := range values {
-				allValues[v] = true
-			}
-		}
-	}
-
-	selectedValues := make(map[string]bool)
-	if values, ok := rxa.GetAllUnchangedValues(data.LocalTagsProperty, id); ok {
-		for _, v := range values {
-			selectedValues[v] = true
-		}
-	}
-
-	title, _ := rxa.GetFirstVal(data.TitleProperty, id)
-
-	if err := app.RenderPropertyEditor(
-		id,
-		title,
-		stencil_app.PropertyTitles[data.LocalTagsProperty],
-		true,
-		"",
-		selectedValues,
-		maps.Keys(allValues),
-		true,
-		"/local-tags/apply",
-		w); err != nil {
-		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
+	if err := r.ParseForm(); err != nil {
+		http.Error(w, nod.Error(err).Error(), http.StatusBadRequest)
 		return
 	}
+
+	var id string
+	if len(r.Form["id"]) > 0 {
+		id = r.Form["id"][0]
+	}
+
+	//don't skip if local-tags are empty as this might be a signal to remove existing tags
+	newLocalTag := ""
+	if len(r.Form["new-property-value"]) > 0 {
+		newLocalTag = r.Form["new-property-value"][0]
+	}
+
+	localTags := r.Form["value"]
+	if newLocalTag != "" {
+		localTags = append(localTags, newLocalTag)
+	}
+
+	if err := rxa.ReplaceValues(data.LocalTagsProperty, id, localTags...); err != nil {
+		http.Error(w, nod.Error(err).Error(), http.StatusBadRequest)
+		return
+	}
+
+	http.Redirect(w, r, "/product?id="+id, http.StatusTemporaryRedirect)
 }

@@ -23,9 +23,10 @@ func HandleFuncs() {
 		"/downloads":   Gzip(GetOnly(Log(http.HandlerFunc(GetDownloads)))),
 		"/description": Gzip(GetOnly(Log(http.HandlerFunc(GetDescription)))),
 		// auth data endpoints
-		"/completed/set":   Auth(Gzip(GetOnly(Log(http.HandlerFunc(GetCompletedSet))))),
-		"/completed/clear": Auth(Gzip(GetOnly(Log(http.HandlerFunc(GetCompletedClear))))),
-		"/local-tags/edit": Auth(Gzip(GetOnly(Log(http.HandlerFunc(GetLocalTagsEdit))))),
+		"/completed/set":    Auth(Gzip(GetOnly(Log(http.HandlerFunc(GetCompletedSet))))),
+		"/completed/clear":  Auth(Gzip(GetOnly(Log(http.HandlerFunc(GetCompletedClear))))),
+		"/local-tags/edit":  Auth(Gzip(GetOnly(Log(http.HandlerFunc(GetLocalTagsEdit))))),
+		"/local-tags/apply": Auth(Gzip(GetOnly(Log(http.HandlerFunc(GetLocalTagsApply))))),
 		// auth media endpoints
 		"/file": Auth(GetOnly(Log(http.HandlerFunc(GetFile)))),
 		// start at the books
