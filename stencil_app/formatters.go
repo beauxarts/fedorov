@@ -106,6 +106,8 @@ func fmtAction(id, property, link string, rxa kvas.ReduxAssets) string {
 		} else {
 			return "Отметить"
 		}
+	case data.LocalTagsProperty:
+		return "Изменить"
 	}
 	return ""
 }
@@ -119,6 +121,8 @@ func fmtActionHref(id, property, link string, _ kvas.ReduxAssets) string {
 		case "Отметить":
 			return "/completed/set?id=" + id
 		}
+	case data.LocalTagsProperty:
+		return "/local-tags/edit?id=" + id
 	}
 	return ""
 }

@@ -25,6 +25,7 @@ func HandleFuncs() {
 		// auth data endpoints
 		"/completed/set":   Auth(Gzip(GetOnly(Log(http.HandlerFunc(GetCompletedSet))))),
 		"/completed/clear": Auth(Gzip(GetOnly(Log(http.HandlerFunc(GetCompletedClear))))),
+		"/local-tags/edit": Auth(Gzip(GetOnly(Log(http.HandlerFunc(GetLocalTagsEdit))))),
 		// auth media endpoints
 		"/file": Auth(GetOnly(Log(http.HandlerFunc(GetFile)))),
 		// start at the books

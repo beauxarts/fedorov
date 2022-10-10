@@ -36,6 +36,7 @@ const (
 	BookTypeProperty          = "book-type"
 	GenresProperty            = "genres"
 	TagsProperty              = "tags"
+	LocalTagsProperty         = "local-tags"
 	BookCompletedProperty     = "book-completed"
 	// aggregate
 	AnyTextProperty = "any-text"
@@ -81,6 +82,7 @@ func ReduxProperties() []string {
 		BookCompletedProperty,
 		GenresProperty,
 		TagsProperty,
+		LocalTagsProperty,
 		SyncCompletedProperty,
 	}
 }

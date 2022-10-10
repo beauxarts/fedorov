@@ -4,7 +4,10 @@ import "github.com/beauxarts/fedorov/data"
 
 var BookProperties = []string{
 	data.BookTypeProperty,
+
 	data.BookCompletedProperty,
+	data.LocalTagsProperty,
+
 	data.AuthorsProperty,
 	data.CoauthorsProperty,
 	data.TranslatorsProperty,
@@ -35,6 +38,7 @@ var BookProperties = []string{
 var BookLabels = []string{
 	data.BookTypeProperty,
 	data.BookCompletedProperty,
+	data.LocalTagsProperty,
 }
 
 var BookHiddenProperties = []string{
