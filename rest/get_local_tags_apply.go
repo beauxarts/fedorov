@@ -36,5 +36,5 @@ func GetLocalTagsApply(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.Redirect(w, r, "/product?id="+id, http.StatusTemporaryRedirect)
+	http.Redirect(w, r, "/book?id="+id, http.StatusTemporaryRedirect)
 }
