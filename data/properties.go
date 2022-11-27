@@ -38,6 +38,8 @@ const (
 	TagsProperty              = "tags"
 	LocalTagsProperty         = "local-tags"
 	BookCompletedProperty     = "book-completed"
+	// irrelevant property
+	KnownIrrelevantProperty = "known-irrelevant"
 	// aggregate
 	AnyTextProperty = "any-text"
 	// sorting

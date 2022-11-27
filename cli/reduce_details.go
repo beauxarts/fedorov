@@ -199,62 +199,17 @@ func reduceDetails(body *html.Node) (map[string][]string, error) {
 	rdx[data.SequenceNameProperty] = sequenceNames
 	rdx[data.SequenceNumberProperty] = sequenceNumbers
 
-	detailedInfoLeftEtc := match_node.NewEtc(atom.Ul, "biblio_book_info_detailed_left", true)
+	detailedInfoLeftEtc := match_node.NewEtc(atom.Div, "biblio_book_info_detailed_left", true)
 	if din := match_node.Match(body, detailedInfoLeftEtc); din != nil {
-		for n := din.FirstChild; n != nil; n = n.NextSibling {
-			if n.FirstChild == nil {
-				continue
-			}
-			strong := n.FirstChild
-			property := propertyByStrongTitle(strong.FirstChild.Data)
-			if property == "" {
-				continue
-			}
-
-			values := make([]string, 0)
-
-			linksEtc := match_node.NewEtc(atom.Span, "biblio_info_detailed__link", false)
-			for _, link := range match_node.Matches(n, linksEtc, -1) {
-				values = append(values, link.FirstChild.Data)
-			}
-
-			if len(values) == 0 {
-				values = []string{strings.TrimSpace(strong.NextSibling.Data)}
-			}
-
-			rdx[property] = append(rdx[property], values...)
+		for key, values := range getBookInfoItems(din) {
+			rdx[key] = append(rdx[key], values...)
 		}
 	}
 
-	detailedInfoRightEtc := match_node.NewEtc(atom.Ul, "biblio_book_info_detailed_right", true)
+	detailedInfoRightEtc := match_node.NewEtc(atom.Div, "biblio_book_info_detailed_right", true)
 	if din := match_node.Match(body, detailedInfoRightEtc); din != nil {
-		for n := din.FirstChild; n != nil; n = n.NextSibling {
-			if n.FirstChild == nil {
-				continue
-			}
-			strong := n.FirstChild
-			property := propertyByStrongTitle(strong.FirstChild.Data)
-			if property == "" {
-				continue
-			}
-
-			values := make([]string, 0)
-
-			linksEtc := match_node.NewEtc(atom.Span, "biblio_info_detailed__link", false)
-			for _, link := range match_node.Matches(n, linksEtc, -1) {
-				values = append(values, link.FirstChild.Data)
-			}
-
-			if len(values) == 0 {
-				val := strong.NextSibling.Data
-				if property == data.ISBNPropertyProperty {
-					val = strong.NextSibling.NextSibling.FirstChild.Data
-				}
-
-				values = []string{strings.TrimSpace(val)}
-			}
-
-			rdx[property] = append(rdx[property], values...)
+		for key, values := range getBookInfoItems(din) {
+			rdx[key] = append(rdx[key], values...)
 		}
 	}
 
@@ -291,7 +246,56 @@ func getAttribute(node *html.Node, attrName string) string {
 	return ""
 }
 
-func propertyByStrongTitle(key string) string {
+func getBookInfoItems(node *html.Node) map[string][]string {
+	infoItems := make(map[string][]string)
+	bii := match_node.NewEtc(atom.Dl, "biblio_book_info_item", false)
+	for _, biin := range match_node.Matches(node, bii, -1) {
+		p := ""
+		for n := biin.FirstChild; n != nil; n = n.NextSibling {
+			switch n.DataAtom {
+			case atom.Dt:
+				switch n.FirstChild.Type {
+				case html.TextNode:
+					p = propertyByTitle(n.FirstChild.Data)
+				case html.ElementNode:
+					switch n.FirstChild.DataAtom {
+					case atom.Strong:
+						p = propertyByTitle(n.FirstChild.FirstChild.Data)
+					case atom.A:
+						// do nothing
+					default:
+						panic("unknown dt property container")
+					}
+				default:
+					panic("unknown dt node type")
+				}
+
+			case atom.Dd:
+				if p == data.KnownIrrelevantProperty {
+					continue
+				}
+				if p == "" {
+					panic("attempt to set unknown property")
+				}
+				switch n.FirstChild.Type {
+				case html.TextNode:
+					infoItems[p] = []string{n.FirstChild.Data}
+				case html.ElementNode:
+					bidl := match_node.NewEtc(atom.Span, "biblio_info_detailed__link", false)
+					for _, s := range match_node.Matches(n, bidl, -1) {
+						infoItems[p] = append(infoItems[p], s.FirstChild.Data)
+					}
+				}
+
+			default:
+				panic("unknown node type")
+			}
+		}
+	}
+	return infoItems
+}
+
+func propertyByTitle(key string) string {
 	property := ""
 	switch key {
 	case "Соавтор:":
@@ -348,9 +352,9 @@ func propertyByStrongTitle(key string) string {
 		property = data.TotalPagesProperty
 
 	case "Оглавление":
-		// do nothing
+		property = data.KnownIrrelevantProperty
 	case "Размер страницы:":
-		// do nothing
+		property = data.KnownIrrelevantProperty
 
 	default:
 		nod.Log("unknown detailed info key: %s", key)
