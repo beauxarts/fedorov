@@ -1,3 +1,19 @@
+Refactor:
+	- move reduction core logic to litres-integration
+	- extract literal values of properties
+	- map literal values to data properties in fedorov
+	
+Add smoke testing for structure changes:
+	- reduce source data and compare quantity of reductions with stored values
+	- warn when gaps are found to indicate source data structure change
+	- add as the last step to sync
+	
+Add ability to onboard external media:
+	- use wits file to specify external redux assets
+	- add method to kvas to import that data
+	- consider the implications of source-less reductions and how this might play 
+	- use this to add other DRM-free books
+
 Archive:
 	Completed action: @done(2022-10-08)
 		- add action formatter @done(2022-10-08)
