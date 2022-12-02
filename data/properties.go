@@ -1,5 +1,9 @@
 package data
 
+import (
+	"github.com/beauxarts/litres_integration"
+)
+
 const (
 	IdProperty = "id"
 	//reduced from the list
@@ -38,8 +42,6 @@ const (
 	TagsProperty              = "tags"
 	LocalTagsProperty         = "local-tags"
 	BookCompletedProperty     = "book-completed"
-	// irrelevant property
-	KnownIrrelevantProperty = "known-irrelevant"
 	// aggregate
 	AnyTextProperty = "any-text"
 	// sorting
@@ -109,4 +111,45 @@ func AnyTextProperties() []string {
 		GenresProperty,
 		TagsProperty,
 	}
+}
+
+var LitResPropertyMap = map[string]string{
+	litres_integration.TitleProperty:          TitleProperty,
+	litres_integration.TypeProperty:           BookTypeProperty,
+	litres_integration.AuthorsProperty:        AuthorsProperty,
+	litres_integration.DownloadLinksProperty:  DownloadLinksProperty,
+	litres_integration.DescriptionProperty:    DescriptionProperty,
+	litres_integration.SequenceNameProperty:   SequenceNameProperty,
+	litres_integration.SequenceNumberProperty: SequenceNumberProperty,
+	litres_integration.GenresProperty:         GenresProperty,
+	litres_integration.TagsProperty:           TagsProperty,
+	"Соавтор:":                                CoauthorsProperty,
+	"Возрастное ограничение:":                 AgeRatingProperty,
+	"Объем:":                                   VolumeProperty,
+	"Длительность:":                            DurationProperty,
+	"Дата выхода на ЛитРес:":                   DateReleasedProperty,
+	"Дата перевода:":                           DateTranslatedProperty,
+	"Дата написания:":                          DateCreatedProperty,
+	"ISBN:":                                    ISBNPropertyProperty,
+	"Переводчики:":                             TranslatorsProperty,
+	"Переводчик:":                              TranslatorsProperty,
+	"Чтецы:":                                   ReadersProperty,
+	"Чтец:":                                    ReadersProperty,
+	"Художники:":                               IllustratorsProperty,
+	"Художник:":                                IllustratorsProperty,
+	"Правообладатели:":                         CopyrightHoldersProperty,
+	"Правообладатель:":                         CopyrightHoldersProperty,
+	"Композиторы:":                             ComposersProperty,
+	"Композитор:":                              ComposersProperty,
+	"Адаптация:":                               AdapterProperty,
+	"Исполнители:":                             PerformersProperty,
+	"Режиссер:":                                DirectorsProperty,
+	"Звукорежиссер:":                           SoundDirectorsProperty,
+	"Издатели:":                                PublishersProperty,
+	"Издатель:":                                PublishersProperty,
+	"Общий размер:":                            TotalSizeProperty,
+	"Общее кол-во страниц:":                    TotalPagesProperty,
+	"Оглавление":                               litres_integration.KnownIrrelevantProperty,
+	"Размер страницы:":                         litres_integration.KnownIrrelevantProperty,
+	litres_integration.KnownIrrelevantProperty: litres_integration.KnownIrrelevantProperty,
 }

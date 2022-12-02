@@ -1,7 +1,7 @@
-Refactor:
-	- move reduction core logic to litres-integration
-	- extract literal values of properties
-	- map literal values to data properties in fedorov
+Refactor: @done(2022-12-02)
+	- move reduction core logic to litres-integration @done(2022-12-02)
+	- extract literal values of properties @done(2022-12-02)
+	- map literal values to data properties in fedorov @done(2022-12-02)
 	
 Add smoke testing for structure changes:
 	- reduce source data and compare quantity of reductions with stored values
@@ -13,6 +13,12 @@ Add ability to onboard external media:
 	- add method to kvas to import that data
 	- consider the implications of source-less reductions and how this might play 
 	- use this to add other DRM-free books
+	
+Add reviews:
+	- https://api.litres.ru/foundation/api/arts/68016400/reviews?limit=5&o=popular
+	
+Add author (reader/translater/etc?) details:
+	- https://api.litres.ru/foundation/api/authors/31883880/arts?art_groups=1&art_groups=2&art_groups=10&author_id_or_slug=31883880&limit=70&o=series&show_unavailable=true
 
 Archive:
 	Completed action: @done(2022-10-08)
