@@ -22,6 +22,7 @@ get-details
 get-my-books
 
 reduce-details
+    score-data
 
 reduce-my-books
 

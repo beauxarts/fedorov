@@ -32,7 +32,7 @@ func Sync() error {
 		return err
 	}
 
-	if err := ReduceDetails(); err != nil {
+	if err := ReduceDetails(true); err != nil {
 		return err
 	}
 

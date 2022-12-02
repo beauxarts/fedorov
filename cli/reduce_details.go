@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"errors"
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/litres_integration"
 	"github.com/boggydigital/kvas"
@@ -9,11 +10,16 @@ import (
 	"net/url"
 )
 
-func ReduceDetailsHandler(_ *url.URL) error {
-	return ReduceDetails()
+func ReduceDetailsHandler(u *url.URL) error {
+
+	scoreData := true
+	if u.Query().Get("score-data") == "false" {
+		scoreData = false
+	}
+	return ReduceDetails(scoreData)
 }
 
-func ReduceDetails() error {
+func ReduceDetails(scoreData bool) error {
 
 	rmbda := nod.NewProgress("reducing details...")
 	defer rmbda.End()
@@ -40,6 +46,8 @@ func ReduceDetails() error {
 	ids := kv.Keys()
 
 	rmbda.TotalInt(len(ids))
+
+	dataScore := make(map[string]int)
 
 	for _, id := range ids {
 
@@ -71,6 +79,13 @@ func ReduceDetails() error {
 				if p == litres_integration.KnownIrrelevantProperty {
 					continue
 				}
+
+				if scoreData {
+					if evs, ok := rxa.GetAllUnchangedValues(p, id); ok {
+						dataScore[id] = len(vals) - len(evs)
+					}
+				}
+
 				reductions[p][id] = vals
 			} else {
 				nod.Log("unknown LitRes property %s", lp)
@@ -79,6 +94,19 @@ func ReduceDetails() error {
 
 		det.Close()
 		rmbda.Increment()
+	}
+
+	if scoreData {
+		overallDataScore := 0
+		for _, score := range dataScore {
+			overallDataScore += score
+		}
+
+		if overallDataScore < 0 {
+			err := errors.New("details reduction produced less data than already existed")
+			rmbda.EndWithError(err)
+			return err
+		}
 	}
 
 	sra := nod.NewProgress(" saving reductions...")
