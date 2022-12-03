@@ -1,4 +1,5 @@
 Add ability to onboard external media:
+	- start with data export to figure out data structure @done(2022-12-02)
 	- use wits file to specify external redux assets
 	- add method to kvas to import that data
 	- consider the implications of source-less reductions and how this might play 
