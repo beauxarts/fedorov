@@ -1,9 +1,11 @@
 Add ability to onboard external media:
 	- start with data export to figure out data structure @done(2022-12-02)
-	- use wits file to specify external redux assets
 	- add method to kvas to import that data
-	- consider the implications of source-less reductions and how this might play 
 	- use this to add other DRM-free books
+	- use this to specify per file redux metadata
+	- on import process the import.txt file
+	- this file alows importing same directory files into fedorov
+		- trim to file name and enforce same directory
 	
 Add reviews:
 	- https://api.litres.ru/foundation/api/arts/68016400/reviews?limit=5&o=popular
