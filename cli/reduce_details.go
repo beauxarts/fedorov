@@ -103,9 +103,7 @@ func ReduceDetails(scoreData bool) error {
 		}
 
 		if overallDataScore < 0 {
-			err := errors.New("details reduction produced less data than already existed")
-			rmbda.EndWithError(err)
-			return err
+			return rmbda.EndWithError(errors.New("details reduction produced less data than already existed"))
 		}
 	}
 

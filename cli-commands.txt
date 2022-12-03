@@ -13,6 +13,9 @@ complete
 download
     id^&
 
+export
+    id^&
+
 get-covers
     id^&
 
