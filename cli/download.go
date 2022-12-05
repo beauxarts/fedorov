@@ -56,6 +56,7 @@ func Download(ids []string, hc *http.Client) error {
 		data.MyBooksIdsProperty,
 		data.TitleProperty,
 		data.AuthorsProperty,
+		data.ImportedProperty,
 		data.DownloadLinksProperty)
 
 	if err != nil {
@@ -76,6 +77,11 @@ func Download(ids []string, hc *http.Client) error {
 	dc := dolo.NewClient(hc, dolo.Defaults())
 
 	for _, id := range ids {
+
+		// don't attempt downloading imported books
+		if IsImported(id, rxa) {
+			continue
+		}
 
 		title, _ := rxa.GetFirstVal(data.TitleProperty, id)
 		authors, _ := rxa.GetAllUnchangedValues(data.AuthorsProperty, id)

@@ -41,6 +41,10 @@ func fmtLabel(_, property, link string, _ kvas.ReduxAssets) string {
 		} else {
 			return "Не прочитано"
 		}
+	case data.ImportedProperty:
+		if link == "true" {
+			return "Импорт"
+		}
 	}
 	return label
 }
@@ -58,6 +62,12 @@ func fmtTitle(id, property, link string, rxa kvas.ReduxAssets) string {
 	case data.HrefProperty:
 		title = "ЛитРес"
 	case data.BookCompletedProperty:
+		if link == "true" {
+			return "Да"
+		} else {
+			return "Нет"
+		}
+	case data.ImportedProperty:
 		if link == "true" {
 			return "Да"
 		} else {

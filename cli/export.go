@@ -6,12 +6,7 @@ import (
 	"github.com/boggydigital/nod"
 	"net/url"
 	"os"
-	"path/filepath"
 	"strings"
-)
-
-const (
-	exportFilename = "export.txt"
 )
 
 func ExportHandler(u *url.URL) error {
@@ -33,8 +28,7 @@ func Export(ids []string) error {
 		return ea.EndWithError(err)
 	}
 
-	fn := filepath.Join(data.Pwd(), exportFilename)
-	file, err := os.Create(fn)
+	file, err := os.Create(data.AbsExportFilename())
 	defer file.Close()
 	if err != nil {
 		return ea.EndWithError(err)

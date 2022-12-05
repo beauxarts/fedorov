@@ -10,12 +10,14 @@ const (
 	ScopeNewSearch      = "Новый поиск"
 	ScopeCompletedBooks = "Прочитанные"
 	ScopeKidsBooks      = "Детские"
+	ScopeImportedBooks  = "Импортированные"
 )
 
 var SearchScopes = []string{
 	ScopeNewSearch,
 	ScopeCompletedBooks,
 	ScopeKidsBooks,
+	ScopeImportedBooks,
 }
 
 func SearchScopeQueries() map[string]string {
@@ -35,6 +37,12 @@ func SearchScopeQueries() map[string]string {
 	q.Set(data.SortProperty, "date-created")
 	q.Set(data.DescendingProperty, "true")
 	scopeUrls[ScopeKidsBooks] = q.Encode()
+
+	q = url.Values{}
+	q.Set(data.ImportedProperty, "true")
+	q.Set(data.SortProperty, "date-created")
+	q.Set(data.DescendingProperty, "true")
+	scopeUrls[ScopeImportedBooks] = q.Encode()
 
 	return scopeUrls
 }

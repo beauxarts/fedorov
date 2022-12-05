@@ -39,6 +39,7 @@ var BookLabels = []string{
 	data.BookTypeProperty,
 	data.BookCompletedProperty,
 	data.LocalTagsProperty,
+	data.ImportedProperty,
 }
 
 var BookHiddenProperties = []string{

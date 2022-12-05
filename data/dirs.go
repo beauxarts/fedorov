@@ -13,6 +13,8 @@ const (
 	relCoversDir        = "covers"
 
 	relCookiesFilename = "cookies.txt"
+	relExportFilename  = "export.txt"
+	relImportFilename  = "import.txt"
 
 	CoverExt = ".jpg"
 )
@@ -57,4 +59,12 @@ func AbsCoverDir() string {
 
 func AbsCookiesFilename() string {
 	return filepath.Join(rootDir, relCookiesFilename)
+}
+
+func AbsExportFilename() string {
+	return filepath.Join(rootDir, relExportFilename)
+}
+
+func AbsImportFilename() string {
+	return filepath.Join(rootDir, relImportFilename)
 }

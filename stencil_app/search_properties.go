@@ -29,4 +29,5 @@ var SearchProperties = []string{
 	data.ISBNPropertyProperty,
 	data.SortProperty,
 	data.DescendingProperty,
+	data.ImportedProperty,
 }

@@ -51,6 +51,11 @@ func ReduceDetails(scoreData bool) error {
 
 	for _, id := range ids {
 
+		// don't attempt reducing imported books
+		if IsImported(id, rxa) {
+			continue
+		}
+
 		det, err := kv.Get(id)
 		if err != nil {
 			det.Close()

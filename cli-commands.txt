@@ -24,6 +24,8 @@ get-details
 
 get-my-books
 
+import
+
 reduce-details
     score-data
 

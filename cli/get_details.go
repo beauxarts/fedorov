@@ -33,7 +33,8 @@ func GetDetails(ids []string, hc *http.Client) error {
 
 	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), nil,
 		data.MyBooksIdsProperty,
-		data.HrefProperty)
+		data.HrefProperty,
+		data.ImportedProperty)
 	if err != nil {
 		return gmbda.EndWithError(err)
 	}
@@ -55,6 +56,12 @@ func GetDetails(ids []string, hc *http.Client) error {
 	gmbda.TotalInt(len(ids))
 
 	for _, id := range ids {
+
+		// don't attempt downloading details for imported books
+		if IsImported(id, rxa) {
+			continue
+		}
+
 		href, ok := rxa.GetFirstVal(data.HrefProperty, id)
 		if !ok {
 			err = errors.New("no href for book " + id)

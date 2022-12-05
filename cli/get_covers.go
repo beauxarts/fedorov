@@ -26,7 +26,9 @@ func GetCovers(ids []string) error {
 	gca := nod.NewProgress("fetching covers...")
 	defer gca.End()
 
-	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), nil, data.MyBooksIdsProperty)
+	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), nil,
+		data.MyBooksIdsProperty,
+		data.ImportedProperty)
 	if err != nil {
 		return gca.EndWithError(err)
 	}
@@ -45,6 +47,11 @@ func GetCovers(ids []string) error {
 	dc := dolo.DefaultClient
 
 	for _, id := range ids {
+
+		// don't attempt downloading covers for imported books
+		if IsImported(id, rxa) {
+			continue
+		}
 
 		idn, err := strconv.ParseInt(id, 10, 64)
 		if err != nil {

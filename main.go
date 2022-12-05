@@ -64,6 +64,7 @@ func main() {
 		"get-covers":      cli.GetCoversHandler,
 		"get-details":     cli.GetDetailsHandler,
 		"get-my-books":    cli.GetMyBooksHandler,
+		"import":          cli.ImportHandler,
 		"reduce-details":  cli.ReduceDetailsHandler,
 		"reduce-my-books": cli.ReduceMyBooksHandler,
 		"serve":           cli.ServeHandler,
