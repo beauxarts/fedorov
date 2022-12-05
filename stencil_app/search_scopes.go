@@ -7,10 +7,10 @@ import (
 )
 
 const (
-	ScopeNewSearch      = "Новый поиск"
+	ScopeNewSearch      = "Новый"
 	ScopeCompletedBooks = "Прочитанные"
 	ScopeKidsBooks      = "Детские"
-	ScopeImportedBooks  = "Импортированные"
+	ScopeImportedBooks  = "Импорт"
 )
 
 var SearchScopes = []string{
