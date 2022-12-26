@@ -33,9 +33,15 @@ func GetFile(w http.ResponseWriter, r *http.Request) {
 
 	if id, err := strconv.ParseInt(idstr, 10, 64); err == nil {
 		localFilepath := data.AbsDownloadPath(id, file)
+
+		cd := "attachment"
+		if data.LinkFormat(localFilepath) == "PDF" {
+			cd = "inline"
+		}
+
 		if _, err := os.Stat(localFilepath); err == nil {
 			w.Header().Set("Cache-Control", "max-age=31536000")
-			w.Header().Set("Content-Disposition", "attachment; filename=\""+file+"\"")
+			w.Header().Set("Content-Disposition", cd+"; filename=\""+file+"\"")
 			http.ServeFile(w, r, localFilepath)
 		} else {
 			_ = nod.Error(fmt.Errorf("no file for id %s, file %s", id, file))

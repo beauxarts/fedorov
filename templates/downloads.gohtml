@@ -1,10 +1,10 @@
 {{define "downloads"}}
     <ul class="downloads">
         {{$id := .Id}}
-        {{range .Files}}
+        {{range $file := .Files}}
             <li>
-                <a class="link" href="/file?id={{$id}}&file={{.}}">
-                    {{$format := linkFormat .}}
+                {{$format := linkFormat $file}}
+                <a class="link" href="/file?id={{$id}}&file={{$file}}" {{if eq $format "PDF"}}target="_blank"{{end}}>
                     <div class="format">{{$format}}</div>
                     <div class="desc">{{formatDesc $format}}</div>
                 </a>
