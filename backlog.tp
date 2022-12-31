@@ -1,6 +1,13 @@
 Figure out using external metadata for imported books (e.g. for print books):
 	- LitRes
 	- LiveLib
+	
+Add view option along with download:
+	- PDF
+	- add separate action
+	
+Rename Docker executable to fv:
+	- Consistent name with vg, gg
 
 Add LitRes API data:
 	- reviews: https://api.litres.ru/foundation/api/arts/68016400/reviews?limit=5&o=popular

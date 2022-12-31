@@ -22,6 +22,8 @@ github.com/boggydigital/nod v0.1.20 h1:6cyK3fDxAUcDC9s+2JLNNHJKuCCObQbabpmJfpXCS
 github.com/boggydigital/nod v0.1.20/go.mod h1:rghsJhj0wC5UL7qT8W3vSUc1MlE5IyheYjfAKIZ9kLQ=
 github.com/boggydigital/stencil v0.1.39 h1:1shg7ieZTfH3zEj6HEUHGyDwyjQ8XKoEz+8jzupPxwU=
 github.com/boggydigital/stencil v0.1.39/go.mod h1:biCvrWxWpBI22vM0LiZ6qbIDsI0jsCUcPf9584fMxuc=
+github.com/boggydigital/stencil v0.1.41 h1:al3o1rToJxxDTJBW1jYTrxbCBo9A1O1Plj54IuN6HJ0=
+github.com/boggydigital/stencil v0.1.41/go.mod h1:Aaq11k9thTE2Y+Jub4XgfUyEQ+8J2OSVMSoNtoiHddk=
 github.com/boggydigital/wits v0.2.3 h1:Z0eB+QlIA18fJmblyV6ZJQ/swPYSFhOxfgMXOQz4/c8=
 github.com/boggydigital/wits v0.2.3/go.mod h1:aR/z0vfMLtg0b4hcts0qiSTZcA51O8A2N3U9laqd2Lc=
 golang.org/x/exp v0.0.0-20220318154914-8dddf5d87bd8 h1:s/+U+w0teGzcoH2mdIlFQ6KfVKGaYpgyGdUefZrn9TU=
