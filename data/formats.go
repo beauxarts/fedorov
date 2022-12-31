@@ -38,10 +38,10 @@ var FormatDescriptors = map[string]string{
 	FormatFB3:     "Развитие формата FB2",
 	FormatTXT:     "Можно открыть почти на любом устройстве",
 	// PDF books
-	FormatPDF: "Скачать в формате PDF",
+	FormatPDF: "Формат PDF содержит текст и изображения",
 	// Audiobooks
-	FormatMP3: "Скачать книгу в стандартном качестве",
-	FormatMP4: "Скачать версию для мобильного телефона",
+	FormatMP3: "Аудио книга в стандартном качестве",
+	FormatMP4: "Версия для мобильного телефона",
 	// Other
 	FormatZIP:     "Zip архив",
 	FormatUnknown: "Неизвестный формат",

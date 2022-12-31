@@ -1,19 +1,18 @@
 Figure out using external metadata for imported books (e.g. for print books):
 	- LitRes
 	- LiveLib
-	
-Add view option along with download:
-	- PDF
-	- add separate action
-	
-Rename Docker executable to fv:
-	- Consistent name with vg, gg
 
 Add LitRes API data:
 	- reviews: https://api.litres.ru/foundation/api/arts/68016400/reviews?limit=5&o=popular
 	- author (reader/translater/etc?) details: https://api.litres.ru/foundation/api/authors/31883880/arts?art_groups=1&art_groups=2&art_groups=10&author_id_or_slug=31883880&limit=70&o=series&show_unavailable=true
 
 Archive:
+	Add view option along with download: @done(2022-12-30)
+		- PDF @done(2022-12-30)
+		- add separate action @done(2022-12-30)
+		
+	Rename Docker executable to fv: @done(2022-12-30)
+		- Consistent name with vg, gg @done(2022-12-30)
 	Add ability to onboard external media: @done(2022-12-04)
 		- start with data export to figure out data structure @done(2022-12-02)
 		- add method to kvas to import that data @done(2022-12-04)

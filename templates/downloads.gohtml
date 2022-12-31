@@ -4,10 +4,16 @@
         {{range $file := .Files}}
             <li>
                 {{$format := linkFormat $file}}
-                <a class="link" href="/file?id={{$id}}&file={{$file}}" {{if eq $format "PDF"}}target="_blank"{{end}}>
+                <a class="link" href="/file?id={{$id}}&file={{$file}}">
                     <div class="format">{{$format}}</div>
                     <div class="desc">{{formatDesc $format}}</div>
                 </a>
+                {{if eq $format "PDF"}}
+                    <a class="link inline" href="/file?id={{$id}}&file={{$file}}&inline" target="_blank">
+                        <div class="format">Просмотр {{$format}}</div>
+                        <div class="desc">{{formatDesc $format}}</div>
+                    </a>
+                {{end}}
             </li>
         {{end}}
     </ul>
