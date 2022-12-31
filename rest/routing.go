@@ -6,6 +6,11 @@ import (
 	"net/http"
 )
 
+const (
+	SharedRole = "shared"
+	AdminRole  = "admin"
+)
+
 var (
 	Auth    = middleware.BasicHttpAuth
 	Gzip    = middleware.Gzip
@@ -23,12 +28,12 @@ func HandleFuncs() {
 		"/downloads":   Gzip(GetOnly(Log(http.HandlerFunc(GetDownloads)))),
 		"/description": Gzip(GetOnly(Log(http.HandlerFunc(GetDescription)))),
 		// auth data endpoints
-		"/completed/set":    Auth(Gzip(GetOnly(Log(http.HandlerFunc(GetCompletedSet))))),
-		"/completed/clear":  Auth(Gzip(GetOnly(Log(http.HandlerFunc(GetCompletedClear))))),
-		"/local-tags/edit":  Auth(Gzip(GetOnly(Log(http.HandlerFunc(GetLocalTagsEdit))))),
-		"/local-tags/apply": Auth(Gzip(GetOnly(Log(http.HandlerFunc(GetLocalTagsApply))))),
+		"/completed/set":    Auth(AdminRole, Gzip(GetOnly(Log(http.HandlerFunc(GetCompletedSet))))),
+		"/completed/clear":  Auth(AdminRole, Gzip(GetOnly(Log(http.HandlerFunc(GetCompletedClear))))),
+		"/local-tags/edit":  Auth(AdminRole, Gzip(GetOnly(Log(http.HandlerFunc(GetLocalTagsEdit))))),
+		"/local-tags/apply": Auth(AdminRole, Gzip(GetOnly(Log(http.HandlerFunc(GetLocalTagsApply))))),
 		// auth media endpoints
-		"/file": Auth(GetOnly(Log(http.HandlerFunc(GetFile)))),
+		"/file": Auth(SharedRole, GetOnly(Log(http.HandlerFunc(GetFile)))),
 		// start at the books
 		"/": http.RedirectHandler("/books", http.StatusPermanentRedirect),
 	}

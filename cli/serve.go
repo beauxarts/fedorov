@@ -11,12 +11,19 @@ import (
 
 func ServeHandler(u *url.URL) error {
 
-	username := u.Query().Get("username")
-	password := u.Query().Get("password")
+	sharedUsername := u.Query().Get("shared-username")
+	sharedPassword := u.Query().Get("shared-password")
+	adminUsername := u.Query().Get("admin-username")
+	adminPassword := u.Query().Get("admin-password")
 
-	if username != "" && password != "" {
-		rest.SetUsername(username)
-		rest.SetPassword(password)
+	if sharedUsername != "" && sharedPassword != "" {
+		rest.SetUsername(rest.SharedRole, sharedUsername)
+		rest.SetPassword(rest.SharedRole, sharedPassword)
+	}
+
+	if adminUsername != "" && adminPassword != "" {
+		rest.SetUsername(rest.AdminRole, adminUsername)
+		rest.SetPassword(rest.AdminRole, adminPassword)
 	}
 
 	portstr := u.Query().Get("port")

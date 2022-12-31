@@ -18,12 +18,12 @@ var (
 	app  *stencil.AppConfiguration
 )
 
-func SetUsername(u string) {
-	middleware.SetUsername(sha256.Sum256([]byte(u)))
+func SetUsername(role, u string) {
+	middleware.SetUsername(role, sha256.Sum256([]byte(u)))
 }
 
-func SetPassword(p string) {
-	middleware.SetPassword(sha256.Sum256([]byte(p)))
+func SetPassword(role, p string) {
+	middleware.SetPassword(role, sha256.Sum256([]byte(p)))
 }
 
 func InitTemplates(templatesFS fs.FS, stencilAppStyles fs.FS) {

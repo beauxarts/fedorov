@@ -36,7 +36,9 @@ sync
 serve
     port$*
     stderr$
-    username$
-    password$
+    admin-username$
+    admin-password$
+    shared-username$
+    shared-password$
 
 version
