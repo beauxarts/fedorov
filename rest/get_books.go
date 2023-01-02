@@ -10,6 +10,10 @@ import (
 	"time"
 )
 
+const (
+	latestBooksLimit = 20
+)
+
 func GetBooks(w http.ResponseWriter, r *http.Request) {
 
 	// GET /books
@@ -41,6 +45,9 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
 
 	for _, id := range myBooks {
 		bt, _ := rxa.GetFirstVal(data.BookTypeProperty, id)
+		if len(booksByType[bt]) >= latestBooksLimit {
+			continue
+		}
 		booksByType[bt] = append(booksByType[bt], id)
 	}
 
