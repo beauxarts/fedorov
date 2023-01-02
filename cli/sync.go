@@ -32,7 +32,7 @@ func Sync() error {
 		return err
 	}
 
-	if err := ReduceDetails(true); err != nil {
+	if err := ReduceBooksDetails(true); err != nil {
 		return err
 	}
 
@@ -40,7 +40,11 @@ func Sync() error {
 		return err
 	}
 
-	if err := GetCovers(nil); err != nil {
+	if err := GetCovers(nil, false); err != nil {
+		return err
+	}
+
+	if err := Backup(); err != nil {
 		return err
 	}
 

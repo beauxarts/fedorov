@@ -1,6 +1,13 @@
 Figure out using external metadata for imported books (e.g. for print books):
-	- LitRes
+	- LitRes @done(2023-01-02)
 	- LiveLib
+	
+Add other formats:
+	- audio to text
+	- text to audio
+	
+Backup data: @done(2023-01-02)
+	- copy code from vangogh @done(2023-01-02)
 
 Add LitRes API data:
 	- reviews: https://api.litres.ru/foundation/api/arts/68016400/reviews?limit=5&o=popular

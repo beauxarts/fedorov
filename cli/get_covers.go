@@ -18,10 +18,10 @@ func GetCoversHandler(u *url.URL) error {
 		ids = strings.Split(idstr, ",")
 	}
 
-	return GetCovers(ids)
+	return GetCovers(ids, false)
 }
 
-func GetCovers(ids []string) error {
+func GetCovers(ids []string, forceImported bool) error {
 
 	gca := nod.NewProgress("fetching covers...")
 	defer gca.End()
@@ -49,7 +49,7 @@ func GetCovers(ids []string) error {
 	for _, id := range ids {
 
 		// don't attempt downloading covers for imported books
-		if IsImported(id, rxa) {
+		if !forceImported && IsImported(id, rxa) {
 			continue
 		}
 

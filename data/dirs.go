@@ -7,6 +7,8 @@ import (
 
 const (
 	relReduxDir         = "_redux"
+	relImportedDir      = "_imported"
+	relBackupDir        = "backup"
 	relMyBookFreshDir   = "my_books_fresh"
 	relMyBookDetailsDir = "my_books_details"
 	relDownloadsDir     = "downloads"
@@ -67,4 +69,12 @@ func AbsExportFilename() string {
 
 func AbsImportFilename() string {
 	return filepath.Join(rootDir, relImportFilename)
+}
+
+func AbsImportedDir() string {
+	return filepath.Join(rootDir, relImportedDir)
+}
+
+func AbsBackupDir() string {
+	return filepath.Join(rootDir, relBackupDir)
 }

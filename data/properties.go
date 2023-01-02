@@ -50,7 +50,8 @@ const (
 	// sync events
 	SyncCompletedProperty = "sync-completed"
 	// imported
-	ImportedProperty = "imported"
+	ImportedProperty   = "imported"
+	DataSourceProperty = "data-source"
 )
 
 func ReduxProperties() []string {
@@ -91,6 +92,7 @@ func ReduxProperties() []string {
 		LocalTagsProperty,
 		SyncCompletedProperty,
 		ImportedProperty,
+		DataSourceProperty,
 	}
 }
 

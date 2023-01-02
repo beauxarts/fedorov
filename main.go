@@ -58,6 +58,7 @@ func main() {
 	}
 
 	clo.HandleFuncs(map[string]clo.Handler{
+		"backup":          cli.BackupHandler,
 		"complete":        cli.CompleteHandler,
 		"download":        cli.DownloadHandler,
 		"export":          cli.ExportHandler,

@@ -16,10 +16,10 @@ func ReduceDetailsHandler(u *url.URL) error {
 	if u.Query().Get("score-data") == "false" {
 		scoreData = false
 	}
-	return ReduceDetails(scoreData)
+	return ReduceBooksDetails(scoreData)
 }
 
-func ReduceDetails(scoreData bool) error {
+func ReduceBooksDetails(scoreData bool) error {
 
 	rmbda := nod.NewProgress("reducing details...")
 	defer rmbda.End()
@@ -56,21 +56,8 @@ func ReduceDetails(scoreData bool) error {
 			continue
 		}
 
-		det, err := kv.Get(id)
+		lrdx, err := ReduceBookDetails(id, kv)
 		if err != nil {
-			det.Close()
-			return rmbda.EndWithError(err)
-		}
-
-		body, err := html.Parse(det)
-		if err != nil {
-			det.Close()
-			return rmbda.EndWithError(err)
-		}
-
-		lrdx, err := litres_integration.ReduceDetails(body)
-		if err != nil {
-			det.Close()
 			return rmbda.EndWithError(err)
 		}
 
@@ -78,26 +65,18 @@ func ReduceDetails(scoreData bool) error {
 			missingDetails = append(missingDetails, id)
 		}
 
-		for lp, vals := range lrdx {
+		MapLitresToFedorov(id, lrdx, reductions)
 
-			if p, ok := data.LitResPropertyMap[lp]; ok {
-				if p == litres_integration.KnownIrrelevantProperty {
-					continue
-				}
-
-				if scoreData {
+		if scoreData {
+			for lp, vals := range lrdx {
+				if p, ok := data.LitResPropertyMap[lp]; ok {
 					if evs, ok := rxa.GetAllUnchangedValues(p, id); ok {
 						dataScore[id] = len(vals) - len(evs)
 					}
 				}
-
-				reductions[p][id] = vals
-			} else {
-				nod.Log("unknown LitRes property %s", lp)
 			}
 		}
 
-		det.Close()
 		rmbda.Increment()
 	}
 
@@ -132,6 +111,35 @@ func ReduceDetails(scoreData bool) error {
 	rmbda.EndWithResult("done")
 
 	return nil
+}
+
+func ReduceBookDetails(id string, kv kvas.KeyValues) (map[string][]string, error) {
+	det, err := kv.Get(id)
+	defer det.Close()
+
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := html.Parse(det)
+	if err != nil {
+		return nil, err
+	}
+
+	return litres_integration.ReduceDetails(body)
+}
+
+func MapLitresToFedorov(id string, lrdx map[string][]string, rdx map[string]map[string][]string) {
+	for lp, vals := range lrdx {
+		if p, ok := data.LitResPropertyMap[lp]; ok {
+			if p == litres_integration.KnownIrrelevantProperty {
+				continue
+			}
+			rdx[p][id] = vals
+		} else {
+			nod.Log("unknown LitRes property %s", lp)
+		}
+	}
 }
 
 func isEmpty(rdx map[string][]string) bool {
