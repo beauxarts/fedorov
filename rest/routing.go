@@ -25,6 +25,7 @@ func HandleFuncs() {
 		"/book":        Gzip(GetOnly(Log(http.HandlerFunc(GetBook)))),
 		"/cover":       GetOnly(Log(http.HandlerFunc(GetCover))),
 		"/search":      Gzip(GetOnly(Log(http.HandlerFunc(GetSearch)))),
+		"/digest":      Gzip(GetOnly(Log(http.HandlerFunc(GetDigest)))),
 		"/downloads":   Gzip(GetOnly(Log(http.HandlerFunc(GetDownloads)))),
 		"/description": Gzip(GetOnly(Log(http.HandlerFunc(GetDescription)))),
 		// auth data endpoints

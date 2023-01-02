@@ -12,6 +12,10 @@ import (
 	"io/fs"
 )
 
+const (
+	SearchResultsLimit = 50
+)
+
 var (
 	rxa  kvas.ReduxAssets
 	tmpl *template.Template

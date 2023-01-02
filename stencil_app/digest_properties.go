@@ -21,4 +21,6 @@ var DigestProperties = []string{
 	data.GenresProperty,
 	data.TagsProperty,
 	data.ImportedProperty,
+	data.SortProperty,
+	data.DescendingProperty,
 }

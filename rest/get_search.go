@@ -7,14 +7,25 @@ import (
 	"golang.org/x/exp/maps"
 	"net/http"
 	"sort"
+	"strconv"
 	"strings"
 )
 
 func GetSearch(w http.ResponseWriter, r *http.Request) {
 
-	// GET /search?(search_params)
+	// GET /search?(search_params)&from
 
 	q := r.URL.Query()
+
+	from, to := 0, 0
+	if q.Has("from") {
+		from64, err := strconv.ParseInt(q.Get("from"), 10, 32)
+		if err != nil {
+			http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
+			return
+		}
+		from = int(from64)
+	}
 
 	query := make(map[string][]string)
 
@@ -58,23 +69,20 @@ func GetSearch(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 		}
+
+		if from > len(ids)-1 {
+			from = 0
+		}
+
+		to = from + SearchResultsLimit
+		if to > len(ids) {
+			to = len(ids)
+		}
 	}
-
-	digests := getDigests(stencil_app.DigestProperties...)
-
-	digests[data.SortProperty] = []string{
-		data.TitleProperty,
-		data.DateCreatedProperty,
-		data.DateTranslatedProperty,
-		data.DateReleasedProperty}
-
-	digests[data.DescendingProperty] = []string{
-		"true",
-		"false"}
 
 	DefaultHeaders(w)
 
-	if err := app.RenderSearch("Поиск", query, ids, digests, rxa, w); err != nil {
+	if err := app.RenderSearch("Поиск", query, ids[from:to], from, to, len(ids), nil, rxa, w); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return
 	}

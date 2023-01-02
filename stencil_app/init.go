@@ -25,7 +25,6 @@ func Init(rxa kvas.ReduxAssets) (*stencil.AppConfiguration, error) {
 		data.TitleProperty,
 		PropertyTitles,
 		SectionTitles,
-		DigestTitles,
 		rxa); err != nil {
 		return app, err
 	}
@@ -56,6 +55,7 @@ func Init(rxa kvas.ReduxAssets) (*stencil.AppConfiguration, error) {
 
 	if err := app.SetSearchConfiguration(
 		SearchProperties,
+		DigestProperties,
 		SearchScopes,
 		SearchScopeQueries()); err != nil {
 		return app, err
