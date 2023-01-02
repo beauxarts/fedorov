@@ -82,7 +82,7 @@ func GetSearch(w http.ResponseWriter, r *http.Request) {
 
 	DefaultHeaders(w)
 
-	if err := app.RenderSearch("Поиск", query, ids[from:to], from, to, len(ids), nil, rxa, w); err != nil {
+	if err := app.RenderSearch("Поиск", query, ids[from:to], from, to, len(ids), r.URL, rxa, w); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return
 	}
