@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	SearchResultsLimit = 50
+	SearchResultsLimit = 20
 )
 
 var (
