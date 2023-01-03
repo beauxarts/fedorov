@@ -30,7 +30,6 @@ func GetDownloads(w http.ResponseWriter, r *http.Request) {
 	}
 
 	links, ok := rxa.GetAllUnchangedValues(data.DownloadLinksProperty, idstr)
-	nod.Log("book %s download links: %s", idstr, strings.Join(links, ","))
 
 	if !ok {
 		http.Error(w, nod.ErrorStr("book has no downloads"), http.StatusInternalServerError)
@@ -42,7 +41,8 @@ func GetDownloads(w http.ResponseWriter, r *http.Request) {
 	if id, err := strconv.ParseInt(idstr, 10, 64); err == nil {
 		for _, link := range links {
 			_, filename := filepath.Split(link)
-			if _, err := os.Stat(data.AbsDownloadPath(id, filename)); err == nil {
+			absDownloadFilename := data.AbsDownloadPath(id, filename)
+			if _, err := os.Stat(absDownloadFilename); err == nil {
 				files = append(files, filename)
 			} else {
 				nod.Log(err.Error())
