@@ -2,6 +2,8 @@ github.com/beauxarts/litres_integration v0.1.8 h1:bcLmVq0m7+cn1Ciy+yd8oFKm3AD4vf
 github.com/beauxarts/litres_integration v0.1.8/go.mod h1:L34YMnzZuPlZWPjFK+ysBQfPp/LZ7f6V/N+ZJ7MWUyg=
 github.com/beauxarts/litres_integration v0.1.9 h1:cgHaZwivLjyUrHOLtwBnBYTsVxXGFgXkuKgknY7bJtM=
 github.com/beauxarts/litres_integration v0.1.9/go.mod h1:VT/+ZewBIhvvbazNs4NpyWRVBkJ5yFZ6bfLc1uzFsaw=
+github.com/beauxarts/litres_integration v0.1.10 h1:FEhUl1BF2QijO9OMSl5Rr0hxedNSIQk8aWu3yWnaiyQ=
+github.com/beauxarts/litres_integration v0.1.10/go.mod h1:VT/+ZewBIhvvbazNs4NpyWRVBkJ5yFZ6bfLc1uzFsaw=
 github.com/boggydigital/clo v0.3.1 h1:hbODCWxflR7y4/O3+96uIuS/KNN5WXfItm5zoMpy36k=
 github.com/boggydigital/clo v0.3.1/go.mod h1:/3bLgOSu4HbChi6qbST8ZN6uDfKyrgVvVwEKNy/GxYw=
 github.com/boggydigital/coost v0.3.8 h1:LMHuC5ftC60uSA8/eMv2/qOj5F/tK86XcQ/3qzEI33Y=

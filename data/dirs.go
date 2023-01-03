@@ -1,6 +1,8 @@
 package data
 
 import (
+	"fmt"
+	"github.com/beauxarts/litres_integration"
 	"path/filepath"
 	"strconv"
 )
@@ -57,6 +59,15 @@ func AbsCoverPath(id int64) string {
 
 func AbsCoverDir() string {
 	return filepath.Join(rootDir, relCoversDir)
+}
+
+func RelCoverFilename(id string, size litres_integration.CoverSize) string {
+	switch size {
+	case litres_integration.SizeMax:
+		return id + CoverExt
+	default:
+		return fmt.Sprintf("%s_%d%s", id, size, CoverExt)
+	}
 }
 
 func AbsCookiesFilename() string {

@@ -60,16 +60,24 @@ func GetCovers(ids []string, forceImported bool) error {
 			continue
 		}
 
-		cu := litres_integration.CoverUrl(idn)
+		sizes := []litres_integration.CoverSize{
+			litres_integration.Size330,
+			litres_integration.Size415,
+			litres_integration.SizeMax,
+		}
 
-		if err := dc.Download(cu, nil, data.AbsCoverDir()); err != nil {
-			// if the full size cover request results in a 440 status from the server
-			// try smaller size that might be available
-			c330u := litres_integration.Cover330Url(idn)
-			if err := dc.Download(c330u, nil, data.AbsCoverDir()); err != nil {
-				gca.Error(err)
-				gca.Increment()
-				continue
+		for _, size := range sizes {
+			fn := data.RelCoverFilename(id, size)
+			cu := litres_integration.CoverUrl(idn, size)
+
+			if err := dc.Download(cu, nil, data.AbsCoverDir(), fn); err != nil {
+				//attempting partner url if default url fails
+				pcu := litres_integration.PartnerCoverUrl(idn, size)
+				if err := dc.Download(pcu, nil, data.AbsCoverDir(), fn); err != nil {
+					gca.Error(err)
+					gca.Increment()
+					continue
+				}
 			}
 		}
 
