@@ -30,6 +30,7 @@ func GetDownloads(w http.ResponseWriter, r *http.Request) {
 	}
 
 	links, ok := rxa.GetAllUnchangedValues(data.DownloadLinksProperty, idstr)
+	nod.Log("book %s download links: %s", idstr, strings.Join(links, ","))
 
 	if !ok {
 		http.Error(w, nod.ErrorStr("book has no downloads"), http.StatusInternalServerError)
@@ -46,6 +47,8 @@ func GetDownloads(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	}
+
+	nod.Log("files: %s", strings.Join(files, ","))
 
 	sb := &strings.Builder{}
 	dvm := view_models.NewDownloads(idstr, files)
