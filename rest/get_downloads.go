@@ -44,11 +44,11 @@ func GetDownloads(w http.ResponseWriter, r *http.Request) {
 			_, filename := filepath.Split(link)
 			if _, err := os.Stat(data.AbsDownloadPath(id, filename)); err == nil {
 				files = append(files, filename)
+			} else {
+				nod.Log(err.Error())
 			}
 		}
 	}
-
-	nod.Log("files: %s", strings.Join(files, ","))
 
 	sb := &strings.Builder{}
 	dvm := view_models.NewDownloads(idstr, files)
