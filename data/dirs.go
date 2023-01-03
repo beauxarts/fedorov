@@ -53,8 +53,8 @@ func AbsReduxDir() string {
 	return filepath.Join(rootDir, relReduxDir)
 }
 
-func AbsCoverPath(id int64) string {
-	return filepath.Join(AbsCoverDir(), strconv.FormatInt(id, 10)+CoverExt)
+func AbsCoverPath(id int64, size litres_integration.CoverSize) string {
+	return filepath.Join(AbsCoverDir(), RelCoverFilename(strconv.FormatInt(id, 10), size))
 }
 
 func AbsCoverDir() string {

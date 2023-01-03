@@ -34,7 +34,7 @@ func Init(rxa kvas.ReduxAssets) (*stencil.AppConfiguration, error) {
 		BooksLabels,
 		BookPath,
 		data.IdProperty,
-		CoverPath,
+		ListCoverPath,
 		rxa); err != nil {
 		return app, err
 	}
@@ -45,7 +45,7 @@ func Init(rxa kvas.ReduxAssets) (*stencil.AppConfiguration, error) {
 		BookHiddenProperties,
 		BookSections,
 		data.IdProperty,
-		CoverPath,
+		BookCoverPath,
 		rxa); err != nil {
 		return app, err
 	}

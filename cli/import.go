@@ -95,7 +95,7 @@ func Import() error {
 			// move cover into destination folder
 			srcCoverFilename := filepath.Join(data.Pwd(), idstr+data.CoverExt)
 			if _, err := os.Stat(srcCoverFilename); err == nil {
-				absDestCoverFilename := data.AbsCoverPath(id)
+				absDestCoverFilename := data.AbsCoverPath(id, litres_integration.SizeMax)
 				if err := os.Rename(srcCoverFilename, absDestCoverFilename); err != nil {
 					return ia.EndWithError(err)
 				}
