@@ -36,6 +36,8 @@ github.com/boggydigital/stencil v0.1.45 h1:OVu4LH24U82+BF75fd4BRBzZU5EEzLKQgwmzm
 github.com/boggydigital/stencil v0.1.45/go.mod h1:Aaq11k9thTE2Y+Jub4XgfUyEQ+8J2OSVMSoNtoiHddk=
 github.com/boggydigital/stencil v0.1.48 h1:/KW4KeNS58l6mFOMadXfZcG+V5UP5Nova1otf/iTkBU=
 github.com/boggydigital/stencil v0.1.48/go.mod h1:Aaq11k9thTE2Y+Jub4XgfUyEQ+8J2OSVMSoNtoiHddk=
+github.com/boggydigital/stencil v0.1.49 h1:JAAGglwuAWSWBl28D1N5bSOvliAIfN9cc9TC42v6teE=
+github.com/boggydigital/stencil v0.1.49/go.mod h1:Aaq11k9thTE2Y+Jub4XgfUyEQ+8J2OSVMSoNtoiHddk=
 github.com/boggydigital/wits v0.2.3 h1:Z0eB+QlIA18fJmblyV6ZJQ/swPYSFhOxfgMXOQz4/c8=
 github.com/boggydigital/wits v0.2.3/go.mod h1:aR/z0vfMLtg0b4hcts0qiSTZcA51O8A2N3U9laqd2Lc=
 golang.org/x/exp v0.0.0-20220318154914-8dddf5d87bd8 h1:s/+U+w0teGzcoH2mdIlFQ6KfVKGaYpgyGdUefZrn9TU=

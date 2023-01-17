@@ -45,7 +45,7 @@ func GetFile(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Content-Disposition", cd+"; filename=\""+file+"\"")
 			http.ServeFile(w, r, localFilepath)
 		} else {
-			_ = nod.Error(fmt.Errorf("no file for id %s, file %s", id, file))
+			_ = nod.Error(fmt.Errorf("no file for id %d, file %s", id, file))
 			http.NotFound(w, r)
 		}
 	} else {
