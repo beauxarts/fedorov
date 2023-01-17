@@ -68,6 +68,8 @@ func LinkFormat(link string) string {
 		format = FormatPDF
 	} else if strings.HasSuffix(link, ".mobi.prc") {
 		format = FormatMOBI
+	} else if strings.HasSuffix(link, ".mobi") {
+		format = FormatMOBI
 	} else if strings.HasSuffix(link, ".fb3") {
 		format = FormatFB3
 	} else if strings.HasSuffix(link, ".txt") {

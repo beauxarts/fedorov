@@ -5,15 +5,14 @@ Add other formats:
 	- audio to text
 	- text to audio
 
-Rework covers:
-	- download 330/415 sizes for lists 
-	- full detail for product details
-
 Add LitRes API data:
 	- reviews: https://api.litres.ru/foundation/api/arts/68016400/reviews?limit=5&o=popular
 	- author (reader/translater/etc?) details: https://api.litres.ru/foundation/api/authors/31883880/arts?art_groups=1&art_groups=2&art_groups=10&author_id_or_slug=31883880&limit=70&o=series&show_unavailable=true
 
 Archive:
+	Rework covers: @done(2023-01-02)
+		- download 330/415 sizes for lists @done(2023-01-02)
+		- full detail for product details @done(2023-01-02)
 	- LitRes @done(2023-01-02) @project(Figure out using external metadata for imported books \(e.g. for print books\))
 	Backup data: @done(2023-01-02)
 		- copy code from vangogh @done(2023-01-02)

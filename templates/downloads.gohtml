@@ -1,11 +1,19 @@
 {{define "downloads"}}
     <ul class="downloads">
         {{$id := .Id}}
-        {{range $file := .Files}}
+        {{$titles := .Titles}}
+        {{range $index, $file := .Files}}
             <li>
                 {{$format := linkFormat $file}}
+
                 <a class="link" href="/file?id={{$id}}&file={{$file}}">
                     <div class="format">{{$format}}</div>
+                    {{if $titles}}
+                        {{$title := index $titles $index}}
+                        {{if $title}}
+                            <div class="title">{{$title}}</div>
+                        {{end}}
+                    {{end}}
                     <div class="desc">{{formatDesc $format}}</div>
                 </a>
                 {{if eq $format "PDF"}}

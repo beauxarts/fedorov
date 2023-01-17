@@ -15,6 +15,7 @@ const (
 	CoauthorsProperty         = "coauthors"
 	DescriptionProperty       = "description"
 	DownloadLinksProperty     = "download-links"
+	DownloadTitlesProperty    = "download-titles"
 	SequenceNameProperty      = "sequence-name"
 	SequenceNumberProperty    = "sequence-number"
 	DateReleasedProperty      = "date-released"
@@ -61,6 +62,7 @@ func ReduxProperties() []string {
 		TitleProperty,
 		DescriptionProperty,
 		DownloadLinksProperty,
+		DownloadTitlesProperty,
 		AuthorsProperty,
 		CoauthorsProperty,
 		SequenceNameProperty,

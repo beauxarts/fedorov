@@ -30,6 +30,7 @@ func GetDownloads(w http.ResponseWriter, r *http.Request) {
 	}
 
 	links, ok := rxa.GetAllUnchangedValues(data.DownloadLinksProperty, idstr)
+	titles, _ := rxa.GetAllUnchangedValues(data.DownloadTitlesProperty, idstr)
 
 	if !ok {
 		http.Error(w, nod.ErrorStr("book has no downloads"), http.StatusInternalServerError)
@@ -51,7 +52,7 @@ func GetDownloads(w http.ResponseWriter, r *http.Request) {
 	}
 
 	sb := &strings.Builder{}
-	dvm := view_models.NewDownloads(idstr, files)
+	dvm := view_models.NewDownloads(idstr, files, titles)
 
 	if err := tmpl.ExecuteTemplate(sb, "downloads", dvm); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
