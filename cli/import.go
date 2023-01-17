@@ -50,7 +50,7 @@ func Import() error {
 
 	hc, err := coost.NewHttpClientFromFile(data.AbsCookiesFilename(), litres_integration.LitResHost)
 	if err != nil {
-		return err
+		return ia.EndWithError(err)
 	}
 
 	// import the data, copy files, etc
@@ -104,6 +104,9 @@ func Import() error {
 			// move download files into destination folder
 			for _, link := range skv[idstr][data.DownloadLinksProperty] {
 				_, relSrcFilename := filepath.Split(link)
+				if relSrcFilename == "" {
+					continue
+				}
 				absSrcFilename := filepath.Join(data.Pwd(), relSrcFilename)
 				if _, err := os.Stat(absSrcFilename); err == nil {
 					absDstFilename := data.AbsDownloadPath(id, relSrcFilename)
