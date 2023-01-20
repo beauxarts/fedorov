@@ -38,6 +38,8 @@ func HandleFuncs() {
 		"/file": Auth(SharedRole, GetOnly(Log(http.HandlerFunc(GetFile)))),
 		// start at the books
 		"/": http.RedirectHandler("/books", http.StatusPermanentRedirect),
+		//robots.txt
+		"/robots.txt": Gzip(GetOnly(Log(http.HandlerFunc(GetRobotsTxt)))),
 	}
 
 	for p, h := range patternHandlers {
