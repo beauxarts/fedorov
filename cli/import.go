@@ -172,7 +172,7 @@ func importLitresData(id string, hc *http.Client) (map[string]map[string][]strin
 	ilda := nod.Begin("importing data from LitRes...")
 	defer ilda.End()
 
-	if err := GetDetails([]string{id}, hc); err != nil {
+	if err := GetDetails([]string{id}, hc, false); err != nil {
 		return nil, ilda.EndWithError(err)
 	}
 

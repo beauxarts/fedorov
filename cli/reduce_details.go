@@ -86,7 +86,10 @@ func ReduceBooksDetails(scoreData bool) error {
 			overallDataScore += score
 		}
 
-		if overallDataScore < 0 {
+		//data scoring threshold is number of books
+		//meaning either big change on small number of books
+		//or 1 change on every book in the collection
+		if overallDataScore < -len(ids) {
 			return rmbda.EndWithError(errors.New("details reduction produced less data than already existed"))
 		}
 	}

@@ -11,9 +11,11 @@ import (
 )
 
 func SyncHandler(u *url.URL) error {
-	return Sync()
+	newOnly := u.Query().Has("new-only")
+
+	return Sync(newOnly)
 }
-func Sync() error {
+func Sync(newOnly bool) error {
 
 	hc, err := coost.NewHttpClientFromFile(data.AbsCookiesFilename(), litres_integration.LitResHost)
 	if err != nil {
@@ -28,7 +30,7 @@ func Sync() error {
 		return err
 	}
 
-	if err := GetDetails(nil, hc); err != nil {
+	if err := GetDetails(nil, hc, newOnly); err != nil {
 		return err
 	}
 

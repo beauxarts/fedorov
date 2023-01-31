@@ -23,10 +23,12 @@ func GetDetailsHandler(u *url.URL) error {
 		ids = strings.Split(idstr, ",")
 	}
 
-	return GetDetails(ids, hc)
+	newOnly := u.Query().Has("new-only")
+
+	return GetDetails(ids, hc, newOnly)
 }
 
-func GetDetails(ids []string, hc *http.Client) error {
+func GetDetails(ids []string, hc *http.Client, newOnly bool) error {
 
 	gmbda := nod.NewProgress("getting my books details...")
 	defer gmbda.End()
@@ -59,6 +61,10 @@ func GetDetails(ids []string, hc *http.Client) error {
 
 		// don't attempt downloading details for imported books
 		if IsImported(id, rxa) {
+			continue
+		}
+
+		if newOnly && kv.Has(id) {
 			continue
 		}
 
