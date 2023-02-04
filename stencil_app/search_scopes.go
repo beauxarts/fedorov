@@ -7,15 +7,15 @@ import (
 )
 
 const (
-	ScopeNewSearch     = "Новый"
-	ScopeUnreadBooks   = "Не прочитанные"
-	ScopeKidsBooks     = "Детские"
-	ScopeImportedBooks = "Импорт"
+	ScopeNewSearch        = "Новый"
+	ScopeBacklogTextBooks = "Бэклог"
+	ScopeKidsBooks        = "Детские"
+	ScopeImportedBooks    = "Импорт"
 )
 
 var SearchScopes = []string{
 	ScopeNewSearch,
-	ScopeUnreadBooks,
+	ScopeBacklogTextBooks,
 	ScopeKidsBooks,
 	ScopeImportedBooks,
 }
@@ -29,7 +29,7 @@ func SearchScopeQueries() map[string]string {
 	q.Set(data.BookCompletedProperty, "false")
 	q.Set(data.BookTypeProperty, BookTypeText)
 	q.Set(data.SortProperty, data.MyBooksOrderProperty)
-	scopeUrls[ScopeUnreadBooks] = q.Encode()
+	scopeUrls[ScopeBacklogTextBooks] = q.Encode()
 
 	q = url.Values{}
 	q.Set(data.GenresProperty, "детские,сказки")
