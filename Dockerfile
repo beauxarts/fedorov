@@ -3,9 +3,9 @@ RUN apk add --no-cache --update git
 ADD . /go/src/app
 WORKDIR /go/src/app
 RUN go get ./...
-RUN go build -o fv main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o fv main.go
 
-FROM alpine
+FROM scratch
 COPY --from=build /go/src/app/fv /usr/bin/fv
 
 EXPOSE 1510
