@@ -9,7 +9,7 @@ require (
 	github.com/boggydigital/dolo v0.2.5
 	github.com/boggydigital/kvas v0.3.27
 	github.com/boggydigital/match_node v0.1.9
-	github.com/boggydigital/middleware v0.1.4
+	github.com/boggydigital/middleware v0.1.5
 	github.com/boggydigital/nod v0.1.20
 	github.com/boggydigital/stencil v0.1.51
 	github.com/boggydigital/wits v0.2.3

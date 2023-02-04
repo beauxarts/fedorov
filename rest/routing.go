@@ -30,12 +30,12 @@ func HandleFuncs() {
 		"/downloads":   Gzip(GetOnly(Log(http.HandlerFunc(GetDownloads)))),
 		"/description": Gzip(GetOnly(Log(http.HandlerFunc(GetDescription)))),
 		// auth data endpoints
-		"/completed/set":    Auth(AdminRole, Gzip(GetOnly(Log(http.HandlerFunc(GetCompletedSet))))),
-		"/completed/clear":  Auth(AdminRole, Gzip(GetOnly(Log(http.HandlerFunc(GetCompletedClear))))),
-		"/local-tags/edit":  Auth(AdminRole, Gzip(GetOnly(Log(http.HandlerFunc(GetLocalTagsEdit))))),
-		"/local-tags/apply": Auth(AdminRole, Gzip(GetOnly(Log(http.HandlerFunc(GetLocalTagsApply))))),
+		"/completed/set":    Auth(Gzip(GetOnly(Log(http.HandlerFunc(GetCompletedSet)))), AdminRole),
+		"/completed/clear":  Auth(Gzip(GetOnly(Log(http.HandlerFunc(GetCompletedClear)))), AdminRole),
+		"/local-tags/edit":  Auth(Gzip(GetOnly(Log(http.HandlerFunc(GetLocalTagsEdit)))), AdminRole),
+		"/local-tags/apply": Auth(Gzip(GetOnly(Log(http.HandlerFunc(GetLocalTagsApply)))), AdminRole),
 		// auth media endpoints
-		"/file": Auth(SharedRole, GetOnly(Log(http.HandlerFunc(GetFile)))),
+		"/file": Auth(GetOnly(Log(http.HandlerFunc(GetFile))), AdminRole, SharedRole),
 		// start at the books
 		"/": http.RedirectHandler("/books", http.StatusPermanentRedirect),
 		//robots.txt
