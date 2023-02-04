@@ -39,7 +39,7 @@ func fmtLabel(_, property, link string, _ kvas.ReduxAssets) string {
 		if link == "true" {
 			return "Прочитано"
 		} else {
-			return "Не прочитано"
+			return ""
 		}
 	case data.ImportedProperty:
 		if link == "true" {

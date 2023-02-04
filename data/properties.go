@@ -53,6 +53,8 @@ const (
 	// imported
 	ImportedProperty   = "imported"
 	DataSourceProperty = "data-source"
+	// my-books-order
+	MyBooksOrderProperty = "my-books-order"
 )
 
 func ReduxProperties() []string {
@@ -95,6 +97,7 @@ func ReduxProperties() []string {
 		SyncCompletedProperty,
 		ImportedProperty,
 		DataSourceProperty,
+		MyBooksOrderProperty,
 	}
 }
 

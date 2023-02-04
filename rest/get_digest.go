@@ -24,7 +24,8 @@ func GetDigest(w http.ResponseWriter, r *http.Request) {
 			data.TitleProperty,
 			data.DateCreatedProperty,
 			data.DateTranslatedProperty,
-			data.DateReleasedProperty}}
+			data.DateReleasedProperty,
+			data.MyBooksOrderProperty}}
 	case data.DescendingProperty:
 		digests = map[string][]string{data.DescendingProperty: {
 			"true",

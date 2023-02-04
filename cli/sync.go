@@ -38,6 +38,10 @@ func Sync(newOnly bool) error {
 		return err
 	}
 
+	if err := Cascade(); err != nil {
+		return err
+	}
+
 	if err := Download(nil, hc); err != nil {
 		return err
 	}
