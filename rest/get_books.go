@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	latestBooksLimit = 20
+	latestBooksLimit = 60
 )
 
 func GetBooks(w http.ResponseWriter, r *http.Request) {
