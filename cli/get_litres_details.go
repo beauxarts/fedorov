@@ -12,7 +12,7 @@ import (
 	"strings"
 )
 
-func GetDetailsHandler(u *url.URL) error {
+func GetLitResDetailsHandler(u *url.URL) error {
 	hc, err := coost.NewHttpClientFromFile(data.AbsCookiesFilename(), litres_integration.LitResHost)
 	if err != nil {
 		return err
@@ -25,12 +25,12 @@ func GetDetailsHandler(u *url.URL) error {
 
 	newOnly := u.Query().Has("new-only")
 
-	return GetDetails(ids, hc, newOnly)
+	return GetLitResDetails(ids, hc, newOnly)
 }
 
-func GetDetails(ids []string, hc *http.Client, newOnly bool) error {
+func GetLitResDetails(ids []string, hc *http.Client, newOnly bool) error {
 
-	gmbda := nod.NewProgress("getting my books details...")
+	gmbda := nod.NewProgress("getting LitRes my books details...")
 	defer gmbda.End()
 
 	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), nil,

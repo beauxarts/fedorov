@@ -22,19 +22,19 @@ func Sync(newOnly bool) error {
 		return err
 	}
 
-	if err := GetMyBooks(hc); err != nil {
+	if err := GetLitResMyBooks(hc); err != nil {
 		return err
 	}
 
-	if err := ReduceMyBooks(); err != nil {
+	if err := ReduceLitResMyBooks(); err != nil {
 		return err
 	}
 
-	if err := GetDetails(nil, hc, newOnly); err != nil {
+	if err := GetLitResDetails(nil, hc, newOnly); err != nil {
 		return err
 	}
 
-	if err := ReduceBooksDetails(true); err != nil {
+	if err := ReduceLitResBooksDetails(true); err != nil {
 		return err
 	}
 
@@ -42,11 +42,11 @@ func Sync(newOnly bool) error {
 		return err
 	}
 
-	if err := Download(nil, hc); err != nil {
+	if err := DownloadLitRes(nil, hc); err != nil {
 		return err
 	}
 
-	if err := GetCovers(nil, false); err != nil {
+	if err := GetLitResCovers(nil, false); err != nil {
 		return err
 	}
 

@@ -10,16 +10,16 @@ import (
 	"net/url"
 )
 
-func ReduceDetailsHandler(u *url.URL) error {
+func ReduceLitResDetailsHandler(u *url.URL) error {
 
 	scoreData := true
 	if u.Query().Get("score-data") == "false" {
 		scoreData = false
 	}
-	return ReduceBooksDetails(scoreData)
+	return ReduceLitResBooksDetails(scoreData)
 }
 
-func ReduceBooksDetails(scoreData bool) error {
+func ReduceLitResBooksDetails(scoreData bool) error {
 
 	rmbda := nod.NewProgress("reducing details...")
 	defer rmbda.End()
@@ -56,7 +56,7 @@ func ReduceBooksDetails(scoreData bool) error {
 			continue
 		}
 
-		lrdx, err := ReduceBookDetails(id, kv)
+		lrdx, err := ReduceLitResBookDetails(id, kv)
 		if err != nil {
 			return rmbda.EndWithError(err)
 		}
@@ -116,7 +116,7 @@ func ReduceBooksDetails(scoreData bool) error {
 	return nil
 }
 
-func ReduceBookDetails(id string, kv kvas.KeyValues) (map[string][]string, error) {
+func ReduceLitResBookDetails(id string, kv kvas.KeyValues) (map[string][]string, error) {
 	det, err := kv.Get(id)
 	defer det.Close()
 

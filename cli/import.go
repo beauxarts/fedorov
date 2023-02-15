@@ -17,6 +17,11 @@ import (
 	"time"
 )
 
+const (
+	LitResDataSource  = "litres"
+	LiveLibDataSource = "livelib"
+)
+
 func ImportHandler(_ *url.URL) error {
 	return Import()
 }
@@ -63,7 +68,7 @@ func Import() error {
 				break
 			}
 			switch ds[0] {
-			case "litres":
+			case LitResDataSource:
 
 				if hrefs, ok := skv[idstr][data.HrefProperty]; ok {
 					rxa.ReplaceValues(data.HrefProperty, idstr, hrefs...)
@@ -85,6 +90,8 @@ func Import() error {
 						skv[idstr][p] = rdx[p][idstr]
 					}
 				}
+			case LiveLibDataSource:
+
 			default:
 				//unknown data source - ignore
 			}
@@ -172,11 +179,11 @@ func importLitresData(id string, hc *http.Client) (map[string]map[string][]strin
 	ilda := nod.Begin("importing data from LitRes...")
 	defer ilda.End()
 
-	if err := GetDetails([]string{id}, hc, false); err != nil {
+	if err := GetLitResDetails([]string{id}, hc, false); err != nil {
 		return nil, ilda.EndWithError(err)
 	}
 
-	if err := GetCovers([]string{id}, true); err != nil {
+	if err := GetLitResCovers([]string{id}, true); err != nil {
 		return nil, ilda.EndWithError(err)
 	}
 
@@ -185,7 +192,39 @@ func importLitresData(id string, hc *http.Client) (map[string]map[string][]strin
 		return nil, ilda.EndWithError(err)
 	}
 
-	lrdx, err := ReduceBookDetails(id, kv)
+	lrdx, err := ReduceLitResBookDetails(id, kv)
+	if err != nil {
+		return nil, ilda.EndWithError(err)
+	}
+
+	rdx := make(map[string]map[string][]string)
+	for _, p := range data.ReduxProperties() {
+		rdx[p] = make(map[string][]string)
+	}
+
+	MapLitresToFedorov(id, lrdx, rdx)
+
+	return rdx, nil
+}
+
+func importLiveLibData(id string, hc *http.Client) (map[string]map[string][]string, error) {
+	ilda := nod.Begin("importing data from LiveLib...")
+	defer ilda.End()
+
+	if err := GetLitResDetails([]string{id}, hc, false); err != nil {
+		return nil, ilda.EndWithError(err)
+	}
+
+	if err := GetLitResCovers([]string{id}, true); err != nil {
+		return nil, ilda.EndWithError(err)
+	}
+
+	kv, err := kvas.ConnectLocal(data.AbsMyBooksDetailsDir(), kvas.HtmlExt)
+	if err != nil {
+		return nil, ilda.EndWithError(err)
+	}
+
+	lrdx, err := ReduceLitResBookDetails(id, kv)
 	if err != nil {
 		return nil, ilda.EndWithError(err)
 	}

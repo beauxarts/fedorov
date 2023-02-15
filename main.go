@@ -58,20 +58,20 @@ func main() {
 	}
 
 	clo.HandleFuncs(map[string]clo.Handler{
-		"backup":          cli.BackupHandler,
-		"cascade":         cli.CascadeHandler,
-		"complete":        cli.CompleteHandler,
-		"download":        cli.DownloadHandler,
-		"export":          cli.ExportHandler,
-		"get-covers":      cli.GetCoversHandler,
-		"get-details":     cli.GetDetailsHandler,
-		"get-my-books":    cli.GetMyBooksHandler,
-		"import":          cli.ImportHandler,
-		"reduce-details":  cli.ReduceDetailsHandler,
-		"reduce-my-books": cli.ReduceMyBooksHandler,
-		"serve":           cli.ServeHandler,
-		"sync":            cli.SyncHandler,
-		"version":         cli.VersionHandler,
+		"backup":                 cli.BackupHandler,
+		"cascade":                cli.CascadeHandler,
+		"complete":               cli.CompleteHandler,
+		"download-litres":        cli.DownloadLitResHandler,
+		"export":                 cli.ExportHandler,
+		"get-litres-covers":      cli.GetLitResCoversHandler,
+		"get-litres-details":     cli.GetLitResDetailsHandler,
+		"get-litres-my-books":    cli.GetLitResMyBooksHandler,
+		"import":                 cli.ImportHandler,
+		"reduce-litres-details":  cli.ReduceLitResDetailsHandler,
+		"reduce-litres-my-books": cli.ReduceLitResMyBooksHandler,
+		"serve":                  cli.ServeHandler,
+		"sync":                   cli.SyncHandler,
+		"version":                cli.VersionHandler,
 	})
 
 	if err := defs.AssertCommandsHaveHandlers(); err != nil {

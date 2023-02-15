@@ -14,27 +14,27 @@ complete
     id^&
     action=set^,clear
 
-download
+download-litres
     id^&
 
 export
     id^&
 
-get-covers
+get-litres-covers
     id^&
 
-get-details
+get-litres-details
     id^&
 
-get-my-books
+get-litres-my-books
     new-only
 
 import
 
-reduce-details
+reduce-litres-details
     score-data
 
-reduce-my-books
+reduce-litres-my-books
 
 sync
     new-only

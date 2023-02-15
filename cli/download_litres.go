@@ -33,7 +33,7 @@ var skipFormatDownloads = map[string]bool{
 	data.FormatMP3:     true,
 }
 
-func DownloadHandler(u *url.URL) error {
+func DownloadLitResHandler(u *url.URL) error {
 	hc, err := coost.NewHttpClientFromFile(data.AbsCookiesFilename(), litres_integration.LitResHost)
 	if err != nil {
 		return err
@@ -44,12 +44,12 @@ func DownloadHandler(u *url.URL) error {
 		ids = strings.Split(idstr, ",")
 	}
 
-	return Download(ids, hc)
+	return DownloadLitRes(ids, hc)
 }
 
-func Download(ids []string, hc *http.Client) error {
+func DownloadLitRes(ids []string, hc *http.Client) error {
 
-	da := nod.NewProgress("downloading books...")
+	da := nod.NewProgress("downloading LitRes books...")
 	defer da.End()
 
 	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), nil,

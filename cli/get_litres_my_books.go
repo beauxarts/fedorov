@@ -16,18 +16,18 @@ import (
 
 const maxSupportedPages = 1000
 
-func GetMyBooksHandler(u *url.URL) error {
+func GetLitResMyBooksHandler(u *url.URL) error {
 	hc, err := coost.NewHttpClientFromFile(data.AbsCookiesFilename(), litres_integration.LitResHost)
 	if err != nil {
 		return err
 	}
 
-	return GetMyBooks(hc)
+	return GetLitResMyBooks(hc)
 }
 
-func GetMyBooks(hc *http.Client) error {
+func GetLitResMyBooks(hc *http.Client) error {
 
-	gmba := nod.NewProgress("fetching my books fresh...")
+	gmba := nod.NewProgress("fetching LitRes my books fresh...")
 	defer gmba.End()
 
 	kv, err := kvas.ConnectLocal(data.AbsMyBooksFreshDir(), kvas.HtmlExt)
