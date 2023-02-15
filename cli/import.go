@@ -96,14 +96,6 @@ func Import() error {
 
 			case LiveLibDataSource:
 
-				if hrefs, ok := skv[idstr][data.HrefProperty]; ok {
-					if err := rxa.ReplaceValues(data.HrefProperty, idstr, hrefs...); err != nil {
-						return ia.EndWithError(err)
-					}
-				} else {
-					return ia.EndWithError(errors.New("href is required for litres data import"))
-				}
-
 				if rdx, err := importLiveLibData(idstr, hc); err != nil {
 					return ia.EndWithError(err)
 				} else {
