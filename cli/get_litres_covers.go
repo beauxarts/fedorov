@@ -23,7 +23,7 @@ func GetLitResCoversHandler(u *url.URL) error {
 
 func GetLitResCovers(ids []string, forceImported bool) error {
 
-	gca := nod.NewProgress("fetching covers...")
+	gca := nod.NewProgress("fetching LitRes covers...")
 	defer gca.End()
 
 	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), nil,

@@ -92,7 +92,7 @@ func fmtHref(_, property, link string, _ kvas.ReduxAssets) string {
 		return litres_integration.HrefUrl(link).String()
 	case data.AgeRatingProperty:
 		fallthrough
-	case data.ISBNPropertyProperty:
+	case data.ISBNProperty:
 		fallthrough
 	case data.TotalPagesProperty:
 		fallthrough

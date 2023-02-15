@@ -2,6 +2,7 @@ package data
 
 import (
 	"github.com/beauxarts/scrinium/litres_integration"
+	"github.com/beauxarts/scrinium/livelib_integration"
 )
 
 const (
@@ -24,7 +25,7 @@ const (
 	AgeRatingProperty         = "age-rating"
 	VolumeProperty            = "volume"
 	DurationProperty          = "duration"
-	ISBNPropertyProperty      = "isbn"
+	ISBNProperty              = "isbn"
 	TranslatorsProperty       = "translators"
 	ReadersProperty           = "readers"
 	IllustratorsProperty      = "illustrators"
@@ -43,6 +44,7 @@ const (
 	TagsProperty              = "tags"
 	LocalTagsProperty         = "local-tags"
 	BookCompletedProperty     = "book-completed"
+	ImageProperty             = "image"
 	// aggregate
 	AnyTextProperty = "any-text"
 	// sorting
@@ -75,7 +77,7 @@ func ReduxProperties() []string {
 		AgeRatingProperty,
 		DurationProperty,
 		VolumeProperty,
-		ISBNPropertyProperty,
+		ISBNProperty,
 		TranslatorsProperty,
 		ReadersProperty,
 		IllustratorsProperty,
@@ -140,7 +142,7 @@ var LitResPropertyMap = map[string]string{
 	"Дата выхода на ЛитРес:":                   DateReleasedProperty,
 	"Дата перевода:":                           DateTranslatedProperty,
 	"Дата написания:":                          DateCreatedProperty,
-	"ISBN:":                                    ISBNPropertyProperty,
+	"ISBN:":                                    ISBNProperty,
 	"Переводчики:":                             TranslatorsProperty,
 	"Переводчик:":                              TranslatorsProperty,
 	"Чтецы:":                                   ReadersProperty,
@@ -162,4 +164,20 @@ var LitResPropertyMap = map[string]string{
 	"Оглавление":                               litres_integration.KnownIrrelevantProperty,
 	"Размер страницы:":                         litres_integration.KnownIrrelevantProperty,
 	litres_integration.KnownIrrelevantProperty: litres_integration.KnownIrrelevantProperty,
+}
+
+var LiveLibPropertyMap = map[string]string{
+	livelib_integration.TitleProperty:          TitleProperty,
+	livelib_integration.AuthorsProperty:        AuthorsProperty,
+	livelib_integration.TranslatorsProperty:    TranslatorsProperty,
+	livelib_integration.DescriptionProperty:    DescriptionProperty,
+	livelib_integration.ISBNProperty:           ISBNProperty,
+	livelib_integration.SequenceNameProperty:   SequenceNameProperty,
+	livelib_integration.SequenceNumberProperty: SequenceNumberProperty,
+	livelib_integration.GenresProperty:         GenresProperty,
+	livelib_integration.TagsProperty:           TagsProperty,
+	livelib_integration.AgeRatingProperty:      AgeRatingProperty,
+	//livelib_integration.LanguageProperty
+	//livelib_integration.ImageProperty
+	//livelib_integration.EditionSeriesProperty
 }

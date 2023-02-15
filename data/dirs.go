@@ -8,13 +8,14 @@ import (
 )
 
 const (
-	relReduxDir         = "_redux"
-	relImportedDir      = "_imported"
-	relBackupDir        = "backup"
-	relMyBookFreshDir   = "my_books_fresh"
-	relMyBookDetailsDir = "my_books_details"
-	relDownloadsDir     = "downloads"
-	relCoversDir        = "covers"
+	relReduxDir          = "_redux"
+	relImportedDir       = "_imported"
+	relBackupDir         = "backup"
+	relMyBookFreshDir    = "my_books_fresh"
+	relMyBookDetailsDir  = "my_books_details"
+	relLiveLibDetailsDir = "livelib_details"
+	relDownloadsDir      = "downloads"
+	relCoversDir         = "covers"
 
 	relCookiesFilename = "cookies.txt"
 	relExportFilename  = "export.txt"
@@ -33,12 +34,16 @@ func Pwd() string {
 	return rootDir
 }
 
-func AbsMyBooksFreshDir() string {
+func AbsLitResMyBooksFreshDir() string {
 	return filepath.Join(rootDir, relMyBookFreshDir)
 }
 
-func AbsMyBooksDetailsDir() string {
+func AbsLitResMyBooksDetailsDir() string {
 	return filepath.Join(rootDir, relMyBookDetailsDir)
+}
+
+func AbsLiveLibDetailsDir() string {
+	return filepath.Join(rootDir, relLiveLibDetailsDir)
 }
 
 func AbsDownloadsDir() string {

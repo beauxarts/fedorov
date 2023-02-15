@@ -65,6 +65,7 @@ func main() {
 		"export":                 cli.ExportHandler,
 		"get-litres-covers":      cli.GetLitResCoversHandler,
 		"get-litres-details":     cli.GetLitResDetailsHandler,
+		"get-livelib-details":    cli.GetLiveLibDetailsHandler,
 		"get-litres-my-books":    cli.GetLitResMyBooksHandler,
 		"import":                 cli.ImportHandler,
 		"reduce-litres-details":  cli.ReduceLitResDetailsHandler,

@@ -41,7 +41,7 @@ func GetLitResDetails(ids []string, hc *http.Client, newOnly bool) error {
 		return gmbda.EndWithError(err)
 	}
 
-	kv, err := kvas.ConnectLocal(data.AbsMyBooksDetailsDir(), kvas.HtmlExt)
+	kv, err := kvas.ConnectLocal(data.AbsLitResMyBooksDetailsDir(), kvas.HtmlExt)
 	if err != nil {
 		return gmbda.EndWithError(err)
 	}

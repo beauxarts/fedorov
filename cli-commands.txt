@@ -26,6 +26,9 @@ get-litres-covers
 get-litres-details
     id^&
 
+get-livelib-details
+    id^&
+
 get-litres-my-books
     new-only
 

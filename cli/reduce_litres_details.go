@@ -38,7 +38,7 @@ func ReduceLitResBooksDetails(scoreData bool) error {
 		return rmbda.EndWithError(err)
 	}
 
-	kv, err := kvas.ConnectLocal(data.AbsMyBooksDetailsDir(), kvas.HtmlExt)
+	kv, err := kvas.ConnectLocal(data.AbsLitResMyBooksDetailsDir(), kvas.HtmlExt)
 	if err != nil {
 		return rmbda.EndWithError(err)
 	}
@@ -65,7 +65,7 @@ func ReduceLitResBooksDetails(scoreData bool) error {
 			missingDetails = append(missingDetails, id)
 		}
 
-		MapLitresToFedorov(id, lrdx, reductions)
+		MapLitResToFedorov(id, lrdx, reductions)
 
 		if scoreData {
 			for lp, vals := range lrdx {
@@ -132,7 +132,7 @@ func ReduceLitResBookDetails(id string, kv kvas.KeyValues) (map[string][]string,
 	return litres_integration.Reduce(body)
 }
 
-func MapLitresToFedorov(id string, lrdx map[string][]string, rdx map[string]map[string][]string) {
+func MapLitResToFedorov(id string, lrdx map[string][]string, rdx map[string]map[string][]string) {
 	for lp, vals := range lrdx {
 		if p, ok := data.LitResPropertyMap[lp]; ok {
 			if p == litres_integration.KnownIrrelevantProperty {

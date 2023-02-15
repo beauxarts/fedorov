@@ -25,7 +25,7 @@ func ReduceLitResMyBooks() error {
 	embia := nod.NewProgress("reducing my books...")
 	defer embia.End()
 
-	kv, err := kvas.ConnectLocal(data.AbsMyBooksFreshDir(), kvas.HtmlExt)
+	kv, err := kvas.ConnectLocal(data.AbsLitResMyBooksFreshDir(), kvas.HtmlExt)
 	if err != nil {
 		return embia.EndWithError(err)
 	}

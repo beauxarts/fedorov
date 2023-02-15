@@ -29,7 +29,7 @@ var BookProperties = []string{
 	data.AgeRatingProperty,
 	data.DurationProperty,
 	data.VolumeProperty,
-	data.ISBNPropertyProperty,
+	data.ISBNProperty,
 	data.TotalSizeProperty,
 	data.TotalPagesProperty,
 	data.HrefProperty,

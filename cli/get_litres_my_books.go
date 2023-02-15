@@ -30,7 +30,7 @@ func GetLitResMyBooks(hc *http.Client) error {
 	gmba := nod.NewProgress("fetching LitRes my books fresh...")
 	defer gmba.End()
 
-	kv, err := kvas.ConnectLocal(data.AbsMyBooksFreshDir(), kvas.HtmlExt)
+	kv, err := kvas.ConnectLocal(data.AbsLitResMyBooksFreshDir(), kvas.HtmlExt)
 	if err != nil {
 		return gmba.EndWithError(err)
 	}

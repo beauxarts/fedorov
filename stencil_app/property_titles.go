@@ -29,7 +29,7 @@ var PropertyTitles = map[string]string{
 	data.AgeRatingProperty:        "Для возраста",
 	data.DurationProperty:         "Длительность",
 	data.VolumeProperty:           "Объем",
-	data.ISBNPropertyProperty:     "ISBN",
+	data.ISBNProperty:             "ISBN",
 	data.TotalSizeProperty:        "Общий размер",
 	data.TotalPagesProperty:       "Всего страниц",
 	data.GenresProperty:           "Жанры",

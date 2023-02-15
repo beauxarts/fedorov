@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/scrinium/litres_integration"
+	"github.com/beauxarts/scrinium/livelib_integration"
 	"github.com/boggydigital/coost"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
@@ -71,7 +72,9 @@ func Import() error {
 			case LitResDataSource:
 
 				if hrefs, ok := skv[idstr][data.HrefProperty]; ok {
-					rxa.ReplaceValues(data.HrefProperty, idstr, hrefs...)
+					if err := rxa.ReplaceValues(data.HrefProperty, idstr, hrefs...); err != nil {
+						return ia.EndWithError(err)
+					}
 				} else {
 					return ia.EndWithError(errors.New("href is required for litres data import"))
 				}
@@ -90,7 +93,28 @@ func Import() error {
 						skv[idstr][p] = rdx[p][idstr]
 					}
 				}
+
 			case LiveLibDataSource:
+
+				if hrefs, ok := skv[idstr][data.HrefProperty]; ok {
+					if err := rxa.ReplaceValues(data.HrefProperty, idstr, hrefs...); err != nil {
+						return ia.EndWithError(err)
+					}
+				} else {
+					return ia.EndWithError(errors.New("href is required for litres data import"))
+				}
+
+				if rdx, err := importLiveLibData(idstr, hc); err != nil {
+					return ia.EndWithError(err)
+				} else {
+					// rdx -> skv
+					for p := range rdx {
+						if len(rdx[p][idstr]) == 0 {
+							continue
+						}
+						skv[idstr][p] = rdx[p][idstr]
+					}
+				}
 
 			default:
 				//unknown data source - ignore
@@ -187,7 +211,7 @@ func importLitresData(id string, hc *http.Client) (map[string]map[string][]strin
 		return nil, ilda.EndWithError(err)
 	}
 
-	kv, err := kvas.ConnectLocal(data.AbsMyBooksDetailsDir(), kvas.HtmlExt)
+	kv, err := kvas.ConnectLocal(data.AbsLitResMyBooksDetailsDir(), kvas.HtmlExt)
 	if err != nil {
 		return nil, ilda.EndWithError(err)
 	}
@@ -202,7 +226,7 @@ func importLitresData(id string, hc *http.Client) (map[string]map[string][]strin
 		rdx[p] = make(map[string][]string)
 	}
 
-	MapLitresToFedorov(id, lrdx, rdx)
+	MapLitResToFedorov(id, lrdx, rdx)
 
 	return rdx, nil
 }
@@ -211,22 +235,24 @@ func importLiveLibData(id string, hc *http.Client) (map[string]map[string][]stri
 	ilda := nod.Begin("importing data from LiveLib...")
 	defer ilda.End()
 
-	if err := GetLitResDetails([]string{id}, hc, false); err != nil {
+	if err := GetLiveLibDetails([]string{id}, hc, false); err != nil {
 		return nil, ilda.EndWithError(err)
 	}
 
-	if err := GetLitResCovers([]string{id}, true); err != nil {
-		return nil, ilda.EndWithError(err)
-	}
-
-	kv, err := kvas.ConnectLocal(data.AbsMyBooksDetailsDir(), kvas.HtmlExt)
+	kv, err := kvas.ConnectLocal(data.AbsLiveLibDetailsDir(), kvas.HtmlExt)
 	if err != nil {
 		return nil, ilda.EndWithError(err)
 	}
 
-	lrdx, err := ReduceLitResBookDetails(id, kv)
+	lrdx, err := ReduceLiveLibBookDetails(id, kv)
 	if err != nil {
 		return nil, ilda.EndWithError(err)
+	}
+
+	if srcs, ok := lrdx[livelib_integration.ImageProperty]; ok && len(srcs) > 0 {
+		if err := GetLiveLibCover(id, srcs[0]); err != nil {
+			return nil, ilda.EndWithError(err)
+		}
 	}
 
 	rdx := make(map[string]map[string][]string)
@@ -234,7 +260,7 @@ func importLiveLibData(id string, hc *http.Client) (map[string]map[string][]stri
 		rdx[p] = make(map[string][]string)
 	}
 
-	MapLitresToFedorov(id, lrdx, rdx)
+	MapLiveLibToFedorov(id, lrdx, rdx)
 
 	return rdx, nil
 }
