@@ -1,7 +1,7 @@
 package data
 
 import (
-	"github.com/beauxarts/litres_integration"
+	"github.com/beauxarts/scrinium/litres_integration"
 )
 
 const (

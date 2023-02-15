@@ -3,7 +3,7 @@ package cli
 import (
 	"errors"
 	"github.com/beauxarts/fedorov/data"
-	"github.com/beauxarts/litres_integration"
+	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
 	"golang.org/x/net/html"
@@ -129,7 +129,7 @@ func ReduceLitResBookDetails(id string, kv kvas.KeyValues) (map[string][]string,
 		return nil, err
 	}
 
-	return litres_integration.ReduceDetails(body)
+	return litres_integration.Reduce(body)
 }
 
 func MapLitresToFedorov(id string, lrdx map[string][]string, rdx map[string]map[string][]string) {

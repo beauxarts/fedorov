@@ -3,7 +3,7 @@ package cli
 import (
 	"errors"
 	"github.com/beauxarts/fedorov/data"
-	"github.com/beauxarts/litres_integration"
+	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/coost"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"

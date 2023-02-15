@@ -3,7 +3,7 @@ package stencil_app
 import (
 	"fmt"
 	"github.com/beauxarts/fedorov/data"
-	"github.com/beauxarts/litres_integration"
+	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/kvas"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
