@@ -1,7 +1,8 @@
-Figure out using external metadata for imported books (e.g. for print books):
-	- LiveLib
-	
-Add other formats:
+Import:
+	- Bug: exported data doesn't import correctly
+	- Infer book type from file extension
+
+Add other formats available:
 	- audio to text
 	- text to audio
 
@@ -10,6 +11,9 @@ Add LitRes API data:
 	- author (reader/translater/etc?) details: https://api.litres.ru/foundation/api/authors/31883880/arts?art_groups=1&art_groups=2&art_groups=10&author_id_or_slug=31883880&limit=70&o=series&show_unavailable=true
 
 Archive:
+	Figure out using external metadata for imported books (e.g. for print books): @done(2023-02-18)
+		- LiveLib @done(2023-02-18)
+		
 	Rework covers: @done(2023-01-02)
 		- download 330/415 sizes for lists @done(2023-01-02)
 		- full detail for product details @done(2023-01-02)
