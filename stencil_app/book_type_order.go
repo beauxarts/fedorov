@@ -1,9 +1,11 @@
 package stencil_app
 
+import "github.com/beauxarts/fedorov/data"
+
 const (
-	BookTypeText  = "текст"
-	BookTypePDF   = "pdf"
-	BookTypeAudio = "аудио"
+	BookTypeText  = data.BookTypeText
+	BookTypePDF   = data.BookTypePDF
+	BookTypeAudio = data.BookTypeAudio
 )
 
 var BookTypeOrder = []string{

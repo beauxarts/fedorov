@@ -1,7 +1,3 @@
-Import:
-	- Bug: exported data doesn't import correctly
-	- Infer book type from file extension
-
 Add other formats available:
 	- audio to text
 	- text to audio
@@ -11,6 +7,10 @@ Add LitRes API data:
 	- author (reader/translater/etc?) details: https://api.litres.ru/foundation/api/authors/31883880/arts?art_groups=1&art_groups=2&art_groups=10&author_id_or_slug=31883880&limit=70&o=series&show_unavailable=true
 
 Archive:
+	Import: @done(2023-02-21)
+		- Bug: exported data doesn't import correctly @done(2023-02-21)
+			- Description had new line - needs to be fixed manually before reimporting @done(2023-02-21)
+		- Infer book type from file extension @done(2023-02-21)
 	Figure out using external metadata for imported books (e.g. for print books): @done(2023-02-18)
 		- LiveLib @done(2023-02-18)
 		

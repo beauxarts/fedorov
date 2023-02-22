@@ -124,8 +124,14 @@ func Import() error {
 				}
 			}
 
-			// move download files into destination folder
+			// move download files into destination folder and infer book type
+
 			for _, link := range skv[idstr][data.DownloadLinksProperty] {
+
+				if len(skv[idstr][data.BookTypeProperty]) == 0 {
+					skv[idstr][data.BookTypeProperty] = []string{data.FormatBookType(data.LinkFormat(link))}
+				}
+
 				_, relSrcFilename := filepath.Split(link)
 				if relSrcFilename == "" {
 					continue

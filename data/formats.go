@@ -1,6 +1,16 @@
 package data
 
-import "strings"
+import (
+	"golang.org/x/exp/slices"
+	"strings"
+)
+
+const (
+	BookTypeText    = "текст"
+	BookTypePDF     = "pdf"
+	BookTypeAudio   = "аудио"
+	BookTypeUnknown = "unknown"
+)
 
 const (
 	// Text books
@@ -87,6 +97,40 @@ func LinkFormat(link string) string {
 	}
 
 	return format
+}
+
+var textFormats = []string{
+	FormatFB2,
+	FormatEPUB,
+	FormatTXTZIP,
+	FormatRTF,
+	FormatPDFA4,
+	FormatMOBI,
+	FormatAZW3,
+	FormatIOSEPUB,
+	FormatPDFA6,
+	FormatFB3,
+	FormatTXT,
+}
+
+var pdfFormats = []string{
+	FormatPDF,
+}
+
+var audioFormats = []string{
+	FormatMP3,
+	FormatMP4,
+}
+
+func FormatBookType(format string) string {
+	if slices.Contains(textFormats, format) {
+		return BookTypeText
+	} else if slices.Contains(pdfFormats, format) {
+		return BookTypePDF
+	} else if slices.Contains(audioFormats, format) {
+		return BookTypeAudio
+	}
+	return BookTypeUnknown
 }
 
 func FormatDesc(format string) string {
