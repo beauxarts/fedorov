@@ -33,6 +33,7 @@ var BookProperties = []string{
 	data.TotalSizeProperty,
 	data.TotalPagesProperty,
 	data.HrefProperty,
+	data.LanguageProperty,
 }
 
 var BookLabels = []string{

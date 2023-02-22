@@ -45,6 +45,7 @@ const (
 	LocalTagsProperty         = "local-tags"
 	BookCompletedProperty     = "book-completed"
 	ImageProperty             = "image"
+	LanguageProperty          = "language"
 	// aggregate
 	AnyTextProperty = "any-text"
 	// sorting
@@ -100,6 +101,7 @@ func ReduxProperties() []string {
 		ImportedProperty,
 		DataSourceProperty,
 		MyBooksOrderProperty,
+		LanguageProperty,
 	}
 }
 
@@ -177,7 +179,9 @@ var LiveLibPropertyMap = map[string]string{
 	livelib_integration.GenresProperty:         GenresProperty,
 	livelib_integration.TagsProperty:           TagsProperty,
 	livelib_integration.AgeRatingProperty:      AgeRatingProperty,
-	//livelib_integration.LanguageProperty
+	livelib_integration.PublishersProperty:     PublishersProperty,
+	livelib_integration.YearPublishedProperty:  DateCreatedProperty,
+	livelib_integration.LanguageProperty:       LanguageProperty,
 	//livelib_integration.ImageProperty
 	//livelib_integration.EditionSeriesProperty
 }

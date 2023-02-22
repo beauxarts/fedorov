@@ -27,6 +27,7 @@ var SearchProperties = []string{
 	data.DateTranslatedProperty,
 	data.DateCreatedProperty,
 	data.ISBNProperty,
+	data.LanguageProperty,
 	data.SortProperty,
 	data.DescendingProperty,
 	data.ImportedProperty,
