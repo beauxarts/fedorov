@@ -12,10 +12,11 @@ import (
 
 func SyncHandler(u *url.URL) error {
 	newOnly := u.Query().Has("new-only")
+	cwu := u.Query().Get("completion-webhook-url")
 
-	return Sync(newOnly)
+	return Sync(cwu, newOnly)
 }
-func Sync(newOnly bool) error {
+func Sync(completionWebhookUrl string, newOnly bool) error {
 
 	hc, err := coost.NewHttpClientFromFile(data.AbsCookiesFilename(), litres_integration.LitResHost)
 	if err != nil {
@@ -51,6 +52,10 @@ func Sync(newOnly bool) error {
 	}
 
 	if err := Backup(); err != nil {
+		return err
+	}
+
+	if err := PostCompletion(completionWebhookUrl); err != nil {
 		return err
 	}
 

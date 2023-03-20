@@ -68,6 +68,7 @@ func main() {
 		"get-livelib-details":    cli.GetLiveLibDetailsHandler,
 		"get-litres-my-books":    cli.GetLitResMyBooksHandler,
 		"import":                 cli.ImportHandler,
+		"post-completion":        cli.PostCompletionHandler,
 		"reduce-litres-details":  cli.ReduceLitResDetailsHandler,
 		"reduce-litres-my-books": cli.ReduceLitResMyBooksHandler,
 		"serve":                  cli.ServeHandler,

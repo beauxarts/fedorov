@@ -34,6 +34,9 @@ get-litres-my-books
 
 import
 
+post-completion
+    completion-webhook-url
+
 reduce-litres-details
     score-data
 
@@ -41,6 +44,7 @@ reduce-litres-my-books
 
 sync
     new-only
+    completion-webhook-url
 
 serve
     port$*

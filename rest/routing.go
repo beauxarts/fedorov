@@ -12,20 +12,27 @@ const (
 )
 
 var (
-	Auth    = middleware.BasicHttpAuth
-	Gzip    = middleware.Gzip
-	GetOnly = middleware.GetMethodOnly
-	Log     = nod.RequestLog
+	Auth     = middleware.BasicHttpAuth
+	Gzip     = middleware.Gzip
+	GetOnly  = middleware.GetMethodOnly
+	PostOnly = middleware.PostMethodOnly
+	Static   = middleware.Static
+	Log      = nod.RequestLog
 )
 
-func HandleFuncs() {
+var port int
+
+func HandleFuncs(p int) {
+
+	port = p
+
 	patternHandlers := map[string]http.Handler{
 		// unauth data endpoints
-		"/books":       Gzip(GetOnly(Log(http.HandlerFunc(GetBooks)))),
-		"/book":        Gzip(GetOnly(Log(http.HandlerFunc(GetBook)))),
+		"/books":       Gzip(GetOnly(Static(Log(http.HandlerFunc(GetBooks))))),
+		"/book":        Gzip(GetOnly(Static(Log(http.HandlerFunc(GetBook))))),
 		"/list_cover":  GetOnly(Log(http.HandlerFunc(GetListCover))),
 		"/book_cover":  GetOnly(Log(http.HandlerFunc(GetBookCover))),
-		"/search":      Gzip(GetOnly(Log(http.HandlerFunc(GetSearch)))),
+		"/search":      Gzip(GetOnly(Static(Log(http.HandlerFunc(GetSearch))))),
 		"/digest":      Gzip(GetOnly(Log(http.HandlerFunc(GetDigest)))),
 		"/downloads":   Gzip(GetOnly(Log(http.HandlerFunc(GetDownloads)))),
 		"/description": Gzip(GetOnly(Log(http.HandlerFunc(GetDescription)))),
@@ -36,6 +43,8 @@ func HandleFuncs() {
 		"/local-tags/apply": Auth(Gzip(GetOnly(Log(http.HandlerFunc(GetLocalTagsApply)))), AdminRole),
 		// auth media endpoints
 		"/file": Auth(GetOnly(Log(http.HandlerFunc(GetFile))), AdminRole, SharedRole),
+		// prerender
+		"/prerender": PostOnly(Log(http.HandlerFunc(PostPrerender))),
 		// start at the books
 		"/": http.RedirectHandler("/books", http.StatusPermanentRedirect),
 		//robots.txt
