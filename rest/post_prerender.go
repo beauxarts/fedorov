@@ -1,12 +1,8 @@
 package rest
 
 import (
-	"bytes"
-	"fmt"
 	"github.com/beauxarts/fedorov/stencil_app"
-	"github.com/boggydigital/middleware"
-	"github.com/boggydigital/nod"
-	"io"
+	"github.com/boggydigital/stencil/stencil_rest"
 	"net/http"
 )
 
@@ -30,40 +26,6 @@ func PostPrerender(w http.ResponseWriter, r *http.Request) {
 		paths = append(paths, sp)
 	}
 
-	// we don't want to accumulate existing static content over the lifetime of the app
-	middleware.ClearStaticContent()
+	stencil_rest.Prerender(paths, port, w)
 
-	host := fmt.Sprintf("http://localhost:%d", port)
-
-	for _, p := range paths {
-		if err := setStaticContent(host, p); err != nil {
-			http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
-			return
-		}
-	}
-
-	if _, err := io.WriteString(w, "ok"); err != nil {
-		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
-		return
-	}
-
-}
-
-func setStaticContent(host, p string) error {
-	resp, err := http.DefaultClient.Get(host + p)
-	if err != nil {
-		return err
-	}
-	defer resp.Body.Close()
-
-	bs := make([]byte, 0, 1024*1024)
-	bb := bytes.NewBuffer(bs)
-
-	if _, err := io.Copy(bb, resp.Body); err != nil {
-		return err
-	}
-
-	middleware.SetStaticContent(p, bb.Bytes())
-
-	return nil
 }
