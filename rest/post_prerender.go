@@ -15,17 +15,13 @@ func PostPrerender(w http.ResponseWriter, _ *http.Request) {
 	// - default path (/updates)
 	// - every top-level search route
 
-	if err := stencil_rest.Prerender(createListsPaths(), true, port); err != nil {
+	if err := updatePrerender(); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return
 	}
 }
 
 func updatePrerender() error {
-	return stencil_rest.Prerender(createListsPaths(), false, port)
-}
-
-func createListsPaths() []string {
 	paths := []string{
 		"/books",
 	}
@@ -38,5 +34,5 @@ func createListsPaths() []string {
 		paths = append(paths, sp)
 	}
 
-	return paths
+	return stencil_rest.Prerender(paths, port)
 }
