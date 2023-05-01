@@ -2,11 +2,12 @@ package rest
 
 import (
 	"github.com/beauxarts/fedorov/stencil_app"
+	"github.com/boggydigital/nod"
 	"github.com/boggydigital/stencil/stencil_rest"
 	"net/http"
 )
 
-func PostPrerender(w http.ResponseWriter, r *http.Request) {
+func PostPrerender(w http.ResponseWriter, _ *http.Request) {
 
 	// POST /prerender
 
@@ -14,6 +15,17 @@ func PostPrerender(w http.ResponseWriter, r *http.Request) {
 	// - default path (/updates)
 	// - every top-level search route
 
+	if err := stencil_rest.Prerender(createListsPaths(), true, port); err != nil {
+		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
+func updatePrerender() error {
+	return stencil_rest.Prerender(createListsPaths(), false, port)
+}
+
+func createListsPaths() []string {
 	paths := []string{
 		"/books",
 	}
@@ -26,6 +38,5 @@ func PostPrerender(w http.ResponseWriter, r *http.Request) {
 		paths = append(paths, sp)
 	}
 
-	stencil_rest.Prerender(paths, port, w)
-
+	return paths
 }
