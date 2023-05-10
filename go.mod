@@ -6,7 +6,7 @@ require (
 	github.com/beauxarts/scrinium v0.1.16
 	github.com/boggydigital/clo v0.3.1
 	github.com/boggydigital/coost v0.3.8
-	github.com/boggydigital/dolo v0.2.5
+	github.com/boggydigital/dolo v0.2.10
 	github.com/boggydigital/kvas v0.3.27
 	github.com/boggydigital/match_node v0.1.11
 	github.com/boggydigital/middleware v0.1.7
