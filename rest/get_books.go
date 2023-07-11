@@ -18,6 +18,8 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
 
 	// GET /books
 
+	showAll := r.URL.Query().Get("show-all") == "true"
+
 	var err error
 	if rxa, err = rxa.RefreshReduxAssets(); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
@@ -42,10 +44,12 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
 	}
 
 	booksByType := make(map[string][]string)
+	bookTypeTotals := make(map[string]int)
 
 	for _, id := range myBooks {
 		bt, _ := rxa.GetFirstVal(data.BookTypeProperty, id)
-		if len(booksByType[bt]) >= latestBooksLimit {
+		bookTypeTotals[bt]++
+		if !showAll && len(booksByType[bt]) >= latestBooksLimit {
 			continue
 		}
 		booksByType[bt] = append(booksByType[bt], id)
@@ -65,7 +69,9 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
 		stencil_app.BookTypeOrder,
 		booksByType,
 		stencil_app.BookTypeTitles,
+		bookTypeTotals,
 		updated,
+		r.URL,
 		rxa,
 		w); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
