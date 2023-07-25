@@ -25,6 +25,8 @@ get-litres-covers
 
 get-litres-details
     id^&
+    new-only
+    no-throttle
 
 get-livelib-details
     id^&
@@ -44,6 +46,7 @@ reduce-litres-my-books
 
 sync
     new-only
+    no-throttle
     completion-webhook-url
 
 serve
