@@ -10,6 +10,8 @@ github.com/boggydigital/dolo v0.2.10 h1:QNv4DTF/hvzXXBs6UkFBEVf80KF6xKnbqfDEBvwz
 github.com/boggydigital/dolo v0.2.10/go.mod h1:KyIaQOp2cV85hC6lTMRwHtzofzjxXr+msOgcs89t078=
 github.com/boggydigital/issa v0.1.5 h1:3thLinhaXNHYcmF3T5y3wOEvhxq+GyhW8WtNDcl0OC0=
 github.com/boggydigital/issa v0.1.5/go.mod h1:evu3blQmQe6xJy9NRFJGIU+91IWy4/YCROVvUZi5k14=
+github.com/boggydigital/issa v0.1.6 h1:XpsnIwAxeHh4VNXkNqB+dO4g9xXFfbP3onWETbS7ARg=
+github.com/boggydigital/issa v0.1.6/go.mod h1:TNYZ7A1mx+Ib7/o4nGQ/G9QLm3JPKV2xP8qBy+DA+ck=
 github.com/boggydigital/kvas v0.3.27 h1:9Oczfp5GFkAsZqLyiIsEp/0cCVfTXA6V6/3MEAw+zyw=
 github.com/boggydigital/kvas v0.3.27/go.mod h1:I+wVKLxOqWhzw0X8nez/ec/GVXcQY5GUksFJBx+G7Yc=
 github.com/boggydigital/match_node v0.1.11 h1:Uxm5tlrDAXGeHDf8EMVpyazZ5UHzRS0DUkN65HfsEDs=
@@ -36,6 +38,8 @@ github.com/boggydigital/stencil v0.1.66 h1:ZCMVudZl55RIR/ywnXTsyRUtGIyl2iAbOwkYm
 github.com/boggydigital/stencil v0.1.66/go.mod h1:A3cjsQrgD7pynWlnAZgGyPjTi2ivoZ3GpXK8VcbJVd8=
 github.com/boggydigital/stencil v0.1.67 h1:84yTMf/sx5lXHhEjNxnu6Hk37fzeYVHTRbxqs+inMmY=
 github.com/boggydigital/stencil v0.1.67/go.mod h1:A3cjsQrgD7pynWlnAZgGyPjTi2ivoZ3GpXK8VcbJVd8=
+github.com/boggydigital/stencil v0.1.71 h1:S2zEB77/jTF4o1ysI3Gf6TzMtRUSDt89rLi/eiZowG4=
+github.com/boggydigital/stencil v0.1.71/go.mod h1:TV479DEX+KyGMkAzAiUDtjk/v78jJlPpLw1zQ/b3p/I=
 github.com/boggydigital/testo v0.1.7 h1:Sa5GIAwCyQNeGGXi8XgVpIpLQqWVeqBKQRcv0gkL098=
 github.com/boggydigital/wits v0.2.3 h1:Z0eB+QlIA18fJmblyV6ZJQ/swPYSFhOxfgMXOQz4/c8=
 github.com/boggydigital/wits v0.2.3/go.mod h1:aR/z0vfMLtg0b4hcts0qiSTZcA51O8A2N3U9laqd2Lc=
@@ -45,5 +49,8 @@ golang.org/x/exp v0.0.0-20230728194245-b0cb94b80691 h1:/yRP+0AN7mf5DkD3BAI6TOFnd
 golang.org/x/exp v0.0.0-20230728194245-b0cb94b80691/go.mod h1:FXUEEKJgO7OQYeo8N01OfiKP8RXMtf6e8aTskBGqWdc=
 golang.org/x/net v0.7.0 h1:rJrUqqhjsgNp7KqAIc25s9pZnjU7TUcSY7HcVZjdn1g=
 golang.org/x/net v0.7.0/go.mod h1:2Tu9+aMcznHK/AK1HMvgo6xiTLG5rD5rZLDS+rp2Bjs=
+golang.org/x/net v0.12.0 h1:cfawfvKITfUsFCeJIHJrbSxpeu/E81khclypR0GVT50=
+golang.org/x/net v0.12.0/go.mod h1:zEVYFnQC7m/vmpQFELhcD1EWkZlX69l4oqgmer6hfKA=
 golang.org/x/text v0.7.0 h1:4BRB4x83lYWy72KwLD/qYDuTu7q9PjSagHvijDw7cLo=
 golang.org/x/text v0.7.0/go.mod h1:mrYo+phRRbMaCq/xk9113O4dZlRixOauAjOtrjsXDZ8=
+golang.org/x/text v0.11.0/go.mod h1:TvPlkZtksWOMsz7fbANvkp4WM8x/WCo/om8BMLbz+aE=
