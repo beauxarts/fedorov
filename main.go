@@ -90,6 +90,7 @@ func main() {
 		"backup":                 cli.BackupHandler,
 		"cascade":                cli.CascadeHandler,
 		"complete":               cli.CompleteHandler,
+		"dehydrate":              cli.DehydrateHandler,
 		"download-litres":        cli.DownloadLitResHandler,
 		"export":                 cli.ExportHandler,
 		"get-litres-covers":      cli.GetLitResCoversHandler,

@@ -52,6 +52,10 @@ func Sync(completionWebhookUrl string, newOnly, noThrottle bool) error {
 		return err
 	}
 
+	if err := Dehydrate(map[string]bool{}, true, false); err != nil {
+		return err
+	}
+
 	if err := Backup(); err != nil {
 		return err
 	}

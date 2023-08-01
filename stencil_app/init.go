@@ -39,6 +39,10 @@ func Init(rxa kvas.ReduxAssets) (*stencil.AppConfiguration, error) {
 		return app, err
 	}
 
+	app.SetDehydratedImagesConfiguration(
+		data.DehydratedListImageProperty,
+		data.DehydratedItemImageProperty)
+
 	if err := app.SetItemConfiguration(
 		BookProperties,
 		nil,

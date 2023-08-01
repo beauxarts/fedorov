@@ -14,6 +14,11 @@ complete
     id^&
     action=set^,clear
 
+dehydrate
+    id^&
+    all
+    overwrite
+
 download-litres
     id^&
 

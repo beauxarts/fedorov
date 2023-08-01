@@ -8,6 +8,8 @@ var BookProperties = []string{
 	data.BookCompletedProperty,
 	data.LocalTagsProperty,
 
+	data.DehydratedItemImageProperty,
+
 	data.AuthorsProperty,
 	data.CoauthorsProperty,
 	data.TranslatorsProperty,
@@ -44,5 +46,6 @@ var BookLabels = []string{
 }
 
 var BookHiddenProperties = []string{
+	data.DehydratedItemImageProperty,
 	data.BookTypeProperty,
 }

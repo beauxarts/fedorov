@@ -8,10 +8,12 @@ var BooksProperties = []string{
 	data.LocalTagsProperty,
 	data.AuthorsProperty,
 	data.DateCreatedProperty,
+	data.DehydratedListImageProperty,
 }
 
 var BooksLabels = []string{
 	data.BookTypeProperty,
 	data.BookCompletedProperty,
 	data.LocalTagsProperty,
+	data.DehydratedListImageProperty,
 }

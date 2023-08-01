@@ -58,6 +58,11 @@ const (
 	DataSourceProperty = "data-source"
 	// my-books-order
 	MyBooksOrderProperty = "my-books-order"
+	// dehydrated images
+	DehydratedListImageProperty         = "dehydrated-list-image"
+	DehydratedListImageModifiedProperty = "dehydrated-list-image-modified"
+	DehydratedItemImageProperty         = "dehydrated-item-image"
+	DehydratedItemImageModifiedProperty = "dehydrated-item-image-modified"
 )
 
 func ReduxProperties() []string {
@@ -102,6 +107,8 @@ func ReduxProperties() []string {
 		DataSourceProperty,
 		MyBooksOrderProperty,
 		LanguageProperty,
+		DehydratedListImageProperty,
+		DehydratedItemImageProperty,
 	}
 }
 

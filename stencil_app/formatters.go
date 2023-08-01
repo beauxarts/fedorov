@@ -102,6 +102,10 @@ func fmtHref(_, property, link string, _ kvas.ReduxAssets) string {
 		fallthrough
 	case data.DurationProperty:
 		return ""
+	case data.DehydratedListImageProperty:
+		fallthrough
+	case data.DehydratedItemImageProperty:
+		return link
 	default:
 		// do nothing
 	}
