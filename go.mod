@@ -11,7 +11,7 @@ require (
 	github.com/boggydigital/match_node v0.1.11
 	github.com/boggydigital/middleware v0.1.7
 	github.com/boggydigital/nod v0.1.21
-	github.com/boggydigital/stencil v0.1.74
+	github.com/boggydigital/stencil v0.1.76
 	github.com/boggydigital/wits v0.2.3
 	golang.org/x/exp v0.0.0-20230728194245-b0cb94b80691
 	golang.org/x/net v0.12.0
@@ -19,6 +19,6 @@ require (
 )
 
 require (
-	github.com/boggydigital/issa v0.1.6 // indirect
+	github.com/boggydigital/issa v0.1.9 // indirect
 	github.com/boggydigital/packer v0.1.0 // indirect
 )
