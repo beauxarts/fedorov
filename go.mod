@@ -1,6 +1,6 @@
 module github.com/beauxarts/fedorov
 
-go 1.19
+go 1.20
 
 require (
 	github.com/beauxarts/scrinium v0.1.16
