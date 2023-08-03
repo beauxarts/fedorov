@@ -32,9 +32,3 @@ var SearchProperties = []string{
 	data.DescendingProperty,
 	data.ImportedProperty,
 }
-
-var SearchHighlightProperties = []string{
-	data.AnyTextProperty,
-	data.TitleProperty,
-	data.AuthorsProperty,
-}

@@ -59,7 +59,6 @@ func Init(rxa kvas.ReduxAssets) (*stencil.AppConfiguration, error) {
 
 	if err := app.SetSearchConfiguration(
 		SearchProperties,
-		SearchHighlightProperties,
 		DigestProperties,
 		SearchScopes,
 		SearchScopeQueries()); err != nil {
