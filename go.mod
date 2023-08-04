@@ -11,7 +11,7 @@ require (
 	github.com/boggydigital/match_node v0.1.11
 	github.com/boggydigital/middleware v0.1.7
 	github.com/boggydigital/nod v0.1.21
-	github.com/boggydigital/stencil v0.1.83
+	github.com/boggydigital/stencil v0.1.84
 	github.com/boggydigital/wits v0.2.3
 	golang.org/x/exp v0.0.0-20230728194245-b0cb94b80691
 	golang.org/x/net v0.12.0
