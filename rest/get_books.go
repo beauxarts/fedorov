@@ -46,12 +46,10 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
 	booksByType := make(map[string][]string)
 	bookTypeTotals := make(map[string]int)
 
-	paginate := false
 	for _, id := range myBooks {
 		bt, _ := rxa.GetFirstVal(data.BookTypeProperty, id)
 		bookTypeTotals[bt]++
-		paginate = len(booksByType[bt]) > latestBooksLimit*2
-		if paginate && !showAll && len(booksByType[bt]) >= latestBooksLimit {
+		if !showAll && len(booksByType[bt]) >= latestBooksLimit {
 			continue
 		}
 		booksByType[bt] = append(booksByType[bt], id)
