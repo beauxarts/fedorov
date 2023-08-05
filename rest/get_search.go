@@ -77,6 +77,8 @@ func GetSearch(w http.ResponseWriter, r *http.Request) {
 		to = from + SearchResultsLimit
 		if to > len(ids) {
 			to = len(ids)
+		} else if to+SearchResultsLimit > len(ids) {
+			to = len(ids)
 		}
 	}
 
