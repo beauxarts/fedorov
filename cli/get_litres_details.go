@@ -46,7 +46,7 @@ func GetLitResDetails(ids []string, hc *http.Client, newOnly, noThrottle bool) e
 	gmbda := nod.NewProgress("getting LitRes my books details...")
 	defer gmbda.End()
 
-	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), nil,
+	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(),
 		data.MyBooksIdsProperty,
 		data.HrefProperty,
 		data.ImportedProperty)

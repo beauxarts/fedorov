@@ -4,7 +4,6 @@ import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/stencil_app"
 	"github.com/boggydigital/nod"
-	"golang.org/x/exp/maps"
 	"net/http"
 )
 
@@ -14,17 +13,17 @@ func GetLocalTagsEdit(w http.ResponseWriter, r *http.Request) {
 
 	id := r.URL.Query().Get("id")
 
-	allValues := make(map[string]bool)
+	allValues := make(map[string]string)
 	for _, id := range rxa.Keys(data.LocalTagsProperty) {
-		if values, ok := rxa.GetAllUnchangedValues(data.LocalTagsProperty, id); ok {
+		if values, ok := rxa.GetAllValues(data.LocalTagsProperty, id); ok {
 			for _, v := range values {
-				allValues[v] = true
+				allValues[v] = v
 			}
 		}
 	}
 
 	selectedValues := make(map[string]bool)
-	if values, ok := rxa.GetAllUnchangedValues(data.LocalTagsProperty, id); ok {
+	if values, ok := rxa.GetAllValues(data.LocalTagsProperty, id); ok {
 		for _, v := range values {
 			selectedValues[v] = true
 		}
@@ -39,7 +38,7 @@ func GetLocalTagsEdit(w http.ResponseWriter, r *http.Request) {
 		true,
 		"",
 		selectedValues,
-		maps.Keys(allValues),
+		allValues,
 		true,
 		"/local-tags/apply",
 		w); err != nil {

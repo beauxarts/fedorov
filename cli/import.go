@@ -32,7 +32,7 @@ func Import() error {
 	ia := nod.Begin("importing books...")
 	defer ia.End()
 
-	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), nil, data.ReduxProperties()...)
+	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), data.ReduxProperties()...)
 	if err != nil {
 		return ia.EndWithError(err)
 	}

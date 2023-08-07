@@ -3,7 +3,6 @@ package stencil_app
 import "github.com/beauxarts/fedorov/data"
 
 var PropertyTitles = map[string]string{
-	data.AnyTextProperty:          "Любой текст",
 	data.TitleProperty:            "Название",
 	data.BookTypeProperty:         "Тип",
 	data.BookCompletedProperty:    "Прочитано",
@@ -40,4 +39,9 @@ var PropertyTitles = map[string]string{
 	// sorting properties
 	data.SortProperty:       "Порядок",
 	data.DescendingProperty: "По убыванию",
+	// sorting values
+	data.MyBooksOrderProperty: "Мои книги",
+	// Yes/No
+	"true":  "Да",
+	"false": "Нет",
 }

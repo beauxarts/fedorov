@@ -42,16 +42,8 @@ func InitTemplates(templatesFS fs.FS, stencilAppStyles fs.FS) {
 
 func Init() error {
 
-	fbr := &kvas.ReduxFabric{
-		Aggregates: map[string][]string{
-			data.AnyTextProperty: data.AnyTextProperties(),
-		},
-		Transitives: nil,
-		Atomics:     nil,
-	}
-
 	var err error
-	if rxa, err = kvas.ConnectReduxAssets(data.AbsReduxDir(), fbr, data.ReduxProperties()...); err != nil {
+	if rxa, err = kvas.ConnectReduxAssets(data.AbsReduxDir(), data.ReduxProperties()...); err != nil {
 		return err
 	}
 

@@ -52,7 +52,7 @@ func DownloadLitRes(ids []string, hc *http.Client) error {
 	da := nod.NewProgress("downloading LitRes books...")
 	defer da.End()
 
-	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), nil,
+	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(),
 		data.MyBooksIdsProperty,
 		data.TitleProperty,
 		data.AuthorsProperty,
@@ -65,7 +65,7 @@ func DownloadLitRes(ids []string, hc *http.Client) error {
 
 	if ids == nil {
 		var ok bool
-		ids, ok = rxa.GetAllUnchangedValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty)
+		ids, ok = rxa.GetAllValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty)
 		if !ok {
 			err = errors.New("no my books found")
 			return da.EndWithError(err)
@@ -84,9 +84,9 @@ func DownloadLitRes(ids []string, hc *http.Client) error {
 		}
 
 		title, _ := rxa.GetFirstVal(data.TitleProperty, id)
-		authors, _ := rxa.GetAllUnchangedValues(data.AuthorsProperty, id)
+		authors, _ := rxa.GetAllValues(data.AuthorsProperty, id)
 
-		dls, ok := rxa.GetAllUnchangedValues(data.DownloadLinksProperty, id)
+		dls, ok := rxa.GetAllValues(data.DownloadLinksProperty, id)
 		if !ok {
 			nod.Log("book %s is missing download links", id)
 			continue

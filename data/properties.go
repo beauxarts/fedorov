@@ -46,8 +46,6 @@ const (
 	BookCompletedProperty     = "book-completed"
 	ImageProperty             = "image"
 	LanguageProperty          = "language"
-	// aggregate
-	AnyTextProperty = "any-text"
 	// sorting
 	SortProperty       = "sort"
 	DescendingProperty = "desc"

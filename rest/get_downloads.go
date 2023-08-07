@@ -29,8 +29,8 @@ func GetDownloads(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	links, ok := rxa.GetAllUnchangedValues(data.DownloadLinksProperty, idstr)
-	titles, _ := rxa.GetAllUnchangedValues(data.DownloadTitlesProperty, idstr)
+	links, ok := rxa.GetAllValues(data.DownloadLinksProperty, idstr)
+	titles, _ := rxa.GetAllValues(data.DownloadTitlesProperty, idstr)
 
 	if !ok {
 		http.Error(w, nod.ErrorStr("book has no downloads"), http.StatusInternalServerError)

@@ -19,7 +19,7 @@ func Cascade() error {
 
 	props := []string{data.TitleProperty, data.BookCompletedProperty, data.MyBooksIdsProperty, data.MyBooksOrderProperty}
 
-	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), nil, props...)
+	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), props...)
 	if err != nil {
 		return ca.EndWithError(err)
 	}
@@ -48,7 +48,7 @@ func Cascade() error {
 	mboa := nod.NewProgress(" " + data.MyBooksOrderProperty)
 	defer mboa.End()
 
-	myBooksIds, _ := rxa.GetAllUnchangedValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty)
+	myBooksIds, _ := rxa.GetAllValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty)
 	mboa.TotalInt(len(myBooksIds))
 
 	order := make(map[string][]string)

@@ -18,8 +18,8 @@ func fmtSequenceNameNumber(id, name string, rxa kvas.ReduxAssets) string {
 		return name
 	}
 
-	names, _ := rxa.GetAllUnchangedValues(data.SequenceNameProperty, id)
-	numbers, _ := rxa.GetAllUnchangedValues(data.SequenceNumberProperty, id)
+	names, _ := rxa.GetAllValues(data.SequenceNameProperty, id)
+	numbers, _ := rxa.GetAllValues(data.SequenceNumberProperty, id)
 
 	for ii, sn := range names {
 		if sn == name {

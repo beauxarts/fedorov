@@ -64,7 +64,7 @@ func Sync(completionWebhookUrl string, newOnly, noThrottle bool) error {
 		return err
 	}
 
-	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), nil, data.SyncCompletedProperty)
+	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), data.SyncCompletedProperty)
 	if err != nil {
 		return err
 	}

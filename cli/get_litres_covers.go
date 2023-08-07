@@ -26,7 +26,7 @@ func GetLitResCovers(ids []string, forceImported bool) error {
 	gca := nod.NewProgress("fetching LitRes covers...")
 	defer gca.End()
 
-	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), nil,
+	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(),
 		data.MyBooksIdsProperty,
 		data.ImportedProperty)
 	if err != nil {
@@ -35,7 +35,7 @@ func GetLitResCovers(ids []string, forceImported bool) error {
 
 	if len(ids) == 0 {
 		var ok bool
-		ids, ok = rxa.GetAllUnchangedValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty)
+		ids, ok = rxa.GetAllValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty)
 		if !ok {
 			err = errors.New("no my books found")
 			return gca.EndWithError(err)

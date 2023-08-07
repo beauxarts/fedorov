@@ -3,6 +3,7 @@ package rest
 import (
 	"encoding/json"
 	"github.com/beauxarts/fedorov/data"
+	"github.com/beauxarts/fedorov/stencil_app"
 	"github.com/boggydigital/nod"
 	"net/http"
 )
@@ -16,27 +17,36 @@ func GetDigest(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var digests map[string][]string
+	var values []string
+	valueTitles := make(map[string]string)
 
 	switch property {
 	case data.SortProperty:
-		digests = map[string][]string{data.SortProperty: {
+		values = []string{
 			data.TitleProperty,
 			data.DateCreatedProperty,
 			data.DateTranslatedProperty,
 			data.DateReleasedProperty,
-			data.MyBooksOrderProperty}}
+			data.MyBooksOrderProperty}
 	case data.DescendingProperty:
-		digests = map[string][]string{data.DescendingProperty: {
+		values = []string{
 			"true",
-			"false"}}
+			"false"}
 	default:
-		digests = getDigests(property)
+		values = getDigests(property)[property]
+	}
+
+	for _, v := range values {
+		if title, ok := stencil_app.PropertyTitles[v]; ok {
+			valueTitles[v] = title
+		} else {
+			valueTitles[v] = v
+		}
 	}
 
 	DefaultHeaders(w)
 
-	if err := json.NewEncoder(w).Encode(digests[property]); err != nil {
+	if err := json.NewEncoder(w).Encode(valueTitles); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return
 	}

@@ -33,7 +33,7 @@ func ReduceLitResBooksDetails(scoreData bool) error {
 
 	missingDetails := make([]string, 0)
 
-	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), nil, reduxProps...)
+	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), reduxProps...)
 	if err != nil {
 		return rmbda.EndWithError(err)
 	}
@@ -70,7 +70,7 @@ func ReduceLitResBooksDetails(scoreData bool) error {
 		if scoreData {
 			for lp, vals := range lrdx {
 				if p, ok := data.LitResPropertyMap[lp]; ok {
-					if evs, ok := rxa.GetAllUnchangedValues(p, id); ok {
+					if evs, ok := rxa.GetAllValues(p, id); ok {
 						dataScore[id] = len(vals) - len(evs)
 					}
 				}

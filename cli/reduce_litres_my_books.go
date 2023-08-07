@@ -70,7 +70,7 @@ func ReduceLitResMyBooks() error {
 		}
 	}
 
-	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), nil,
+	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(),
 		data.MyBooksIdsProperty,
 		data.HrefProperty,
 		data.ImportedProperty)

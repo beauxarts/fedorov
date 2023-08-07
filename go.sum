@@ -12,6 +12,8 @@ github.com/boggydigital/dolo v0.2.5 h1:Ux0JNW4U1L2QLII013ajhnbPC96NGNV/wo2ka9F30
 github.com/boggydigital/dolo v0.2.5/go.mod h1:KyIaQOp2cV85hC6lTMRwHtzofzjxXr+msOgcs89t078=
 github.com/boggydigital/dolo v0.2.10 h1:QNv4DTF/hvzXXBs6UkFBEVf80KF6xKnbqfDEBvwzoGM=
 github.com/boggydigital/dolo v0.2.10/go.mod h1:KyIaQOp2cV85hC6lTMRwHtzofzjxXr+msOgcs89t078=
+github.com/boggydigital/dolo v0.2.11 h1:L/VotXRJbuV7VN7H+eW4HQinYZHzUCeUOQ01++MFsPE=
+github.com/boggydigital/dolo v0.2.11/go.mod h1:KyIaQOp2cV85hC6lTMRwHtzofzjxXr+msOgcs89t078=
 github.com/boggydigital/issa v0.1.5 h1:3thLinhaXNHYcmF3T5y3wOEvhxq+GyhW8WtNDcl0OC0=
 github.com/boggydigital/issa v0.1.5/go.mod h1:evu3blQmQe6xJy9NRFJGIU+91IWy4/YCROVvUZi5k14=
 github.com/boggydigital/issa v0.1.6 h1:XpsnIwAxeHh4VNXkNqB+dO4g9xXFfbP3onWETbS7ARg=
@@ -24,6 +26,8 @@ github.com/boggydigital/issa v0.1.9 h1:Na0WO1gdF6wKGnoNXADBINLlUultOHY9x2F3qVSjk
 github.com/boggydigital/issa v0.1.9/go.mod h1:TNYZ7A1mx+Ib7/o4nGQ/G9QLm3JPKV2xP8qBy+DA+ck=
 github.com/boggydigital/kvas v0.3.27 h1:9Oczfp5GFkAsZqLyiIsEp/0cCVfTXA6V6/3MEAw+zyw=
 github.com/boggydigital/kvas v0.3.27/go.mod h1:I+wVKLxOqWhzw0X8nez/ec/GVXcQY5GUksFJBx+G7Yc=
+github.com/boggydigital/kvas v0.3.28 h1:BfWdJwzbqLMOHrqdCSSgB3nIHEX4xRkH/5fHyyeNrj4=
+github.com/boggydigital/kvas v0.3.28/go.mod h1:I+wVKLxOqWhzw0X8nez/ec/GVXcQY5GUksFJBx+G7Yc=
 github.com/boggydigital/match_node v0.1.11 h1:Uxm5tlrDAXGeHDf8EMVpyazZ5UHzRS0DUkN65HfsEDs=
 github.com/boggydigital/match_node v0.1.11/go.mod h1:LmKtZy8YgBYC14BStAS4g17MglrLqqUF6dehrBX7Zwc=
 github.com/boggydigital/middleware v0.1.7 h1:BOgctgkbtPkWoIBgHYOuOwdQnpZYa0NrB0gpP66IHwE=
@@ -78,6 +82,8 @@ github.com/boggydigital/stencil v0.1.84 h1:g52gncZ1/ebn1o6Tfx360LCEHQwjvSOa4ZUdS
 github.com/boggydigital/stencil v0.1.84/go.mod h1:yUJAeXbGWxnbWWqPnRgbctYXf3YPA5bfh48igehwpss=
 github.com/boggydigital/stencil v0.1.88 h1:lnHr0tyHrFjheIV82MijOMKC532sHhUWsWd9+7CRjKo=
 github.com/boggydigital/stencil v0.1.88/go.mod h1:yUJAeXbGWxnbWWqPnRgbctYXf3YPA5bfh48igehwpss=
+github.com/boggydigital/stencil v0.1.91 h1:QZNwHmSnK6Pnhc2kp1dJ59TeD3QnctL9Cu2//EVTjig=
+github.com/boggydigital/stencil v0.1.91/go.mod h1:qmu+FvjF8kq0/eGGiVu4huCTS2D9i40rQhjXHcGNOtw=
 github.com/boggydigital/testo v0.1.7 h1:Sa5GIAwCyQNeGGXi8XgVpIpLQqWVeqBKQRcv0gkL098=
 github.com/boggydigital/wits v0.2.3 h1:Z0eB+QlIA18fJmblyV6ZJQ/swPYSFhOxfgMXOQz4/c8=
 github.com/boggydigital/wits v0.2.3/go.mod h1:aR/z0vfMLtg0b4hcts0qiSTZcA51O8A2N3U9laqd2Lc=

@@ -26,13 +26,13 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	myBooks, ok := rxa.GetAllUnchangedValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty)
+	myBooks, ok := rxa.GetAllValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty)
 	if !ok {
 		http.Error(w, nod.ErrorStr("no my books found"), http.StatusInternalServerError)
 		return
 	}
 
-	if missingDetails, ok := rxa.GetAllUnchangedValues(data.MissingDetailsIdsProperty, data.MissingDetailsIdsProperty); ok {
+	if missingDetails, ok := rxa.GetAllValues(data.MissingDetailsIdsProperty, data.MissingDetailsIdsProperty); ok {
 		filteredBooks := make([]string, 0, len(myBooks))
 		for _, id := range myBooks {
 			if slices.Contains(missingDetails, id) {

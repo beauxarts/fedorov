@@ -29,7 +29,7 @@ func Complete(ids []string, action string) error {
 	ca := nod.NewProgress("%s complete...", action)
 	defer ca.End()
 
-	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), nil, data.TitleProperty, data.BookCompletedProperty)
+	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), data.TitleProperty, data.BookCompletedProperty)
 	if err != nil {
 		return err
 	}

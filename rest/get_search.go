@@ -59,7 +59,7 @@ func GetSearch(w http.ResponseWriter, r *http.Request) {
 
 	if len(query) > 0 {
 
-		ids = maps.Keys(rxa.Match(query, true))
+		ids = maps.Keys(rxa.Match(query, true, true))
 
 		if sort := r.URL.Query().Get(data.SortProperty); sort != "" {
 			desc := r.URL.Query().Get(data.DescendingProperty) == "true"

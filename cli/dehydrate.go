@@ -37,7 +37,6 @@ func Dehydrate(idSet map[string]bool, all, overwrite bool) error {
 
 	rxa, err := kvas.ConnectReduxAssets(
 		data.AbsReduxDir(),
-		nil,
 		data.DehydratedListImageProperty,
 		data.DehydratedListImageModifiedProperty,
 		data.DehydratedItemImageProperty,

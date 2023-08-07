@@ -3,7 +3,6 @@ package stencil_app
 import "github.com/beauxarts/fedorov/data"
 
 var SearchProperties = []string{
-	data.AnyTextProperty,
 	data.TitleProperty,
 	data.AuthorsProperty,
 	data.BookTypeProperty,
