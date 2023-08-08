@@ -44,6 +44,10 @@ import
 post-completion
     completion-webhook-url$
 
+purge
+    id*^
+    confirm
+
 reduce-litres-details
     score-data
 

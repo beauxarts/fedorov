@@ -41,7 +41,7 @@ func GetDownloads(w http.ResponseWriter, r *http.Request) {
 
 	if id, err := strconv.ParseInt(idstr, 10, 64); err == nil {
 		for _, link := range links {
-			_, filename := filepath.Split(link)
+			filename := filepath.Base(link)
 			absDownloadFilename := data.AbsDownloadPath(id, filename)
 			if _, err := os.Stat(absDownloadFilename); err == nil {
 				files = append(files, filename)

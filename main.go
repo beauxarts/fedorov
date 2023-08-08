@@ -70,6 +70,7 @@ func main() {
 		"get-litres-my-books":    cli.GetLitResMyBooksHandler,
 		"import":                 cli.ImportHandler,
 		"post-completion":        cli.PostCompletionHandler,
+		"purge":                  cli.PurgeHandler,
 		"reduce-litres-details":  cli.ReduceLitResDetailsHandler,
 		"reduce-litres-my-books": cli.ReduceLitResMyBooksHandler,
 		"serve":                  cli.ServeHandler,
