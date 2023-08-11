@@ -14,12 +14,15 @@ github.com/boggydigital/match_node v0.1.11 h1:Uxm5tlrDAXGeHDf8EMVpyazZ5UHzRS0DUk
 github.com/boggydigital/match_node v0.1.11/go.mod h1:LmKtZy8YgBYC14BStAS4g17MglrLqqUF6dehrBX7Zwc=
 github.com/boggydigital/middleware v0.1.7 h1:BOgctgkbtPkWoIBgHYOuOwdQnpZYa0NrB0gpP66IHwE=
 github.com/boggydigital/middleware v0.1.7/go.mod h1:pU6ig6HG7HpwZtUatAy0Hp/H7bfllI5cZhZQOy2NIME=
+github.com/boggydigital/middleware v0.1.10/go.mod h1:pU6ig6HG7HpwZtUatAy0Hp/H7bfllI5cZhZQOy2NIME=
 github.com/boggydigital/nod v0.1.21 h1:pQbrgswCuU5dr3IWS1Z902PJAm5BebSLG+Q3aG7KJ+4=
 github.com/boggydigital/nod v0.1.21/go.mod h1:bYucIZ3rLHBZKf/3+T+eTSxuijuja7Y6OgU2P6o2/vo=
 github.com/boggydigital/packer v0.1.0 h1:u727MJMwwElKDkyhcNjkhJwChdbeUl0sWh7R0SmkWNc=
 github.com/boggydigital/packer v0.1.0/go.mod h1:cCRWxv7LDqsKuVoD6B6R2rSQedZbugrlnTyc39Lm59c=
 github.com/boggydigital/stencil v0.1.91 h1:QZNwHmSnK6Pnhc2kp1dJ59TeD3QnctL9Cu2//EVTjig=
 github.com/boggydigital/stencil v0.1.91/go.mod h1:qmu+FvjF8kq0/eGGiVu4huCTS2D9i40rQhjXHcGNOtw=
+github.com/boggydigital/stencil v0.1.92 h1:PXrOafKllx5a1s7xARjXx5Qcu+1+WecOvcxeUOeVOIU=
+github.com/boggydigital/stencil v0.1.92/go.mod h1:jJMqlrYS9h3b+CGNBhsZ20bygOBo8euBV6RKjB34soQ=
 github.com/boggydigital/testo v0.1.8 h1:NKuKLpWKn8gG3dYq8xNrFYHimxoCTdzLOs242q6jeQo=
 github.com/boggydigital/wits v0.2.3 h1:Z0eB+QlIA18fJmblyV6ZJQ/swPYSFhOxfgMXOQz4/c8=
 github.com/boggydigital/wits v0.2.3/go.mod h1:aR/z0vfMLtg0b4hcts0qiSTZcA51O8A2N3U9laqd2Lc=
