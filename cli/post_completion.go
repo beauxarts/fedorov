@@ -7,20 +7,21 @@ import (
 )
 
 func PostCompletionHandler(u *url.URL) error {
-	cwu := u.Query().Get("completion-webhook-url")
-	return PostCompletion(cwu)
+	wu := u.Query().Get("webhook-url")
+	return PostCompletion(wu)
 }
 
-func PostCompletion(completionWebhookUrl string) error {
-
-	if completionWebhookUrl == "" {
-		return nil
-	}
+func PostCompletion(webhookUrl string) error {
 
 	pca := nod.Begin("posting completion...")
 	defer pca.End()
 
-	_, err := http.DefaultClient.Post(completionWebhookUrl, "", nil)
+	if webhookUrl == "" {
+		pca.EndWithResult("webhook-url is empty")
+		return nil
+	}
+
+	_, err := http.DefaultClient.Post(webhookUrl, "", nil)
 	if err != nil {
 		return pca.EndWithError(err)
 	}
