@@ -1,22 +1,22 @@
 module github.com/beauxarts/fedorov
 
-go 1.20
+go 1.21
 
 require (
-	github.com/beauxarts/scrinium v0.1.16
+	github.com/beauxarts/scrinium v0.1.17
 	github.com/boggydigital/clo v0.3.6
 	github.com/boggydigital/coost v0.3.8
-	github.com/boggydigital/dolo v0.2.11
+	github.com/boggydigital/dolo v0.2.12
 	github.com/boggydigital/issa v0.1.10
 	github.com/boggydigital/kvas v0.3.28
-	github.com/boggydigital/match_node v0.1.11
+	github.com/boggydigital/match_node v0.1.14
 	github.com/boggydigital/middleware v0.1.10
 	github.com/boggydigital/nod v0.1.21
 	github.com/boggydigital/packer v0.1.0
-	github.com/boggydigital/stencil v0.1.93
+	github.com/boggydigital/stencil v0.1.95
 	github.com/boggydigital/wits v0.2.3
-	golang.org/x/exp v0.0.0-20230728194245-b0cb94b80691
-	golang.org/x/net v0.12.0
+	golang.org/x/exp v0.0.0-20230817173708-d852ddb80c63
+	golang.org/x/net v0.14.0
 	golang.org/x/text v0.12.0
 )
 
