@@ -9,6 +9,8 @@ Fedorov is named in honor of [Ivan Fedorov](https://en.wikipedia.org/wiki/Ivan_F
 The recommended way to install `fedorov` is with docker-compose:
 
 - create a `docker-compose.yaml` fil (this minimal example omits common settings like network, restart, etc):
+- NOTE: cold storage signifies resources used less frequently
+- NOTE: hot storage signifies resources used on most page loads
 
 ```yaml
 version: '3'
@@ -21,11 +23,14 @@ services:
       # - FV_SERVE_ADMIN-PASSWORD=ADMIN-PASSWORD
       # - FV_SERVE_SHARED-USERNAME=SHARED-USERNAME
       # - FV_SERVE_SHARED-PASSWORD=SHARED-PASSWORD
-      # - FV_POST-COMPLETION_COMPLETION-WEBHOOK-URL=http://FEDOROV-ADDRESS
-      # - FV_SYNC_COMPLETION-WEBHOOK-URL=http://FEDOROV-ADDRESS
+      # - FV_WEBHOOK-URL=http://FEDOROV-ADDRESS/prerender
     volumes:
-      # root state dir
+      # root state dir (cold storage)
       - /docker/fedorov:/var/lib/fedorov
+      # redux dir (hot storage)
+      - /docker/fedorov/_redux:/var/lib/fedorov/_redux
+      # covers dir (hot storage)
+      - /docker/fedorov/covers:/var/lib/fedorov/covers
       # sharing timezone from the host
       - /etc/localtime:/etc/localtime:ro
     ports:
