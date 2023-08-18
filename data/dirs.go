@@ -8,14 +8,12 @@ import (
 )
 
 const (
-	relReduxDir          = "_redux"
 	relImportedDir       = "_imported"
 	relBackupDir         = "backup"
 	relMyBookFreshDir    = "my_books_fresh"
 	relMyBookDetailsDir  = "my_books_details"
 	relLiveLibDetailsDir = "livelib_details"
 	relDownloadsDir      = "downloads"
-	relCoversDir         = "covers"
 
 	relCookiesFilename = "cookies.txt"
 	relExportFilename  = "export.txt"
@@ -24,30 +22,42 @@ const (
 	CoverExt = ".jpg"
 )
 
-var rootDir = ""
+var (
+	absRootDir   = ""
+	absReduxDir  = ""
+	absCoversDir = ""
+)
 
 func ChRoot(d string) {
-	rootDir = d
+	absRootDir = d
 }
 
 func Pwd() string {
-	return rootDir
+	return absRootDir
+}
+
+func SetReduxDir(d string) {
+	absReduxDir = d
+}
+
+func SetCoversDir(d string) {
+	absCoversDir = d
 }
 
 func AbsLitResMyBooksFreshDir() string {
-	return filepath.Join(rootDir, relMyBookFreshDir)
+	return filepath.Join(absRootDir, relMyBookFreshDir)
 }
 
 func AbsLitResMyBooksDetailsDir() string {
-	return filepath.Join(rootDir, relMyBookDetailsDir)
+	return filepath.Join(absRootDir, relMyBookDetailsDir)
 }
 
 func AbsLiveLibDetailsDir() string {
-	return filepath.Join(rootDir, relLiveLibDetailsDir)
+	return filepath.Join(absRootDir, relLiveLibDetailsDir)
 }
 
 func AbsDownloadsDir() string {
-	return filepath.Join(rootDir, relDownloadsDir)
+	return filepath.Join(absRootDir, relDownloadsDir)
 }
 
 func AbsDownloadPath(id int64, file string) string {
@@ -55,7 +65,7 @@ func AbsDownloadPath(id int64, file string) string {
 }
 
 func AbsReduxDir() string {
-	return filepath.Join(rootDir, relReduxDir)
+	return absReduxDir
 }
 
 func AbsCoverPath(id int64, size litres_integration.CoverSize) string {
@@ -63,7 +73,7 @@ func AbsCoverPath(id int64, size litres_integration.CoverSize) string {
 }
 
 func AbsCoverDir() string {
-	return filepath.Join(rootDir, relCoversDir)
+	return absCoversDir
 }
 
 func RelCoverFilename(id string, size litres_integration.CoverSize) string {
@@ -76,21 +86,21 @@ func RelCoverFilename(id string, size litres_integration.CoverSize) string {
 }
 
 func AbsCookiesFilename() string {
-	return filepath.Join(rootDir, relCookiesFilename)
+	return filepath.Join(absRootDir, relCookiesFilename)
 }
 
 func AbsExportFilename() string {
-	return filepath.Join(rootDir, relExportFilename)
+	return filepath.Join(absRootDir, relExportFilename)
 }
 
 func AbsImportFilename() string {
-	return filepath.Join(rootDir, relImportFilename)
+	return filepath.Join(absRootDir, relImportFilename)
 }
 
 func AbsImportedDir() string {
-	return filepath.Join(rootDir, relImportedDir)
+	return filepath.Join(absRootDir, relImportedDir)
 }
 
 func AbsBackupDir() string {
-	return filepath.Join(rootDir, relBackupDir)
+	return filepath.Join(absRootDir, relBackupDir)
 }

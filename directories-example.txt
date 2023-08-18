@@ -1,3 +1,9 @@
 root
- # root fedorov state directory
- /var/lib/vangogh
+    # root fedorov state directory
+    /var/lib/fedorov
+redux
+    # reductions directory
+    /var/lib/fedorov/_redux
+covers
+    # covers directory
+    /var/lib/fedorov/covers

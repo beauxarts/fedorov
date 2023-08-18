@@ -28,7 +28,10 @@ var (
 	cliCommands []byte
 	//go:embed "cli-help.txt"
 	cliHelp []byte
-	rootDir = "/var/lib/fedorov"
+
+	rootDir   = "/var/lib/fedorov"
+	reduxDir  = rootDir + "/_redux"
+	coversDir = rootDir + "/covers"
 )
 
 func main() {
@@ -48,6 +51,8 @@ func main() {
 	}
 
 	data.ChRoot(rootDir)
+	data.SetReduxDir(reduxDir)
+	data.SetCoversDir(coversDir)
 
 	defs, err := clo.Load(
 		bytes.NewBuffer(cliCommands),
@@ -105,9 +110,21 @@ func readUserDirectories() error {
 	if sd, ok := dirs["root"]; ok {
 		rootDir = sd
 	}
+	if rd, ok := dirs["redux"]; ok {
+		reduxDir = rd
+	}
+	if cd, ok := dirs["covers"]; ok {
+		coversDir = cd
+	}
 
 	//validate that directories actually exist
 	if _, err := os.Stat(rootDir); err != nil {
+		return err
+	}
+	if _, err := os.Stat(reduxDir); err != nil {
+		return err
+	}
+	if _, err := os.Stat(coversDir); err != nil {
 		return err
 	}
 
