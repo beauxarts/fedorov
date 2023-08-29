@@ -97,6 +97,7 @@ func ReduxProperties() []string {
 		MissingDetailsIdsProperty,
 		BookTypeProperty,
 		BookCompletedProperty,
+		ImageProperty,
 		GenresProperty,
 		TagsProperty,
 		LocalTagsProperty,
@@ -107,6 +108,13 @@ func ReduxProperties() []string {
 		LanguageProperty,
 		DehydratedListImageProperty,
 		DehydratedItemImageProperty,
+	}
+}
+
+func ImportedProperties() []string {
+	return []string{
+		ImportedProperty,
+		DataSourceProperty,
 	}
 }
 

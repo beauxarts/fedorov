@@ -14,7 +14,8 @@ import (
 func PurgeHandler(u *url.URL) error {
 	id := u.Query().Get("id")
 	confirm := u.Query().Has("confirm")
-	return Purge(id, confirm)
+	wu := u.Query().Get("webhook-url")
+	return Purge(id, wu, confirm)
 }
 
 // Purge will remove all book artefacts from the system:
@@ -22,7 +23,7 @@ func PurgeHandler(u *url.URL) error {
 // - covers
 // - downloads
 // - reductions (must be last to allow downloads to be resolved)
-func Purge(id string, confirm bool) error {
+func Purge(id string, webhookUrl string, confirm bool) error {
 
 	wa := nod.Begin("purge removes all book data, restoring that data will require an earlier backup")
 	wa.End()
@@ -51,7 +52,10 @@ func Purge(id string, confirm bool) error {
 		}
 	}
 
-	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), data.ReduxProperties()...)
+	props := data.ReduxProperties()
+	props = append(props, data.ImportedProperties()...)
+
+	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), props...)
 	if err != nil {
 		return pa.EndWithError(err)
 	}
@@ -102,7 +106,7 @@ func Purge(id string, confirm bool) error {
 
 	// reductions
 
-	for _, p := range data.ReduxProperties() {
+	for _, p := range props {
 		if rxa.HasKey(p, id) {
 			cra := nod.Begin(" found %s in %s...", id, p)
 			if confirm {
@@ -116,6 +120,13 @@ func Purge(id string, confirm bool) error {
 				cra.EndWithResult("removed")
 			}
 			cra.End()
+		}
+	}
+
+	// make sure to post completion to update static versions
+	if confirm {
+		if err := PostCompletion(webhookUrl); err != nil {
+			return pa.EndWithError(err)
 		}
 	}
 

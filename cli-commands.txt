@@ -47,6 +47,7 @@ post-completion
 purge
     id*^
     confirm
+    webhook-url$
 
 reduce-litres-details
     score-data
