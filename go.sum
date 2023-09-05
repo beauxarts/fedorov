@@ -20,6 +20,8 @@ github.com/boggydigital/packer v0.1.0 h1:u727MJMwwElKDkyhcNjkhJwChdbeUl0sWh7R0Sm
 github.com/boggydigital/packer v0.1.0/go.mod h1:cCRWxv7LDqsKuVoD6B6R2rSQedZbugrlnTyc39Lm59c=
 github.com/boggydigital/stencil v0.1.95 h1:hrbzTpDfKc46H4a+80qac6jT3hni6HS2c04SW5cHB5A=
 github.com/boggydigital/stencil v0.1.95/go.mod h1:jJMqlrYS9h3b+CGNBhsZ20bygOBo8euBV6RKjB34soQ=
+github.com/boggydigital/stencil v0.1.97 h1:coIq4j2tPWNOu6jAiNMkkFHVxmR/d2jkZvO0dbSttOE=
+github.com/boggydigital/stencil v0.1.97/go.mod h1:jJMqlrYS9h3b+CGNBhsZ20bygOBo8euBV6RKjB34soQ=
 github.com/boggydigital/testo v0.1.8 h1:NKuKLpWKn8gG3dYq8xNrFYHimxoCTdzLOs242q6jeQo=
 github.com/boggydigital/testo v0.1.8/go.mod h1:8JTO6UKeQPsHS82vbCH/3NLDfewmr/84vVQ6rNLdCas=
 github.com/boggydigital/wits v0.2.3 h1:Z0eB+QlIA18fJmblyV6ZJQ/swPYSFhOxfgMXOQz4/c8=
