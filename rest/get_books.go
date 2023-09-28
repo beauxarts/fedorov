@@ -65,7 +65,7 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := app.RenderGroup(
-		"Новинки",
+		stencil_app.NavLatestBooks,
 		stencil_app.BookTypeOrder,
 		booksByType,
 		stencil_app.BookTypeTitles,
