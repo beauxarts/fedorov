@@ -10,11 +10,13 @@ import (
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/wits"
+	"io"
 	"net/http"
 	"net/url"
 	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -120,7 +122,13 @@ func Import() error {
 			if _, err := os.Stat(srcCoverFilename); err == nil {
 				absDestCoverFilename := data.AbsCoverPath(id, litres_integration.SizeMax)
 				if err := os.Rename(srcCoverFilename, absDestCoverFilename); err != nil {
-					return ia.EndWithError(err)
+					if strings.Contains(err.Error(), "invalid cross-device link") {
+						if err := copyDelete(srcCoverFilename, absDestCoverFilename); err != nil {
+							return ia.EndWithError(err)
+						}
+					} else {
+						return ia.EndWithError(err)
+					}
 				}
 			}
 
@@ -148,7 +156,13 @@ func Import() error {
 					}
 
 					if err := os.Rename(absSrcFilename, absDstFilename); err != nil {
-						return ia.EndWithError(err)
+						if strings.Contains(err.Error(), "invalid cross-device link") {
+							if err := copyDelete(absSrcFilename, absDstFilename); err != nil {
+								return ia.EndWithError(err)
+							}
+						} else {
+							return ia.EndWithError(err)
+						}
 					}
 				} else {
 					nod.Log(err.Error())
@@ -188,7 +202,13 @@ func Import() error {
 	dstImportFilename = fmt.Sprintf("%s_%s", time.Now().Format("20060102-1504"), dstImportFilename)
 	dstImportFilename = filepath.Join(data.AbsImportedDir(), dstImportFilename)
 	if err := os.Rename(absImportFilename, dstImportFilename); err != nil {
-		return ia.EndWithError(err)
+		if strings.Contains(err.Error(), "invalid cross-device link") {
+			if err := copyDelete(absImportFilename, dstImportFilename); err != nil {
+				return ia.EndWithError(err)
+			}
+		} else {
+			return ia.EndWithError(err)
+		}
 	}
 
 	ia.EndWithResult("done")
@@ -268,4 +288,25 @@ func IsImported(id string, rxa kvas.ReduxAssets) bool {
 		return val == "true"
 	}
 	return false
+}
+
+func copyDelete(src, dst string) error {
+	srcf, err := os.Open(src)
+	if err != nil {
+		return err
+	}
+	defer srcf.Close()
+
+	dstf, err := os.Create(dst)
+	if err != nil {
+		return err
+	}
+	defer dstf.Close()
+
+	_, err = io.Copy(dstf, srcf)
+	if err != nil {
+		return err
+	}
+
+	return os.Remove(src)
 }
