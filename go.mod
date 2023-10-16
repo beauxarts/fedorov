@@ -13,7 +13,7 @@ require (
 	github.com/boggydigital/middleware v0.1.10
 	github.com/boggydigital/nod v0.1.21
 	github.com/boggydigital/packer v0.1.0
-	github.com/boggydigital/stencil v0.2.10
+	github.com/boggydigital/stencil v0.2.11
 	github.com/boggydigital/wits v0.2.3
 	golang.org/x/exp v0.0.0-20230905200255-921286631fa9
 	golang.org/x/net v0.17.0
