@@ -13,7 +13,7 @@ const (
 
 var (
 	Auth     = middleware.BasicHttpAuth
-	Gzip     = middleware.Gzip
+	BrGzip   = middleware.BrGzip
 	GetOnly  = middleware.GetMethodOnly
 	PostOnly = middleware.PostMethodOnly
 	Static   = middleware.Static
@@ -28,19 +28,19 @@ func HandleFuncs(p int) {
 
 	patternHandlers := map[string]http.Handler{
 		// unauth data endpoints
-		"/books":       Gzip(GetOnly(Static(Log(http.HandlerFunc(GetBooks))))),
-		"/book":        Gzip(GetOnly(Static(Log(http.HandlerFunc(GetBook))))),
+		"/books":       BrGzip(GetOnly(Static(Log(http.HandlerFunc(GetBooks))))),
+		"/book":        BrGzip(GetOnly(Static(Log(http.HandlerFunc(GetBook))))),
 		"/list_cover":  GetOnly(Log(http.HandlerFunc(GetListCover))),
 		"/book_cover":  GetOnly(Log(http.HandlerFunc(GetBookCover))),
-		"/search":      Gzip(GetOnly(Static(Log(http.HandlerFunc(GetSearch))))),
-		"/digest":      Gzip(GetOnly(Log(http.HandlerFunc(GetDigest)))),
-		"/downloads":   Gzip(GetOnly(Log(http.HandlerFunc(GetDownloads)))),
-		"/description": Gzip(GetOnly(Log(http.HandlerFunc(GetDescription)))),
+		"/search":      BrGzip(GetOnly(Static(Log(http.HandlerFunc(GetSearch))))),
+		"/digest":      BrGzip(GetOnly(Log(http.HandlerFunc(GetDigest)))),
+		"/downloads":   BrGzip(GetOnly(Log(http.HandlerFunc(GetDownloads)))),
+		"/description": BrGzip(GetOnly(Log(http.HandlerFunc(GetDescription)))),
 		// auth data endpoints
-		"/completed/set":    Auth(Gzip(GetOnly(Log(http.HandlerFunc(GetCompletedSet)))), AdminRole),
-		"/completed/clear":  Auth(Gzip(GetOnly(Log(http.HandlerFunc(GetCompletedClear)))), AdminRole),
-		"/local-tags/edit":  Auth(Gzip(GetOnly(Log(http.HandlerFunc(GetLocalTagsEdit)))), AdminRole),
-		"/local-tags/apply": Auth(Gzip(GetOnly(Log(http.HandlerFunc(GetLocalTagsApply)))), AdminRole),
+		"/completed/set":    Auth(BrGzip(GetOnly(Log(http.HandlerFunc(GetCompletedSet)))), AdminRole),
+		"/completed/clear":  Auth(BrGzip(GetOnly(Log(http.HandlerFunc(GetCompletedClear)))), AdminRole),
+		"/local-tags/edit":  Auth(BrGzip(GetOnly(Log(http.HandlerFunc(GetLocalTagsEdit)))), AdminRole),
+		"/local-tags/apply": Auth(BrGzip(GetOnly(Log(http.HandlerFunc(GetLocalTagsApply)))), AdminRole),
 		// auth media endpoints
 		"/file": Auth(GetOnly(Log(http.HandlerFunc(GetFile))), AdminRole, SharedRole),
 		// prerender
@@ -48,7 +48,7 @@ func HandleFuncs(p int) {
 		// start at the books
 		"/": http.RedirectHandler("/books", http.StatusPermanentRedirect),
 		//robots.txt
-		"/robots.txt": Gzip(GetOnly(Log(http.HandlerFunc(GetRobotsTxt)))),
+		"/robots.txt": BrGzip(GetOnly(Log(http.HandlerFunc(GetRobotsTxt)))),
 	}
 
 	for p, h := range patternHandlers {
