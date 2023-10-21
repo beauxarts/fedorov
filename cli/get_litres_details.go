@@ -16,20 +16,7 @@ import (
 	"time"
 )
 
-const (
-	defaultThrottleSeconds = 20
-	ddosThrottleSeconds    = 200
-	ddosGuardStr           = "ddos-guard"
-)
-
-var ddosGuardError = errors.New("DDoS Guard detected")
-
 func GetLitResDetailsHandler(u *url.URL) error {
-	hc, err := coost.NewHttpClientFromFile(data.AbsCookiesFilename(), litres_integration.LitResHost)
-	if err != nil {
-		return err
-	}
-
 	var ids []string
 	if idstr := u.Query().Get("id"); idstr != "" {
 		ids = strings.Split(idstr, ",")
@@ -38,10 +25,10 @@ func GetLitResDetailsHandler(u *url.URL) error {
 	newOnly := u.Query().Has("new-only")
 	noThrottle := u.Query().Has("no-throttle")
 
-	return GetLitResDetails(ids, hc, newOnly, noThrottle)
+	return GetLitResDetails(ids, newOnly, noThrottle)
 }
 
-func GetLitResDetails(ids []string, hc *http.Client, newOnly, noThrottle bool) error {
+func GetLitResDetails(ids []string, newOnly, noThrottle bool) error {
 
 	gmbda := nod.NewProgress("getting LitRes my books details...")
 	defer gmbda.End()
@@ -59,6 +46,13 @@ func GetLitResDetails(ids []string, hc *http.Client, newOnly, noThrottle bool) e
 		return gmbda.EndWithError(err)
 	}
 
+	cj, err := coost.NewJar(data.AbsCookiesFilename())
+	if err != nil {
+		return gmbda.EndWithError(err)
+	}
+
+	hc := cj.NewHttpClient()
+
 	if len(ids) == 0 {
 		var ok bool
 		ids, ok = rxa.GetAllValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty)
@@ -70,14 +64,14 @@ func GetLitResDetails(ids []string, hc *http.Client, newOnly, noThrottle bool) e
 
 	gmbda.TotalInt(len(ids))
 
-	ddosIds := make([]string, 0)
-
 	for _, id := range ids {
 
-		if err := getMyBookById(id, hc, defaultThrottleSeconds, rxa, kv, newOnly, noThrottle); errors.Is(err, ddosGuardError) {
-			ddosIds = append(ddosIds, id)
-		} else if err != nil {
-			nod.Log(err.Error())
+		if err := getMyBookById(id, hc, rxa, kv, newOnly); err != nil {
+			return err
+		}
+
+		if err := cj.Store(data.AbsCookiesFilename()); err != nil {
+			return err
 		}
 
 		gmbda.Increment()
@@ -85,36 +79,10 @@ func GetLitResDetails(ids []string, hc *http.Client, newOnly, noThrottle bool) e
 
 	gmbda.EndWithResult("done")
 
-	if len(ddosIds) > 0 {
-		gdia := nod.NewProgress("attempting to get LitRes my books details for DDoS guarded ids")
-		defer gdia.End()
-
-		gdia.TotalInt(len(ddosIds))
-
-		for _, id := range ddosIds {
-
-			if err := getMyBookById(id, hc, ddosThrottleSeconds, rxa, kv, newOnly, noThrottle); err != nil {
-				nod.Log(err.Error())
-			}
-
-			gdia.Increment()
-		}
-
-		gdia.EndWithResult("done")
-
-	}
-
 	return nil
 }
 
-func getMyBookById(id string, hc *http.Client, ts int, rxa kvas.ReduxAssets, kv kvas.KeyValues, newOnly, noThrottle bool) error {
-
-	// sleep to throttle server requests
-	if !noThrottle {
-		ta := nod.Begin(" throttling server requests by %ds...", ts)
-		time.Sleep(time.Second * time.Duration(ts))
-		ta.End()
-	}
+func getMyBookById(id string, hc *http.Client, rxa kvas.ReduxAssets, kv kvas.KeyValues, newOnly bool) error {
 
 	gia := nod.Begin(" getting %s...", id)
 	defer gia.End()
@@ -149,7 +117,6 @@ func getMyBookById(id string, hc *http.Client, ts int, rxa kvas.ReduxAssets, kv 
 	if err != nil {
 		return gia.EndWithError(err)
 	}
-
 	defer resp.Body.Close()
 
 	if resp.StatusCode == 304 {
@@ -167,11 +134,6 @@ func getMyBookById(id string, hc *http.Client, ts int, rxa kvas.ReduxAssets, kv 
 	}
 
 	str := sb.String()
-
-	//do not write out the content if it's a DDoS Guard page
-	if strings.Contains(str, ddosGuardStr) {
-		return gia.EndWithError(ddosGuardError)
-	}
 
 	if err := kv.Set(id, strings.NewReader(str)); err != nil {
 		return gia.EndWithError(err)

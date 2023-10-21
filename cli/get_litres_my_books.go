@@ -17,15 +17,10 @@ import (
 const maxSupportedPages = 1000
 
 func GetLitResMyBooksHandler(u *url.URL) error {
-	hc, err := coost.NewHttpClientFromFile(data.AbsCookiesFilename(), litres_integration.LitResHost)
-	if err != nil {
-		return err
-	}
-
-	return GetLitResMyBooks(hc)
+	return GetLitResMyBooks()
 }
 
-func GetLitResMyBooks(hc *http.Client) error {
+func GetLitResMyBooks() error {
 
 	gmba := nod.NewProgress("fetching LitRes my books fresh...")
 	defer gmba.End()
@@ -34,6 +29,13 @@ func GetLitResMyBooks(hc *http.Client) error {
 	if err != nil {
 		return gmba.EndWithError(err)
 	}
+
+	cj, err := coost.NewJar(data.AbsCookiesFilename())
+	if err != nil {
+		return gmba.EndWithError(err)
+	}
+
+	hc := cj.NewHttpClient()
 
 	// get the first page and extract total pages
 
@@ -51,6 +53,10 @@ func GetLitResMyBooks(hc *http.Client) error {
 		}
 	}
 
+	if err := cj.Store(data.AbsCookiesFilename()); err != nil {
+		return gmba.EndWithError(err)
+	}
+
 	totalPages, err := getTotalPages(kv)
 	gmba.TotalInt(totalPages)
 
@@ -58,25 +64,35 @@ func GetLitResMyBooks(hc *http.Client) error {
 	gmba.Increment()
 
 	for page = 2; page <= totalPages; page++ {
-
-		resp, err := hc.Get(litres_integration.MyBooksFreshUrl(page).String())
-		if err != nil {
-			return gmba.EndWithError(err)
-		}
-		defer resp.Body.Close()
-
-		if resp.StatusCode != http.StatusOK {
-			gmba.Increment()
-			continue
-		}
-
-		if err := kv.Set(strconv.Itoa(page), resp.Body); err != nil {
+		if err := getMyBooksPage(page, hc, kv, gmba); err != nil {
 			return gmba.EndWithError(err)
 		}
 
-		gmba.Increment()
+		if err := cj.Store(data.AbsCookiesFilename()); err != nil {
+			return gmba.EndWithError(err)
+		}
 	}
 
+	return nil
+}
+
+func getMyBooksPage(page int, hc *http.Client, kv kvas.KeyValues, tpw nod.TotalProgressWriter) error {
+	resp, err := hc.Get(litres_integration.MyBooksFreshUrl(page).String())
+	if err != nil {
+		return tpw.EndWithError(err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		tpw.Increment()
+		return nil
+	}
+
+	if err = kv.Set(strconv.Itoa(page), resp.Body); err != nil {
+		return err
+	}
+
+	tpw.Increment()
 	return nil
 }
 

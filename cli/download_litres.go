@@ -8,7 +8,6 @@ import (
 	"github.com/boggydigital/dolo"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
-	"net/http"
 	"net/url"
 	"path/filepath"
 	"strings"
@@ -34,20 +33,15 @@ var skipFormatDownloads = map[string]bool{
 }
 
 func DownloadLitResHandler(u *url.URL) error {
-	hc, err := coost.NewHttpClientFromFile(data.AbsCookiesFilename(), litres_integration.LitResHost)
-	if err != nil {
-		return err
-	}
-
 	var ids []string
 	if idstr := u.Query().Get("id"); idstr != "" {
 		ids = strings.Split(idstr, ",")
 	}
 
-	return DownloadLitRes(ids, hc)
+	return DownloadLitRes(ids)
 }
 
-func DownloadLitRes(ids []string, hc *http.Client) error {
+func DownloadLitRes(ids []string) error {
 
 	da := nod.NewProgress("downloading LitRes books...")
 	defer da.End()
@@ -73,6 +67,13 @@ func DownloadLitRes(ids []string, hc *http.Client) error {
 	}
 
 	da.TotalInt(len(ids))
+
+	cj, err := coost.NewJar(data.AbsCookiesFilename())
+	if err != nil {
+		return da.EndWithError(err)
+	}
+
+	hc := cj.NewHttpClient()
 
 	dc := dolo.NewClient(hc, dolo.Defaults())
 
@@ -107,6 +108,10 @@ func DownloadLitRes(ids []string, hc *http.Client) error {
 			if err := dc.Download(litres_integration.HrefUrl(link), tpw, data.AbsDownloadsDir(), id, fname); err != nil {
 				nod.Log(err.Error())
 				continue
+			}
+
+			if err := cj.Store(data.AbsCookiesFilename()); err != nil {
+				return da.EndWithError(err)
 			}
 
 			tpw.EndWithResult("done")

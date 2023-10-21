@@ -56,7 +56,7 @@ func Import() error {
 		return ia.EndWithError(err)
 	}
 
-	hc, err := coost.NewHttpClientFromFile(data.AbsCookiesFilename(), litres_integration.LitResHost)
+	hc, err := coost.NewHttpClientFromFile(data.AbsCookiesFilename())
 	if err != nil {
 		return ia.EndWithError(err)
 	}
@@ -221,7 +221,7 @@ func importLitresData(id string, hc *http.Client) (map[string]map[string][]strin
 	ilda := nod.Begin("importing data from LitRes...")
 	defer ilda.End()
 
-	if err := GetLitResDetails([]string{id}, hc, false, false); err != nil {
+	if err := GetLitResDetails([]string{id}, false, false); err != nil {
 		return nil, ilda.EndWithError(err)
 	}
 
