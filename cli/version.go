@@ -3,18 +3,17 @@ package cli
 import (
 	"fmt"
 	"net/url"
-	"runtime/debug"
 )
 
-func VersionHandler(u *url.URL) error {
-	Version()
-	return nil
-}
+var (
+	GitTag string
+)
 
-func Version() {
-	if bi, ok := debug.ReadBuildInfo(); ok {
-		fmt.Println(bi)
+func VersionHandler(_ *url.URL) error {
+	if GitTag == "" {
+		fmt.Println("unknown version")
 	} else {
-		fmt.Println("unable to read build info")
+		fmt.Println(GitTag)
 	}
+	return nil
 }
