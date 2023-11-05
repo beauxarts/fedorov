@@ -7,13 +7,13 @@ import (
 )
 
 const (
-	appTitle       = "fedorov"
-	appAccentColor = "gray"
+	appTitle        = "fedorov"
+	appFavIconEmoji = "📇"
 )
 
 func Init(rxa kvas.ReduxAssets) (*stencil.AppConfiguration, error) {
 
-	app := stencil.NewAppConfig(appTitle, appAccentColor)
+	app := stencil.NewAppConfig(appTitle, appFavIconEmoji)
 
 	app.SetNavigation(NavItems, NavIcons, NavHrefs)
 	app.SetFooter(FooterLocation, FooterRepoUrl)
