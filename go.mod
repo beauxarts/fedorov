@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	github.com/beauxarts/scrinium v0.1.18
-	github.com/boggydigital/clo v0.3.6
+	github.com/boggydigital/clo v1.0.4
 	github.com/boggydigital/coost v0.3.9
 	github.com/boggydigital/dolo v0.2.13
 	github.com/boggydigital/issa v0.1.10
@@ -15,7 +15,7 @@ require (
 	github.com/boggydigital/packer v0.1.0
 	github.com/boggydigital/stencil v0.2.20
 	github.com/boggydigital/wits v0.2.3
-	golang.org/x/exp v0.0.0-20231006140011-7918f672742d
+	golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa
 	golang.org/x/net v0.17.0
 	golang.org/x/text v0.13.0
 )
