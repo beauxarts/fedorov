@@ -181,12 +181,12 @@ func Import() error {
 		}
 
 		// add imported book id to my books
-		if err := rxa.AddVal(data.MyBooksIdsProperty, data.MyBooksIdsProperty, idstr); err != nil {
+		if err := rxa.AddValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty, idstr); err != nil {
 			return ia.EndWithError(err)
 		}
 
 		// set imported book as... imported - primarily to be able to recreate upon sync
-		if err := rxa.AddVal(data.ImportedProperty, idstr, "true"); err != nil {
+		if err := rxa.AddValues(data.ImportedProperty, idstr, "true"); err != nil {
 			return ia.EndWithError(err)
 		}
 	}
