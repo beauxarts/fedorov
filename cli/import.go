@@ -29,6 +29,34 @@ func ImportHandler(_ *url.URL) error {
 	return Import()
 }
 
+// Import adds external media to the library, e.g. DRM-free purchases from elsewhere.
+// To do that you need to provide the following in the input directory:
+// - BEFORE YOU START: book id should be a value that can be parsed into int64
+//
+// - book media files, e.g. `id.mp4`, `id.epub`, `id.txt`
+// - book cover named `id.jpg`
+// - import.txt with the media metadata
+//   - id - ISBN is recommended or a LiveLib id
+//   - title, ... - as needed
+//   - data-source=litres - if the book (or similar book) is available on LitRes
+//   - > href - e.g. `/book/mihail-shishkin/pismovnik-447855/`
+//   - data-source=livelib - if the book (or similar book) is available on LiveLib
+//   - > id of the book should match LiveLib id, e.g. `1003406901`
+//   - download-links - filenames of the book media files, e.g. id.mp4, id.epub, id.txt
+//   - download-titles - human-readable titles corresponding to the download-links
+//   - > e.g. Audio-book (MP4), EPUB, Text file
+//
+// Upon placing those files, you can run import command. When import completes -
+// all those input files are removed. import.txt is moved to the  _imported subdirectory
+// of the input directory as YYYYMMDD-HHMM-import.txt, where YYYYMMDD-HHMM is the date
+// and time of the import.
+//
+// If needed you can move YYYYMMDD-HHMM-import.txt back to the input directory, rename
+// to import.txt, change some values and import again. New data will overwrite any
+// existing data.
+//
+// Another suggestion is to consider exporting the book with similar metadata to use as a
+// base for import.txt. export.txt and import.txt have identical structure.
 func Import() error {
 
 	ia := nod.Begin("importing books...")
