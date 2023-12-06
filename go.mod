@@ -8,15 +8,15 @@ require (
 	github.com/boggydigital/coost v0.3.9
 	github.com/boggydigital/dolo v0.2.13
 	github.com/boggydigital/issa v0.1.10
-	github.com/boggydigital/kvas v0.3.34
+	github.com/boggydigital/kvas v0.3.35
 	github.com/boggydigital/match_node v0.1.16
 	github.com/boggydigital/middleware v0.1.11
 	github.com/boggydigital/nod v0.1.21
 	github.com/boggydigital/packer v0.1.0
-	github.com/boggydigital/stencil v0.2.20
+	github.com/boggydigital/stencil v0.2.21
 	github.com/boggydigital/wits v0.2.3
-	golang.org/x/exp v0.0.0-20231127185646-65229373498e
-	golang.org/x/net v0.18.0
+	golang.org/x/exp v0.0.0-20231206192017-f3f8817b8deb
+	golang.org/x/net v0.19.0
 	golang.org/x/text v0.14.0
 )
 
