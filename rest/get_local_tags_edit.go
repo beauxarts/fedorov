@@ -14,8 +14,8 @@ func GetLocalTagsEdit(w http.ResponseWriter, r *http.Request) {
 	id := r.URL.Query().Get("id")
 
 	allValues := make(map[string]string)
-	for _, id := range rxa.Keys(data.LocalTagsProperty) {
-		if values, ok := rxa.GetAllValues(data.LocalTagsProperty, id); ok {
+	for _, id := range rdx.Keys(data.LocalTagsProperty) {
+		if values, ok := rdx.GetAllValues(data.LocalTagsProperty, id); ok {
 			for _, v := range values {
 				allValues[v] = v
 			}
@@ -23,13 +23,13 @@ func GetLocalTagsEdit(w http.ResponseWriter, r *http.Request) {
 	}
 
 	selectedValues := make(map[string]bool)
-	if values, ok := rxa.GetAllValues(data.LocalTagsProperty, id); ok {
+	if values, ok := rdx.GetAllValues(data.LocalTagsProperty, id); ok {
 		for _, v := range values {
 			selectedValues[v] = true
 		}
 	}
 
-	title, _ := rxa.GetFirstVal(data.TitleProperty, id)
+	title, _ := rdx.GetFirstVal(data.TitleProperty, id)
 
 	if err := app.RenderPropertyEditor(
 		id,

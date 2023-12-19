@@ -17,7 +17,7 @@ const (
 )
 
 var (
-	rxa  kvas.ReduxAssets
+	rdx  kvas.ReadableRedux
 	tmpl *template.Template
 	app  *stencil.AppConfiguration
 )
@@ -43,11 +43,11 @@ func InitTemplates(templatesFS fs.FS, stencilAppStyles fs.FS) {
 func Init() error {
 
 	var err error
-	if rxa, err = kvas.ConnectReduxAssets(data.AbsReduxDir(), data.ReduxProperties()...); err != nil {
+	if rdx, err = kvas.ReduxReader(data.AbsReduxDir(), data.ReduxProperties()...); err != nil {
 		return err
 	}
 
-	if app, err = stencil_app.Init(rxa); err != nil {
+	if app, err = stencil_app.Init(rdx); err != nil {
 		return err
 	}
 

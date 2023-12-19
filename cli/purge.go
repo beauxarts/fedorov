@@ -55,14 +55,14 @@ func Purge(id string, webhookUrl string, confirm bool) error {
 	props := data.ReduxProperties()
 	props = append(props, data.ImportedProperties()...)
 
-	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), props...)
+	rdx, err := kvas.ReduxWriter(data.AbsReduxDir(), props...)
 	if err != nil {
 		return pa.EndWithError(err)
 	}
 
 	// downloads
 
-	if links, ok := rxa.GetAllValues(data.DownloadLinksProperty, id); ok {
+	if links, ok := rdx.GetAllValues(data.DownloadLinksProperty, id); ok {
 		for _, link := range links {
 			lfn := data.AbsDownloadPath(idi, filepath.Base(link))
 			if _, err := os.Stat(lfn); err == nil {
@@ -107,12 +107,12 @@ func Purge(id string, webhookUrl string, confirm bool) error {
 	// reductions
 
 	for _, p := range props {
-		if rxa.HasKey(p, id) {
+		if rdx.HasKey(p, id) {
 			cra := nod.Begin(" found %s in %s...", id, p)
 			if confirm {
-				if values, ok := rxa.GetAllValues(p, id); ok {
+				if values, ok := rdx.GetAllValues(p, id); ok {
 					for _, val := range values {
-						if err := rxa.CutVal(p, id, val); err != nil {
+						if err := rdx.CutValues(p, id, val); err != nil {
 							return cra.EndWithError(err)
 						}
 					}

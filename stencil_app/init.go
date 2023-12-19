@@ -11,7 +11,7 @@ const (
 	appFavIconEmoji = "📇"
 )
 
-func Init(rxa kvas.ReduxAssets) (*stencil.AppConfiguration, error) {
+func Init(rdx kvas.ReadableRedux) (*stencil.AppConfiguration, error) {
 
 	app := stencil.NewAppConfig(appTitle, appFavIconEmoji)
 
@@ -25,7 +25,7 @@ func Init(rxa kvas.ReduxAssets) (*stencil.AppConfiguration, error) {
 		data.TitleProperty,
 		PropertyTitles,
 		SectionTitles,
-		rxa); err != nil {
+		rdx); err != nil {
 		return app, err
 	}
 
@@ -35,7 +35,7 @@ func Init(rxa kvas.ReduxAssets) (*stencil.AppConfiguration, error) {
 		BookPath,
 		data.IdProperty,
 		ListCoverPath,
-		rxa); err != nil {
+		rdx); err != nil {
 		return app, err
 	}
 
@@ -50,7 +50,7 @@ func Init(rxa kvas.ReduxAssets) (*stencil.AppConfiguration, error) {
 		BookSections,
 		data.IdProperty,
 		BookCoverPath,
-		rxa); err != nil {
+		rdx); err != nil {
 		return app, err
 	}
 

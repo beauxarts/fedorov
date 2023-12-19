@@ -24,13 +24,13 @@ func GetDownloads(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var err error
-	if rxa, err = rxa.RefreshReduxAssets(); err != nil {
+	if rdx, err = rdx.RefreshReader(); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return
 	}
 
-	links, ok := rxa.GetAllValues(data.DownloadLinksProperty, idstr)
-	titles, _ := rxa.GetAllValues(data.DownloadTitlesProperty, idstr)
+	links, ok := rdx.GetAllValues(data.DownloadLinksProperty, idstr)
+	titles, _ := rdx.GetAllValues(data.DownloadTitlesProperty, idstr)
 
 	if !ok {
 		http.Error(w, nod.ErrorStr("book has no downloads"), http.StatusInternalServerError)

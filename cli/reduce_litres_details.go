@@ -33,7 +33,7 @@ func ReduceLitResBooksDetails(scoreData bool) error {
 
 	missingDetails := make([]string, 0)
 
-	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), reduxProps...)
+	rdx, err := kvas.ReduxWriter(data.AbsReduxDir(), reduxProps...)
 	if err != nil {
 		return rmbda.EndWithError(err)
 	}
@@ -52,7 +52,7 @@ func ReduceLitResBooksDetails(scoreData bool) error {
 	for _, id := range ids {
 
 		// don't attempt reducing imported books
-		if IsImported(id, rxa) {
+		if IsImported(id, rdx) {
 			continue
 		}
 
@@ -70,7 +70,7 @@ func ReduceLitResBooksDetails(scoreData bool) error {
 		if scoreData {
 			for lp, vals := range lrdx {
 				if p, ok := data.LitResPropertyMap[lp]; ok {
-					if evs, ok := rxa.GetAllValues(p, id); ok {
+					if evs, ok := rdx.GetAllValues(p, id); ok {
 						dataScore[id] = len(vals) - len(evs)
 					}
 				}
@@ -99,12 +99,12 @@ func ReduceLitResBooksDetails(scoreData bool) error {
 
 	sra.TotalInt(len(reductions))
 
-	if err := rxa.ReplaceValues(data.MissingDetailsIdsProperty, data.MissingDetailsIdsProperty, missingDetails...); err != nil {
+	if err := rdx.ReplaceValues(data.MissingDetailsIdsProperty, data.MissingDetailsIdsProperty, missingDetails...); err != nil {
 		rmbda.EndWithError(err)
 	}
 
-	for prop, rdx := range reductions {
-		if err := rxa.BatchReplaceValues(prop, rdx); err != nil {
+	for prop, rs := range reductions {
+		if err := rdx.BatchReplaceValues(prop, rs); err != nil {
 			return rmbda.EndWithError(err)
 		}
 		sra.Increment()

@@ -52,18 +52,18 @@ func GetSearch(w http.ResponseWriter, r *http.Request) {
 	var ids []string
 
 	var err error
-	if rxa, err = rxa.RefreshReduxAssets(); err != nil {
+	if rdx, err = rdx.RefreshReader(); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return
 	}
 
 	if len(query) > 0 {
 
-		ids = maps.Keys(rxa.Match(query, true, true))
+		ids = rdx.Match(query)
 
 		if sort := r.URL.Query().Get(data.SortProperty); sort != "" {
 			desc := r.URL.Query().Get(data.DescendingProperty) == "true"
-			ids, err = rxa.Sort(ids, desc, sort, data.TitleProperty)
+			ids, err = rdx.Sort(ids, desc, sort, data.TitleProperty)
 			if err != nil {
 				http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 				return
@@ -84,7 +84,7 @@ func GetSearch(w http.ResponseWriter, r *http.Request) {
 
 	DefaultHeaders(w)
 
-	if err := app.RenderSearch("Поиск", query, ids[from:to], from, to, len(ids), r.URL, rxa, w); err != nil {
+	if err := app.RenderSearch("Поиск", query, ids[from:to], from, to, len(ids), r.URL, rdx, w); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return
 	}
@@ -94,8 +94,8 @@ func getDigests(properties ...string) map[string][]string {
 	digests := make(map[string][]string)
 	for _, p := range properties {
 		dv := make(map[string]interface{})
-		for _, id := range rxa.Keys(p) {
-			values, ok := rxa.GetAllValues(p, id)
+		for _, id := range rdx.Keys(p) {
+			values, ok := rdx.GetAllValues(p, id)
 			if !ok {
 				continue
 			}

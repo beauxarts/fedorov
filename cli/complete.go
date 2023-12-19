@@ -29,7 +29,7 @@ func Complete(ids []string, action string) error {
 	ca := nod.NewProgress("%s complete...", action)
 	defer ca.End()
 
-	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), data.TitleProperty, data.BookCompletedProperty)
+	rdx, err := kvas.ReduxWriter(data.AbsReduxDir(), data.TitleProperty, data.BookCompletedProperty)
 	if err != nil {
 		return err
 	}
@@ -40,11 +40,11 @@ func Complete(ids []string, action string) error {
 
 		switch action {
 		case SetComplete:
-			if err := rxa.ReplaceValues(data.BookCompletedProperty, id, "true"); err != nil {
+			if err := rdx.ReplaceValues(data.BookCompletedProperty, id, "true"); err != nil {
 				return err
 			}
 		case ClearComplete:
-			if err := rxa.CutVal(data.BookCompletedProperty, id, "true"); err != nil {
+			if err := rdx.CutValues(data.BookCompletedProperty, id, "true"); err != nil {
 				return err
 			}
 		default:

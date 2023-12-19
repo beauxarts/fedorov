@@ -46,7 +46,7 @@ func DownloadLitRes(ids []string) error {
 	da := nod.NewProgress("downloading LitRes books...")
 	defer da.End()
 
-	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(),
+	rdx, err := kvas.ReduxReader(data.AbsReduxDir(),
 		data.MyBooksIdsProperty,
 		data.TitleProperty,
 		data.AuthorsProperty,
@@ -59,7 +59,7 @@ func DownloadLitRes(ids []string) error {
 
 	if ids == nil {
 		var ok bool
-		ids, ok = rxa.GetAllValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty)
+		ids, ok = rdx.GetAllValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty)
 		if !ok {
 			err = errors.New("no my books found")
 			return da.EndWithError(err)
@@ -80,14 +80,14 @@ func DownloadLitRes(ids []string) error {
 	for _, id := range ids {
 
 		// don't attempt downloading imported books
-		if IsImported(id, rxa) {
+		if IsImported(id, rdx) {
 			continue
 		}
 
-		title, _ := rxa.GetFirstVal(data.TitleProperty, id)
-		authors, _ := rxa.GetAllValues(data.AuthorsProperty, id)
+		title, _ := rdx.GetFirstVal(data.TitleProperty, id)
+		authors, _ := rdx.GetAllValues(data.AuthorsProperty, id)
 
-		dls, ok := rxa.GetAllValues(data.DownloadLinksProperty, id)
+		dls, ok := rdx.GetAllValues(data.DownloadLinksProperty, id)
 		if !ok {
 			nod.Log("book %s is missing download links", id)
 			continue

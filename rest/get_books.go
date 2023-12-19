@@ -21,18 +21,18 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
 	showAll := r.URL.Query().Get("show-all") == "true"
 
 	var err error
-	if rxa, err = rxa.RefreshReduxAssets(); err != nil {
+	if rdx, err = rdx.RefreshReader(); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return
 	}
 
-	myBooks, ok := rxa.GetAllValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty)
+	myBooks, ok := rdx.GetAllValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty)
 	if !ok {
 		http.Error(w, nod.ErrorStr("no my books found"), http.StatusInternalServerError)
 		return
 	}
 
-	if missingDetails, ok := rxa.GetAllValues(data.MissingDetailsIdsProperty, data.MissingDetailsIdsProperty); ok {
+	if missingDetails, ok := rdx.GetAllValues(data.MissingDetailsIdsProperty, data.MissingDetailsIdsProperty); ok {
 		filteredBooks := make([]string, 0, len(myBooks))
 		for _, id := range myBooks {
 			if slices.Contains(missingDetails, id) {
@@ -47,7 +47,7 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
 	bookTypeTotals := make(map[string]int)
 
 	for _, id := range myBooks {
-		bt, _ := rxa.GetFirstVal(data.BookTypeProperty, id)
+		bt, _ := rdx.GetFirstVal(data.BookTypeProperty, id)
 		bookTypeTotals[bt]++
 		if !showAll && len(booksByType[bt]) >= latestBooksLimit {
 			continue
@@ -58,7 +58,7 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
 	DefaultHeaders(w)
 
 	updated := "recently"
-	if scu, ok := rxa.GetFirstVal(data.SyncCompletedProperty, data.SyncCompletedProperty); ok {
+	if scu, ok := rdx.GetFirstVal(data.SyncCompletedProperty, data.SyncCompletedProperty); ok {
 		if scui, err := strconv.ParseInt(scu, 10, 64); err == nil {
 			updated = time.Unix(scui, 0).Format(time.RFC1123)
 		}
@@ -72,7 +72,7 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
 		bookTypeTotals,
 		updated,
 		r.URL,
-		rxa,
+		rdx,
 		w); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return

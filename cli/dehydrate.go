@@ -35,7 +35,7 @@ func Dehydrate(idSet map[string]bool, all, overwrite bool) error {
 	di := nod.Begin("dehydrating images...")
 	defer di.End()
 
-	rxa, err := kvas.ConnectReduxAssets(
+	rdx, err := kvas.ReduxWriter(
 		data.AbsReduxDir(),
 		data.DehydratedListImageProperty,
 		data.DehydratedListImageModifiedProperty,
@@ -47,14 +47,14 @@ func Dehydrate(idSet map[string]bool, all, overwrite bool) error {
 	}
 
 	if all {
-		for _, id := range rxa.Keys(data.TitleProperty) {
+		for _, id := range rdx.Keys(data.TitleProperty) {
 			idSet[id] = true
 		}
 	}
 
 	if err := dehydrateImages(
 		idSet,
-		rxa,
+		rdx,
 		data.DehydratedItemImageProperty,
 		data.DehydratedItemImageModifiedProperty,
 		data.CoverSizesDesc,
@@ -64,7 +64,7 @@ func Dehydrate(idSet map[string]bool, all, overwrite bool) error {
 
 	if err := dehydrateImages(
 		idSet,
-		rxa,
+		rdx,
 		data.DehydratedListImageProperty,
 		data.DehydratedListImageModifiedProperty,
 		data.CoverSizesAsc,
@@ -77,7 +77,7 @@ func Dehydrate(idSet map[string]bool, all, overwrite bool) error {
 
 func dehydrateImages(
 	idSet map[string]bool,
-	rxa kvas.ReduxAssets,
+	rdx kvas.WriteableRedux,
 	imageProperty, modifiedProperty string,
 	sizes []litres_integration.CoverSize,
 	overwrite bool) error {
@@ -94,7 +94,7 @@ func dehydrateImages(
 
 	for idStr := range idSet {
 
-		if _, ok := rxa.GetFirstVal(imageProperty, idStr); ok && !overwrite {
+		if _, ok := rdx.GetFirstVal(imageProperty, idStr); ok && !overwrite {
 			continue
 		}
 
@@ -119,11 +119,11 @@ func dehydrateImages(
 		di.Increment()
 	}
 
-	if err := rxa.BatchReplaceValues(imageProperty, dehydratedImages); err != nil {
+	if err := rdx.BatchReplaceValues(imageProperty, dehydratedImages); err != nil {
 		return di.EndWithError(err)
 	}
 
-	if err := rxa.BatchReplaceValues(modifiedProperty, dehydratedImageModified); err != nil {
+	if err := rdx.BatchReplaceValues(modifiedProperty, dehydratedImageModified); err != nil {
 		return di.EndWithError(err)
 	}
 

@@ -70,7 +70,7 @@ func ReduceLitResMyBooks() error {
 		}
 	}
 
-	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(),
+	rdx, err := kvas.ReduxWriter(data.AbsReduxDir(),
 		data.MyBooksIdsProperty,
 		data.HrefProperty,
 		data.ImportedProperty)
@@ -82,13 +82,13 @@ func ReduceLitResMyBooks() error {
 	defer sra.End()
 
 	// add previously imported book to my books before saving that set
-	myBooks[data.MyBooksIdsProperty] = append(myBooks[data.MyBooksIdsProperty], rxa.Keys(data.ImportedProperty)...)
+	myBooks[data.MyBooksIdsProperty] = append(myBooks[data.MyBooksIdsProperty], rdx.Keys(data.ImportedProperty)...)
 
-	if err := rxa.BatchReplaceValues(data.MyBooksIdsProperty, myBooks); err != nil {
+	if err := rdx.BatchReplaceValues(data.MyBooksIdsProperty, myBooks); err != nil {
 		return embia.EndWithError(err)
 	}
 
-	if err := rxa.BatchReplaceValues(data.HrefProperty, hrefs); err != nil {
+	if err := rdx.BatchReplaceValues(data.HrefProperty, hrefs); err != nil {
 		return embia.EndWithError(err)
 	}
 

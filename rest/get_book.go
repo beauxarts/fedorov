@@ -17,14 +17,14 @@ func GetBook(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var err error
-	if rxa, err = rxa.RefreshReduxAssets(); err != nil {
+	if rdx, err = rdx.RefreshReader(); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return
 	}
 
 	DefaultHeaders(w)
 
-	if err := app.RenderItem(id, nil, rxa, w); err != nil {
+	if err := app.RenderItem(id, nil, rdx, w); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return
 	}

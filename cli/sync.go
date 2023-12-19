@@ -57,12 +57,12 @@ func Sync(webhookUrl string, newOnly, noThrottle bool) error {
 		return err
 	}
 
-	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), data.SyncCompletedProperty)
+	rdx, err := kvas.ReduxWriter(data.AbsReduxDir(), data.SyncCompletedProperty)
 	if err != nil {
 		return err
 	}
 
 	tnu := time.Now().UTC().Unix()
 
-	return rxa.ReplaceValues(data.SyncCompletedProperty, data.SyncCompletedProperty, strconv.FormatInt(tnu, 10))
+	return rdx.ReplaceValues(data.SyncCompletedProperty, data.SyncCompletedProperty, strconv.FormatInt(tnu, 10))
 }

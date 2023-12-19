@@ -33,7 +33,7 @@ func GetLitResDetails(ids []string, newOnly, noThrottle bool) error {
 	gmbda := nod.NewProgress("getting LitRes my books details...")
 	defer gmbda.End()
 
-	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(),
+	rdx, err := kvas.ReduxReader(data.AbsReduxDir(),
 		data.MyBooksIdsProperty,
 		data.HrefProperty,
 		data.ImportedProperty)
@@ -55,7 +55,7 @@ func GetLitResDetails(ids []string, newOnly, noThrottle bool) error {
 
 	if len(ids) == 0 {
 		var ok bool
-		ids, ok = rxa.GetAllValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty)
+		ids, ok = rdx.GetAllValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty)
 		if !ok {
 			err = errors.New("no my books found")
 			return gmbda.EndWithError(err)
@@ -66,7 +66,7 @@ func GetLitResDetails(ids []string, newOnly, noThrottle bool) error {
 
 	for _, id := range ids {
 
-		if err := getMyBookById(id, hc, rxa, kv, newOnly); err != nil {
+		if err := getMyBookById(id, hc, rdx, kv, newOnly); err != nil {
 			return err
 		}
 
@@ -82,13 +82,13 @@ func GetLitResDetails(ids []string, newOnly, noThrottle bool) error {
 	return nil
 }
 
-func getMyBookById(id string, hc *http.Client, rxa kvas.ReduxAssets, kv kvas.KeyValues, newOnly bool) error {
+func getMyBookById(id string, hc *http.Client, rdx kvas.ReadableRedux, kv kvas.KeyValues, newOnly bool) error {
 
 	gia := nod.Begin(" getting %s...", id)
 	defer gia.End()
 
 	// don't attempt downloading details for imported books
-	if IsImported(id, rxa) {
+	if IsImported(id, rdx) {
 		gia.EndWithResult("imported")
 		return nil
 	}
@@ -98,7 +98,7 @@ func getMyBookById(id string, hc *http.Client, rxa kvas.ReduxAssets, kv kvas.Key
 		return nil
 	}
 
-	href, ok := rxa.GetFirstVal(data.HrefProperty, id)
+	href, ok := rdx.GetFirstVal(data.HrefProperty, id)
 	if !ok {
 		err := fmt.Errorf("no href for book " + id)
 		return gia.EndWithError(err)

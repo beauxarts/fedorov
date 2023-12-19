@@ -23,7 +23,7 @@ func Export(ids []string) error {
 	ea := nod.Begin("exporting books...")
 	defer ea.End()
 
-	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), data.ReduxProperties()...)
+	rdx, err := kvas.ReduxReader(data.AbsReduxDir(), data.ReduxProperties()...)
 	if err != nil {
 		return ea.EndWithError(err)
 	}
@@ -34,7 +34,7 @@ func Export(ids []string) error {
 		return ea.EndWithError(err)
 	}
 
-	if err := rxa.Export(file, ids...); err != nil {
+	if err := rdx.Export(file, ids...); err != nil {
 		return ea.EndWithError(err)
 	}
 

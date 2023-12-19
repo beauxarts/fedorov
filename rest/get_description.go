@@ -19,12 +19,12 @@ func GetDescription(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var err error
-	if rxa, err = rxa.RefreshReduxAssets(); err != nil {
+	if rdx, err = rdx.RefreshReader(); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return
 	}
 
-	desc, ok := rxa.GetFirstVal(data.DescriptionProperty, id)
+	desc, ok := rdx.GetFirstVal(data.DescriptionProperty, id)
 
 	if !ok {
 		http.Error(w, nod.ErrorStr("book has no downloads"), http.StatusInternalServerError)

@@ -11,15 +11,15 @@ import (
 
 var caser = cases.Title(language.Russian)
 
-func fmtSequenceNameNumber(id, name string, rxa kvas.ReduxAssets) string {
-	if err := rxa.IsSupported(
+func fmtSequenceNameNumber(id, name string, rdx kvas.ReadableRedux) string {
+	if err := rdx.MustHave(
 		data.SequenceNameProperty,
 		data.SequenceNumberProperty); err != nil {
 		return name
 	}
 
-	names, _ := rxa.GetAllValues(data.SequenceNameProperty, id)
-	numbers, _ := rxa.GetAllValues(data.SequenceNumberProperty, id)
+	names, _ := rdx.GetAllValues(data.SequenceNameProperty, id)
+	numbers, _ := rdx.GetAllValues(data.SequenceNumberProperty, id)
 
 	for ii, sn := range names {
 		if sn == name {
@@ -32,7 +32,7 @@ func fmtSequenceNameNumber(id, name string, rxa kvas.ReduxAssets) string {
 	return name
 }
 
-func fmtLabel(_, property, link string, _ kvas.ReduxAssets) string {
+func fmtLabel(_, property, link string, _ kvas.ReadableRedux) string {
 	label := link
 	switch property {
 	case data.BookCompletedProperty:
@@ -49,12 +49,12 @@ func fmtLabel(_, property, link string, _ kvas.ReduxAssets) string {
 	return label
 }
 
-func fmtTitle(id, property, link string, rxa kvas.ReduxAssets) string {
+func fmtTitle(id, property, link string, rdx kvas.ReadableRedux) string {
 	title := link
 
 	switch property {
 	case data.SequenceNameProperty:
-		title = fmtSequenceNameNumber(id, link, rxa)
+		title = fmtSequenceNameNumber(id, link, rdx)
 	case data.GenresProperty:
 		fallthrough
 	case data.TagsProperty:
@@ -80,7 +80,7 @@ func fmtTitle(id, property, link string, rxa kvas.ReduxAssets) string {
 	return title
 }
 
-func fmtHref(_, property, link string, _ kvas.ReduxAssets) string {
+func fmtHref(_, property, link string, _ kvas.ReadableRedux) string {
 	switch property {
 	case data.SequenceNameProperty:
 		fallthrough
@@ -112,7 +112,7 @@ func fmtHref(_, property, link string, _ kvas.ReduxAssets) string {
 	return fmt.Sprintf("/search?%s=%s", property, link)
 }
 
-func fmtAction(id, property, link string, rxa kvas.ReduxAssets) string {
+func fmtAction(id, property, link string, _ kvas.ReadableRedux) string {
 	switch property {
 	case data.BookCompletedProperty:
 		if link == "true" {
@@ -126,7 +126,7 @@ func fmtAction(id, property, link string, rxa kvas.ReduxAssets) string {
 	return ""
 }
 
-func fmtActionHref(id, property, link string, _ kvas.ReduxAssets) string {
+func fmtActionHref(id, property, link string, _ kvas.ReadableRedux) string {
 	switch property {
 	case data.BookCompletedProperty:
 		switch link {

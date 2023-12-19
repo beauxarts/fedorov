@@ -62,7 +62,7 @@ func Import() error {
 	ia := nod.Begin("importing books...")
 	defer ia.End()
 
-	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), data.ReduxProperties()...)
+	rdx, err := kvas.ReduxWriter(data.AbsReduxDir(), data.ReduxProperties()...)
 	if err != nil {
 		return ia.EndWithError(err)
 	}
@@ -102,7 +102,7 @@ func Import() error {
 			case LitResDataSource:
 
 				if hrefs, ok := skv[idstr][data.HrefProperty]; ok {
-					if err := rxa.ReplaceValues(data.HrefProperty, idstr, hrefs...); err != nil {
+					if err := rdx.ReplaceValues(data.HrefProperty, idstr, hrefs...); err != nil {
 						return ia.EndWithError(err)
 					}
 				} else {
@@ -203,18 +203,18 @@ func Import() error {
 			if len(values) == 0 {
 				continue
 			}
-			if err := rxa.ReplaceValues(prop, idstr, values...); err != nil {
+			if err := rdx.ReplaceValues(prop, idstr, values...); err != nil {
 				return ia.EndWithError(err)
 			}
 		}
 
 		// add imported book id to my books
-		if err := rxa.AddValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty, idstr); err != nil {
+		if err := rdx.AddValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty, idstr); err != nil {
 			return ia.EndWithError(err)
 		}
 
 		// set imported book as... imported - primarily to be able to recreate upon sync
-		if err := rxa.AddValues(data.ImportedProperty, idstr, "true"); err != nil {
+		if err := rdx.AddValues(data.ImportedProperty, idstr, "true"); err != nil {
 			return ia.EndWithError(err)
 		}
 	}
@@ -311,8 +311,8 @@ func importLiveLibData(id string, hc *http.Client) (map[string]map[string][]stri
 	return rdx, nil
 }
 
-func IsImported(id string, rxa kvas.ReduxAssets) bool {
-	if val, ok := rxa.GetFirstVal(data.ImportedProperty, id); ok {
+func IsImported(id string, rdx kvas.ReadableRedux) bool {
+	if val, ok := rdx.GetFirstVal(data.ImportedProperty, id); ok {
 		return val == "true"
 	}
 	return false

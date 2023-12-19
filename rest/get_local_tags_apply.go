@@ -2,6 +2,7 @@ package rest
 
 import (
 	"github.com/beauxarts/fedorov/data"
+	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
 	"net/http"
 )
@@ -31,7 +32,13 @@ func GetLocalTagsApply(w http.ResponseWriter, r *http.Request) {
 		localTags = append(localTags, newLocalTag)
 	}
 
-	if err := rxa.ReplaceValues(data.LocalTagsProperty, id, localTags...); err != nil {
+	ltRdx, err := kvas.ReduxWriter(data.AbsReduxDir(), data.LocalTagsProperty)
+	if err != nil {
+		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if err := ltRdx.ReplaceValues(data.LocalTagsProperty, id, localTags...); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusBadRequest)
 		return
 	}

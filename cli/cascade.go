@@ -19,7 +19,7 @@ func Cascade() error {
 
 	props := []string{data.TitleProperty, data.BookCompletedProperty, data.MyBooksIdsProperty, data.MyBooksOrderProperty}
 
-	rxa, err := kvas.ConnectReduxAssets(data.AbsReduxDir(), props...)
+	rdx, err := kvas.ReduxWriter(data.AbsReduxDir(), props...)
 	if err != nil {
 		return ca.EndWithError(err)
 	}
@@ -28,15 +28,15 @@ func Cascade() error {
 	bcpa := nod.NewProgress(" " + data.BookCompletedProperty)
 	defer bcpa.End()
 
-	ids := rxa.Keys(data.TitleProperty)
+	ids := rdx.Keys(data.TitleProperty)
 	bcpa.TotalInt(len(ids))
 
 	for _, id := range ids {
 		bcpa.Increment()
-		if val, ok := rxa.GetFirstVal(data.BookCompletedProperty, id); ok && val != "" {
+		if val, ok := rdx.GetFirstVal(data.BookCompletedProperty, id); ok && val != "" {
 			continue
 		}
-		if err := rxa.ReplaceValues(data.BookCompletedProperty, id, "false"); err != nil {
+		if err := rdx.ReplaceValues(data.BookCompletedProperty, id, "false"); err != nil {
 			return ca.EndWithError(err)
 		}
 	}
@@ -48,14 +48,14 @@ func Cascade() error {
 	mboa := nod.NewProgress(" " + data.MyBooksOrderProperty)
 	defer mboa.End()
 
-	myBooksIds, _ := rxa.GetAllValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty)
+	myBooksIds, _ := rdx.GetAllValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty)
 	mboa.TotalInt(len(myBooksIds))
 
 	order := make(map[string][]string)
 	for i, id := range myBooksIds {
 		order[id] = []string{fmt.Sprintf("%9d", i)}
 	}
-	if err := rxa.BatchReplaceValues(data.MyBooksOrderProperty, order); err != nil {
+	if err := rdx.BatchReplaceValues(data.MyBooksOrderProperty, order); err != nil {
 		return mboa.EndWithError(err)
 	}
 	mboa.EndWithResult("done")
