@@ -3,6 +3,7 @@ package cli
 import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/boggydigital/kvas"
+	"github.com/boggydigital/pathology"
 	"net/url"
 	"strconv"
 	"time"
@@ -57,7 +58,12 @@ func Sync(webhookUrl string, newOnly, noThrottle bool) error {
 		return err
 	}
 
-	rdx, err := kvas.ReduxWriter(data.AbsReduxDir(), data.SyncCompletedProperty)
+	absReduxDir, err := pathology.GetAbsRelDir(data.Redux)
+	if err != nil {
+		return err
+	}
+
+	rdx, err := kvas.ReduxWriter(absReduxDir, data.SyncCompletedProperty)
 	if err != nil {
 		return err
 	}

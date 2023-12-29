@@ -5,6 +5,7 @@ import (
 	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/dolo"
 	"github.com/boggydigital/nod"
+	"github.com/boggydigital/pathology"
 	"net/url"
 )
 
@@ -22,7 +23,12 @@ func GetLiveLibCover(id, src string) error {
 		return gca.EndWithError(err)
 	}
 
-	if err := dc.Download(cu, nil, data.AbsCoverDir(), fn); err != nil {
+	absCoverDir, err := pathology.GetAbsDir(data.Covers)
+	if err != nil {
+		return gca.EndWithError(err)
+	}
+
+	if err := dc.Download(cu, nil, absCoverDir, fn); err != nil {
 		return gca.EndWithError(err)
 	}
 

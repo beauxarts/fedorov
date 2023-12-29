@@ -21,7 +21,11 @@ func getCover(sizes []litres_integration.CoverSize, w http.ResponseWriter, r *ht
 
 	if id, err := strconv.ParseInt(idstr, 10, 64); err == nil {
 		for _, size := range sizes {
-			coverPath := data.AbsCoverPath(id, size)
+			coverPath, err := data.AbsCoverImagePath(id, size)
+			if err != nil {
+				http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
+				return
+			}
 			if _, err := os.Stat(coverPath); err == nil {
 				w.Header().Set("Cache-Control", "max-age=31536000")
 				http.ServeFile(w, r, coverPath)

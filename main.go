@@ -8,6 +8,7 @@ import (
 	"github.com/beauxarts/fedorov/rest"
 	"github.com/boggydigital/clo"
 	"github.com/boggydigital/nod"
+	"github.com/boggydigital/pathology"
 	"github.com/boggydigital/wits"
 	"log"
 	"os"
@@ -15,7 +16,7 @@ import (
 )
 
 const (
-	directoriesFilename = "directories.txt"
+	userDirsFilename = "directories.txt"
 )
 
 var (
@@ -36,6 +37,24 @@ var (
 
 func main() {
 
+	// setup pathology dirs
+	pathology.SetDefaultRootDir(data.DefaultFedorovRootDir)
+	if err := pathology.SetAbsDirs(data.AllAbsDirs...); err != nil {
+		panic(err)
+	}
+	if _, err := os.Stat(userDirsFilename); err == nil {
+		udFile, err := os.Open(userDirsFilename)
+		if err != nil {
+			panic(err)
+		}
+		userDirs, err := wits.ReadKeyValue(udFile)
+		if err != nil {
+			panic(err)
+		}
+		pathology.SetUserDirsOverrides(userDirs)
+	}
+	pathology.SetRelToAbsDir(data.RelToAbsDirs)
+
 	nod.EnableStdOutPresenter()
 
 	once.Do(func() {
@@ -44,15 +63,6 @@ func main() {
 
 	ns := nod.NewProgress("fedorov is serving your DRM-free books")
 	defer ns.End()
-
-	if err := readUserDirectories(); err != nil {
-		_ = ns.EndWithError(err)
-		os.Exit(1)
-	}
-
-	data.ChRoot(rootDir)
-	data.SetReduxDir(reduxDir)
-	data.SetCoversDir(coversDir)
 
 	defs, err := clo.Load(
 		bytes.NewBuffer(cliCommands),
@@ -90,43 +100,4 @@ func main() {
 	if err := defs.Serve(os.Args[1:]); err != nil {
 		log.Fatalln(err)
 	}
-}
-
-func readUserDirectories() error {
-	if _, err := os.Stat(directoriesFilename); os.IsNotExist(err) {
-		return nil
-	}
-
-	udFile, err := os.Open(directoriesFilename)
-	if err != nil {
-		return err
-	}
-
-	dirs, err := wits.ReadKeyValue(udFile)
-	if err != nil {
-		return err
-	}
-
-	if sd, ok := dirs["root"]; ok {
-		rootDir = sd
-	}
-	if rd, ok := dirs["redux"]; ok {
-		reduxDir = rd
-	}
-	if cd, ok := dirs["covers"]; ok {
-		coversDir = cd
-	}
-
-	//validate that directories actually exist
-	if _, err := os.Stat(rootDir); err != nil {
-		return err
-	}
-	if _, err := os.Stat(reduxDir); err != nil {
-		return err
-	}
-	if _, err := os.Stat(coversDir); err != nil {
-		return err
-	}
-
-	return nil
 }

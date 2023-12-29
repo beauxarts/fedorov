@@ -26,7 +26,12 @@ func GetLiveLibDetails(ids []string, hc *http.Client, newOnly bool) error {
 	glbda := nod.NewProgress("getting LiveLib books details...")
 	defer glbda.End()
 
-	kv, err := kvas.ConnectLocal(data.AbsLiveLibDetailsDir(), kvas.HtmlExt)
+	absLiveLibDetailsDir, err := data.AbsDataTypeDir(data.LiveLibDetails)
+	if err != nil {
+		return glbda.EndWithError(err)
+	}
+
+	kv, err := kvas.ConnectLocal(absLiveLibDetailsDir, kvas.HtmlExt)
 	if err != nil {
 		return glbda.EndWithError(err)
 	}

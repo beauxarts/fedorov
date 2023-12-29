@@ -8,6 +8,7 @@ import (
 	"github.com/boggydigital/dolo"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
+	"github.com/boggydigital/pathology"
 	"net/url"
 	"path/filepath"
 	"strings"
@@ -46,7 +47,12 @@ func DownloadLitRes(ids []string) error {
 	da := nod.NewProgress("downloading LitRes books...")
 	defer da.End()
 
-	rdx, err := kvas.ReduxReader(data.AbsReduxDir(),
+	absReduxDir, err := pathology.GetAbsRelDir(data.Redux)
+	if err != nil {
+		return da.EndWithError(err)
+	}
+
+	rdx, err := kvas.ReduxReader(absReduxDir,
 		data.MyBooksIdsProperty,
 		data.TitleProperty,
 		data.AuthorsProperty,
@@ -68,7 +74,12 @@ func DownloadLitRes(ids []string) error {
 
 	da.TotalInt(len(ids))
 
-	cj, err := coost.NewJar(data.AbsCookiesFilename())
+	absCookiesFilename, err := data.AbsCookiesFilename()
+	if err != nil {
+		return da.EndWithError(err)
+	}
+
+	cj, err := coost.NewJar(absCookiesFilename)
 	if err != nil {
 		return da.EndWithError(err)
 	}
@@ -76,6 +87,11 @@ func DownloadLitRes(ids []string) error {
 	hc := cj.NewHttpClient()
 
 	dc := dolo.NewClient(hc, dolo.Defaults())
+
+	absDownloadsDir, err := pathology.GetAbsDir(data.Downloads)
+	if err != nil {
+		return da.EndWithError(err)
+	}
 
 	for _, id := range ids {
 
@@ -105,12 +121,12 @@ func DownloadLitRes(ids []string) error {
 
 			tpw := nod.NewProgress(" %s", fname)
 
-			if err := dc.Download(litres_integration.HrefUrl(link), tpw, data.AbsDownloadsDir(), id, fname); err != nil {
+			if err := dc.Download(litres_integration.HrefUrl(link), tpw, absDownloadsDir, id, fname); err != nil {
 				nod.Log(err.Error())
 				continue
 			}
 
-			if err := cj.Store(data.AbsCookiesFilename()); err != nil {
+			if err := cj.Store(absCookiesFilename); err != nil {
 				return da.EndWithError(err)
 			}
 

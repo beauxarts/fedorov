@@ -4,6 +4,7 @@ import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
+	"github.com/boggydigital/pathology"
 	"net/http"
 )
 
@@ -32,7 +33,13 @@ func GetLocalTagsApply(w http.ResponseWriter, r *http.Request) {
 		localTags = append(localTags, newLocalTag)
 	}
 
-	ltRdx, err := kvas.ReduxWriter(data.AbsReduxDir(), data.LocalTagsProperty)
+	absReduxDir, err := pathology.GetAbsRelDir(data.Redux)
+	if err != nil {
+		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
+		return
+	}
+
+	ltRdx, err := kvas.ReduxWriter(absReduxDir, data.LocalTagsProperty)
 	if err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return

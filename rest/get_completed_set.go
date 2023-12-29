@@ -4,6 +4,7 @@ import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
+	"github.com/boggydigital/pathology"
 	"net/http"
 )
 
@@ -13,7 +14,13 @@ func GetCompletedSet(w http.ResponseWriter, r *http.Request) {
 
 	id := r.URL.Query().Get(data.IdProperty)
 
-	bcRdx, err := kvas.ReduxWriter(data.AbsReduxDir(), data.BookCompletedProperty)
+	absReduxDir, err := pathology.GetAbsRelDir(data.Redux)
+	if err != nil {
+		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
+		return
+	}
+
+	bcRdx, err := kvas.ReduxWriter(absReduxDir, data.BookCompletedProperty)
 	if err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return

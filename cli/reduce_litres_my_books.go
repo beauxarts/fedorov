@@ -5,6 +5,7 @@ import (
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/match_node"
 	"github.com/boggydigital/nod"
+	"github.com/boggydigital/pathology"
 	"golang.org/x/net/html"
 	"golang.org/x/net/html/atom"
 	"net/url"
@@ -25,7 +26,12 @@ func ReduceLitResMyBooks() error {
 	embia := nod.NewProgress("reducing my books...")
 	defer embia.End()
 
-	kv, err := kvas.ConnectLocal(data.AbsLitResMyBooksFreshDir(), kvas.HtmlExt)
+	absLitResMyBooksFreshDir, err := data.AbsDataTypeDir(data.LitResMyBooksFresh)
+	if err != nil {
+		return embia.EndWithError(err)
+	}
+
+	kv, err := kvas.ConnectLocal(absLitResMyBooksFreshDir, kvas.HtmlExt)
 	if err != nil {
 		return embia.EndWithError(err)
 	}
@@ -70,7 +76,12 @@ func ReduceLitResMyBooks() error {
 		}
 	}
 
-	rdx, err := kvas.ReduxWriter(data.AbsReduxDir(),
+	absReduxDir, err := pathology.GetAbsRelDir(data.Redux)
+	if err != nil {
+		return embia.EndWithError(err)
+	}
+
+	rdx, err := kvas.ReduxWriter(absReduxDir,
 		data.MyBooksIdsProperty,
 		data.HrefProperty,
 		data.ImportedProperty)

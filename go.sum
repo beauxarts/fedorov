@@ -38,6 +38,10 @@ github.com/boggydigital/nod v0.1.21 h1:pQbrgswCuU5dr3IWS1Z902PJAm5BebSLG+Q3aG7KJ
 github.com/boggydigital/nod v0.1.21/go.mod h1:bYucIZ3rLHBZKf/3+T+eTSxuijuja7Y6OgU2P6o2/vo=
 github.com/boggydigital/packer v0.1.0 h1:u727MJMwwElKDkyhcNjkhJwChdbeUl0sWh7R0SmkWNc=
 github.com/boggydigital/packer v0.1.0/go.mod h1:cCRWxv7LDqsKuVoD6B6R2rSQedZbugrlnTyc39Lm59c=
+github.com/boggydigital/packer v0.1.1 h1:Ac/DnmJbEXRJmci3Pi+/C+7eV1MypWxOi91IE6/1bfE=
+github.com/boggydigital/packer v0.1.1/go.mod h1:cCRWxv7LDqsKuVoD6B6R2rSQedZbugrlnTyc39Lm59c=
+github.com/boggydigital/pathology v0.1.8 h1:a5brNIQS//yednzdJsxtCExHVJLlu8hhi2pB1D/us0U=
+github.com/boggydigital/pathology v0.1.8/go.mod h1:kv9hzFMn1Ud0Hxn2vITcZAS68YuB/XbaErXXcANcolU=
 github.com/boggydigital/stencil v0.2.10 h1:E1VENiWar4qI13PCWrJTULaj8Yo8eb1pN3YT9knPdh8=
 github.com/boggydigital/stencil v0.2.10/go.mod h1:jJMqlrYS9h3b+CGNBhsZ20bygOBo8euBV6RKjB34soQ=
 github.com/boggydigital/stencil v0.2.11 h1:0sHOEIfHw+BweGvmgUm4a8QH34GKkp1bHMvVHET7D/c=
@@ -83,6 +87,8 @@ golang.org/x/exp v0.0.0-20231206192017-f3f8817b8deb h1:c0vyKkb6yr3KR7jEfJaOSv4lG
 golang.org/x/exp v0.0.0-20231206192017-f3f8817b8deb/go.mod h1:iRJReGqOEeBhDZGkGbynYwcHlctCvnjTYIamk7uXpHI=
 golang.org/x/exp v0.0.0-20231219180239-dc181d75b848 h1:+iq7lrkxmFNBM7xx+Rae2W6uyPfhPeDWD+n+JgppptE=
 golang.org/x/exp v0.0.0-20231219180239-dc181d75b848/go.mod h1:iRJReGqOEeBhDZGkGbynYwcHlctCvnjTYIamk7uXpHI=
+golang.org/x/exp v0.0.0-20231226003508-02704c960a9b h1:kLiC65FbiHWFAOu+lxwNPujcsl8VYyTYYEZnsOO1WK4=
+golang.org/x/exp v0.0.0-20231226003508-02704c960a9b/go.mod h1:iRJReGqOEeBhDZGkGbynYwcHlctCvnjTYIamk7uXpHI=
 golang.org/x/image v0.11.0 h1:ds2RoQvBvYTiJkwpSFDwCcDFNX7DqjL2WsUgTNk0Ooo=
 golang.org/x/image v0.11.0/go.mod h1:bglhjqbqVuEb9e9+eNR45Jfu7D+T4Qan+NhQk8Ck2P8=
 golang.org/x/image v0.13.0 h1:3cge/F/QTkNLauhf2QoE9zp+7sr+ZcL4HnoZmdwg9sg=

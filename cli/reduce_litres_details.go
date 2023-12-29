@@ -6,6 +6,7 @@ import (
 	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
+	"github.com/boggydigital/pathology"
 	"golang.org/x/net/html"
 	"net/url"
 )
@@ -33,12 +34,22 @@ func ReduceLitResBooksDetails(scoreData bool) error {
 
 	missingDetails := make([]string, 0)
 
-	rdx, err := kvas.ReduxWriter(data.AbsReduxDir(), reduxProps...)
+	absReduxDir, err := pathology.GetAbsRelDir(data.Redux)
 	if err != nil {
 		return rmbda.EndWithError(err)
 	}
 
-	kv, err := kvas.ConnectLocal(data.AbsLitResMyBooksDetailsDir(), kvas.HtmlExt)
+	rdx, err := kvas.ReduxWriter(absReduxDir, reduxProps...)
+	if err != nil {
+		return rmbda.EndWithError(err)
+	}
+
+	absLitResMyBooksDetailsDir, err := data.AbsDataTypeDir(data.LitResMyBooksDetails)
+	if err != nil {
+		return rmbda.EndWithError(err)
+	}
+
+	kv, err := kvas.ConnectLocal(absLitResMyBooksDetailsDir, kvas.HtmlExt)
 	if err != nil {
 		return rmbda.EndWithError(err)
 	}

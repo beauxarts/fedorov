@@ -25,12 +25,20 @@ services:
       # - FV_SERVE_SHARED-PASSWORD=SHARED-PASSWORD
       # - FV_WEBHOOK-URL=http://FEDOROV-ADDRESS/prerender
     volumes:
-      # root state dir (cold storage)
-      - /docker/fedorov:/var/lib/fedorov
-      # redux dir (hot storage)
-      - /docker/fedorov/_redux:/var/lib/fedorov/_redux
+      # backups (cold storage)
+      - /docker/fedorov/backups:/var/lib/fedorov/backups
+      # metadata dir (hot storage)
+      - /docker/fedorov/metadata:/var/lib/fedorov/metadata
+      # input dir (cold storage)
+      - /docker/fedorov:/var/lib/fedorov/input
+      # output dir (cold storage)
+      - /docker/fedorov:/var/lib/fedorov/output
       # covers dir (hot storage)
       - /docker/fedorov/covers:/var/lib/fedorov/covers
+      # downloads dir (cold storage)
+      - /docker/fedorov/downloads:/var/lib/fedorov/downloads
+      # imported dir (cold storage)
+      - /docker/fedorov/_imported:/var/lib/fedorov/_imported
       # sharing timezone from the host
       - /etc/localtime:/etc/localtime:ro
     ports:
