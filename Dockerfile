@@ -14,12 +14,20 @@ COPY --from=build /go/src/app/fv /usr/bin/fv
 COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
 EXPOSE 1510
-#root dir
-VOLUME /var/lib/fedorov
-#redux dir
-VOLUME /var/lib/fedorov/_redux
+#backups
+VOLUME /var/lib/fedorov/backups
+#metadata
+VOLUME /var/lib/fedorov/metadata
+#input
+VOLUME /var/lib/fedorov/input
+#output
+VOLUME /var/lib/fedorov/output
 #covers
 VOLUME /var/lib/fedorov/covers
+#downloads
+VOLUME /var/lib/fedorov/downloads
+#imported
+VOLUME /var/lib/fedorov/_imported
 
 ENTRYPOINT ["/usr/bin/fv"]
 CMD ["serve","-port", "1510", "-stderr"]

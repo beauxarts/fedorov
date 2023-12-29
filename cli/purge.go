@@ -5,6 +5,7 @@ import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
+	"github.com/boggydigital/pathology"
 	"net/url"
 	"os"
 	"path/filepath"
@@ -39,7 +40,10 @@ func Purge(id string, webhookUrl string, confirm bool) error {
 	}
 
 	for _, cs := range data.CoverSizesAsc {
-		cfn := data.AbsCoverPath(idi, cs)
+		cfn, err := data.AbsCoverImagePath(idi, cs)
+		if err != nil {
+			return pa.EndWithError(err)
+		}
 		if _, err := os.Stat(cfn); err == nil {
 			rca := nod.Begin(" found cover %s...", filepath.Base(cfn))
 			if confirm {
@@ -55,7 +59,12 @@ func Purge(id string, webhookUrl string, confirm bool) error {
 	props := data.ReduxProperties()
 	props = append(props, data.ImportedProperties()...)
 
-	rdx, err := kvas.ReduxWriter(data.AbsReduxDir(), props...)
+	absReduxDir, err := pathology.GetAbsRelDir(data.Redux)
+	if err != nil {
+		return pa.EndWithError(err)
+	}
+
+	rdx, err := kvas.ReduxWriter(absReduxDir, props...)
 	if err != nil {
 		return pa.EndWithError(err)
 	}
@@ -64,7 +73,10 @@ func Purge(id string, webhookUrl string, confirm bool) error {
 
 	if links, ok := rdx.GetAllValues(data.DownloadLinksProperty, id); ok {
 		for _, link := range links {
-			lfn := data.AbsDownloadPath(idi, filepath.Base(link))
+			lfn, err := data.AbsFileDownloadPath(idi, filepath.Base(link))
+			if err != nil {
+				return pa.EndWithError(err)
+			}
 			if _, err := os.Stat(lfn); err == nil {
 				rda := nod.Begin(" found download %s...", filepath.Base(lfn))
 				if confirm {
@@ -80,20 +92,26 @@ func Purge(id string, webhookUrl string, confirm bool) error {
 
 	// details
 
-	detailsDirs := []string{
-		data.AbsLitResMyBooksFreshDir(),
-		data.AbsLitResMyBooksDetailsDir(),
-		data.AbsLiveLibDetailsDir(),
+	dataTypes := []data.DataType{
+		data.LitResMyBooksFresh,
+		data.LitResMyBooksDetails,
+		data.LiveLibDetails,
 	}
 
-	for _, d := range detailsDirs {
-		kv, err := kvas.ConnectLocal(d, kvas.HtmlExt)
+	for _, dt := range dataTypes {
+
+		adtd, err := data.AbsDataTypeDir(dt)
+		if err != nil {
+			return pa.EndWithError(err)
+		}
+
+		kv, err := kvas.ConnectLocal(adtd, kvas.HtmlExt)
 		if err != nil {
 			return pa.EndWithError(err)
 		}
 
 		if kv.Has(id) {
-			cda := nod.Begin(" found %s in %s...", id, filepath.Base(d))
+			cda := nod.Begin(" found %s in %s...", id, filepath.Base(adtd))
 			if confirm {
 				if _, err := kv.Cut(id); err != nil {
 					return cda.EndWithError(err)

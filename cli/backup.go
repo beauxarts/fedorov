@@ -4,6 +4,7 @@ import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/packer"
+	"github.com/boggydigital/pathology"
 	"net/url"
 	"os"
 )
@@ -17,13 +18,23 @@ func Backup() error {
 	ba := nod.NewProgress("creating metadata backup...")
 	defer ba.End()
 
-	if _, err := os.Stat(data.AbsBackupDir()); os.IsNotExist(err) {
-		if err := os.MkdirAll(data.AbsBackupDir(), 0755); err != nil {
+	absBackupsDir, err := pathology.GetAbsDir(data.Backups)
+	if err != nil {
+		return ba.EndWithError(err)
+	}
+
+	absReduxDir, err := pathology.GetAbsRelDir(data.Redux)
+	if err != nil {
+		return ba.EndWithError(err)
+	}
+
+	if _, err := os.Stat(absBackupsDir); os.IsNotExist(err) {
+		if err := os.MkdirAll(absBackupsDir, 0755); err != nil {
 			return ba.EndWithError(err)
 		}
 	}
 
-	if err := packer.Pack(data.Pwd(), data.AbsReduxDir(), data.AbsBackupDir(), ba); err != nil {
+	if err := packer.Pack(absReduxDir, absBackupsDir, ba); err != nil {
 		return ba.EndWithError(err)
 	}
 

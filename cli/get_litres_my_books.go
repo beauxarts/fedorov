@@ -25,12 +25,22 @@ func GetLitResMyBooks() error {
 	gmba := nod.NewProgress("fetching LitRes my books fresh...")
 	defer gmba.End()
 
-	kv, err := kvas.ConnectLocal(data.AbsLitResMyBooksFreshDir(), kvas.HtmlExt)
+	absLitResMyBooksFreshDir, err := data.AbsDataTypeDir(data.LitResMyBooksFresh)
 	if err != nil {
 		return gmba.EndWithError(err)
 	}
 
-	cj, err := coost.NewJar(data.AbsCookiesFilename())
+	kv, err := kvas.ConnectLocal(absLitResMyBooksFreshDir, kvas.HtmlExt)
+	if err != nil {
+		return gmba.EndWithError(err)
+	}
+
+	absCookiesFilename, err := data.AbsCookiesFilename()
+	if err != nil {
+		return gmba.EndWithError(err)
+	}
+
+	cj, err := coost.NewJar(absCookiesFilename)
 	if err != nil {
 		return gmba.EndWithError(err)
 	}
@@ -53,7 +63,7 @@ func GetLitResMyBooks() error {
 		}
 	}
 
-	if err := cj.Store(data.AbsCookiesFilename()); err != nil {
+	if err := cj.Store(absCookiesFilename); err != nil {
 		return gmba.EndWithError(err)
 	}
 
@@ -68,7 +78,7 @@ func GetLitResMyBooks() error {
 			return gmba.EndWithError(err)
 		}
 
-		if err := cj.Store(data.AbsCookiesFilename()); err != nil {
+		if err := cj.Store(absCookiesFilename); err != nil {
 			return gmba.EndWithError(err)
 		}
 	}

@@ -9,6 +9,7 @@ import (
 	"github.com/boggydigital/coost"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
+	"github.com/boggydigital/pathology"
 	"github.com/boggydigital/wits"
 	"io"
 	"net/http"
@@ -62,12 +63,21 @@ func Import() error {
 	ia := nod.Begin("importing books...")
 	defer ia.End()
 
-	rdx, err := kvas.ReduxWriter(data.AbsReduxDir(), data.ReduxProperties()...)
+	absReduxDir, err := pathology.GetAbsRelDir(data.Redux)
 	if err != nil {
 		return ia.EndWithError(err)
 	}
 
-	absImportFilename := data.AbsImportFilename()
+	rdx, err := kvas.ReduxWriter(absReduxDir, data.ReduxProperties()...)
+	if err != nil {
+		return ia.EndWithError(err)
+	}
+
+	absImportFilename, err := data.AbsImportFilename()
+	if err != nil {
+		return ia.EndWithError(err)
+	}
+
 	if _, err := os.Stat(absImportFilename); err != nil {
 		return ia.EndWithError(err)
 	}
@@ -84,7 +94,17 @@ func Import() error {
 		return ia.EndWithError(err)
 	}
 
-	hc, err := coost.NewHttpClientFromFile(data.AbsCookiesFilename())
+	absCookiesFilename, err := data.AbsCookiesFilename()
+	if err != nil {
+		return ia.EndWithError(err)
+	}
+
+	hc, err := coost.NewHttpClientFromFile(absCookiesFilename)
+	if err != nil {
+		return ia.EndWithError(err)
+	}
+
+	absInputDir, err := pathology.GetAbsDir(data.Input)
 	if err != nil {
 		return ia.EndWithError(err)
 	}
@@ -146,9 +166,12 @@ func Import() error {
 		if id, err := strconv.ParseInt(idstr, 10, 64); err == nil {
 
 			// move cover into destination folder
-			srcCoverFilename := filepath.Join(data.Pwd(), idstr+data.CoverExt)
+			srcCoverFilename := filepath.Join(absInputDir, idstr+data.DefaultCoverExt)
 			if _, err := os.Stat(srcCoverFilename); err == nil {
-				absDestCoverFilename := data.AbsCoverPath(id, litres_integration.SizeMax)
+				absDestCoverFilename, err := data.AbsCoverImagePath(id, litres_integration.SizeMax)
+				if err != nil {
+					return ia.EndWithError(err)
+				}
 				if err := os.Rename(srcCoverFilename, absDestCoverFilename); err != nil {
 					if strings.Contains(err.Error(), "invalid cross-device link") {
 						if err := copyDelete(srcCoverFilename, absDestCoverFilename); err != nil {
@@ -172,9 +195,12 @@ func Import() error {
 				if relSrcFilename == "" {
 					continue
 				}
-				absSrcFilename := filepath.Join(data.Pwd(), relSrcFilename)
+				absSrcFilename := filepath.Join(absInputDir, relSrcFilename)
 				if _, err := os.Stat(absSrcFilename); err == nil {
-					absDstFilename := data.AbsDownloadPath(id, relSrcFilename)
+					absDstFilename, err := data.AbsFileDownloadPath(id, relSrcFilename)
+					if err != nil {
+						return ia.EndWithError(err)
+					}
 
 					absDstDir, _ := filepath.Split(absDstFilename)
 					if _, err := os.Stat(absDstDir); os.IsNotExist(err) {
@@ -219,16 +245,21 @@ func Import() error {
 		}
 	}
 
+	absImportedDir, err := pathology.GetAbsDir(data.Imported)
+	if err != nil {
+		return ia.EndWithError(err)
+	}
+
 	// move import declaration to imported dir when all is done
-	if _, err := os.Stat(data.AbsImportedDir()); os.IsNotExist(err) {
-		if err := os.MkdirAll(data.AbsImportedDir(), 0755); err != nil {
+	if _, err := os.Stat(absImportedDir); os.IsNotExist(err) {
+		if err := os.MkdirAll(absImportedDir, 0755); err != nil {
 			return ia.EndWithError(err)
 		}
 	}
 
 	_, dstImportFilename := filepath.Split(absImportFilename)
 	dstImportFilename = fmt.Sprintf("%s_%s", time.Now().Format("20060102-1504"), dstImportFilename)
-	dstImportFilename = filepath.Join(data.AbsImportedDir(), dstImportFilename)
+	dstImportFilename = filepath.Join(absImportedDir, dstImportFilename)
 	if err := os.Rename(absImportFilename, dstImportFilename); err != nil {
 		if strings.Contains(err.Error(), "invalid cross-device link") {
 			if err := copyDelete(absImportFilename, dstImportFilename); err != nil {
@@ -257,7 +288,12 @@ func importLitresData(id string, hc *http.Client) (map[string]map[string][]strin
 		return nil, ilda.EndWithError(err)
 	}
 
-	kv, err := kvas.ConnectLocal(data.AbsLitResMyBooksDetailsDir(), kvas.HtmlExt)
+	absLitResMyBooksDetailsDir, err := data.AbsDataTypeDir(data.LitResMyBooksDetails)
+	if err != nil {
+		return nil, ilda.EndWithError(err)
+	}
+
+	kv, err := kvas.ConnectLocal(absLitResMyBooksDetailsDir, kvas.HtmlExt)
 	if err != nil {
 		return nil, ilda.EndWithError(err)
 	}
@@ -285,7 +321,12 @@ func importLiveLibData(id string, hc *http.Client) (map[string]map[string][]stri
 		return nil, ilda.EndWithError(err)
 	}
 
-	kv, err := kvas.ConnectLocal(data.AbsLiveLibDetailsDir(), kvas.HtmlExt)
+	absLiveLibDetailsDir, err := data.AbsDataTypeDir(data.LiveLibDetails)
+	if err != nil {
+		return nil, ilda.EndWithError(err)
+	}
+
+	kv, err := kvas.ConnectLocal(absLiveLibDetailsDir, kvas.HtmlExt)
 	if err != nil {
 		return nil, ilda.EndWithError(err)
 	}

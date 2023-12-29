@@ -9,6 +9,7 @@ import (
 	"github.com/boggydigital/dolo"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
+	"github.com/boggydigital/pathology"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,7 +34,12 @@ func GetLitResDetails(ids []string, newOnly, noThrottle bool) error {
 	gmbda := nod.NewProgress("getting LitRes my books details...")
 	defer gmbda.End()
 
-	rdx, err := kvas.ReduxReader(data.AbsReduxDir(),
+	absReduxDir, err := pathology.GetAbsRelDir(data.Redux)
+	if err != nil {
+		return gmbda.EndWithError(err)
+	}
+
+	rdx, err := kvas.ReduxReader(absReduxDir,
 		data.MyBooksIdsProperty,
 		data.HrefProperty,
 		data.ImportedProperty)
@@ -41,12 +47,22 @@ func GetLitResDetails(ids []string, newOnly, noThrottle bool) error {
 		return gmbda.EndWithError(err)
 	}
 
-	kv, err := kvas.ConnectLocal(data.AbsLitResMyBooksDetailsDir(), kvas.HtmlExt)
+	absCookiesFilename, err := data.AbsCookiesFilename()
 	if err != nil {
 		return gmbda.EndWithError(err)
 	}
 
-	cj, err := coost.NewJar(data.AbsCookiesFilename())
+	absLitResMyBooksDetailsDir, err := data.AbsDataTypeDir(data.LitResMyBooksDetails)
+	if err != nil {
+		return gmbda.EndWithError(err)
+	}
+
+	kv, err := kvas.ConnectLocal(absLitResMyBooksDetailsDir, kvas.HtmlExt)
+	if err != nil {
+		return gmbda.EndWithError(err)
+	}
+
+	cj, err := coost.NewJar(absCookiesFilename)
 	if err != nil {
 		return gmbda.EndWithError(err)
 	}
@@ -70,7 +86,7 @@ func GetLitResDetails(ids []string, newOnly, noThrottle bool) error {
 			return err
 		}
 
-		if err := cj.Store(data.AbsCookiesFilename()); err != nil {
+		if err := cj.Store(absCookiesFilename); err != nil {
 			return err
 		}
 

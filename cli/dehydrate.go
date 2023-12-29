@@ -6,6 +6,7 @@ import (
 	"github.com/boggydigital/issa"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
+	"github.com/boggydigital/pathology"
 	"image"
 	"image/color"
 	_ "image/jpeg"
@@ -35,8 +36,12 @@ func Dehydrate(idSet map[string]bool, all, overwrite bool) error {
 	di := nod.Begin("dehydrating images...")
 	defer di.End()
 
-	rdx, err := kvas.ReduxWriter(
-		data.AbsReduxDir(),
+	absReduxDir, err := pathology.GetAbsRelDir(data.Redux)
+	if err != nil {
+		return di.EndWithError(err)
+	}
+
+	rdx, err := kvas.ReduxWriter(absReduxDir,
 		data.DehydratedListImageProperty,
 		data.DehydratedListImageModifiedProperty,
 		data.DehydratedItemImageProperty,
@@ -106,7 +111,10 @@ func dehydrateImages(
 
 		for _, size := range sizes {
 
-			acp := data.AbsCoverPath(id, size)
+			acp, err := data.AbsCoverImagePath(id, size)
+			if err != nil {
+				return di.EndWithError(err)
+			}
 			if dhi, err := dehydrateImage(acp, plt); err == nil {
 				dehydratedImages[idStr] = []string{dhi}
 				dehydratedImageModified[idStr] = []string{strconv.FormatInt(time.Now().Unix(), 10)}

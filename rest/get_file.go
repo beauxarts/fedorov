@@ -33,7 +33,11 @@ func GetFile(w http.ResponseWriter, r *http.Request) {
 	_, file = filepath.Split(file)
 
 	if id, err := strconv.ParseInt(idstr, 10, 64); err == nil {
-		localFilepath := data.AbsDownloadPath(id, file)
+		localFilepath, err := data.AbsFileDownloadPath(id, file)
+		if err != nil {
+			http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
+			return
+		}
 
 		if _, err := os.Stat(localFilepath); err == nil {
 			w.Header().Set("Cache-Control", "max-age=31536000")
