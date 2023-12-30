@@ -44,7 +44,7 @@ func ReduceLitResBooksDetails(scoreData bool) error {
 		return rmbda.EndWithError(err)
 	}
 
-	absLitResMyBooksDetailsDir, err := data.AbsDataTypeDir(data.LitResMyBooksDetails)
+	absLitResMyBooksDetailsDir, err := data.AbsDataTypeDir(litres_integration.LitResMyBooksDetails)
 	if err != nil {
 		return rmbda.EndWithError(err)
 	}

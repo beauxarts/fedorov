@@ -288,7 +288,7 @@ func importLitresData(id string, hc *http.Client) (map[string]map[string][]strin
 		return nil, ilda.EndWithError(err)
 	}
 
-	absLitResMyBooksDetailsDir, err := data.AbsDataTypeDir(data.LitResMyBooksDetails)
+	absLitResMyBooksDetailsDir, err := data.AbsDataTypeDir(litres_integration.LitResMyBooksDetails)
 	if err != nil {
 		return nil, ilda.EndWithError(err)
 	}
@@ -321,7 +321,7 @@ func importLiveLibData(id string, hc *http.Client) (map[string]map[string][]stri
 		return nil, ilda.EndWithError(err)
 	}
 
-	absLiveLibDetailsDir, err := data.AbsDataTypeDir(data.LiveLibDetails)
+	absLiveLibDetailsDir, err := data.AbsDataTypeDir(livelib_integration.LiveLibDetails)
 	if err != nil {
 		return nil, ilda.EndWithError(err)
 	}

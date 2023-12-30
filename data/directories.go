@@ -46,12 +46,12 @@ const (
 	DefaultCoverExt = ".jpg"
 )
 
-func AbsDataTypeDir(dt DataType) (string, error) {
+func AbsDataTypeDir(stringer fmt.Stringer) (string, error) {
 	absMetadataDir, err := pathology.GetAbsDir(Metadata)
 	if err != nil {
 		return "", err
 	}
-	return filepath.Join(absMetadataDir, dt.String()), nil
+	return filepath.Join(absMetadataDir, stringer.String()), nil
 }
 
 func AbsArtsTypeDir(at litres_integration.ArtsType) (string, error) {

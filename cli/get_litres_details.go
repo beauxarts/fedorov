@@ -52,7 +52,7 @@ func GetLitResDetails(ids []string, newOnly, noThrottle bool) error {
 		return gmbda.EndWithError(err)
 	}
 
-	absLitResMyBooksDetailsDir, err := data.AbsDataTypeDir(data.LitResMyBooksDetails)
+	absLitResMyBooksDetailsDir, err := data.AbsDataTypeDir(litres_integration.LitResMyBooksDetails)
 	if err != nil {
 		return gmbda.EndWithError(err)
 	}

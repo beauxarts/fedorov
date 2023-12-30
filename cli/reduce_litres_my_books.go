@@ -2,6 +2,7 @@ package cli
 
 import (
 	"github.com/beauxarts/fedorov/data"
+	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/match_node"
 	"github.com/boggydigital/nod"
@@ -26,7 +27,7 @@ func ReduceLitResMyBooks() error {
 	embia := nod.NewProgress("reducing my books...")
 	defer embia.End()
 
-	absLitResMyBooksFreshDir, err := data.AbsDataTypeDir(data.LitResMyBooksFresh)
+	absLitResMyBooksFreshDir, err := data.AbsDataTypeDir(litres_integration.LitResMyBooksFresh)
 	if err != nil {
 		return embia.EndWithError(err)
 	}

@@ -3,6 +3,8 @@ package cli
 import (
 	"fmt"
 	"github.com/beauxarts/fedorov/data"
+	"github.com/beauxarts/scrinium/litres_integration"
+	"github.com/beauxarts/scrinium/livelib_integration"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/pathology"
@@ -92,10 +94,28 @@ func Purge(id string, webhookUrl string, confirm bool) error {
 
 	// details
 
-	dataTypes := []data.DataType{
-		data.LitResMyBooksFresh,
-		data.LitResMyBooksDetails,
-		data.LiveLibDetails,
+	dataTypes := []fmt.Stringer{
+		// LitResDataTypes
+		litres_integration.LitResMyBooksFresh,
+		litres_integration.LitResMyBooksDetails,
+
+		// LiveLibDataTypes
+		livelib_integration.LiveLibDetails,
+
+		// ArtsType
+		litres_integration.ArtsDetails,
+		litres_integration.ArtsSimilar,
+		litres_integration.ArtsQuotes,
+		litres_integration.ArtsFiles,
+		litres_integration.ArtsReviews,
+
+		// AuthorTypes
+		litres_integration.AuthorDetails,
+		litres_integration.AuthorArts,
+
+		// SeriesTypes
+		litres_integration.SeriesDetails,
+		litres_integration.SeriesArts,
 	}
 
 	for _, dt := range dataTypes {
