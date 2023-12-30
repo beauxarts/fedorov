@@ -3,12 +3,12 @@ module github.com/beauxarts/fedorov
 go 1.21
 
 require (
-	github.com/beauxarts/scrinium v0.1.18
+	github.com/beauxarts/scrinium v0.1.19
 	github.com/boggydigital/clo v1.0.4
 	github.com/boggydigital/coost v0.3.9
 	github.com/boggydigital/dolo v0.2.13
 	github.com/boggydigital/issa v0.1.10
-	github.com/boggydigital/kvas v0.4.1
+	github.com/boggydigital/kvas v0.4.3
 	github.com/boggydigital/match_node v0.1.16
 	github.com/boggydigital/middleware v0.1.11
 	github.com/boggydigital/nod v0.1.21

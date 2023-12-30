@@ -39,7 +39,7 @@ func ReduceLitResBooksDetails(scoreData bool) error {
 		return rmbda.EndWithError(err)
 	}
 
-	rdx, err := kvas.ReduxWriter(absReduxDir, reduxProps...)
+	rdx, err := kvas.NewReduxWriter(absReduxDir, reduxProps...)
 	if err != nil {
 		return rmbda.EndWithError(err)
 	}

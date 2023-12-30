@@ -41,7 +41,7 @@ func Dehydrate(idSet map[string]bool, all, overwrite bool) error {
 		return di.EndWithError(err)
 	}
 
-	rdx, err := kvas.ReduxWriter(absReduxDir,
+	rdx, err := kvas.NewReduxWriter(absReduxDir,
 		data.DehydratedListImageProperty,
 		data.DehydratedListImageModifiedProperty,
 		data.DehydratedItemImageProperty,

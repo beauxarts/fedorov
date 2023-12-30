@@ -81,7 +81,7 @@ func ReduceLitResMyBooks() error {
 		return embia.EndWithError(err)
 	}
 
-	rdx, err := kvas.ReduxWriter(absReduxDir,
+	rdx, err := kvas.NewReduxWriter(absReduxDir,
 		data.MyBooksIdsProperty,
 		data.HrefProperty,
 		data.ImportedProperty)

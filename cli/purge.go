@@ -64,7 +64,7 @@ func Purge(id string, webhookUrl string, confirm bool) error {
 		return pa.EndWithError(err)
 	}
 
-	rdx, err := kvas.ReduxWriter(absReduxDir, props...)
+	rdx, err := kvas.NewReduxWriter(absReduxDir, props...)
 	if err != nil {
 		return pa.EndWithError(err)
 	}

@@ -29,7 +29,7 @@ func Export(ids []string) error {
 		return ea.EndWithError(err)
 	}
 
-	rdx, err := kvas.ReduxReader(absReduxDir, data.ReduxProperties()...)
+	rdx, err := kvas.NewReduxReader(absReduxDir, data.ReduxProperties()...)
 	if err != nil {
 		return ea.EndWithError(err)
 	}

@@ -2,6 +2,8 @@ github.com/andybalholm/brotli v1.0.6 h1:Yf9fFpf49Zrxb9NlQaluyE92/+X7UVHlhMNJN2sx
 github.com/andybalholm/brotli v1.0.6/go.mod h1:fO7iG3H7G2nSZ7m0zPUDn85XEX2GTukHGRSepvi9Eig=
 github.com/beauxarts/scrinium v0.1.18 h1:Gr5GBcwI9Fj+hSQIRjAc0wn9zU0+hVC6VcubNEcC2uk=
 github.com/beauxarts/scrinium v0.1.18/go.mod h1:oeb/+3gXRCTiTsNUvz6R3cg1AOTUWa5FNGxGuZMnroA=
+github.com/beauxarts/scrinium v0.1.19 h1:qDhZ35H0/7wmIqxnUb7bpP4no2qxrIMbgqJZmAhhJOk=
+github.com/beauxarts/scrinium v0.1.19/go.mod h1:f77zXJ4zTjMhGlGpdRyVLRC8Pvxgn9/YLPAJp2nJkks=
 github.com/boggydigital/clo v0.3.6 h1:syeucZIM2/9B3jsUZqDo3TOYqgvJ6C1ketRgSuDoUf4=
 github.com/boggydigital/clo v0.3.6/go.mod h1:7QbdMB008okXsdk41qJyJ6k/oJALIIXQ0GLYSxY9WFM=
 github.com/boggydigital/clo v1.0.4 h1:LKvXktyG+EeemzjnSp0DYIAEbY2/rvFcuHtjjwJk280=
@@ -28,6 +30,8 @@ github.com/boggydigital/kvas v0.3.35 h1:ywPMXTPGgeJgx161OYbQVSOgnYVZH5/WSwqgECDk
 github.com/boggydigital/kvas v0.3.35/go.mod h1:ZKvlZY8ygEgdsH4LXpr3TL456O2HJ8Spr3KYCtQxzD0=
 github.com/boggydigital/kvas v0.4.1 h1:p+AejSEYaiZhHy3hD04V8VuXWkl9U45Oz7Uk03JLH4Y=
 github.com/boggydigital/kvas v0.4.1/go.mod h1:oP9td1uUuG0cgNGle/iz2dbdAllJcyLBGgp0GJ7nZCg=
+github.com/boggydigital/kvas v0.4.3 h1:T6hSzFz1ocPBzpn4rhbDf+mIU0P7xvFn7zVkQ+JV43w=
+github.com/boggydigital/kvas v0.4.3/go.mod h1:oP9td1uUuG0cgNGle/iz2dbdAllJcyLBGgp0GJ7nZCg=
 github.com/boggydigital/match_node v0.1.16 h1:oE7Hlehb1xuFnB3k7kfZPjaOV3c+j0g/O76+XVoib3E=
 github.com/boggydigital/match_node v0.1.16/go.mod h1:dAlD1Ktt/eUSkGzvqoxDUDTmAKZO6V7aWH5toocaeU4=
 github.com/boggydigital/middleware v0.1.10 h1:69KEbo1sKZykR5wnh6Ai7yyzErVqKOci1Bo6K0hEkHM=

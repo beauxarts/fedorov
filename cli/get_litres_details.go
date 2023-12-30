@@ -39,7 +39,7 @@ func GetLitResDetails(ids []string, newOnly, noThrottle bool) error {
 		return gmbda.EndWithError(err)
 	}
 
-	rdx, err := kvas.ReduxReader(absReduxDir,
+	rdx, err := kvas.NewReduxReader(absReduxDir,
 		data.MyBooksIdsProperty,
 		data.HrefProperty,
 		data.ImportedProperty)

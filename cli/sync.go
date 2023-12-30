@@ -18,13 +18,13 @@ func SyncHandler(u *url.URL) error {
 }
 func Sync(webhookUrl string, newOnly, noThrottle bool) error {
 
-	if err := GetLitResMyBooks(); err != nil {
-		return err
-	}
+	//if err := GetLitResMyBooks(); err != nil {
+	//	return err
+	//}
 
-	if err := ReduceLitResMyBooks(); err != nil {
-		return err
-	}
+	//if err := ReduceLitResMyBooks(); err != nil {
+	//	return err
+	//}
 
 	if err := GetLitResDetails(nil, newOnly, noThrottle); err != nil {
 		return err
@@ -63,7 +63,7 @@ func Sync(webhookUrl string, newOnly, noThrottle bool) error {
 		return err
 	}
 
-	rdx, err := kvas.ReduxWriter(absReduxDir, data.SyncCompletedProperty)
+	rdx, err := kvas.NewReduxWriter(absReduxDir, data.SyncCompletedProperty)
 	if err != nil {
 		return err
 	}

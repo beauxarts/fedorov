@@ -68,7 +68,7 @@ func Import() error {
 		return ia.EndWithError(err)
 	}
 
-	rdx, err := kvas.ReduxWriter(absReduxDir, data.ReduxProperties()...)
+	rdx, err := kvas.NewReduxWriter(absReduxDir, data.ReduxProperties()...)
 	if err != nil {
 		return ia.EndWithError(err)
 	}
