@@ -37,11 +37,6 @@ get-litres-authors
 get-litres-covers
     id^&
 
-get-litres-details
-    id^&
-    new-only
-    no-throttle
-
 get-litres-series
     id^&
 
@@ -61,14 +56,10 @@ purge
     confirm
     webhook-url$
 
-reduce-litres-details
-    score-data
-
 reduce-litres-my-books
 
 sync
-    new-only
-    no-throttle
+    force
     webhook-url$
 
 serve
