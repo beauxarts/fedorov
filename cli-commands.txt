@@ -25,6 +25,12 @@ download-litres
 export
     id^&
 
+get-litres-arts
+    id^&
+
+get-litres-authors
+    id^&
+
 get-litres-covers
     id^&
 
@@ -32,6 +38,9 @@ get-litres-details
     id^&
     new-only
     no-throttle
+
+get-litres-series
+    id^&
 
 get-livelib-details
     id^&
