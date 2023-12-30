@@ -3,7 +3,7 @@ module github.com/beauxarts/fedorov
 go 1.21
 
 require (
-	github.com/beauxarts/scrinium v0.1.19
+	github.com/beauxarts/scrinium v0.1.20
 	github.com/boggydigital/clo v1.0.4
 	github.com/boggydigital/coost v0.3.9
 	github.com/boggydigital/dolo v0.2.13
@@ -22,6 +22,7 @@ require (
 
 require (
 	github.com/andybalholm/brotli v1.0.6 // indirect
+	github.com/boggydigital/kvas_dolo v0.1.6 // indirect
 	github.com/boggydigital/pathology v0.1.8 // indirect
 	golang.org/x/image v0.14.0 // indirect
 )

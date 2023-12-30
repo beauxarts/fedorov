@@ -1,5 +1,6 @@
 package data
 
+// TODO: move to scrinium
 type DataType int
 
 const (

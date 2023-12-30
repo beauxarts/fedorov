@@ -27,6 +27,9 @@ export
 
 get-litres-arts
     id^&
+    arts-type*&={arts-types^}
+    all-arts-types
+    force
 
 get-litres-authors
     id^&

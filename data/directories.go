@@ -54,6 +54,14 @@ func AbsDataTypeDir(dt DataType) (string, error) {
 	return filepath.Join(absMetadataDir, dt.String()), nil
 }
 
+func AbsArtsTypeDir(at litres_integration.ArtsType) (string, error) {
+	absMetadataDir, err := pathology.GetAbsDir(Metadata)
+	if err != nil {
+		return "", err
+	}
+	return filepath.Join(absMetadataDir, at.String()), nil
+}
+
 func AbsFileDownloadPath(id int64, file string) (string, error) {
 	absDownloadsDir, err := pathology.GetAbsDir(Downloads)
 	if err != nil {

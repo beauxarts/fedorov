@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"embed"
 	"github.com/beauxarts/fedorov/cli"
+	"github.com/beauxarts/fedorov/clo_delegates"
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/rest"
 	"github.com/boggydigital/clo"
@@ -67,7 +68,7 @@ func main() {
 	defs, err := clo.Load(
 		bytes.NewBuffer(cliCommands),
 		bytes.NewBuffer(cliHelp),
-		nil)
+		clo_delegates.Values)
 	if err != nil {
 		log.Fatalln(err)
 	}
