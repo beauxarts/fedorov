@@ -277,40 +277,43 @@ func Import() error {
 
 func importLitresData(id string, hc *http.Client) (map[string]map[string][]string, error) {
 
-	ilda := nod.Begin("importing data from LitRes...")
-	defer ilda.End()
+	//ilda := nod.Begin("importing data from LitRes...")
+	//defer ilda.End()
+	//
+	//if err := GetLitResDetails([]string{id}, false, false); err != nil {
+	//	return nil, ilda.EndWithError(err)
+	//}
+	//
+	//if err := GetLitResCovers([]string{id}, true); err != nil {
+	//	return nil, ilda.EndWithError(err)
+	//}
+	//
+	//absLitResMyBooksDetailsDir, err := data.AbsDataTypeDir(litres_integration.LitResMyBooksDetails)
+	//if err != nil {
+	//	return nil, ilda.EndWithError(err)
+	//}
+	//
+	//kv, err := kvas.ConnectLocal(absLitResMyBooksDetailsDir, kvas.HtmlExt)
+	//if err != nil {
+	//	return nil, ilda.EndWithError(err)
+	//}
+	//
+	//lrdx, err := ReduceLitResBookDetails(id, kv)
+	//if err != nil {
+	//	return nil, ilda.EndWithError(err)
+	//}
+	//
+	//rdx := make(map[string]map[string][]string)
+	//for _, p := range data.ReduxProperties() {
+	//	rdx[p] = make(map[string][]string)
+	//}
+	//
+	//MapLitResToFedorov(id, lrdx, rdx)
+	//
+	//return rdx, nil
 
-	if err := GetLitResDetails([]string{id}, false, false); err != nil {
-		return nil, ilda.EndWithError(err)
-	}
-
-	if err := GetLitResCovers([]string{id}, true); err != nil {
-		return nil, ilda.EndWithError(err)
-	}
-
-	absLitResMyBooksDetailsDir, err := data.AbsDataTypeDir(litres_integration.LitResMyBooksDetails)
-	if err != nil {
-		return nil, ilda.EndWithError(err)
-	}
-
-	kv, err := kvas.ConnectLocal(absLitResMyBooksDetailsDir, kvas.HtmlExt)
-	if err != nil {
-		return nil, ilda.EndWithError(err)
-	}
-
-	lrdx, err := ReduceLitResBookDetails(id, kv)
-	if err != nil {
-		return nil, ilda.EndWithError(err)
-	}
-
-	rdx := make(map[string]map[string][]string)
-	for _, p := range data.ReduxProperties() {
-		rdx[p] = make(map[string][]string)
-	}
-
-	MapLitResToFedorov(id, lrdx, rdx)
-
-	return rdx, nil
+	// TODO: rewrite in the new reduction scheme
+	return nil, nil
 }
 
 func importLiveLibData(id string, hc *http.Client) (map[string]map[string][]string, error) {
