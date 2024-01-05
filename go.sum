@@ -38,6 +38,8 @@ github.com/boggydigital/kvas v0.4.3 h1:T6hSzFz1ocPBzpn4rhbDf+mIU0P7xvFn7zVkQ+JV4
 github.com/boggydigital/kvas v0.4.3/go.mod h1:oP9td1uUuG0cgNGle/iz2dbdAllJcyLBGgp0GJ7nZCg=
 github.com/boggydigital/kvas v0.4.4 h1:74MRryE/zcjaZzIvADe1vGh/scv9pnxR8djf6E5m0qI=
 github.com/boggydigital/kvas v0.4.4/go.mod h1:oP9td1uUuG0cgNGle/iz2dbdAllJcyLBGgp0GJ7nZCg=
+github.com/boggydigital/kvas v0.4.5 h1:/IGNr+M7UsWJxyO78OlIkGoldE5xw2xf4efHFDAX8gI=
+github.com/boggydigital/kvas v0.4.5/go.mod h1:oP9td1uUuG0cgNGle/iz2dbdAllJcyLBGgp0GJ7nZCg=
 github.com/boggydigital/kvas_dolo v0.1.6 h1:8FWZBzkcV06/eOFLZcEsCYdXHIatooCW7drYKjcEOks=
 github.com/boggydigital/kvas_dolo v0.1.6/go.mod h1:6rtg+zY/yNCE1U3palU/z2SNsHm0toCY67pqfS6US/0=
 github.com/boggydigital/match_node v0.1.16 h1:oE7Hlehb1xuFnB3k7kfZPjaOV3c+j0g/O76+XVoib3E=
@@ -56,6 +58,8 @@ github.com/boggydigital/pathology v0.1.8 h1:a5brNIQS//yednzdJsxtCExHVJLlu8hhi2pB
 github.com/boggydigital/pathology v0.1.8/go.mod h1:kv9hzFMn1Ud0Hxn2vITcZAS68YuB/XbaErXXcANcolU=
 github.com/boggydigital/pathology v0.1.9 h1:G8791r1/z4eUP+w3ysKHXc3kwLVOHIYycH9rtdstW3M=
 github.com/boggydigital/pathology v0.1.9/go.mod h1:Kded3dV1G1agmmw3OjGzT5UJW5GyBNIoJSd/GHXToAs=
+github.com/boggydigital/pathology v0.1.10 h1:sS+pDMjXEMZSAmDIBqmpusb3x0k30fxBCBF0RWMnQRA=
+github.com/boggydigital/pathology v0.1.10/go.mod h1:Kded3dV1G1agmmw3OjGzT5UJW5GyBNIoJSd/GHXToAs=
 github.com/boggydigital/stencil v0.2.10 h1:E1VENiWar4qI13PCWrJTULaj8Yo8eb1pN3YT9knPdh8=
 github.com/boggydigital/stencil v0.2.10/go.mod h1:jJMqlrYS9h3b+CGNBhsZ20bygOBo8euBV6RKjB34soQ=
 github.com/boggydigital/stencil v0.2.11 h1:0sHOEIfHw+BweGvmgUm4a8QH34GKkp1bHMvVHET7D/c=

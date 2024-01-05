@@ -44,6 +44,7 @@ func main() {
 	if err := pathology.Setup(
 		dirsOverrideFilename,
 		data.DefaultFedorovRootDir,
+		data.RelToAbsDirs,
 		data.AllAbsDirs...); err != nil {
 		_ = ns.EndWithError(err)
 		os.Exit(1)
