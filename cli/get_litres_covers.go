@@ -32,7 +32,7 @@ func GetLitResCovers(ids []string, forceImported bool) error {
 		return gca.EndWithError(err)
 	}
 
-	rdx, err := kvas.ReduxReader(absReduxDir,
+	rdx, err := kvas.NewReduxReader(absReduxDir,
 		data.MyBooksIdsProperty,
 		data.ImportedProperty)
 	if err != nil {

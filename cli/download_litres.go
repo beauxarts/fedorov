@@ -52,7 +52,7 @@ func DownloadLitRes(ids []string) error {
 		return da.EndWithError(err)
 	}
 
-	rdx, err := kvas.ReduxReader(absReduxDir,
+	rdx, err := kvas.NewReduxReader(absReduxDir,
 		data.MyBooksIdsProperty,
 		data.TitleProperty,
 		data.AuthorsProperty,

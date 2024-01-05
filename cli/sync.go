@@ -2,6 +2,7 @@ package cli
 
 import (
 	"github.com/beauxarts/fedorov/data"
+	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/pathology"
 	"net/url"
@@ -10,13 +11,12 @@ import (
 )
 
 func SyncHandler(u *url.URL) error {
-	newOnly := u.Query().Has("new-only")
-	noThrottle := u.Query().Has("no-throttle")
+	force := u.Query().Has("force")
 	wu := u.Query().Get("webhook-url")
 
-	return Sync(wu, newOnly, noThrottle)
+	return Sync(wu, force)
 }
-func Sync(webhookUrl string, newOnly, noThrottle bool) error {
+func Sync(webhookUrl string, force bool) error {
 
 	if err := GetLitResMyBooks(); err != nil {
 		return err
@@ -26,13 +26,15 @@ func Sync(webhookUrl string, newOnly, noThrottle bool) error {
 		return err
 	}
 
-	if err := GetLitResDetails(nil, newOnly, noThrottle); err != nil {
+	if err := GetLitResArts(litres_integration.AllArtsTypes(), force); err != nil {
 		return err
 	}
 
-	if err := ReduceLitResBooksDetails(true); err != nil {
-		return err
-	}
+	// add reduce arts
+	// add get authors
+	// add reduce authors
+	// add get series
+	// add reduce series
 
 	if err := Cascade(); err != nil {
 		return err
@@ -63,7 +65,7 @@ func Sync(webhookUrl string, newOnly, noThrottle bool) error {
 		return err
 	}
 
-	rdx, err := kvas.ReduxWriter(absReduxDir, data.SyncCompletedProperty)
+	rdx, err := kvas.NewReduxWriter(absReduxDir, data.SyncCompletedProperty)
 	if err != nil {
 		return err
 	}

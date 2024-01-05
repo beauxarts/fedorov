@@ -6,7 +6,6 @@ import (
 	"github.com/boggydigital/packer"
 	"github.com/boggydigital/pathology"
 	"net/url"
-	"os"
 )
 
 func BackupHandler(_ *url.URL) error {
@@ -26,12 +25,6 @@ func Backup() error {
 	absReduxDir, err := pathology.GetAbsRelDir(data.Redux)
 	if err != nil {
 		return ba.EndWithError(err)
-	}
-
-	if _, err := os.Stat(absBackupsDir); os.IsNotExist(err) {
-		if err := os.MkdirAll(absBackupsDir, 0755); err != nil {
-			return ba.EndWithError(err)
-		}
 	}
 
 	if err := packer.Pack(absReduxDir, absBackupsDir, ba); err != nil {

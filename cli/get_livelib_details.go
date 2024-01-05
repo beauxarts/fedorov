@@ -26,7 +26,7 @@ func GetLiveLibDetails(ids []string, hc *http.Client, newOnly bool) error {
 	glbda := nod.NewProgress("getting LiveLib books details...")
 	defer glbda.End()
 
-	absLiveLibDetailsDir, err := data.AbsDataTypeDir(data.LiveLibDetails)
+	absLiveLibDetailsDir, err := data.AbsDataTypeDir(livelib_integration.LiveLibDetails)
 	if err != nil {
 		return glbda.EndWithError(err)
 	}

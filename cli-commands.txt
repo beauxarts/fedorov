@@ -25,13 +25,20 @@ download-litres
 export
     id^&
 
+get-litres-arts
+    id^&
+    arts-type*&={arts-types^}
+    all-arts-types
+    force
+
+get-litres-authors
+    id^&
+
 get-litres-covers
     id^&
 
-get-litres-details
+get-litres-series
     id^&
-    new-only
-    no-throttle
 
 get-livelib-details
     id^&
@@ -49,14 +56,10 @@ purge
     confirm
     webhook-url$
 
-reduce-litres-details
-    score-data
-
 reduce-litres-my-books
 
 sync
-    new-only
-    no-throttle
+    force
     webhook-url$
 
 serve

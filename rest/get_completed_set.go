@@ -20,7 +20,7 @@ func GetCompletedSet(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	bcRdx, err := kvas.ReduxWriter(absReduxDir, data.BookCompletedProperty)
+	bcRdx, err := kvas.NewReduxWriter(absReduxDir, data.BookCompletedProperty)
 	if err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return

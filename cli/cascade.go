@@ -25,7 +25,7 @@ func Cascade() error {
 		return ca.EndWithError(err)
 	}
 
-	rdx, err := kvas.ReduxWriter(absReduxDir, props...)
+	rdx, err := kvas.NewReduxWriter(absReduxDir, props...)
 	if err != nil {
 		return ca.EndWithError(err)
 	}

@@ -48,7 +48,7 @@ func Init() error {
 		return err
 	}
 
-	if rdx, err = kvas.ReduxReader(absReduxDir, data.ReduxProperties()...); err != nil {
+	if rdx, err = kvas.NewReduxReader(absReduxDir, data.ReduxProperties()...); err != nil {
 		return err
 	}
 

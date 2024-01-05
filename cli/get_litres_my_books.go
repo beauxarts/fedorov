@@ -25,7 +25,7 @@ func GetLitResMyBooks() error {
 	gmba := nod.NewProgress("fetching LitRes my books fresh...")
 	defer gmba.End()
 
-	absLitResMyBooksFreshDir, err := data.AbsDataTypeDir(data.LitResMyBooksFresh)
+	absLitResMyBooksFreshDir, err := data.AbsDataTypeDir(litres_integration.LitResMyBooksFresh)
 	if err != nil {
 		return gmba.EndWithError(err)
 	}
