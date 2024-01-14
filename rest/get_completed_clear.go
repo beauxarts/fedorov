@@ -4,7 +4,7 @@ import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pathology"
+	"github.com/boggydigital/pasu"
 	"net/http"
 )
 
@@ -14,7 +14,7 @@ func GetCompletedClear(w http.ResponseWriter, r *http.Request) {
 
 	id := r.URL.Query().Get(data.IdProperty)
 
-	absReduxDir, err := pathology.GetAbsRelDir(data.Redux)
+	absReduxDir, err := pasu.GetAbsRelDir(data.Redux)
 	if err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return

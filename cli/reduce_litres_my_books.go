@@ -6,7 +6,7 @@ import (
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/match_node"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pathology"
+	"github.com/boggydigital/pasu"
 	"golang.org/x/net/html"
 	"golang.org/x/net/html/atom"
 	"net/url"
@@ -77,7 +77,7 @@ func ReduceLitResMyBooks() error {
 		}
 	}
 
-	absReduxDir, err := pathology.GetAbsRelDir(data.Redux)
+	absReduxDir, err := pasu.GetAbsRelDir(data.Redux)
 	if err != nil {
 		return embia.EndWithError(err)
 	}

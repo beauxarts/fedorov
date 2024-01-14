@@ -3,7 +3,7 @@ package data
 import (
 	"fmt"
 	"github.com/beauxarts/scrinium/litres_integration"
-	"github.com/boggydigital/pathology"
+	"github.com/boggydigital/pasu"
 	"path/filepath"
 	"strconv"
 )
@@ -11,16 +11,16 @@ import (
 const DefaultFedorovRootDir = "/var/lib/fedorov"
 
 const (
-	Backups   pathology.AbsDir = "backups"
-	Metadata  pathology.AbsDir = "metadata"
-	Input     pathology.AbsDir = "input"
-	Output    pathology.AbsDir = "output"
-	Covers    pathology.AbsDir = "covers"
-	Downloads pathology.AbsDir = "downloads"
-	Imported  pathology.AbsDir = "_imported"
+	Backups   pasu.AbsDir = "backups"
+	Metadata  pasu.AbsDir = "metadata"
+	Input     pasu.AbsDir = "input"
+	Output    pasu.AbsDir = "output"
+	Covers    pasu.AbsDir = "covers"
+	Downloads pasu.AbsDir = "downloads"
+	Imported  pasu.AbsDir = "_imported"
 )
 
-var AllAbsDirs = []pathology.AbsDir{
+var AllAbsDirs = []pasu.AbsDir{
 	Backups,
 	Metadata,
 	Input,
@@ -31,10 +31,10 @@ var AllAbsDirs = []pathology.AbsDir{
 }
 
 const (
-	Redux pathology.RelDir = "_redux"
+	Redux pasu.RelDir = "_redux"
 )
 
-var RelToAbsDirs = map[pathology.RelDir]pathology.AbsDir{
+var RelToAbsDirs = map[pasu.RelDir]pasu.AbsDir{
 	Redux: Metadata,
 }
 
@@ -47,7 +47,7 @@ const (
 )
 
 func AbsDataTypeDir(stringer fmt.Stringer) (string, error) {
-	absMetadataDir, err := pathology.GetAbsDir(Metadata)
+	absMetadataDir, err := pasu.GetAbsDir(Metadata)
 	if err != nil {
 		return "", err
 	}
@@ -55,7 +55,7 @@ func AbsDataTypeDir(stringer fmt.Stringer) (string, error) {
 }
 
 func AbsArtsTypeDir(at litres_integration.ArtsType) (string, error) {
-	absMetadataDir, err := pathology.GetAbsDir(Metadata)
+	absMetadataDir, err := pasu.GetAbsDir(Metadata)
 	if err != nil {
 		return "", err
 	}
@@ -63,7 +63,7 @@ func AbsArtsTypeDir(at litres_integration.ArtsType) (string, error) {
 }
 
 func AbsFileDownloadPath(id int64, file string) (string, error) {
-	absDownloadsDir, err := pathology.GetAbsDir(Downloads)
+	absDownloadsDir, err := pasu.GetAbsDir(Downloads)
 	if err != nil {
 		return "", err
 	}
@@ -72,7 +72,7 @@ func AbsFileDownloadPath(id int64, file string) (string, error) {
 }
 
 func AbsCoverImagePath(id int64, size litres_integration.CoverSize) (string, error) {
-	absCoverDir, err := pathology.GetAbsDir(Covers)
+	absCoverDir, err := pasu.GetAbsDir(Covers)
 	if err != nil {
 		return "", err
 	}
@@ -90,7 +90,7 @@ func RelCoverFilename(id string, size litres_integration.CoverSize) string {
 }
 
 func AbsCookiesFilename() (string, error) {
-	absInputDir, err := pathology.GetAbsDir(Input)
+	absInputDir, err := pasu.GetAbsDir(Input)
 	if err != nil {
 		return "", err
 	}
@@ -99,7 +99,7 @@ func AbsCookiesFilename() (string, error) {
 }
 
 func AbsExportFilename() (string, error) {
-	absOutputDir, err := pathology.GetAbsDir(Output)
+	absOutputDir, err := pasu.GetAbsDir(Output)
 	if err != nil {
 		return "", err
 	}
@@ -108,7 +108,7 @@ func AbsExportFilename() (string, error) {
 }
 
 func AbsImportFilename() (string, error) {
-	absInputDir, err := pathology.GetAbsDir(Input)
+	absInputDir, err := pasu.GetAbsDir(Input)
 	if err != nil {
 		return "", err
 	}

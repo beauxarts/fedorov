@@ -8,7 +8,7 @@ import (
 	"github.com/boggydigital/dolo"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pathology"
+	"github.com/boggydigital/pasu"
 	"net/url"
 	"path/filepath"
 	"strings"
@@ -47,7 +47,7 @@ func DownloadLitRes(ids []string) error {
 	da := nod.NewProgress("downloading LitRes books...")
 	defer da.End()
 
-	absReduxDir, err := pathology.GetAbsRelDir(data.Redux)
+	absReduxDir, err := pasu.GetAbsRelDir(data.Redux)
 	if err != nil {
 		return da.EndWithError(err)
 	}
@@ -88,7 +88,7 @@ func DownloadLitRes(ids []string) error {
 
 	dc := dolo.NewClient(hc, dolo.Defaults())
 
-	absDownloadsDir, err := pathology.GetAbsDir(data.Downloads)
+	absDownloadsDir, err := pasu.GetAbsDir(data.Downloads)
 	if err != nil {
 		return da.EndWithError(err)
 	}

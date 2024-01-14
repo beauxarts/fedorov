@@ -4,7 +4,7 @@ import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/kvas"
-	"github.com/boggydigital/pathology"
+	"github.com/boggydigital/pasu"
 	"net/url"
 	"strconv"
 	"time"
@@ -60,7 +60,7 @@ func Sync(webhookUrl string, force bool) error {
 		return err
 	}
 
-	absReduxDir, err := pathology.GetAbsRelDir(data.Redux)
+	absReduxDir, err := pasu.GetAbsRelDir(data.Redux)
 	if err != nil {
 		return err
 	}

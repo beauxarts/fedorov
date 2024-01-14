@@ -4,7 +4,7 @@ import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/packer"
-	"github.com/boggydigital/pathology"
+	"github.com/boggydigital/pasu"
 	"net/url"
 )
 
@@ -17,12 +17,12 @@ func Backup() error {
 	ba := nod.NewProgress("creating metadata backup...")
 	defer ba.End()
 
-	absBackupsDir, err := pathology.GetAbsDir(data.Backups)
+	absBackupsDir, err := pasu.GetAbsDir(data.Backups)
 	if err != nil {
 		return ba.EndWithError(err)
 	}
 
-	absReduxDir, err := pathology.GetAbsRelDir(data.Redux)
+	absReduxDir, err := pasu.GetAbsRelDir(data.Redux)
 	if err != nil {
 		return ba.EndWithError(err)
 	}

@@ -6,7 +6,7 @@ import (
 	"github.com/boggydigital/issa"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pathology"
+	"github.com/boggydigital/pasu"
 	"image"
 	"image/color"
 	_ "image/jpeg"
@@ -36,7 +36,7 @@ func Dehydrate(idSet map[string]bool, all, overwrite bool) error {
 	di := nod.Begin("dehydrating images...")
 	defer di.End()
 
-	absReduxDir, err := pathology.GetAbsRelDir(data.Redux)
+	absReduxDir, err := pasu.GetAbsRelDir(data.Redux)
 	if err != nil {
 		return di.EndWithError(err)
 	}

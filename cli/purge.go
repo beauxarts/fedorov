@@ -7,7 +7,7 @@ import (
 	"github.com/beauxarts/scrinium/livelib_integration"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pathology"
+	"github.com/boggydigital/pasu"
 	"net/url"
 	"os"
 	"path/filepath"
@@ -61,7 +61,7 @@ func Purge(id string, webhookUrl string, confirm bool) error {
 	props := data.ReduxProperties()
 	props = append(props, data.ImportedProperties()...)
 
-	absReduxDir, err := pathology.GetAbsRelDir(data.Redux)
+	absReduxDir, err := pasu.GetAbsRelDir(data.Redux)
 	if err != nil {
 		return pa.EndWithError(err)
 	}

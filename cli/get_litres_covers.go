@@ -7,7 +7,7 @@ import (
 	"github.com/boggydigital/dolo"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pathology"
+	"github.com/boggydigital/pasu"
 	"net/url"
 	"strconv"
 	"strings"
@@ -27,7 +27,7 @@ func GetLitResCovers(ids []string, forceImported bool) error {
 	gca := nod.NewProgress("fetching LitRes covers...")
 	defer gca.End()
 
-	absReduxDir, err := pathology.GetAbsRelDir(data.Redux)
+	absReduxDir, err := pasu.GetAbsRelDir(data.Redux)
 	if err != nil {
 		return gca.EndWithError(err)
 	}
@@ -52,7 +52,7 @@ func GetLitResCovers(ids []string, forceImported bool) error {
 
 	dc := dolo.DefaultClient
 
-	absCoversDir, err := pathology.GetAbsDir(data.Covers)
+	absCoversDir, err := pasu.GetAbsDir(data.Covers)
 	if err != nil {
 		return gca.EndWithError(err)
 	}

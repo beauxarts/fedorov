@@ -5,7 +5,7 @@ import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pathology"
+	"github.com/boggydigital/pasu"
 	"net/url"
 )
 
@@ -20,7 +20,7 @@ func Cascade() error {
 
 	props := []string{data.TitleProperty, data.BookCompletedProperty, data.MyBooksIdsProperty, data.MyBooksOrderProperty}
 
-	absReduxDir, err := pathology.GetAbsRelDir(data.Redux)
+	absReduxDir, err := pasu.GetAbsRelDir(data.Redux)
 	if err != nil {
 		return ca.EndWithError(err)
 	}

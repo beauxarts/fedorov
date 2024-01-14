@@ -9,7 +9,7 @@ import (
 	"github.com/boggydigital/coost"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pathology"
+	"github.com/boggydigital/pasu"
 	"github.com/boggydigital/wits"
 	"io"
 	"net/http"
@@ -63,7 +63,7 @@ func Import() error {
 	ia := nod.Begin("importing books...")
 	defer ia.End()
 
-	absReduxDir, err := pathology.GetAbsRelDir(data.Redux)
+	absReduxDir, err := pasu.GetAbsRelDir(data.Redux)
 	if err != nil {
 		return ia.EndWithError(err)
 	}
@@ -104,7 +104,7 @@ func Import() error {
 		return ia.EndWithError(err)
 	}
 
-	absInputDir, err := pathology.GetAbsDir(data.Input)
+	absInputDir, err := pasu.GetAbsDir(data.Input)
 	if err != nil {
 		return ia.EndWithError(err)
 	}
@@ -245,7 +245,7 @@ func Import() error {
 		}
 	}
 
-	absImportedDir, err := pathology.GetAbsDir(data.Imported)
+	absImportedDir, err := pasu.GetAbsDir(data.Imported)
 	if err != nil {
 		return ia.EndWithError(err)
 	}

@@ -7,7 +7,7 @@ import (
 	"github.com/beauxarts/fedorov/view_models"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/middleware"
-	"github.com/boggydigital/pathology"
+	"github.com/boggydigital/pasu"
 	"github.com/boggydigital/stencil"
 	"html/template"
 	"io/fs"
@@ -43,7 +43,7 @@ func InitTemplates(templatesFS fs.FS, stencilAppStyles fs.FS) {
 
 func Init() error {
 
-	absReduxDir, err := pathology.GetAbsRelDir(data.Redux)
+	absReduxDir, err := pasu.GetAbsRelDir(data.Redux)
 	if err != nil {
 		return err
 	}

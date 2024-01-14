@@ -9,7 +9,7 @@ import (
 	"github.com/beauxarts/fedorov/rest"
 	"github.com/boggydigital/clo"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pathology"
+	"github.com/boggydigital/pasu"
 	"os"
 	"sync"
 )
@@ -41,7 +41,7 @@ func main() {
 		rest.InitTemplates(templates, stencilAppStyles)
 	})
 
-	if err := pathology.Setup(
+	if err := pasu.Setup(
 		dirsOverrideFilename,
 		data.DefaultFedorovRootDir,
 		data.RelToAbsDirs,
