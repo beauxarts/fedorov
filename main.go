@@ -86,7 +86,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	//absArtsTypeDir, err := data.AbsArtsTypeDir(litres_integration.ArtsTypeDetails)
+	//absArtsTypeDir, err := data.AbsArtsTypeDir(litres_integration.ArtsTypeFiles)
 	//if err != nil {
 	//	panic(err)
 	//}
@@ -105,9 +105,9 @@ func main() {
 	//		panic(err)
 	//	}
 	//
-	//	var artsDetails litres_integration.ArtsDetails
+	//	var artsData litres_integration.ArtsReviews
 	//
-	//	if err := json.NewDecoder(ad).Decode(&artsDetails); err != nil {
+	//	if err := json.NewDecoder(ad).Decode(&artsData); err != nil {
 	//		panic(err)
 	//	}
 	//
