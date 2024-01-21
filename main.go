@@ -86,30 +86,21 @@ func main() {
 		os.Exit(1)
 	}
 
-	//absArtsTypeDir, err := data.AbsArtsTypeDir(litres_integration.ArtsTypeFiles)
+	//atr, err := data.NewArtsTypesReader(litres_integration.ArtsTypeFiles)
 	//if err != nil {
 	//	panic(err)
 	//}
 	//
-	//kv, err := kvas.ConnectLocal(absArtsTypeDir, kvas.JsonExt)
-	//if err != nil {
-	//	panic(err)
-	//}
-	//
-	//for _, id := range kv.Keys() {
+	//for _, id := range atr.Keys() {
 	//
 	//	fmt.Println(id)
 	//
-	//	ad, err := kv.Get(id)
+	//	ad, err := atr.ReadValue(id)
 	//	if err != nil {
 	//		panic(err)
 	//	}
 	//
-	//	var artsData litres_integration.ArtsReviews
-	//
-	//	if err := json.NewDecoder(ad).Decode(&artsData); err != nil {
-	//		panic(err)
-	//	}
+	//	fmt.Println(ad)
 	//
 	//}
 
