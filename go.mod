@@ -3,10 +3,10 @@ module github.com/beauxarts/fedorov
 go 1.21
 
 require (
-	github.com/beauxarts/scrinium v0.1.21
+	github.com/beauxarts/scrinium v0.1.22
 	github.com/boggydigital/clo v1.0.4
 	github.com/boggydigital/coost v0.3.9
-	github.com/boggydigital/dolo v0.2.13
+	github.com/boggydigital/dolo v0.2.14
 	github.com/boggydigital/issa v0.1.10
 	github.com/boggydigital/kvas v0.4.6
 	github.com/boggydigital/kvas_dolo v0.1.6
@@ -17,7 +17,7 @@ require (
 	github.com/boggydigital/pasu v0.1.12
 	github.com/boggydigital/stencil v0.2.22
 	github.com/boggydigital/wits v0.2.3
-	golang.org/x/exp v0.0.0-20240112132812-db7319d0e0e3
+	golang.org/x/exp v0.0.0-20240119083558-1b970713d09a
 	golang.org/x/net v0.20.0
 	golang.org/x/text v0.14.0
 )

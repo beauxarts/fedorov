@@ -103,11 +103,11 @@ func Purge(id string, webhookUrl string, confirm bool) error {
 		livelib_integration.LiveLibDetails,
 
 		// ArtsType
-		litres_integration.ArtsDetails,
-		litres_integration.ArtsSimilar,
-		litres_integration.ArtsQuotes,
-		litres_integration.ArtsFiles,
-		litres_integration.ArtsReviews,
+		litres_integration.ArtsTypeDetails,
+		litres_integration.ArtsTypeSimilar,
+		litres_integration.ArtsTypeQuotes,
+		litres_integration.ArtsTypeFiles,
+		litres_integration.ArtsTypeReviews,
 
 		// AuthorTypes
 		litres_integration.AuthorDetails,

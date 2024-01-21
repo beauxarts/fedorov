@@ -118,12 +118,12 @@ func getSetArtsType(dc *dolo.Client, at litres_integration.ArtsType, force bool,
 	indexSetter := kvas_dolo.NewIndexSetter(kv, newIds...)
 	urls := make([]*url.URL, 0, len(newIds))
 	for _, id := range newIds {
-		urls = append(urls, litres_integration.ArtsUrl(at, id))
+		urls = append(urls, litres_integration.ArtsTypeUrl(at, id))
 	}
 
 	result := "done"
 
-	if errs := dc.GetSet(urls, indexSetter, gsat); len(errs) > 0 {
+	if errs := dc.GetSet(urls, indexSetter, gsat, force); len(errs) > 0 {
 		errIds := make([]string, 0, len(errs))
 		for ii := range errs {
 			errIds = append(errIds, newIds[ii])

@@ -31,9 +31,10 @@ func Sync(webhookUrl string, force bool) error {
 	}
 
 	// add reduce arts
+
 	// add get authors
-	// add reduce authors
 	// add get series
+	// add reduce authors
 	// add reduce series
 
 	if err := Cascade(); err != nil {
