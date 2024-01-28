@@ -33,7 +33,7 @@ func GetLitResCovers(ids []string, forceImported bool) error {
 	}
 
 	rdx, err := kvas.NewReduxReader(absReduxDir,
-		data.MyBooksIdsProperty,
+		data.ArtsHistoryOrderProperty,
 		data.ImportedProperty)
 	if err != nil {
 		return gca.EndWithError(err)
@@ -41,7 +41,7 @@ func GetLitResCovers(ids []string, forceImported bool) error {
 
 	if len(ids) == 0 {
 		var ok bool
-		ids, ok = rdx.GetAllValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty)
+		ids, ok = rdx.GetAllValues(data.ArtsHistoryOrderProperty, data.ArtsHistoryOrderProperty)
 		if !ok {
 			err = errors.New("no my books found")
 			return gca.EndWithError(err)

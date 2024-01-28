@@ -53,7 +53,7 @@ func DownloadLitRes(ids []string) error {
 	}
 
 	rdx, err := kvas.NewReduxReader(absReduxDir,
-		data.MyBooksIdsProperty,
+		data.ArtsHistoryOrderProperty,
 		data.TitleProperty,
 		data.AuthorsProperty,
 		data.ImportedProperty,
@@ -65,7 +65,7 @@ func DownloadLitRes(ids []string) error {
 
 	if ids == nil {
 		var ok bool
-		ids, ok = rdx.GetAllValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty)
+		ids, ok = rdx.GetAllValues(data.ArtsHistoryOrderProperty, data.ArtsHistoryOrderProperty)
 		if !ok {
 			err = errors.New("no my books found")
 			return da.EndWithError(err)

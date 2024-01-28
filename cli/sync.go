@@ -18,11 +18,11 @@ func SyncHandler(u *url.URL) error {
 }
 func Sync(webhookUrl string, force bool) error {
 
-	if err := GetLitResMyBooks(); err != nil {
+	if err := GetLitResHistoryLog(); err != nil {
 		return err
 	}
 
-	if err := ReduceLitResMyBooks(); err != nil {
+	if err := ReduceLitResHistoryLog(); err != nil {
 		return err
 	}
 

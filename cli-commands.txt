@@ -37,14 +37,13 @@ get-litres-authors
 get-litres-covers
     id^&
 
+get-litres-history-log
+
 get-litres-series
     id^&
 
 get-livelib-details
     id^&
-
-get-litres-my-books
-    new-only
 
 import
 
@@ -56,7 +55,7 @@ purge
     confirm
     webhook-url$
 
-reduce-litres-my-books
+reduce-litres-history-log
 
 sync
     force

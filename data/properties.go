@@ -7,10 +7,15 @@ import (
 
 const (
 	IdProperty = "id"
-	//reduced from the list
-	MyBooksIdsProperty = "my-books-ids"
-	HrefProperty       = "href"
+	// arts history
+	ArtsHistoryOrderProperty     = "arts-history-order"
+	ArtsHistoryEventTimeProperty = "arts-history-event-time"
+
+	// legacy reduced from my-books
+	HrefProperty = "href"
+
 	// reduced from detail page
+
 	TitleProperty             = "title"
 	AuthorsProperty           = "authors"
 	CoauthorsProperty         = "coauthors"
@@ -65,7 +70,8 @@ const (
 
 func ReduxProperties() []string {
 	return []string{
-		MyBooksIdsProperty,
+		ArtsHistoryOrderProperty,
+		ArtsHistoryEventTimeProperty,
 		HrefProperty,
 		TitleProperty,
 		DescriptionProperty,

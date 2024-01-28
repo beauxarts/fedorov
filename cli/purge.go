@@ -94,10 +94,10 @@ func Purge(id string, webhookUrl string, confirm bool) error {
 
 	// details
 
+	//TODO: Likely need to add Arts data types
 	dataTypes := []fmt.Stringer{
 		// LitResDataTypes
-		litres_integration.LitResMyBooksFresh,
-		litres_integration.LitResMyBooksDetails,
+		litres_integration.LitResHistoryLog,
 
 		// LiveLibDataTypes
 		livelib_integration.LiveLibDetails,

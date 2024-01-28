@@ -1,7 +1,6 @@
 package cli
 
 import (
-	"fmt"
 	"github.com/beauxarts/fedorov/data"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
@@ -18,7 +17,7 @@ func Cascade() error {
 	ca := nod.Begin("cascading reductions...")
 	defer ca.End()
 
-	props := []string{data.TitleProperty, data.BookCompletedProperty, data.MyBooksIdsProperty, data.MyBooksOrderProperty}
+	props := []string{data.TitleProperty, data.BookCompletedProperty, data.ArtsHistoryOrderProperty, data.MyBooksOrderProperty}
 
 	absReduxDir, err := pasu.GetAbsRelDir(data.Redux)
 	if err != nil {
@@ -51,20 +50,20 @@ func Cascade() error {
 
 	// cascading data.MyBooksOrderProperty
 
-	mboa := nod.NewProgress(" " + data.MyBooksOrderProperty)
-	defer mboa.End()
-
-	myBooksIds, _ := rdx.GetAllValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty)
-	mboa.TotalInt(len(myBooksIds))
-
-	order := make(map[string][]string)
-	for i, id := range myBooksIds {
-		order[id] = []string{fmt.Sprintf("%9d", i)}
-	}
-	if err := rdx.BatchReplaceValues(data.MyBooksOrderProperty, order); err != nil {
-		return mboa.EndWithError(err)
-	}
-	mboa.EndWithResult("done")
+	//mboa := nod.NewProgress(" " + data.MyBooksOrderProperty)
+	//defer mboa.End()
+	//
+	//artsIds, _ := rdx.GetAllValues(data.ArtsHistoryOrderProperty, data.ArtsHistoryOrderProperty)
+	//mboa.TotalInt(len(artsIds))
+	//
+	//order := make(map[string][]string)
+	//for i, id := range artsIds {
+	//	order[id] = []string{fmt.Sprintf("%9d", i)}
+	//}
+	//if err := rdx.BatchReplaceValues(data.MyBooksOrderProperty, order); err != nil {
+	//	return mboa.EndWithError(err)
+	//}
+	//mboa.EndWithResult("done")
 
 	ca.EndWithResult("done")
 

@@ -26,27 +26,27 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	myBooks, ok := rdx.GetAllValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty)
+	artsIds, ok := rdx.GetAllValues(data.ArtsHistoryOrderProperty, data.ArtsHistoryOrderProperty)
 	if !ok {
-		http.Error(w, nod.ErrorStr("no my books found"), http.StatusInternalServerError)
+		http.Error(w, nod.ErrorStr("no artsIds history order found"), http.StatusInternalServerError)
 		return
 	}
 
 	if missingDetails, ok := rdx.GetAllValues(data.MissingDetailsIdsProperty, data.MissingDetailsIdsProperty); ok {
-		filteredBooks := make([]string, 0, len(myBooks))
-		for _, id := range myBooks {
+		filteredBooks := make([]string, 0, len(artsIds))
+		for _, id := range artsIds {
 			if slices.Contains(missingDetails, id) {
 				continue
 			}
 			filteredBooks = append(filteredBooks, id)
 		}
-		myBooks = filteredBooks
+		artsIds = filteredBooks
 	}
 
 	booksByType := make(map[string][]string)
 	bookTypeTotals := make(map[string]int)
 
-	for _, id := range myBooks {
+	for _, id := range artsIds {
 		bt, _ := rdx.GetFirstVal(data.BookTypeProperty, id)
 		bookTypeTotals[bt]++
 		if !showAll && len(booksByType[bt]) >= latestBooksLimit {

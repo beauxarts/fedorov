@@ -235,7 +235,7 @@ func Import() error {
 		}
 
 		// add imported book id to my books
-		if err := rdx.AddValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty, idstr); err != nil {
+		if err := rdx.AddValues(data.ArtsHistoryOrderProperty, data.ArtsHistoryOrderProperty, idstr); err != nil {
 			return ia.EndWithError(err)
 		}
 

@@ -51,13 +51,13 @@ func GetLitResArts(artsTypes []litres_integration.ArtsType, force bool, ids ...s
 	}
 
 	if len(ids) == 0 {
-		rdx, err := kvas.NewReduxReader(absReduxDir, data.MyBooksIdsProperty, data.ImportedProperty)
+		rdx, err := kvas.NewReduxReader(absReduxDir, data.ArtsHistoryOrderProperty, data.ImportedProperty)
 		if err != nil {
 			return glaa.EndWithError(err)
 		}
 
-		if myBooksIds, ok := rdx.GetAllValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty); ok {
-			for _, mbid := range myBooksIds {
+		if artsIds, ok := rdx.GetAllValues(data.ArtsHistoryOrderProperty, data.ArtsHistoryOrderProperty); ok {
+			for _, mbid := range artsIds {
 				if rdx.HasKey(data.ImportedProperty, mbid) {
 					continue
 				}
