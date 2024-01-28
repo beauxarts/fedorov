@@ -46,14 +46,16 @@ func Dehydrate(idSet map[string]bool, all, overwrite bool) error {
 		data.DehydratedListImageModifiedProperty,
 		data.DehydratedItemImageProperty,
 		data.DehydratedItemImageModifiedProperty,
-		data.TitleProperty)
+		data.ArtsHistoryOrderProperty)
 	if err != nil {
 		return di.EndWithError(err)
 	}
 
 	if all {
-		for _, id := range rdx.Keys(data.TitleProperty) {
-			idSet[id] = true
+		if all, ok := rdx.GetAllValues(data.ArtsHistoryOrderProperty, data.ArtsHistoryOrderProperty); ok {
+			for _, id := range all {
+				idSet[id] = true
+			}
 		}
 	}
 

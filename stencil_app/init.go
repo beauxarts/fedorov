@@ -22,7 +22,7 @@ func Init(rdx kvas.ReadableRedux) (*stencil.AppConfiguration, error) {
 		BookLabels,
 		nil,
 		nil,
-		data.TitleProperty,
+		"", //data.TitleProperty,
 		PropertyTitles,
 		SectionTitles,
 		rdx); err != nil {

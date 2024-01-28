@@ -55,9 +55,10 @@ func DownloadLitRes(ids []string) error {
 	rdx, err := kvas.NewReduxReader(absReduxDir,
 		data.ArtsHistoryOrderProperty,
 		data.TitleProperty,
-		data.AuthorsProperty,
+		//data.AuthorsProperty,
 		data.ImportedProperty,
-		data.DownloadLinksProperty)
+		//data.DownloadLinksProperty)
+	)
 
 	if err != nil {
 		return da.EndWithError(err)
@@ -101,13 +102,16 @@ func DownloadLitRes(ids []string) error {
 		}
 
 		title, _ := rdx.GetFirstVal(data.TitleProperty, id)
-		authors, _ := rdx.GetAllValues(data.AuthorsProperty, id)
+		authors := []string{}
 
-		dls, ok := rdx.GetAllValues(data.DownloadLinksProperty, id)
-		if !ok {
-			nod.Log("book %s is missing download links", id)
-			continue
-		}
+		//authors, _ := rdx.GetAllValues(data.AuthorsProperty, id)
+
+		dls := []string{}
+		//dls, ok := rdx.GetAllValues(data.DownloadLinksProperty, id)
+		//if !ok {
+		//	nod.Log("book %s is missing download links", id)
+		//	continue
+		//}
 
 		bdla := nod.Begin("%s - %s", strings.Join(authors, ","), title)
 

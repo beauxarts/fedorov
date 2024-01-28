@@ -35,7 +35,7 @@ func Complete(ids []string, action string) error {
 		return ca.EndWithError(err)
 	}
 
-	rdx, err := kvas.NewReduxWriter(absReduxDir, data.TitleProperty, data.BookCompletedProperty)
+	rdx, err := kvas.NewReduxWriter(absReduxDir, data.BookCompletedProperty)
 	if err != nil {
 		return err
 	}

@@ -17,7 +17,7 @@ func Cascade() error {
 	ca := nod.Begin("cascading reductions...")
 	defer ca.End()
 
-	props := []string{data.TitleProperty, data.BookCompletedProperty, data.ArtsHistoryOrderProperty, data.MyBooksOrderProperty}
+	props := []string{data.TitleProperty, data.BookCompletedProperty, data.ArtsHistoryOrderProperty}
 
 	absReduxDir, err := pasu.GetAbsRelDir(data.Redux)
 	if err != nil {
@@ -47,23 +47,6 @@ func Cascade() error {
 	}
 
 	bcpa.EndWithResult("done")
-
-	// cascading data.MyBooksOrderProperty
-
-	//mboa := nod.NewProgress(" " + data.MyBooksOrderProperty)
-	//defer mboa.End()
-	//
-	//artsIds, _ := rdx.GetAllValues(data.ArtsHistoryOrderProperty, data.ArtsHistoryOrderProperty)
-	//mboa.TotalInt(len(artsIds))
-	//
-	//order := make(map[string][]string)
-	//for i, id := range artsIds {
-	//	order[id] = []string{fmt.Sprintf("%9d", i)}
-	//}
-	//if err := rdx.BatchReplaceValues(data.MyBooksOrderProperty, order); err != nil {
-	//	return mboa.EndWithError(err)
-	//}
-	//mboa.EndWithResult("done")
 
 	ca.EndWithResult("done")
 

@@ -1,10 +1,8 @@
 package cli
 
 import (
-	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/scrinium/livelib_integration"
 	"github.com/boggydigital/kvas"
-	"github.com/boggydigital/nod"
 	"golang.org/x/net/html"
 )
 
@@ -25,11 +23,11 @@ func ReduceLiveLibBookDetails(id string, kv kvas.KeyValues) (map[string][]string
 }
 
 func MapLiveLibToFedorov(id string, lrdx map[string][]string, rdx map[string]map[string][]string) {
-	for lp, vals := range lrdx {
-		if p, ok := data.LiveLibPropertyMap[lp]; ok {
-			rdx[p][id] = vals
-		} else {
-			nod.Log("unknown LivLib property %s", lp)
-		}
-	}
+	//for lp, vals := range lrdx {
+	//if p, ok := data.LiveLibPropertyMap[lp]; ok {
+	//	rdx[p][id] = vals
+	//} else {
+	//	nod.Log("unknown LivLib property %s", lp)
+	//}
+	//}
 }

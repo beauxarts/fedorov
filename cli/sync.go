@@ -30,12 +30,17 @@ func Sync(webhookUrl string, force bool) error {
 		return err
 	}
 
-	// add reduce arts
+	if err := ReduceLitResArts(litres_integration.AllArtsTypes()); err != nil {
+		return err
+	}
 
-	// add get authors
-	// add get series
-	// add reduce authors
-	// add reduce series
+	// reduce arts
+
+	// get authors
+	// reduce authors
+
+	// get series
+	// reduce series
 
 	if err := Cascade(); err != nil {
 		return err

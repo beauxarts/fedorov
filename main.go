@@ -75,6 +75,7 @@ func main() {
 		"import":                    cli.ImportHandler,
 		"post-completion":           cli.PostCompletionHandler,
 		"purge":                     cli.PurgeHandler,
+		"reduce-litres-arts":        cli.ReduceLitResArtsHandler,
 		"reduce-litres-history-log": cli.ReduceLitResHistoryLogHandler,
 		"serve":                     cli.ServeHandler,
 		"sync":                      cli.SyncHandler,

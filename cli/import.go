@@ -1,7 +1,6 @@
 package cli
 
 import (
-	"errors"
 	"fmt"
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/scrinium/litres_integration"
@@ -121,28 +120,30 @@ func Import() error {
 			switch ds[0] {
 			case LitResDataSource:
 
-				if hrefs, ok := skv[idstr][data.HrefProperty]; ok {
-					if err := rdx.ReplaceValues(data.HrefProperty, idstr, hrefs...); err != nil {
-						return ia.EndWithError(err)
-					}
-				} else {
-					return ia.EndWithError(errors.New("href is required for litres data import"))
-				}
+				// TODO: this would need to be rewritten to support arts
 
-				if rdx, err := importLitresData(idstr, hc); err != nil {
-					return ia.EndWithError(err)
-				} else {
-					// rdx -> skv
-					for p := range rdx {
-						if p == data.DownloadLinksProperty {
-							continue
-						}
-						if len(rdx[p][idstr]) == 0 {
-							continue
-						}
-						skv[idstr][p] = rdx[p][idstr]
-					}
-				}
+				//if hrefs, ok := skv[idstr][data.HrefProperty]; ok {
+				//	if err := rdx.ReplaceValues(data.HrefProperty, idstr, hrefs...); err != nil {
+				//		return ia.EndWithError(err)
+				//	}
+				//} else {
+				//	return ia.EndWithError(errors.New("href is required for litres data import"))
+				//}
+				//
+				//if rdx, err := importLitresData(idstr, hc); err != nil {
+				//	return ia.EndWithError(err)
+				//} else {
+				//	// rdx -> skv
+				//	for p := range rdx {
+				//		if p == data.DownloadLinksProperty {
+				//			continue
+				//		}
+				//		if len(rdx[p][idstr]) == 0 {
+				//			continue
+				//		}
+				//		skv[idstr][p] = rdx[p][idstr]
+				//	}
+				//}
 
 			case LiveLibDataSource:
 
@@ -185,43 +186,43 @@ func Import() error {
 
 			// move download files into destination folder and infer book type
 
-			for _, link := range skv[idstr][data.DownloadLinksProperty] {
-
-				if len(skv[idstr][data.BookTypeProperty]) == 0 {
-					skv[idstr][data.BookTypeProperty] = []string{data.FormatBookType(data.LinkFormat(link))}
-				}
-
-				_, relSrcFilename := filepath.Split(link)
-				if relSrcFilename == "" {
-					continue
-				}
-				absSrcFilename := filepath.Join(absInputDir, relSrcFilename)
-				if _, err := os.Stat(absSrcFilename); err == nil {
-					absDstFilename, err := data.AbsFileDownloadPath(id, relSrcFilename)
-					if err != nil {
-						return ia.EndWithError(err)
-					}
-
-					absDstDir, _ := filepath.Split(absDstFilename)
-					if _, err := os.Stat(absDstDir); os.IsNotExist(err) {
-						if err := os.MkdirAll(absDstDir, 0755); err != nil {
-							return ia.EndWithError(err)
-						}
-					}
-
-					if err := os.Rename(absSrcFilename, absDstFilename); err != nil {
-						if strings.Contains(err.Error(), "invalid cross-device link") {
-							if err := copyDelete(absSrcFilename, absDstFilename); err != nil {
-								return ia.EndWithError(err)
-							}
-						} else {
-							return ia.EndWithError(err)
-						}
-					}
-				} else {
-					nod.Log(err.Error())
-				}
-			}
+			//for _, link := range skv[idstr][data.DownloadLinksProperty] {
+			//
+			//	if len(skv[idstr][data.BookTypeProperty]) == 0 {
+			//		skv[idstr][data.BookTypeProperty] = []string{data.FormatBookType(data.LinkFormat(link))}
+			//	}
+			//
+			//	_, relSrcFilename := filepath.Split(link)
+			//	if relSrcFilename == "" {
+			//		continue
+			//	}
+			//	absSrcFilename := filepath.Join(absInputDir, relSrcFilename)
+			//	if _, err := os.Stat(absSrcFilename); err == nil {
+			//		absDstFilename, err := data.AbsFileDownloadPath(id, relSrcFilename)
+			//		if err != nil {
+			//			return ia.EndWithError(err)
+			//		}
+			//
+			//		absDstDir, _ := filepath.Split(absDstFilename)
+			//		if _, err := os.Stat(absDstDir); os.IsNotExist(err) {
+			//			if err := os.MkdirAll(absDstDir, 0755); err != nil {
+			//				return ia.EndWithError(err)
+			//			}
+			//		}
+			//
+			//		if err := os.Rename(absSrcFilename, absDstFilename); err != nil {
+			//			if strings.Contains(err.Error(), "invalid cross-device link") {
+			//				if err := copyDelete(absSrcFilename, absDstFilename); err != nil {
+			//					return ia.EndWithError(err)
+			//				}
+			//			} else {
+			//				return ia.EndWithError(err)
+			//			}
+			//		}
+			//	} else {
+			//		nod.Log(err.Error())
+			//	}
+			//}
 		}
 
 		// replace redux values with imported data

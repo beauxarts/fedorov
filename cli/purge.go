@@ -73,24 +73,24 @@ func Purge(id string, webhookUrl string, confirm bool) error {
 
 	// downloads
 
-	if links, ok := rdx.GetAllValues(data.DownloadLinksProperty, id); ok {
-		for _, link := range links {
-			lfn, err := data.AbsFileDownloadPath(idi, filepath.Base(link))
-			if err != nil {
-				return pa.EndWithError(err)
-			}
-			if _, err := os.Stat(lfn); err == nil {
-				rda := nod.Begin(" found download %s...", filepath.Base(lfn))
-				if confirm {
-					if err := os.Remove(lfn); err != nil {
-						return rda.EndWithError(err)
-					}
-					rda.EndWithResult("removed")
-				}
-				rda.End()
-			}
-		}
-	}
+	//if links, ok := rdx.GetAllValues(data.DownloadLinksProperty, id); ok {
+	//	for _, link := range links {
+	//		lfn, err := data.AbsFileDownloadPath(idi, filepath.Base(link))
+	//		if err != nil {
+	//			return pa.EndWithError(err)
+	//		}
+	//		if _, err := os.Stat(lfn); err == nil {
+	//			rda := nod.Begin(" found download %s...", filepath.Base(lfn))
+	//			if confirm {
+	//				if err := os.Remove(lfn); err != nil {
+	//					return rda.EndWithError(err)
+	//				}
+	//				rda.EndWithResult("removed")
+	//			}
+	//			rda.End()
+	//		}
+	//	}
+	//}
 
 	// details
 
