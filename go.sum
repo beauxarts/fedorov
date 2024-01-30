@@ -6,6 +6,8 @@ github.com/beauxarts/scrinium v0.1.22 h1:XJqnufAXVnnmIy3tO2jEr9I88Ed0MTpjNGJnaIq
 github.com/beauxarts/scrinium v0.1.22/go.mod h1:f77zXJ4zTjMhGlGpdRyVLRC8Pvxgn9/YLPAJp2nJkks=
 github.com/beauxarts/scrinium v0.1.23 h1:86pZUfW4M26rpc+ubntvcvzG2Dfz4ejXPPuY8KVie58=
 github.com/beauxarts/scrinium v0.1.23/go.mod h1:f77zXJ4zTjMhGlGpdRyVLRC8Pvxgn9/YLPAJp2nJkks=
+github.com/beauxarts/scrinium v0.1.24 h1:bKQ1D8WJPhcUt5UXFW3Yaj2ch50YJMFWlczrFVkYQng=
+github.com/beauxarts/scrinium v0.1.24/go.mod h1:f77zXJ4zTjMhGlGpdRyVLRC8Pvxgn9/YLPAJp2nJkks=
 github.com/boggydigital/clo v1.0.4 h1:LKvXktyG+EeemzjnSp0DYIAEbY2/rvFcuHtjjwJk280=
 github.com/boggydigital/clo v1.0.4/go.mod h1:7QbdMB008okXsdk41qJyJ6k/oJALIIXQ0GLYSxY9WFM=
 github.com/boggydigital/coost v0.3.9 h1:lMfR5PyexBDR4xDOQp0zWZWUk/Dqlrx7gw7i7XdsC4c=

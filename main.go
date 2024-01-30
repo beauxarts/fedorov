@@ -3,10 +3,12 @@ package main
 import (
 	"bytes"
 	"embed"
+	"fmt"
 	"github.com/beauxarts/fedorov/cli"
 	"github.com/beauxarts/fedorov/clo_delegates"
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/rest"
+	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/clo"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/pasu"
@@ -87,23 +89,23 @@ func main() {
 		os.Exit(1)
 	}
 
-	//atr, err := data.NewArtsTypesReader(litres_integration.ArtsTypeFiles)
-	//if err != nil {
-	//	panic(err)
-	//}
-	//
-	//for _, id := range atr.Keys() {
-	//
-	//	fmt.Println(id)
-	//
-	//	ad, err := atr.ReadValue(id)
-	//	if err != nil {
-	//		panic(err)
-	//	}
-	//
-	//	fmt.Println(ad)
-	//
-	//}
+	atr, err := data.NewArtsReader(litres_integration.ArtsTypeDetails)
+	if err != nil {
+		panic(err)
+	}
+
+	for _, id := range atr.Keys() {
+
+		fmt.Println(id)
+
+		ad, err := atr.ArtsDetails(id)
+		if err != nil {
+			panic(err)
+		}
+
+		fmt.Println(ad.Payload.Data.ArtType)
+
+	}
 
 	if err := defs.Serve(os.Args[1:]); err != nil {
 		_ = ns.EndWithError(err)
