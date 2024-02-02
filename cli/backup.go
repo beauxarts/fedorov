@@ -2,8 +2,8 @@ package cli
 
 import (
 	"github.com/beauxarts/fedorov/data"
+	"github.com/boggydigital/hogo"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/packer"
 	"github.com/boggydigital/pasu"
 	"net/url"
 )
@@ -14,7 +14,7 @@ func BackupHandler(_ *url.URL) error {
 
 func Backup() error {
 
-	ba := nod.NewProgress("creating metadata backup...")
+	ba := nod.NewProgress("backing up metadata...")
 	defer ba.End()
 
 	absBackupsDir, err := pasu.GetAbsDir(data.Backups)
@@ -27,11 +27,20 @@ func Backup() error {
 		return ba.EndWithError(err)
 	}
 
-	if err := packer.Pack(absReduxDir, absBackupsDir, ba); err != nil {
+	if err := hogo.Compress(absReduxDir, absBackupsDir, ba); err != nil {
 		return ba.EndWithError(err)
 	}
 
 	ba.EndWithResult("done")
+
+	cba := nod.NewProgress("cleaning up old backups...")
+	defer cba.End()
+
+	if err := hogo.Cleanup(absBackupsDir, true, cba); err != nil {
+		return cba.EndWithError(err)
+	}
+
+	cba.EndWithResult("done")
 
 	return nil
 }
