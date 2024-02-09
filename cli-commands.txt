@@ -47,9 +47,6 @@ get-livelib-details
 
 import
 
-post-completion
-    webhook-url^*$
-
 purge
     id*^
     confirm
@@ -61,7 +58,6 @@ reduce-litres-history-log
 
 sync
     force
-    webhook-url$
 
 serve
     port$*

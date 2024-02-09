@@ -73,7 +73,6 @@ func main() {
 		"get-litres-series":          cli.GetLitResSeriesHandler,
 		"get-livelib-details":        cli.GetLiveLibDetailsHandler,
 		"import":                     cli.ImportHandler,
-		"post-completion":            cli.PostCompletionHandler,
 		"purge":                      cli.PurgeHandler,
 		"reduce-litres-arts-details": cli.ReduceLitResArtsDetailsHandler,
 		"reduce-litres-history-log":  cli.ReduceLitResHistoryLogHandler,

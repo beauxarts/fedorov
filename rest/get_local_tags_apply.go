@@ -50,10 +50,5 @@ func GetLocalTagsApply(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := updatePrerender(); err != nil {
-		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
-		return
-	}
-
 	http.Redirect(w, r, "/book?id="+id, http.StatusTemporaryRedirect)
 }
