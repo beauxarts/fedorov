@@ -18,6 +18,8 @@ func SyncHandler(u *url.URL) error {
 }
 func Sync(webhookUrl string, force bool) error {
 
+	syncStart := time.Now().UTC().Unix()
+
 	if err := GetLitResHistoryLog(); err != nil {
 		return err
 	}
@@ -30,7 +32,7 @@ func Sync(webhookUrl string, force bool) error {
 		return err
 	}
 
-	if err := ReduceLitResArts(litres_integration.AllArtsTypes()); err != nil {
+	if err := ReduceLitResArtsDetails(syncStart); err != nil {
 		return err
 	}
 

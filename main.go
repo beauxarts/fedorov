@@ -3,12 +3,10 @@ package main
 import (
 	"bytes"
 	"embed"
-	"fmt"
 	"github.com/beauxarts/fedorov/cli"
 	"github.com/beauxarts/fedorov/clo_delegates"
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/rest"
-	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/clo"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/pasu"
@@ -62,26 +60,26 @@ func main() {
 	}
 
 	clo.HandleFuncs(map[string]clo.Handler{
-		"backup":                    cli.BackupHandler,
-		"cascade":                   cli.CascadeHandler,
-		"complete":                  cli.CompleteHandler,
-		"dehydrate":                 cli.DehydrateHandler,
-		"download-litres":           cli.DownloadLitResHandler,
-		"export":                    cli.ExportHandler,
-		"get-litres-arts":           cli.GetLitResArtsHandler,
-		"get-litres-authors":        cli.GetLitResAuthorsHandler,
-		"get-litres-covers":         cli.GetLitResCoversHandler,
-		"get-litres-history-log":    cli.GetLitResHistoryLogHandler,
-		"get-litres-series":         cli.GetLitResSeriesHandler,
-		"get-livelib-details":       cli.GetLiveLibDetailsHandler,
-		"import":                    cli.ImportHandler,
-		"post-completion":           cli.PostCompletionHandler,
-		"purge":                     cli.PurgeHandler,
-		"reduce-litres-arts":        cli.ReduceLitResArtsHandler,
-		"reduce-litres-history-log": cli.ReduceLitResHistoryLogHandler,
-		"serve":                     cli.ServeHandler,
-		"sync":                      cli.SyncHandler,
-		"version":                   cli.VersionHandler,
+		"backup":                     cli.BackupHandler,
+		"cascade":                    cli.CascadeHandler,
+		"complete":                   cli.CompleteHandler,
+		"dehydrate":                  cli.DehydrateHandler,
+		"download-litres":            cli.DownloadLitResHandler,
+		"export":                     cli.ExportHandler,
+		"get-litres-arts":            cli.GetLitResArtsHandler,
+		"get-litres-authors":         cli.GetLitResAuthorsHandler,
+		"get-litres-covers":          cli.GetLitResCoversHandler,
+		"get-litres-history-log":     cli.GetLitResHistoryLogHandler,
+		"get-litres-series":          cli.GetLitResSeriesHandler,
+		"get-livelib-details":        cli.GetLiveLibDetailsHandler,
+		"import":                     cli.ImportHandler,
+		"post-completion":            cli.PostCompletionHandler,
+		"purge":                      cli.PurgeHandler,
+		"reduce-litres-arts-details": cli.ReduceLitResArtsDetailsHandler,
+		"reduce-litres-history-log":  cli.ReduceLitResHistoryLogHandler,
+		"serve":                      cli.ServeHandler,
+		"sync":                       cli.SyncHandler,
+		"version":                    cli.VersionHandler,
 	})
 
 	if err := defs.AssertCommandsHaveHandlers(); err != nil {
@@ -89,23 +87,26 @@ func main() {
 		os.Exit(1)
 	}
 
-	atr, err := data.NewArtsReader(litres_integration.ArtsTypeDetails)
-	if err != nil {
-		panic(err)
-	}
-
-	for _, id := range atr.Keys() {
-
-		fmt.Println(id)
-
-		ad, err := atr.ArtsDetails(id)
-		if err != nil {
-			panic(err)
-		}
-
-		fmt.Println(ad.Payload.Data.ArtType)
-
-	}
+	//atr, err := data.NewArtsReader(litres_integration.ArtsTypeDetails)
+	//if err != nil {
+	//	panic(err)
+	//}
+	//
+	//for _, id := range atr.Keys() {
+	//
+	//	ad, err := atr.ArtsDetails(id)
+	//	if err != nil {
+	//		panic(err)
+	//	}
+	//
+	//	at := ad.Payload.Data.ArtType
+	//	if at == 0 || at == 1 || at == 4 {
+	//		continue
+	//	}
+	//
+	//	fmt.Println(id, ad.Payload.Data.Title, ad.Payload.Data.ArtType)
+	//
+	//}
 
 	if err := defs.Serve(os.Args[1:]); err != nil {
 		_ = ns.EndWithError(err)

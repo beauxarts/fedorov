@@ -55,9 +55,7 @@ purge
     confirm
     webhook-url$
 
-reduce-litres-arts
-    arts-type*&={arts-types^}
-    all-arts-types
+reduce-litres-arts-details
 
 reduce-litres-history-log
 

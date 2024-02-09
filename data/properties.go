@@ -13,6 +13,7 @@ const (
 	ArtTypeProperty                = "art-type"
 	PriceProperty                  = "price"
 	MinAgeProperty                 = "min-age"
+	SymbolsCountProperty           = "symbols-count"
 	LastUpdatedAtProperty          = "last-updated-at"
 	LastReleasedAtProperty         = "last-released-at"
 	AvailableFromProperty          = "available-from"
@@ -22,9 +23,10 @@ const (
 	PersonUrlProperty              = "person-url"
 	RatedAvgProperty               = "rated-avg"
 	RatedTotalCountProperty        = "rated-total-count"
-	LinkedArtsProperty             = "linked-arts"
+	LinkedArtsIdsProperty          = "linked-arts-ids"
 	SeriesIdProperty               = "series-ids"
 	SeriesArtOrderProperty         = "series-art-order"
+	SeriesArtsCountProperty        = "series-arts-count"
 	SeriesNameProperty             = "series-name"
 	SeriesUrlProperty              = "series-url"
 	DateWrittenAtProperty          = "date-written-at"
@@ -50,45 +52,45 @@ const (
 	PublisherIdProperty            = "publisher-id"
 	PublisherNameProperty          = "publisher-name"
 	PublisherUrlProperty           = "publisher-url"
-	RightholderIdProperty          = "rightholder-id"
+	RightholdersIdsProperty        = "rightholders-ids"
 	RightholderNameProperty        = "rightholder-name"
 	RightholderUrlProperty         = "rightholder-url"
 
 	// arts files properties
 
-	// legacy reduced from detail page
-	//AuthorsProperty           = "authors"
-	//CoauthorsProperty         = "coauthors"
-	//DescriptionProperty       = "description"
-	//DownloadLinksProperty     = "download-links"
-	//DownloadTitlesProperty    = "download-titles"
-	//SequenceNameProperty      = "sequence-name"
-	//SequenceNumberProperty    = "sequence-number"
-	//DateReleasedProperty      = "date-released"
-	//DateTranslatedProperty    = "date-translated"
-	//DateCreatedProperty       = "date-created"
-	//AgeRatingProperty         = "age-rating"
-	//VolumeProperty            = "volume"
-	//DurationProperty          = "duration"
-	//ISBNProperty              = "isbn"
-	//TranslatorsProperty       = "translators"
-	//ReadersProperty           = "readers"
-	//IllustratorsProperty      = "illustrators"
-	//CopyrightHoldersProperty  = "copyright-holders"
-	//ComposersProperty         = "composers"
-	//AdapterProperty           = "adapter"
-	//PerformersProperty        = "performers"
-	//DirectorsProperty         = "directors"
-	//SoundDirectorsProperty    = "sound-directors"
-	//PublishersProperty        = "publishers"
-	//TotalSizeProperty         = "total-size"
-	//TotalPagesProperty        = "total-pages"
-	//MissingDetailsIdsProperty = "missing-details-ids"
-	//BookTypeProperty          = "book-type"
-	//GenresProperty            = "genres"
-	//TagsProperty              = "tags"
-	//ImageProperty             = "image"
-	//LanguageProperty          = "language"
+	//legacy reduced from detail page
+	LegacyAuthorsProperty           = "authors"
+	LegacyCoauthorsProperty         = "coauthors"
+	LegacyDescriptionProperty       = "description"
+	LegacyDownloadLinksProperty     = "download-links"
+	LegacyDownloadTitlesProperty    = "download-titles"
+	LegacySequenceNameProperty      = "sequence-name"
+	LegacySequenceNumberProperty    = "sequence-number"
+	LegacyDateReleasedProperty      = "date-released"
+	LegacyDateTranslatedProperty    = "date-translated"
+	LegacyDateCreatedProperty       = "date-created"
+	LegacyAgeRatingProperty         = "age-rating"
+	LegacyVolumeProperty            = "volume"
+	LegacyDurationProperty          = "duration"
+	LegacyISBNProperty              = "isbn"
+	LegacyTranslatorsProperty       = "translators"
+	LegacyReadersProperty           = "readers"
+	LegacyIllustratorsProperty      = "illustrators"
+	LegacyCopyrightHoldersProperty  = "copyright-holders"
+	LegacyComposersProperty         = "composers"
+	LegacyAdapterProperty           = "adapter"
+	LegacyPerformersProperty        = "performers"
+	LegacyDirectorsProperty         = "directors"
+	LegacySoundDirectorsProperty    = "sound-directors"
+	LegacyPublishersProperty        = "publishers"
+	LegacyTotalSizeProperty         = "total-size"
+	LegacyTotalPagesProperty        = "total-pages"
+	LegacyMissingDetailsIdsProperty = "missing-details-ids"
+	LegacyBookTypeProperty          = "book-type"
+	LegacyGenresProperty            = "genres"
+	LegacyTagsProperty              = "tags"
+	LegacyImageProperty             = "image"
+	LegacyLanguageProperty          = "language"
 
 	// local properties
 	LocalTagsProperty     = "local-tags"
@@ -108,17 +110,107 @@ const (
 	DehydratedItemImageModifiedProperty = "dehydrated-item-image-modified"
 )
 
-func ReduxProperties() []string {
+func ArtsDetailsReduxProperties() []string {
 	return []string{
-		ArtsHistoryOrderProperty,
-		ArtsHistoryEventTimeProperty,
-		//
-		SyncCompletedProperty,
-		ImportedProperty,
-		DataSourceProperty,
-		DehydratedListImageProperty,
-		DehydratedItemImageProperty,
+		CoverUrlProperty,
+		TitleProperty,
+		ArtTypeProperty,
+		PriceProperty,
+		MinAgeProperty,
+		SymbolsCountProperty,
+		LastUpdatedAtProperty,
+		LastReleasedAtProperty,
+		AvailableFromProperty,
+		PersonsIdsProperty,
+		PersonsRolesProperty,
+		PersonFullNameProperty,
+		PersonUrlProperty,
+		RatedAvgProperty,
+		RatedTotalCountProperty,
+		LinkedArtsIdsProperty,
+		SeriesIdProperty,
+		SeriesArtOrderProperty,
+		SeriesArtsCountProperty,
+		SeriesNameProperty,
+		SeriesUrlProperty,
+		DateWrittenAtProperty,
+		AlternativeVersionsProperty,
+		HTMLAnnotationProperty,
+		HTMLAnnotationLitResProperty,
+		FirstTimeSaleAtProperty,
+		LiveLibRatedAvgProperty,
+		LiveLibRatedTotalCountProperty,
+		GenresIdsProperty,
+		GenreNameProperty,
+		GenreUrlProperty,
+		TagsIdsProperty,
+		TagNameProperty,
+		TagUrlProperty,
+		ISBNProperty,
+		PublicationDateProperty,
+		YouTubeVideosProperty,
+		ContentsUrlProperty,
+		RegisteredAtProperty,
+		TranslatedAtProperty,
+		CurrentPagesOrSecondsProperty,
+		PublisherIdProperty,
+		PublisherNameProperty,
+		PublisherUrlProperty,
+		RightholdersIdsProperty,
+		RightholderNameProperty,
+		RightholderUrlProperty,
 	}
+}
+
+func LegacyReduxProperties() []string {
+	return []string{
+		LegacyAuthorsProperty,
+		LegacyCoauthorsProperty,
+		LegacyDescriptionProperty,
+		LegacyDownloadLinksProperty,
+		LegacyDownloadTitlesProperty,
+		LegacySequenceNameProperty,
+		LegacySequenceNumberProperty,
+		LegacyDateReleasedProperty,
+		LegacyDateTranslatedProperty,
+		LegacyDateCreatedProperty,
+		LegacyAgeRatingProperty,
+		LegacyVolumeProperty,
+		LegacyDurationProperty,
+		LegacyISBNProperty,
+		LegacyTranslatorsProperty,
+		LegacyReadersProperty,
+		LegacyIllustratorsProperty,
+		LegacyCopyrightHoldersProperty,
+		LegacyComposersProperty,
+		LegacyAdapterProperty,
+		LegacyPerformersProperty,
+		LegacyDirectorsProperty,
+		LegacySoundDirectorsProperty,
+		LegacyPublishersProperty,
+		LegacyTotalSizeProperty,
+		LegacyTotalPagesProperty,
+		LegacyMissingDetailsIdsProperty,
+		LegacyBookTypeProperty,
+		LegacyGenresProperty,
+		LegacyTagsProperty,
+		LegacyImageProperty,
+		LegacyLanguageProperty,
+	}
+}
+
+func ReduxProperties() []string {
+	return append(ArtsDetailsReduxProperties(),
+		[]string{
+			ArtsHistoryOrderProperty,
+			ArtsHistoryEventTimeProperty,
+			//
+			SyncCompletedProperty,
+			ImportedProperty,
+			DataSourceProperty,
+			DehydratedListImageProperty,
+			DehydratedItemImageProperty,
+		}...)
 }
 
 func ImportedProperties() []string {
