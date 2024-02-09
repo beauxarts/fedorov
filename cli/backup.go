@@ -27,7 +27,7 @@ func Backup() error {
 		return ba.EndWithError(err)
 	}
 
-	if err := hogo.Compress(absReduxDir, absBackupsDir, ba); err != nil {
+	if err := hogo.Compress(absReduxDir, absBackupsDir); err != nil {
 		return ba.EndWithError(err)
 	}
 

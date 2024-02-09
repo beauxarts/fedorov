@@ -7,7 +7,7 @@ require (
 	github.com/boggydigital/clo v1.0.4
 	github.com/boggydigital/coost v0.3.9
 	github.com/boggydigital/dolo v0.2.14
-	github.com/boggydigital/hogo v0.1.0
+	github.com/boggydigital/hogo v0.1.1
 	github.com/boggydigital/issa v0.1.10
 	github.com/boggydigital/kvas v0.4.7
 	github.com/boggydigital/kvas_dolo v0.1.6
@@ -22,6 +22,4 @@ require (
 	golang.org/x/text v0.14.0
 )
 
-require (
-	golang.org/x/image v0.15.0 // indirect
-)
+require golang.org/x/image v0.15.0 // indirect
