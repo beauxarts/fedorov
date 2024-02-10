@@ -2,7 +2,7 @@ package cli
 
 import (
 	"github.com/beauxarts/fedorov/data"
-	"github.com/boggydigital/hogo"
+	"github.com/boggydigital/konpo"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/pasu"
 	"net/url"
@@ -27,7 +27,7 @@ func Backup() error {
 		return ba.EndWithError(err)
 	}
 
-	if err := hogo.Compress(absReduxDir, absBackupsDir); err != nil {
+	if err := konpo.Compress(absReduxDir, absBackupsDir); err != nil {
 		return ba.EndWithError(err)
 	}
 
@@ -36,7 +36,7 @@ func Backup() error {
 	cba := nod.NewProgress("cleaning up old backups...")
 	defer cba.End()
 
-	if err := hogo.Cleanup(absBackupsDir, true, cba); err != nil {
+	if err := konpo.Cleanup(absBackupsDir, true, cba); err != nil {
 		return cba.EndWithError(err)
 	}
 
