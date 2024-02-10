@@ -41,8 +41,6 @@ func HandleFuncs(p int) {
 		"GET /file": Auth(Log(http.HandlerFunc(GetFile)), AdminRole, SharedRole),
 		// start at the books
 		"/": http.RedirectHandler("/books", http.StatusPermanentRedirect),
-		//robots.txt
-		"GET /robots.txt": Log(http.HandlerFunc(GetRobotsTxt)),
 	}
 
 	for p, h := range patternHandlers {
