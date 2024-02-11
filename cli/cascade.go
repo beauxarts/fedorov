@@ -12,6 +12,7 @@ func CascadeHandler(_ *url.URL) error {
 	return Cascade()
 }
 
+// TODO: use batch operations
 func Cascade() error {
 
 	ca := nod.Begin("cascading reductions...")

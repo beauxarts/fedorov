@@ -36,9 +36,10 @@ func Sync(webhookUrl string, force bool) error {
 		return err
 	}
 
-	// reduce arts
+	if err := GetLitResAuthors(litres_integration.AllAuthorTypes(), force); err != nil {
+		return err
+	}
 
-	// get authors
 	// reduce authors
 
 	// get series
