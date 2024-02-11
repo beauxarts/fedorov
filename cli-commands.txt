@@ -44,6 +44,9 @@ get-litres-history-log
 
 get-litres-series
     id^&
+    series-type*&={series-types^}
+    all-series-types
+    force
 
 get-livelib-details
     id^&

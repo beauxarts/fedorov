@@ -161,13 +161,6 @@ func Purge(id string, webhookUrl string, confirm bool) error {
 		}
 	}
 
-	// make sure to post completion to update static versions
-	if confirm {
-		if err := PostCompletion(webhookUrl); err != nil {
-			return pa.EndWithError(err)
-		}
-	}
-
 	result := fmt.Sprintf("run `purge %s -confirm` to delete all", id)
 	if confirm {
 		result = "done"

@@ -22,12 +22,12 @@ func Backup() error {
 		return ba.EndWithError(err)
 	}
 
-	absReduxDir, err := pasu.GetAbsRelDir(data.Redux)
+	absMetadataDir, err := pasu.GetAbsDir(data.Metadata)
 	if err != nil {
 		return ba.EndWithError(err)
 	}
 
-	if err := konpo.Compress(absReduxDir, absBackupsDir); err != nil {
+	if err := konpo.Compress(absMetadataDir, absBackupsDir); err != nil {
 		return ba.EndWithError(err)
 	}
 

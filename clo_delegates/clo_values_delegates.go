@@ -7,7 +7,8 @@ import (
 
 var Values = map[string]func() []string{
 	"arts-types":   allArtsTypesStrings,
-	"author-types": allAuthorTypesString,
+	"author-types": allAuthorTypesStrings,
+	"series-types": allSeriesTypesStrings,
 }
 
 func toStrings[T fmt.Stringer](stringers ...T) []string {
@@ -22,6 +23,10 @@ func allArtsTypesStrings() []string {
 	return toStrings(litres_integration.AllArtsTypes()...)
 }
 
-func allAuthorTypesString() []string {
+func allAuthorTypesStrings() []string {
 	return toStrings(litres_integration.AllAuthorTypes()...)
+}
+
+func allSeriesTypesStrings() []string {
+	return toStrings(litres_integration.AllSeriesTypes()...)
 }

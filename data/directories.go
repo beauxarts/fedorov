@@ -66,6 +66,10 @@ func AbsArtsTypeDir(at litres_integration.ArtsType) (string, error) {
 	return absStringerDir(at)
 }
 
+func AbsSeriesTypeDir(st litres_integration.SeriesType) (string, error) {
+	return absStringerDir(st)
+}
+
 func AbsAuthorTypeDir(at litres_integration.AuthorType) (string, error) {
 	return absStringerDir(at)
 }

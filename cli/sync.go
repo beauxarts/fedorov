@@ -39,7 +39,9 @@ func Sync(force bool) error {
 		return err
 	}
 
-	// get series
+	if err := GetLitResSeries(litres_integration.AllSeriesTypes(), force); err != nil {
+		return err
+	}
 
 	if err := Cascade(); err != nil {
 		return err
