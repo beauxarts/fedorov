@@ -2,9 +2,7 @@ package rest
 
 import (
 	"github.com/beauxarts/fedorov/data"
-	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pasu"
 	"net/http"
 )
 
@@ -33,13 +31,7 @@ func GetLocalTagsApply(w http.ResponseWriter, r *http.Request) {
 		localTags = append(localTags, newLocalTag)
 	}
 
-	absReduxDir, err := pasu.GetAbsRelDir(data.Redux)
-	if err != nil {
-		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
-		return
-	}
-
-	ltRdx, err := kvas.NewReduxWriter(absReduxDir, data.LocalTagsProperty)
+	ltRdx, err := data.NewReduxWriter(data.LocalTagsProperty)
 	if err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return

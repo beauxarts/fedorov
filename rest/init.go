@@ -7,7 +7,6 @@ import (
 	"github.com/beauxarts/fedorov/view_models"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/middleware"
-	"github.com/boggydigital/pasu"
 	"github.com/boggydigital/stencil"
 	"html/template"
 	"io/fs"
@@ -43,12 +42,9 @@ func InitTemplates(templatesFS fs.FS, stencilAppStyles fs.FS) {
 
 func Init() error {
 
-	absReduxDir, err := pasu.GetAbsRelDir(data.Redux)
-	if err != nil {
-		return err
-	}
+	var err error
 
-	if rdx, err = kvas.NewReduxReader(absReduxDir, data.ReduxProperties()...); err != nil {
+	if rdx, err = data.NewReduxReader(data.ReduxProperties()...); err != nil {
 		return err
 	}
 

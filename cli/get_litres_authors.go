@@ -9,7 +9,6 @@ import (
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/kvas_dolo"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pasu"
 	"golang.org/x/exp/maps"
 	"net/url"
 	"strings"
@@ -45,16 +44,11 @@ func GetLitResAuthors(authorTypes []litres_integration.AuthorType, force bool, i
 	glaa := nod.NewProgress("getting litres authors...")
 	defer glaa.End()
 
-	absReduxDir, err := pasu.GetAbsRelDir(data.Redux)
-	if err != nil {
-		return glaa.EndWithError(err)
-	}
-
 	if len(ids) == 0 {
 
 		persons := make(map[string]interface{})
 
-		rdx, err := kvas.NewReduxReader(absReduxDir, data.ArtsHistoryOrderProperty, data.PersonsIdsProperty)
+		rdx, err := data.NewReduxReader(data.ArtsHistoryOrderProperty, data.PersonsIdsProperty)
 		if err != nil {
 			return glaa.EndWithError(err)
 		}

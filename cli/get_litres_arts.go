@@ -9,7 +9,6 @@ import (
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/kvas_dolo"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pasu"
 	"net/url"
 	"strings"
 )
@@ -45,13 +44,8 @@ func GetLitResArts(artsTypes []litres_integration.ArtsType, force bool, ids ...s
 	glaa := nod.NewProgress("getting litres arts...")
 	defer glaa.End()
 
-	absReduxDir, err := pasu.GetAbsRelDir(data.Redux)
-	if err != nil {
-		return glaa.EndWithError(err)
-	}
-
 	if len(ids) == 0 {
-		rdx, err := kvas.NewReduxReader(absReduxDir, data.ArtsHistoryOrderProperty, data.ImportedProperty)
+		rdx, err := data.NewReduxReader(data.ArtsHistoryOrderProperty, data.ImportedProperty)
 		if err != nil {
 			return glaa.EndWithError(err)
 		}

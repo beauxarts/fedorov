@@ -5,7 +5,6 @@ import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/dolo"
-	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/pasu"
 	"net/url"
@@ -27,12 +26,7 @@ func GetLitResCovers(ids []string, forceImported bool) error {
 	gca := nod.NewProgress("fetching LitRes covers...")
 	defer gca.End()
 
-	absReduxDir, err := pasu.GetAbsRelDir(data.Redux)
-	if err != nil {
-		return gca.EndWithError(err)
-	}
-
-	rdx, err := kvas.NewReduxReader(absReduxDir,
+	rdx, err := data.NewReduxReader(
 		data.ArtsHistoryOrderProperty,
 		data.ImportedProperty)
 	if err != nil {

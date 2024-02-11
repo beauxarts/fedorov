@@ -9,7 +9,6 @@ import (
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/kvas_dolo"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pasu"
 	"golang.org/x/exp/maps"
 	"net/url"
 	"strings"
@@ -45,16 +44,11 @@ func GetLitResSeries(seriesTypes []litres_integration.SeriesType, force bool, id
 	glsa := nod.NewProgress("getting litres series...")
 	defer glsa.End()
 
-	absReduxDir, err := pasu.GetAbsRelDir(data.Redux)
-	if err != nil {
-		return glsa.EndWithError(err)
-	}
-
 	if len(ids) == 0 {
 
 		series := make(map[string]interface{})
 
-		rdx, err := kvas.NewReduxReader(absReduxDir, data.ArtsHistoryOrderProperty, data.SeriesIdProperty)
+		rdx, err := data.NewReduxReader(data.ArtsHistoryOrderProperty, data.SeriesIdProperty)
 		if err != nil {
 			return glsa.EndWithError(err)
 		}

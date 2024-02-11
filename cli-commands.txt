@@ -19,7 +19,10 @@ dehydrate
     all
     overwrite
 
-download-litres
+download-litres-books
+    id^&
+
+download-litres-contents
     id^&
 
 export

@@ -7,7 +7,6 @@ import (
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/match_node"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pasu"
 	"golang.org/x/net/html"
 	"golang.org/x/net/html/atom"
 	"net/url"
@@ -75,12 +74,7 @@ func ReduceLitResHistoryLog() error {
 		}
 	}
 
-	absReduxDir, err := pasu.GetAbsRelDir(data.Redux)
-	if err != nil {
-		return rhla.EndWithError(err)
-	}
-
-	rdx, err := kvas.NewReduxWriter(absReduxDir,
+	rdx, err := data.NewReduxWriter(
 		data.ArtsHistoryOrderProperty,
 		data.ArtsHistoryEventTimeProperty,
 		data.ImportedProperty)

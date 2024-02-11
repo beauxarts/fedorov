@@ -3,8 +3,6 @@ package cli
 import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/scrinium/litres_integration"
-	"github.com/boggydigital/kvas"
-	"github.com/boggydigital/pasu"
 	"net/url"
 	"strconv"
 	"time"
@@ -16,8 +14,6 @@ func SyncHandler(u *url.URL) error {
 	return Sync(force)
 }
 func Sync(force bool) error {
-
-	syncStart := time.Now().UTC().Unix()
 
 	if err := GetLitResHistoryLog(); err != nil {
 		return err
@@ -31,7 +27,7 @@ func Sync(force bool) error {
 		return err
 	}
 
-	if err := ReduceLitResArtsDetails(syncStart); err != nil {
+	if err := ReduceLitResArtsDetails(); err != nil {
 		return err
 	}
 
@@ -47,7 +43,11 @@ func Sync(force bool) error {
 		return err
 	}
 
-	if err := DownloadLitRes(nil); err != nil {
+	if err := DownloadLitResBooks(); err != nil {
+		return err
+	}
+
+	if err := DownloadLitresContents(); err != nil {
 		return err
 	}
 
@@ -63,17 +63,13 @@ func Sync(force bool) error {
 		return err
 	}
 
-	absReduxDir, err := pasu.GetAbsRelDir(data.Redux)
+	rdx, err := data.NewReduxWriter(data.SyncCompletedProperty)
 	if err != nil {
 		return err
 	}
 
-	rdx, err := kvas.NewReduxWriter(absReduxDir, data.SyncCompletedProperty)
-	if err != nil {
-		return err
-	}
-
-	tnu := time.Now().UTC().Unix()
-
-	return rdx.ReplaceValues(data.SyncCompletedProperty, data.SyncCompletedProperty, strconv.FormatInt(tnu, 10))
+	return rdx.ReplaceValues(
+		data.SyncCompletedProperty,
+		data.SyncCompletedProperty,
+		strconv.FormatInt(time.Now().UTC().Unix(), 10))
 }

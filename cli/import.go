@@ -62,12 +62,7 @@ func Import() error {
 	ia := nod.Begin("importing books...")
 	defer ia.End()
 
-	absReduxDir, err := pasu.GetAbsRelDir(data.Redux)
-	if err != nil {
-		return ia.EndWithError(err)
-	}
-
-	rdx, err := kvas.NewReduxWriter(absReduxDir, data.ReduxProperties()...)
+	rdx, err := data.NewReduxWriter(data.ReduxProperties()...)
 	if err != nil {
 		return ia.EndWithError(err)
 	}

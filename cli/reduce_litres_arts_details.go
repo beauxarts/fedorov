@@ -13,10 +13,10 @@ import (
 func ReduceLitResArtsDetailsHandler(u *url.URL) error {
 
 	//TODO: add vangogh style since-hours-ago
-	return ReduceLitResArtsDetails(0)
+	return ReduceLitResArtsDetails()
 }
 
-func ReduceLitResArtsDetails(since int64) error {
+func ReduceLitResArtsDetails() error {
 
 	rlaa := nod.NewProgress("reducing arts details...")
 	defer rlaa.End()
@@ -26,12 +26,7 @@ func ReduceLitResArtsDetails(since int64) error {
 		return rlaa.EndWithError(err)
 	}
 
-	var ids []string
-	if since > 0 {
-		ids = atr.ModifiedAfter(since, false)
-	} else {
-		ids = atr.Keys()
-	}
+	ids := atr.Keys()
 
 	rlaa.TotalInt(len(ids))
 

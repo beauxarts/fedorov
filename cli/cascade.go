@@ -4,7 +4,6 @@ import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pasu"
 	"net/url"
 )
 
@@ -19,12 +18,7 @@ func Cascade() error {
 
 	props := []string{data.TitleProperty, data.BookCompletedProperty}
 
-	absReduxDir, err := pasu.GetAbsRelDir(data.Redux)
-	if err != nil {
-		return ca.EndWithError(err)
-	}
-
-	rdx, err := kvas.NewReduxWriter(absReduxDir, props...)
+	rdx, err := data.NewReduxWriter(props...)
 	if err != nil {
 		return ca.EndWithError(err)
 	}

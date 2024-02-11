@@ -6,7 +6,6 @@ import (
 	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/coost"
 	"github.com/boggydigital/dolo"
-	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/pasu"
 	"net/url"
@@ -33,26 +32,21 @@ var skipFormatDownloads = map[string]bool{
 	data.FormatMP3:     true,
 }
 
-func DownloadLitResHandler(u *url.URL) error {
+func DownloadLitResBooksHandler(u *url.URL) error {
 	var ids []string
 	if idstr := u.Query().Get("id"); idstr != "" {
 		ids = strings.Split(idstr, ",")
 	}
 
-	return DownloadLitRes(ids)
+	return DownloadLitResBooks(ids...)
 }
 
-func DownloadLitRes(ids []string) error {
+func DownloadLitResBooks(ids ...string) error {
 
 	da := nod.NewProgress("downloading LitRes books...")
 	defer da.End()
 
-	absReduxDir, err := pasu.GetAbsRelDir(data.Redux)
-	if err != nil {
-		return da.EndWithError(err)
-	}
-
-	rdx, err := kvas.NewReduxReader(absReduxDir,
+	rdx, err := data.NewReduxReader(
 		data.ArtsHistoryOrderProperty,
 		data.TitleProperty,
 		//data.AuthorsProperty,
