@@ -12,11 +12,10 @@ import (
 
 func SyncHandler(u *url.URL) error {
 	force := u.Query().Has("force")
-	wu := u.Query().Get("webhook-url")
 
-	return Sync(wu, force)
+	return Sync(force)
 }
-func Sync(webhookUrl string, force bool) error {
+func Sync(force bool) error {
 
 	syncStart := time.Now().UTC().Unix()
 
@@ -40,10 +39,7 @@ func Sync(webhookUrl string, force bool) error {
 		return err
 	}
 
-	// reduce authors
-
 	// get series
-	// reduce series
 
 	if err := Cascade(); err != nil {
 		return err
@@ -62,10 +58,6 @@ func Sync(webhookUrl string, force bool) error {
 	}
 
 	if err := Backup(); err != nil {
-		return err
-	}
-
-	if err := PostCompletion(webhookUrl); err != nil {
 		return err
 	}
 

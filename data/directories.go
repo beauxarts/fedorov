@@ -54,12 +54,20 @@ func AbsDataTypeDir(stringer fmt.Stringer) (string, error) {
 	return filepath.Join(absMetadataDir, stringer.String()), nil
 }
 
-func AbsArtsTypeDir(at litres_integration.ArtsType) (string, error) {
+func absStringerDir(stringer fmt.Stringer) (string, error) {
 	absMetadataDir, err := pasu.GetAbsDir(Metadata)
 	if err != nil {
 		return "", err
 	}
-	return filepath.Join(absMetadataDir, at.String()), nil
+	return filepath.Join(absMetadataDir, stringer.String()), nil
+}
+
+func AbsArtsTypeDir(at litres_integration.ArtsType) (string, error) {
+	return absStringerDir(at)
+}
+
+func AbsAuthorTypeDir(at litres_integration.AuthorType) (string, error) {
+	return absStringerDir(at)
 }
 
 func AbsFileDownloadPath(id int64, file string) (string, error) {

@@ -42,7 +42,7 @@ func GetLitResArtsHandler(u *url.URL) error {
 
 func GetLitResArts(artsTypes []litres_integration.ArtsType, force bool, ids ...string) error {
 
-	glaa := nod.NewProgress("getting litres-arts...")
+	glaa := nod.NewProgress("getting litres arts...")
 	defer glaa.End()
 
 	absReduxDir, err := pasu.GetAbsRelDir(data.Redux)
