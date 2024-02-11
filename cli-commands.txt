@@ -33,6 +33,9 @@ get-litres-arts
 
 get-litres-authors
     id^&
+    author-type*&={author-types^}
+    all-author-types
+    force
 
 get-litres-covers
     id^&
