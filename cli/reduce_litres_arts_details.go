@@ -3,7 +3,9 @@ package cli
 import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/scrinium/litres_integration"
+	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
+	"github.com/boggydigital/pasu"
 	"net/url"
 	"strconv"
 )
@@ -49,10 +51,42 @@ func ReduceLitResArtsDetails(since int64) error {
 			propertyIdValues[p][id] = getArtsDetailsPropertyValues(ad, p)
 		}
 
+		for p, iv := range getDetailedPropertyValues(ad) {
+			for i, v := range iv {
+				propertyIdValues[p][i] = v
+			}
+		}
+
 		rlaa.Increment()
 	}
 
 	rlaa.EndWithResult("done")
+
+	wra := nod.NewProgress("writing redux values...")
+	defer wra.End()
+
+	reduxDir, err := pasu.GetAbsRelDir(data.Redux)
+	if err != nil {
+		return wra.EndWithError(err)
+	}
+
+	rdx, err := kvas.NewReduxWriter(reduxDir, data.ReduxProperties()...)
+	if err != nil {
+		return wra.EndWithError(err)
+	}
+
+	wra.TotalInt(len(propertyIdValues))
+
+	for p, idValues := range propertyIdValues {
+
+		if err := rdx.BatchReplaceValues(p, idValues); err != nil {
+			return wra.EndWithError(err)
+		}
+
+		wra.Increment()
+	}
+
+	wra.EndWithResult("done")
 
 	return nil
 }
@@ -63,6 +97,68 @@ func fmtFloat(f float64) string {
 
 func fmtInt(i int) string {
 	return strconv.FormatInt(int64(i), 10)
+}
+
+func getDetailedPropertyValues(ad *litres_integration.ArtsDetails) (pkv map[string]map[string][]string) {
+
+	properties := []string{
+		data.PersonFullNameProperty,
+		data.PersonUrlProperty,
+		data.SeriesNameProperty,
+		data.SeriesArtsCountProperty,
+		data.SeriesUrlProperty,
+		data.GenreNameProperty,
+		data.GenreUrlProperty,
+		data.TagNameProperty,
+		data.TagUrlProperty,
+		data.PublisherNameProperty,
+		data.PublisherUrlProperty,
+		data.RightholderNameProperty,
+		data.RightholderUrlProperty,
+	}
+	pkv = make(map[string]map[string][]string)
+	for _, p := range properties {
+		pkv[p] = make(map[string][]string)
+	}
+
+	for _, person := range ad.Payload.Data.Persons {
+		pid := fmtInt(person.Id)
+		pkv[data.PersonFullNameProperty][pid] = []string{person.FullName}
+		pkv[data.PersonUrlProperty][pid] = []string{person.Url}
+	}
+
+	for _, series := range ad.Payload.Data.Series {
+		sid := fmtInt(series.Id)
+		pkv[data.SeriesNameProperty][sid] = []string{series.Name}
+		pkv[data.SeriesUrlProperty][sid] = []string{series.Url}
+		pkv[data.SeriesArtsCountProperty][sid] = []string{fmtInt(series.ArtsCount)}
+	}
+
+	for _, genre := range ad.Payload.Data.Genres {
+		gid := fmtInt(genre.Id)
+		pkv[data.GenreNameProperty][gid] = []string{genre.Name}
+		pkv[data.GenreUrlProperty][gid] = []string{genre.Url}
+	}
+
+	for _, tag := range ad.Payload.Data.Tags {
+		tid := fmtInt(tag.Id)
+		pkv[data.GenreNameProperty][tid] = []string{tag.Name}
+		pkv[data.GenreUrlProperty][tid] = []string{tag.Url}
+	}
+
+	if pub := ad.Payload.Data.Publisher; pub != nil {
+		pid := fmtInt(pub.Id)
+		pkv[data.PublisherNameProperty][pid] = []string{pub.Name}
+		pkv[data.GenreUrlProperty][pid] = []string{pub.Url}
+	}
+
+	for _, rh := range ad.Payload.Data.Rightholders {
+		rid := fmtInt(rh.Id)
+		pkv[data.RightholderNameProperty][rid] = []string{rh.Name}
+		pkv[data.RightholderUrlProperty][rid] = []string{rh.Url}
+	}
+
+	return pkv
 }
 
 func getArtsDetailsPropertyValues(ad *litres_integration.ArtsDetails, property string) (values []string) {
