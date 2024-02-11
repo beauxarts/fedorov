@@ -24,6 +24,7 @@ download-litres-books
 
 download-litres-covers
     id^&
+    force-imported
 
 export
     id^&

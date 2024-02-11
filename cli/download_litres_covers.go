@@ -18,12 +18,14 @@ func DownloadLitResCoversHandler(u *url.URL) error {
 		ids = strings.Split(idstr, ",")
 	}
 
-	return DownloadLitResCovers(ids, false)
+	forceImported := u.Query().Has("force-imported")
+
+	return DownloadLitResCovers(ids, forceImported)
 }
 
 func DownloadLitResCovers(ids []string, forceImported bool) error {
 
-	gca := nod.NewProgress("fetching LitRes covers...")
+	gca := nod.NewProgress("downloading LitRes covers...")
 	defer gca.End()
 
 	rdx, err := data.NewReduxReader(
@@ -37,12 +39,14 @@ func DownloadLitResCovers(ids []string, forceImported bool) error {
 		var ok bool
 		ids, ok = rdx.GetAllValues(data.ArtsHistoryOrderProperty, data.ArtsHistoryOrderProperty)
 		if !ok {
-			err = errors.New("no my books found")
+			err = errors.New("no arts history order found")
 			return gca.EndWithError(err)
 		}
 	}
 
-	gca.TotalInt(len(ids))
+	sizes := litres_integration.AllCoverSizes()
+
+	gca.TotalInt(len(ids) * len(sizes))
 
 	dc := dolo.DefaultClient
 
@@ -61,14 +65,8 @@ func DownloadLitResCovers(ids []string, forceImported bool) error {
 		idn, err := strconv.ParseInt(id, 10, 64)
 		if err != nil {
 			gca.Error(err)
-			gca.Increment()
+			gca.ProgressInt(len(sizes))
 			continue
-		}
-
-		sizes := []litres_integration.CoverSize{
-			litres_integration.Size330,
-			litres_integration.Size415,
-			litres_integration.SizeMax,
 		}
 
 		for _, size := range sizes {
@@ -76,17 +74,11 @@ func DownloadLitResCovers(ids []string, forceImported bool) error {
 			cu := litres_integration.CoverUrl(idn, size)
 
 			if err := dc.Download(cu, nil, absCoversDir, fn); err != nil {
-				//attempting partner url if default url fails
-				pcu := litres_integration.PartnerCoverUrl(idn, size)
-				if err := dc.Download(pcu, nil, absCoversDir, fn); err != nil {
-					gca.Error(err)
-					gca.Increment()
-					continue
-				}
+				gca.Error(err)
 			}
-		}
 
-		gca.Increment()
+			gca.Increment()
+		}
 	}
 
 	gca.EndWithResult("done")

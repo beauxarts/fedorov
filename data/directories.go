@@ -95,12 +95,19 @@ func AbsCoverImagePath(id int64, size litres_integration.CoverSize) (string, err
 }
 
 func RelCoverFilename(id string, size litres_integration.CoverSize) string {
+	fn := ""
 	switch size {
 	case litres_integration.SizeMax:
-		return id + DefaultCoverExt
+		fn = id + DefaultCoverExt
 	default:
-		return fmt.Sprintf("%s_%d%s", id, size, DefaultCoverExt)
+		fn = fmt.Sprintf("%s%s%s", id, size, DefaultCoverExt)
 	}
+
+	if len(fn) > 0 {
+		fn = filepath.Join(fn[:2], fn)
+	}
+
+	return fn
 }
 
 func AbsCookiesFilename() (string, error) {
