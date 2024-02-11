@@ -31,11 +31,13 @@ var AllAbsDirs = []pasu.AbsDir{
 }
 
 const (
-	Redux pasu.RelDir = "_redux"
+	Redux    pasu.RelDir = "_redux"
+	Contents pasu.RelDir = "contents"
 )
 
 var RelToAbsDirs = map[pasu.RelDir]pasu.AbsDir{
-	Redux: Metadata,
+	Redux:    Metadata,
+	Contents: Metadata,
 }
 
 const (

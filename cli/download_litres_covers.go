@@ -12,16 +12,16 @@ import (
 	"strings"
 )
 
-func GetLitResCoversHandler(u *url.URL) error {
+func DownloadLitResCoversHandler(u *url.URL) error {
 	var ids []string
 	if idstr := u.Query().Get("id"); idstr != "" {
 		ids = strings.Split(idstr, ",")
 	}
 
-	return GetLitResCovers(ids, false)
+	return DownloadLitResCovers(ids, false)
 }
 
-func GetLitResCovers(ids []string, forceImported bool) error {
+func DownloadLitResCovers(ids []string, forceImported bool) error {
 
 	gca := nod.NewProgress("fetching LitRes covers...")
 	defer gca.End()

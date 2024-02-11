@@ -280,7 +280,7 @@ func importLitresData(id string, hc *http.Client) (map[string]map[string][]strin
 	//	return nil, ilda.EndWithError(err)
 	//}
 	//
-	//if err := GetLitResCovers([]string{id}, true); err != nil {
+	//if err := DownloadLitResCovers([]string{id}, true); err != nil {
 	//	return nil, ilda.EndWithError(err)
 	//}
 	//

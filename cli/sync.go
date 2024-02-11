@@ -39,6 +39,10 @@ func Sync(force bool) error {
 		return err
 	}
 
+	if err := GetLitresContents(force); err != nil {
+		return err
+	}
+
 	if err := Cascade(); err != nil {
 		return err
 	}
@@ -47,11 +51,7 @@ func Sync(force bool) error {
 		return err
 	}
 
-	if err := DownloadLitresContents(); err != nil {
-		return err
-	}
-
-	if err := GetLitResCovers(nil, false); err != nil {
+	if err := DownloadLitResCovers(nil, false); err != nil {
 		return err
 	}
 

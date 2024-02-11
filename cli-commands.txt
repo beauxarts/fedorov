@@ -22,7 +22,7 @@ dehydrate
 download-litres-books
     id^&
 
-download-litres-contents
+download-litres-covers
     id^&
 
 export
@@ -40,8 +40,9 @@ get-litres-authors
     all-author-types
     force
 
-get-litres-covers
+get-litres-contents
     id^&
+    force
 
 get-litres-history-log
 
