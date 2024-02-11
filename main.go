@@ -87,27 +87,6 @@ func main() {
 		os.Exit(1)
 	}
 
-	//atr, err := data.NewArtsReader(litres_integration.ArtsTypeDetails)
-	//if err != nil {
-	//	panic(err)
-	//}
-	//
-	//for _, id := range atr.Keys() {
-	//
-	//	ad, err := atr.ArtsDetails(id)
-	//	if err != nil {
-	//		panic(err)
-	//	}
-	//
-	//	at := ad.Payload.Data.ArtType
-	//	if at == 0 || at == 1 || at == 4 {
-	//		continue
-	//	}
-	//
-	//	fmt.Println(id, ad.Payload.Data.Title, ad.Payload.Data.ArtType)
-	//
-	//}
-
 	if err := defs.Serve(os.Args[1:]); err != nil {
 		_ = ns.EndWithError(err)
 		os.Exit(1)
