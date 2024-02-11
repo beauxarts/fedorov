@@ -8,6 +8,8 @@ import (
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/pasu"
 	"net/url"
+	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 )
@@ -19,11 +21,12 @@ func DownloadLitResCoversHandler(u *url.URL) error {
 	}
 
 	forceImported := u.Query().Has("force-imported")
+	skipExisting := u.Query().Has("skip-existing")
 
-	return DownloadLitResCovers(ids, forceImported)
+	return DownloadLitResCovers(skipExisting, forceImported, ids...)
 }
 
-func DownloadLitResCovers(ids []string, forceImported bool) error {
+func DownloadLitResCovers(skipExisting, forceImported bool, ids ...string) error {
 
 	gca := nod.NewProgress("downloading LitRes covers...")
 	defer gca.End()
@@ -70,10 +73,18 @@ func DownloadLitResCovers(ids []string, forceImported bool) error {
 		}
 
 		for _, size := range sizes {
-			fn := data.RelCoverFilename(id, size)
+			relFn := data.RelCoverFilename(id, size)
 			cu := litres_integration.CoverUrl(idn, size)
 
-			if err := dc.Download(cu, nil, absCoversDir, fn); err != nil {
+			if skipExisting {
+				absFn := filepath.Join(absCoversDir, relFn)
+				if _, err := os.Stat(absFn); err == nil {
+					gca.Increment()
+					continue
+				}
+			}
+
+			if err := dc.Download(cu, nil, absCoversDir, relFn); err != nil {
 				gca.Error(err)
 			}
 

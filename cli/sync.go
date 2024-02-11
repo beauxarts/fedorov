@@ -51,7 +51,7 @@ func Sync(force bool) error {
 		return err
 	}
 
-	if err := DownloadLitResCovers(nil, false); err != nil {
+	if err := DownloadLitResCovers(true, false); err != nil {
 		return err
 	}
 
