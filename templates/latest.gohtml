@@ -1,0 +1,49 @@
+{{define "latest"}}
+    <!doctype html>
+    <html lang="en">
+    <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <meta name='color-scheme' content='dark light'>
+        <title>Latest books</title>
+        {{template "css-base-themes"}}
+        <style>
+            * {
+                font-family: sans-serif;
+            }
+
+            body {
+                margin: var(--large)
+            }
+
+            ul {
+                margin: 0;
+                padding: 0;
+                list-style: none;
+                display: flex;
+                flex-direction: column;
+                gap: var(--normal);
+            }
+
+            a {
+                text-decoration: none;
+                color: var(--color-light-green)
+            }
+
+        </style>
+    </head>
+    <body>
+    <ul class="books">
+    {{range $book := .}}
+        <li>
+            <a href="/new_book?id={{.Id}}">
+                <span class="title">"{{.Title}}"</span>
+                <span class="authors">
+                    {{range $author := .Authors}}{{$author}}&nbsp;{{end}}
+                </span>
+            </a>
+        </li>
+    {{end}}
+    </ul>
+    </body>
+{{end}}

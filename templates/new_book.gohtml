@@ -1,0 +1,50 @@
+{{define "new_book"}}
+    <!doctype html>
+    <html lang="en">
+    <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <meta name='color-scheme' content='dark light'>
+        <title>Latest books</title>
+        {{template "css-base-themes"}}
+        <style>
+            * {
+                font-family: sans-serif;
+            }
+
+            body {
+                margin: var(--large)
+            }
+
+            ul {
+                margin: 0;
+                padding: 0;
+                list-style: none;
+                display: flex;
+                flex-direction: column;
+                gap: var(--normal);
+            }
+
+            a {
+                text-decoration: none;
+                color: var(--color-light-green)
+            }
+
+            .downloads {
+                margin-block: var(--large)
+            }
+
+        </style>
+    </head>
+    <body>
+    <h1>{{.Title}}</h1>
+    <h2>{{range $author := .Authors}}{{$author}}&nbsp;{{end}}</h2>
+
+    <ul class="downloads">
+        {{range $download := .Downloads}}
+            <li><a href="/file?id={{.Id}}&file={{.Filename}}">{{.Description}}</a></li>
+        {{end}}
+    </ul>
+
+    </body>
+{{end}}
