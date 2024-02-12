@@ -1,21 +1,32 @@
 package clo_delegates
 
 import (
+	"fmt"
 	"github.com/beauxarts/scrinium/litres_integration"
 )
 
 var Values = map[string]func() []string{
-	"arts-types": allArtsTypesStr,
+	"arts-types":   allArtsTypesStrings,
+	"author-types": allAuthorTypesStrings,
+	"series-types": allSeriesTypesStrings,
 }
 
-func artsTypeStr(artsTypes ...litres_integration.ArtsType) []string {
-	atStr := make([]string, 0, len(artsTypes))
-	for _, at := range artsTypes {
-		atStr = append(atStr, at.String())
+func toStrings[T fmt.Stringer](stringers ...T) []string {
+	strings := make([]string, 0, len(stringers))
+	for _, s := range stringers {
+		strings = append(strings, s.String())
 	}
-	return atStr
+	return strings
 }
 
-func allArtsTypesStr() []string {
-	return artsTypeStr(litres_integration.AllArtsTypes()...)
+func allArtsTypesStrings() []string {
+	return toStrings(litres_integration.AllArtsTypes()...)
+}
+
+func allAuthorTypesStrings() []string {
+	return toStrings(litres_integration.AllAuthorTypes()...)
+}
+
+func allSeriesTypesStrings() []string {
+	return toStrings(litres_integration.AllSeriesTypes()...)
 }

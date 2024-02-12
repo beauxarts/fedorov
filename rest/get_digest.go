@@ -23,11 +23,11 @@ func GetDigest(w http.ResponseWriter, r *http.Request) {
 	switch property {
 	case data.SortProperty:
 		values = []string{
-			data.TitleProperty,
-			data.DateCreatedProperty,
-			data.DateTranslatedProperty,
-			data.DateReleasedProperty,
-			data.MyBooksOrderProperty}
+			//data.TitleProperty,
+			//data.DateCreatedProperty,
+			//data.DateTranslatedProperty,
+			//data.DateReleasedProperty,
+			data.ArtsHistoryOrderProperty}
 	case data.DescendingProperty:
 		values = []string{
 			"true",

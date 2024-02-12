@@ -1,7 +1,6 @@
 package cli
 
 import (
-	"errors"
 	"fmt"
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/scrinium/litres_integration"
@@ -9,7 +8,7 @@ import (
 	"github.com/boggydigital/coost"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pathology"
+	"github.com/boggydigital/pasu"
 	"github.com/boggydigital/wits"
 	"io"
 	"net/http"
@@ -63,12 +62,7 @@ func Import() error {
 	ia := nod.Begin("importing books...")
 	defer ia.End()
 
-	absReduxDir, err := pathology.GetAbsRelDir(data.Redux)
-	if err != nil {
-		return ia.EndWithError(err)
-	}
-
-	rdx, err := kvas.NewReduxWriter(absReduxDir, data.ReduxProperties()...)
+	rdx, err := data.NewReduxWriter(data.ReduxProperties()...)
 	if err != nil {
 		return ia.EndWithError(err)
 	}
@@ -104,7 +98,7 @@ func Import() error {
 		return ia.EndWithError(err)
 	}
 
-	absInputDir, err := pathology.GetAbsDir(data.Input)
+	absInputDir, err := pasu.GetAbsDir(data.Input)
 	if err != nil {
 		return ia.EndWithError(err)
 	}
@@ -121,28 +115,30 @@ func Import() error {
 			switch ds[0] {
 			case LitResDataSource:
 
-				if hrefs, ok := skv[idstr][data.HrefProperty]; ok {
-					if err := rdx.ReplaceValues(data.HrefProperty, idstr, hrefs...); err != nil {
-						return ia.EndWithError(err)
-					}
-				} else {
-					return ia.EndWithError(errors.New("href is required for litres data import"))
-				}
+				// TODO: this would need to be rewritten to support arts
 
-				if rdx, err := importLitresData(idstr, hc); err != nil {
-					return ia.EndWithError(err)
-				} else {
-					// rdx -> skv
-					for p := range rdx {
-						if p == data.DownloadLinksProperty {
-							continue
-						}
-						if len(rdx[p][idstr]) == 0 {
-							continue
-						}
-						skv[idstr][p] = rdx[p][idstr]
-					}
-				}
+				//if hrefs, ok := skv[idstr][data.HrefProperty]; ok {
+				//	if err := rdx.ReplaceValues(data.HrefProperty, idstr, hrefs...); err != nil {
+				//		return ia.EndWithError(err)
+				//	}
+				//} else {
+				//	return ia.EndWithError(errors.New("href is required for litres data import"))
+				//}
+				//
+				//if rdx, err := importLitresData(idstr, hc); err != nil {
+				//	return ia.EndWithError(err)
+				//} else {
+				//	// rdx -> skv
+				//	for p := range rdx {
+				//		if p == data.DownloadLinksProperty {
+				//			continue
+				//		}
+				//		if len(rdx[p][idstr]) == 0 {
+				//			continue
+				//		}
+				//		skv[idstr][p] = rdx[p][idstr]
+				//	}
+				//}
 
 			case LiveLibDataSource:
 
@@ -185,43 +181,43 @@ func Import() error {
 
 			// move download files into destination folder and infer book type
 
-			for _, link := range skv[idstr][data.DownloadLinksProperty] {
-
-				if len(skv[idstr][data.BookTypeProperty]) == 0 {
-					skv[idstr][data.BookTypeProperty] = []string{data.FormatBookType(data.LinkFormat(link))}
-				}
-
-				_, relSrcFilename := filepath.Split(link)
-				if relSrcFilename == "" {
-					continue
-				}
-				absSrcFilename := filepath.Join(absInputDir, relSrcFilename)
-				if _, err := os.Stat(absSrcFilename); err == nil {
-					absDstFilename, err := data.AbsFileDownloadPath(id, relSrcFilename)
-					if err != nil {
-						return ia.EndWithError(err)
-					}
-
-					absDstDir, _ := filepath.Split(absDstFilename)
-					if _, err := os.Stat(absDstDir); os.IsNotExist(err) {
-						if err := os.MkdirAll(absDstDir, 0755); err != nil {
-							return ia.EndWithError(err)
-						}
-					}
-
-					if err := os.Rename(absSrcFilename, absDstFilename); err != nil {
-						if strings.Contains(err.Error(), "invalid cross-device link") {
-							if err := copyDelete(absSrcFilename, absDstFilename); err != nil {
-								return ia.EndWithError(err)
-							}
-						} else {
-							return ia.EndWithError(err)
-						}
-					}
-				} else {
-					nod.Log(err.Error())
-				}
-			}
+			//for _, link := range skv[idstr][data.DownloadLinksProperty] {
+			//
+			//	if len(skv[idstr][data.BookTypeProperty]) == 0 {
+			//		skv[idstr][data.BookTypeProperty] = []string{data.FormatBookType(data.LinkFormat(link))}
+			//	}
+			//
+			//	_, relSrcFilename := filepath.Split(link)
+			//	if relSrcFilename == "" {
+			//		continue
+			//	}
+			//	absSrcFilename := filepath.Join(absInputDir, relSrcFilename)
+			//	if _, err := os.Stat(absSrcFilename); err == nil {
+			//		absDstFilename, err := data.AbsFileDownloadPath(id, relSrcFilename)
+			//		if err != nil {
+			//			return ia.EndWithError(err)
+			//		}
+			//
+			//		absDstDir, _ := filepath.Split(absDstFilename)
+			//		if _, err := os.Stat(absDstDir); os.IsNotExist(err) {
+			//			if err := os.MkdirAll(absDstDir, 0755); err != nil {
+			//				return ia.EndWithError(err)
+			//			}
+			//		}
+			//
+			//		if err := os.Rename(absSrcFilename, absDstFilename); err != nil {
+			//			if strings.Contains(err.Error(), "invalid cross-device link") {
+			//				if err := copyDelete(absSrcFilename, absDstFilename); err != nil {
+			//					return ia.EndWithError(err)
+			//				}
+			//			} else {
+			//				return ia.EndWithError(err)
+			//			}
+			//		}
+			//	} else {
+			//		nod.Log(err.Error())
+			//	}
+			//}
 		}
 
 		// replace redux values with imported data
@@ -235,7 +231,7 @@ func Import() error {
 		}
 
 		// add imported book id to my books
-		if err := rdx.AddValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty, idstr); err != nil {
+		if err := rdx.AddValues(data.ArtsHistoryOrderProperty, data.ArtsHistoryOrderProperty, idstr); err != nil {
 			return ia.EndWithError(err)
 		}
 
@@ -245,7 +241,7 @@ func Import() error {
 		}
 	}
 
-	absImportedDir, err := pathology.GetAbsDir(data.Imported)
+	absImportedDir, err := pasu.GetAbsDir(data.Imported)
 	if err != nil {
 		return ia.EndWithError(err)
 	}
@@ -284,7 +280,7 @@ func importLitresData(id string, hc *http.Client) (map[string]map[string][]strin
 	//	return nil, ilda.EndWithError(err)
 	//}
 	//
-	//if err := GetLitResCovers([]string{id}, true); err != nil {
+	//if err := DownloadLitResCovers([]string{id}, true); err != nil {
 	//	return nil, ilda.EndWithError(err)
 	//}
 	//

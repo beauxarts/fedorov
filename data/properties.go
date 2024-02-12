@@ -1,51 +1,100 @@
 package data
 
-import (
-	"github.com/beauxarts/scrinium/litres_integration"
-	"github.com/beauxarts/scrinium/livelib_integration"
-)
-
 const (
 	IdProperty = "id"
-	//reduced from the list
-	MyBooksIdsProperty = "my-books-ids"
-	HrefProperty       = "href"
-	// reduced from detail page
-	TitleProperty             = "title"
-	AuthorsProperty           = "authors"
-	CoauthorsProperty         = "coauthors"
-	DescriptionProperty       = "description"
-	DownloadLinksProperty     = "download-links"
-	DownloadTitlesProperty    = "download-titles"
-	SequenceNameProperty      = "sequence-name"
-	SequenceNumberProperty    = "sequence-number"
-	DateReleasedProperty      = "date-released"
-	DateTranslatedProperty    = "date-translated"
-	DateCreatedProperty       = "date-created"
-	AgeRatingProperty         = "age-rating"
-	VolumeProperty            = "volume"
-	DurationProperty          = "duration"
-	ISBNProperty              = "isbn"
-	TranslatorsProperty       = "translators"
-	ReadersProperty           = "readers"
-	IllustratorsProperty      = "illustrators"
-	CopyrightHoldersProperty  = "copyright-holders"
-	ComposersProperty         = "composers"
-	AdapterProperty           = "adapter"
-	PerformersProperty        = "performers"
-	DirectorsProperty         = "directors"
-	SoundDirectorsProperty    = "sound-directors"
-	PublishersProperty        = "publishers"
-	TotalSizeProperty         = "total-size"
-	TotalPagesProperty        = "total-pages"
-	MissingDetailsIdsProperty = "missing-details-ids"
-	BookTypeProperty          = "book-type"
-	GenresProperty            = "genres"
-	TagsProperty              = "tags"
-	LocalTagsProperty         = "local-tags"
-	BookCompletedProperty     = "book-completed"
-	ImageProperty             = "image"
-	LanguageProperty          = "language"
+
+	// arts history
+	ArtsHistoryOrderProperty     = "arts-history-order"
+	ArtsHistoryEventTimeProperty = "arts-history-event-time"
+
+	// arts details properties
+	CoverUrlProperty               = "cover-url"
+	TitleProperty                  = "title"
+	ArtTypeProperty                = "art-type"
+	PriceProperty                  = "price"
+	MinAgeProperty                 = "min-age"
+	SymbolsCountProperty           = "symbols-count"
+	LastUpdatedAtProperty          = "last-updated-at"
+	LastReleasedAtProperty         = "last-released-at"
+	AvailableFromProperty          = "available-from"
+	PersonsIdsProperty             = "persons-ids"
+	PersonsRolesProperty           = "persons-roles"
+	PersonFullNameProperty         = "person-full-name"
+	PersonUrlProperty              = "person-url"
+	RatedAvgProperty               = "rated-avg"
+	RatedTotalCountProperty        = "rated-total-count"
+	LinkedArtsIdsProperty          = "linked-arts-ids"
+	SeriesIdProperty               = "series-ids"
+	SeriesArtOrderProperty         = "series-art-order"
+	SeriesArtsCountProperty        = "series-arts-count"
+	SeriesNameProperty             = "series-name"
+	SeriesUrlProperty              = "series-url"
+	DateWrittenAtProperty          = "date-written-at"
+	AlternativeVersionsProperty    = "alternative-versions"
+	HTMLAnnotationProperty         = "html-annotation"
+	HTMLAnnotationLitResProperty   = "html-annotation-litres"
+	FirstTimeSaleAtProperty        = "first-time-sale-at"
+	LiveLibRatedAvgProperty        = "livelib-rated-avg"
+	LiveLibRatedTotalCountProperty = "livelib-rated-total-count"
+	GenresIdsProperty              = "genres-ids"
+	GenreNameProperty              = "genre-name"
+	GenreUrlProperty               = "genre-url"
+	TagsIdsProperty                = "tags-ids"
+	TagNameProperty                = "tag-name"
+	TagUrlProperty                 = "tag-url"
+	ISBNProperty                   = "isbn"
+	PublicationDateProperty        = "publication-date"
+	YouTubeVideosProperty          = "youtube-videos"
+	ContentsUrlProperty            = "contents-url"
+	RegisteredAtProperty           = "registered-at"
+	TranslatedAtProperty           = "translated-at"
+	CurrentPagesOrSecondsProperty  = "current-pages-or-seconds"
+	PublisherIdProperty            = "publisher-id"
+	PublisherNameProperty          = "publisher-name"
+	PublisherUrlProperty           = "publisher-url"
+	RightholdersIdsProperty        = "rightholders-ids"
+	RightholderNameProperty        = "rightholder-name"
+	RightholderUrlProperty         = "rightholder-url"
+
+	// arts files properties
+
+	//legacy reduced from detail page
+	LegacyAuthorsProperty           = "authors"
+	LegacyCoauthorsProperty         = "coauthors"
+	LegacyDescriptionProperty       = "description"
+	LegacyDownloadLinksProperty     = "download-links"
+	LegacyDownloadTitlesProperty    = "download-titles"
+	LegacySequenceNameProperty      = "sequence-name"
+	LegacySequenceNumberProperty    = "sequence-number"
+	LegacyDateReleasedProperty      = "date-released"
+	LegacyDateTranslatedProperty    = "date-translated"
+	LegacyDateCreatedProperty       = "date-created"
+	LegacyAgeRatingProperty         = "age-rating"
+	LegacyVolumeProperty            = "volume"
+	LegacyDurationProperty          = "duration"
+	LegacyISBNProperty              = "isbn"
+	LegacyTranslatorsProperty       = "translators"
+	LegacyReadersProperty           = "readers"
+	LegacyIllustratorsProperty      = "illustrators"
+	LegacyCopyrightHoldersProperty  = "copyright-holders"
+	LegacyComposersProperty         = "composers"
+	LegacyAdapterProperty           = "adapter"
+	LegacyPerformersProperty        = "performers"
+	LegacyDirectorsProperty         = "directors"
+	LegacySoundDirectorsProperty    = "sound-directors"
+	LegacyPublishersProperty        = "publishers"
+	LegacyTotalSizeProperty         = "total-size"
+	LegacyTotalPagesProperty        = "total-pages"
+	LegacyMissingDetailsIdsProperty = "missing-details-ids"
+	LegacyBookTypeProperty          = "book-type"
+	LegacyGenresProperty            = "genres"
+	LegacyTagsProperty              = "tags"
+	LegacyImageProperty             = "image"
+	LegacyLanguageProperty          = "language"
+
+	// local properties
+	LocalTagsProperty     = "local-tags"
+	BookCompletedProperty = "book-completed"
 	// sorting
 	SortProperty       = "sort"
 	DescendingProperty = "desc"
@@ -54,8 +103,6 @@ const (
 	// imported
 	ImportedProperty   = "imported"
 	DataSourceProperty = "data-source"
-	// my-books-order
-	MyBooksOrderProperty = "my-books-order"
 	// dehydrated images
 	DehydratedListImageProperty         = "dehydrated-list-image"
 	DehydratedListImageModifiedProperty = "dehydrated-list-image-modified"
@@ -63,52 +110,107 @@ const (
 	DehydratedItemImageModifiedProperty = "dehydrated-item-image-modified"
 )
 
-func ReduxProperties() []string {
+func ArtsDetailsReduxProperties() []string {
 	return []string{
-		MyBooksIdsProperty,
-		HrefProperty,
+		CoverUrlProperty,
 		TitleProperty,
-		DescriptionProperty,
-		DownloadLinksProperty,
-		DownloadTitlesProperty,
-		AuthorsProperty,
-		CoauthorsProperty,
-		SequenceNameProperty,
-		SequenceNumberProperty,
-		DateReleasedProperty,
-		DateTranslatedProperty,
-		DateCreatedProperty,
-		AgeRatingProperty,
-		DurationProperty,
-		VolumeProperty,
+		ArtTypeProperty,
+		PriceProperty,
+		MinAgeProperty,
+		SymbolsCountProperty,
+		LastUpdatedAtProperty,
+		LastReleasedAtProperty,
+		AvailableFromProperty,
+		PersonsIdsProperty,
+		PersonsRolesProperty,
+		PersonFullNameProperty,
+		PersonUrlProperty,
+		RatedAvgProperty,
+		RatedTotalCountProperty,
+		LinkedArtsIdsProperty,
+		SeriesIdProperty,
+		SeriesArtOrderProperty,
+		SeriesArtsCountProperty,
+		SeriesNameProperty,
+		SeriesUrlProperty,
+		DateWrittenAtProperty,
+		AlternativeVersionsProperty,
+		HTMLAnnotationProperty,
+		HTMLAnnotationLitResProperty,
+		FirstTimeSaleAtProperty,
+		LiveLibRatedAvgProperty,
+		LiveLibRatedTotalCountProperty,
+		GenresIdsProperty,
+		GenreNameProperty,
+		GenreUrlProperty,
+		TagsIdsProperty,
+		TagNameProperty,
+		TagUrlProperty,
 		ISBNProperty,
-		TranslatorsProperty,
-		ReadersProperty,
-		IllustratorsProperty,
-		CopyrightHoldersProperty,
-		ComposersProperty,
-		AdapterProperty,
-		PerformersProperty,
-		DirectorsProperty,
-		SoundDirectorsProperty,
-		PublishersProperty,
-		TotalSizeProperty,
-		TotalPagesProperty,
-		MissingDetailsIdsProperty,
-		BookTypeProperty,
-		BookCompletedProperty,
-		ImageProperty,
-		GenresProperty,
-		TagsProperty,
-		LocalTagsProperty,
-		SyncCompletedProperty,
-		ImportedProperty,
-		DataSourceProperty,
-		MyBooksOrderProperty,
-		LanguageProperty,
-		DehydratedListImageProperty,
-		DehydratedItemImageProperty,
+		PublicationDateProperty,
+		YouTubeVideosProperty,
+		ContentsUrlProperty,
+		RegisteredAtProperty,
+		TranslatedAtProperty,
+		CurrentPagesOrSecondsProperty,
+		PublisherIdProperty,
+		PublisherNameProperty,
+		PublisherUrlProperty,
+		RightholdersIdsProperty,
+		RightholderNameProperty,
+		RightholderUrlProperty,
 	}
+}
+
+func LegacyReduxProperties() []string {
+	return []string{
+		LegacyAuthorsProperty,
+		LegacyCoauthorsProperty,
+		LegacyDescriptionProperty,
+		LegacyDownloadLinksProperty,
+		LegacyDownloadTitlesProperty,
+		LegacySequenceNameProperty,
+		LegacySequenceNumberProperty,
+		LegacyDateReleasedProperty,
+		LegacyDateTranslatedProperty,
+		LegacyDateCreatedProperty,
+		LegacyAgeRatingProperty,
+		LegacyVolumeProperty,
+		LegacyDurationProperty,
+		LegacyISBNProperty,
+		LegacyTranslatorsProperty,
+		LegacyReadersProperty,
+		LegacyIllustratorsProperty,
+		LegacyCopyrightHoldersProperty,
+		LegacyComposersProperty,
+		LegacyAdapterProperty,
+		LegacyPerformersProperty,
+		LegacyDirectorsProperty,
+		LegacySoundDirectorsProperty,
+		LegacyPublishersProperty,
+		LegacyTotalSizeProperty,
+		LegacyTotalPagesProperty,
+		LegacyMissingDetailsIdsProperty,
+		LegacyBookTypeProperty,
+		LegacyGenresProperty,
+		LegacyTagsProperty,
+		LegacyImageProperty,
+		LegacyLanguageProperty,
+	}
+}
+
+func ReduxProperties() []string {
+	return append(ArtsDetailsReduxProperties(),
+		[]string{
+			ArtsHistoryOrderProperty,
+			ArtsHistoryEventTimeProperty,
+			//
+			SyncCompletedProperty,
+			ImportedProperty,
+			DataSourceProperty,
+			DehydratedListImageProperty,
+			DehydratedItemImageProperty,
+		}...)
 }
 
 func ImportedProperties() []string {
@@ -118,83 +220,20 @@ func ImportedProperties() []string {
 	}
 }
 
-func AnyTextProperties() []string {
-	return []string{
-		TitleProperty,
-		AuthorsProperty,
-		CoauthorsProperty,
-		DescriptionProperty,
-		SequenceNameProperty,
-		TranslatorsProperty,
-		ReadersProperty,
-		IllustratorsProperty,
-		CopyrightHoldersProperty,
-		ComposersProperty,
-		AdapterProperty,
-		PerformersProperty,
-		DirectorsProperty,
-		SoundDirectorsProperty,
-		PublishersProperty,
-		GenresProperty,
-		TagsProperty,
-	}
-}
-
-var LitResPropertyMap = map[string]string{
-	litres_integration.TitleProperty:          TitleProperty,
-	litres_integration.TypeProperty:           BookTypeProperty,
-	litres_integration.AuthorsProperty:        AuthorsProperty,
-	litres_integration.DownloadLinksProperty:  DownloadLinksProperty,
-	litres_integration.DescriptionProperty:    DescriptionProperty,
-	litres_integration.SequenceNameProperty:   SequenceNameProperty,
-	litres_integration.SequenceNumberProperty: SequenceNumberProperty,
-	litres_integration.GenresProperty:         GenresProperty,
-	litres_integration.TagsProperty:           TagsProperty,
-	"Соавтор:":                                CoauthorsProperty,
-	"Возрастное ограничение:":                 AgeRatingProperty,
-	"Объем:":                                   VolumeProperty,
-	"Длительность:":                            DurationProperty,
-	"Дата выхода на ЛитРес:":                   DateReleasedProperty,
-	"Дата перевода:":                           DateTranslatedProperty,
-	"Дата написания:":                          DateCreatedProperty,
-	"ISBN:":                                    ISBNProperty,
-	"Переводчики:":                             TranslatorsProperty,
-	"Переводчик:":                              TranslatorsProperty,
-	"Чтецы:":                                   ReadersProperty,
-	"Чтец:":                                    ReadersProperty,
-	"Художники:":                               IllustratorsProperty,
-	"Художник:":                                IllustratorsProperty,
-	"Правообладатели:":                         CopyrightHoldersProperty,
-	"Правообладатель:":                         CopyrightHoldersProperty,
-	"Композиторы:":                             ComposersProperty,
-	"Композитор:":                              ComposersProperty,
-	"Адаптация:":                               AdapterProperty,
-	"Исполнители:":                             PerformersProperty,
-	"Режиссер:":                                DirectorsProperty,
-	"Звукорежиссер:":                           SoundDirectorsProperty,
-	"Издатели:":                                PublishersProperty,
-	"Издатель:":                                PublishersProperty,
-	"Общий размер:":                            TotalSizeProperty,
-	"Общее кол-во страниц:":                    TotalPagesProperty,
-	"Оглавление":                               litres_integration.KnownIrrelevantProperty,
-	"Размер страницы:":                         litres_integration.KnownIrrelevantProperty,
-	litres_integration.KnownIrrelevantProperty: litres_integration.KnownIrrelevantProperty,
-}
-
-var LiveLibPropertyMap = map[string]string{
-	livelib_integration.TitleProperty:          TitleProperty,
-	livelib_integration.AuthorsProperty:        AuthorsProperty,
-	livelib_integration.TranslatorsProperty:    TranslatorsProperty,
-	livelib_integration.DescriptionProperty:    DescriptionProperty,
-	livelib_integration.ISBNProperty:           ISBNProperty,
-	livelib_integration.SequenceNameProperty:   SequenceNameProperty,
-	livelib_integration.SequenceNumberProperty: SequenceNumberProperty,
-	livelib_integration.GenresProperty:         GenresProperty,
-	livelib_integration.TagsProperty:           TagsProperty,
-	livelib_integration.AgeRatingProperty:      AgeRatingProperty,
-	livelib_integration.PublishersProperty:     PublishersProperty,
-	livelib_integration.YearPublishedProperty:  DateCreatedProperty,
-	livelib_integration.LanguageProperty:       LanguageProperty,
-	//livelib_integration.ImageProperty
-	//livelib_integration.EditionSeriesProperty
-}
+//var LiveLibPropertyMap = map[string]string{
+//	livelib_integration.TitleProperty:          TitleProperty,
+//	livelib_integration.AuthorsProperty:        AuthorsProperty,
+//	livelib_integration.TranslatorsProperty:    TranslatorsProperty,
+//	livelib_integration.DescriptionProperty:    DescriptionProperty,
+//	livelib_integration.ISBNProperty:           ISBNProperty,
+//	livelib_integration.SequenceNameProperty:   SequenceNameProperty,
+//	livelib_integration.SequenceNumberProperty: SequenceNumberProperty,
+//	livelib_integration.GenresProperty:         GenresProperty,
+//	livelib_integration.TagsProperty:           TagsProperty,
+//	livelib_integration.AgeRatingProperty:      AgeRatingProperty,
+//	livelib_integration.PublishersProperty:     PublishersProperty,
+//	livelib_integration.YearPublishedProperty:  DateCreatedProperty,
+//	livelib_integration.LanguageProperty:       LanguageProperty,
+//	//livelib_integration.ImageProperty
+//	//livelib_integration.EditionSeriesProperty
+//}

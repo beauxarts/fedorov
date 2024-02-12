@@ -9,7 +9,6 @@ import (
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/kvas_dolo"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pathology"
 	"net/url"
 	"strings"
 )
@@ -42,22 +41,17 @@ func GetLitResArtsHandler(u *url.URL) error {
 
 func GetLitResArts(artsTypes []litres_integration.ArtsType, force bool, ids ...string) error {
 
-	glaa := nod.NewProgress("getting litres-arts...")
+	glaa := nod.NewProgress("getting litres arts...")
 	defer glaa.End()
 
-	absReduxDir, err := pathology.GetAbsRelDir(data.Redux)
-	if err != nil {
-		return glaa.EndWithError(err)
-	}
-
 	if len(ids) == 0 {
-		rdx, err := kvas.NewReduxReader(absReduxDir, data.MyBooksIdsProperty, data.ImportedProperty)
+		rdx, err := data.NewReduxReader(data.ArtsHistoryOrderProperty, data.ImportedProperty)
 		if err != nil {
 			return glaa.EndWithError(err)
 		}
 
-		if myBooksIds, ok := rdx.GetAllValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty); ok {
-			for _, mbid := range myBooksIds {
+		if artsIds, ok := rdx.GetAllValues(data.ArtsHistoryOrderProperty, data.ArtsHistoryOrderProperty); ok {
+			for _, mbid := range artsIds {
 				if rdx.HasKey(data.ImportedProperty, mbid) {
 					continue
 				}
@@ -118,12 +112,12 @@ func getSetArtsType(dc *dolo.Client, at litres_integration.ArtsType, force bool,
 	indexSetter := kvas_dolo.NewIndexSetter(kv, newIds...)
 	urls := make([]*url.URL, 0, len(newIds))
 	for _, id := range newIds {
-		urls = append(urls, litres_integration.ArtsUrl(at, id))
+		urls = append(urls, litres_integration.ArtsTypeUrl(at, id))
 	}
 
 	result := "done"
 
-	if errs := dc.GetSet(urls, indexSetter, gsat); len(errs) > 0 {
+	if errs := dc.GetSet(urls, indexSetter, gsat, force); len(errs) > 0 {
 		errIds := make([]string, 0, len(errs))
 		for ii := range errs {
 			errIds = append(errIds, newIds[ii])

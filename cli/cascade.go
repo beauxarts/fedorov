@@ -1,11 +1,9 @@
 package cli
 
 import (
-	"fmt"
 	"github.com/beauxarts/fedorov/data"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pathology"
 	"net/url"
 )
 
@@ -18,55 +16,49 @@ func Cascade() error {
 	ca := nod.Begin("cascading reductions...")
 	defer ca.End()
 
-	props := []string{data.TitleProperty, data.BookCompletedProperty, data.MyBooksIdsProperty, data.MyBooksOrderProperty}
+	props := []string{data.TitleProperty, data.BookCompletedProperty}
 
-	absReduxDir, err := pathology.GetAbsRelDir(data.Redux)
+	rdx, err := data.NewReduxWriter(props...)
 	if err != nil {
 		return ca.EndWithError(err)
 	}
 
-	rdx, err := kvas.NewReduxWriter(absReduxDir, props...)
-	if err != nil {
+	if err := cascadeBookCompletedProperty(rdx); err != nil {
 		return ca.EndWithError(err)
 	}
-
-	// cascading data.BookCompletedProperty
-	bcpa := nod.NewProgress(" " + data.BookCompletedProperty)
-	defer bcpa.End()
-
-	ids := rdx.Keys(data.TitleProperty)
-	bcpa.TotalInt(len(ids))
-
-	for _, id := range ids {
-		bcpa.Increment()
-		if val, ok := rdx.GetFirstVal(data.BookCompletedProperty, id); ok && val != "" {
-			continue
-		}
-		if err := rdx.ReplaceValues(data.BookCompletedProperty, id, "false"); err != nil {
-			return ca.EndWithError(err)
-		}
-	}
-
-	bcpa.EndWithResult("done")
-
-	// cascading data.MyBooksOrderProperty
-
-	mboa := nod.NewProgress(" " + data.MyBooksOrderProperty)
-	defer mboa.End()
-
-	myBooksIds, _ := rdx.GetAllValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty)
-	mboa.TotalInt(len(myBooksIds))
-
-	order := make(map[string][]string)
-	for i, id := range myBooksIds {
-		order[id] = []string{fmt.Sprintf("%9d", i)}
-	}
-	if err := rdx.BatchReplaceValues(data.MyBooksOrderProperty, order); err != nil {
-		return mboa.EndWithError(err)
-	}
-	mboa.EndWithResult("done")
 
 	ca.EndWithResult("done")
+
+	return nil
+}
+
+func cascadeBookCompletedProperty(rdx kvas.WriteableRedux) error {
+
+	bca := nod.NewProgress(" " + data.BookCompletedProperty)
+	defer bca.End()
+
+	if err := rdx.MustHave(data.TitleProperty, data.BookCompletedProperty); err != nil {
+		return bca.EndWithError(err)
+	}
+
+	ids := rdx.Keys(data.TitleProperty)
+	bca.TotalInt(len(ids))
+
+	completed := make(map[string][]string)
+
+	for _, id := range ids {
+		bca.Increment()
+		if val, ok := rdx.GetFirstVal(data.BookCompletedProperty, id); ok && val != "" {
+			completed[id] = []string{"true"}
+		}
+		completed[id] = []string{"false"}
+	}
+
+	if err := rdx.BatchReplaceValues(data.BookCompletedProperty, completed); err != nil {
+		return bca.EndWithError(err)
+	}
+
+	bca.EndWithResult("done")
 
 	return nil
 }

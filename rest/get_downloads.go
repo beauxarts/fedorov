@@ -29,8 +29,8 @@ func GetDownloads(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	links, ok := rdx.GetAllValues(data.DownloadLinksProperty, idstr)
-	titles, _ := rdx.GetAllValues(data.DownloadTitlesProperty, idstr)
+	links, ok := rdx.GetAllValues("" /*data.DownloadLinksProperty*/, idstr)
+	titles, _ := rdx.GetAllValues("" /*data.DownloadTitlesProperty*/, idstr)
 
 	if !ok {
 		http.Error(w, nod.ErrorStr("book has no downloads"), http.StatusInternalServerError)

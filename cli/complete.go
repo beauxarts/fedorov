@@ -3,9 +3,7 @@ package cli
 import (
 	"errors"
 	"github.com/beauxarts/fedorov/data"
-	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pathology"
 	"net/url"
 	"strings"
 )
@@ -30,12 +28,7 @@ func Complete(ids []string, action string) error {
 	ca := nod.NewProgress("%s complete...", action)
 	defer ca.End()
 
-	absReduxDir, err := pathology.GetAbsRelDir(data.Redux)
-	if err != nil {
-		return ca.EndWithError(err)
-	}
-
-	rdx, err := kvas.NewReduxWriter(absReduxDir, data.TitleProperty, data.BookCompletedProperty)
+	rdx, err := data.NewReduxWriter(data.BookCompletedProperty)
 	if err != nil {
 		return err
 	}

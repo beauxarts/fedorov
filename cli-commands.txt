@@ -19,8 +19,14 @@ dehydrate
     all
     overwrite
 
-download-litres
+download-litres-books
     id^&
+    force
+
+download-litres-covers
+    id^&
+    force-imported
+    skip-existing
 
 export
     id^&
@@ -33,34 +39,38 @@ get-litres-arts
 
 get-litres-authors
     id^&
+    author-type*&={author-types^}
+    all-author-types
+    force
 
-get-litres-covers
+get-litres-contents
     id^&
+    force
+
+get-litres-history-log
 
 get-litres-series
     id^&
+    series-type*&={series-types^}
+    all-series-types
+    force
 
 get-livelib-details
     id^&
 
-get-litres-my-books
-    new-only
-
 import
-
-post-completion
-    webhook-url^*$
 
 purge
     id*^
     confirm
     webhook-url$
 
-reduce-litres-my-books
+reduce-litres-arts-details
+
+reduce-litres-history-log
 
 sync
     force
-    webhook-url$
 
 serve
     port$*

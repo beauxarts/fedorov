@@ -2,9 +2,7 @@ package cli
 
 import (
 	"github.com/beauxarts/fedorov/data"
-	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pathology"
 	"net/url"
 	"os"
 	"strings"
@@ -24,12 +22,7 @@ func Export(ids []string) error {
 	ea := nod.Begin("exporting books...")
 	defer ea.End()
 
-	absReduxDir, err := pathology.GetAbsRelDir(data.Redux)
-	if err != nil {
-		return ea.EndWithError(err)
-	}
-
-	rdx, err := kvas.NewReduxReader(absReduxDir, data.ReduxProperties()...)
+	rdx, err := data.NewReduxReader(data.ReduxProperties()...)
 	if err != nil {
 		return ea.EndWithError(err)
 	}

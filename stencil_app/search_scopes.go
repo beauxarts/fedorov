@@ -26,21 +26,21 @@ func SearchScopeQueries() map[string]string {
 	scopeUrls[ScopeNewSearch] = ""
 
 	q := url.Values{}
-	q.Set(data.BookCompletedProperty, "false")
-	q.Set(data.BookTypeProperty, BookTypeText)
-	q.Set(data.SortProperty, data.MyBooksOrderProperty)
+	//q.Set(data.BookCompletedProperty, "false")
+	//q.Set(data.BookTypeProperty, BookTypeText)
+	q.Set(data.SortProperty, data.ArtsHistoryOrderProperty)
 	scopeUrls[ScopeBacklogTextBooks] = strings.ToLower(q.Encode())
 
 	q = url.Values{}
-	q.Set(data.GenresProperty, "детские,сказки")
-	q.Set(data.BookTypeProperty, strings.Join([]string{BookTypeText, BookTypePDF}, ","))
-	q.Set(data.SortProperty, data.DateCreatedProperty)
+	//q.Set(data.GenresProperty, "детские,сказки")
+	//q.Set(data.BookTypeProperty, strings.Join([]string{BookTypeText, BookTypePDF}, ","))
+	//q.Set(data.SortProperty, data.DateCreatedProperty)
 	q.Set(data.DescendingProperty, "true")
 	scopeUrls[ScopeKidsBooks] = strings.ToLower(q.Encode())
 
 	q = url.Values{}
 	q.Set(data.ImportedProperty, "true")
-	q.Set(data.SortProperty, data.DateCreatedProperty)
+	//q.Set(data.SortProperty, data.DateCreatedProperty)
 	q.Set(data.DescendingProperty, "true")
 	scopeUrls[ScopeImportedBooks] = strings.ToLower(q.Encode())
 

@@ -7,7 +7,6 @@ import (
 	"github.com/beauxarts/scrinium/livelib_integration"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pathology"
 	"net/url"
 	"os"
 	"path/filepath"
@@ -61,53 +60,48 @@ func Purge(id string, webhookUrl string, confirm bool) error {
 	props := data.ReduxProperties()
 	props = append(props, data.ImportedProperties()...)
 
-	absReduxDir, err := pathology.GetAbsRelDir(data.Redux)
-	if err != nil {
-		return pa.EndWithError(err)
-	}
-
-	rdx, err := kvas.NewReduxWriter(absReduxDir, props...)
+	rdx, err := data.NewReduxWriter(props...)
 	if err != nil {
 		return pa.EndWithError(err)
 	}
 
 	// downloads
 
-	if links, ok := rdx.GetAllValues(data.DownloadLinksProperty, id); ok {
-		for _, link := range links {
-			lfn, err := data.AbsFileDownloadPath(idi, filepath.Base(link))
-			if err != nil {
-				return pa.EndWithError(err)
-			}
-			if _, err := os.Stat(lfn); err == nil {
-				rda := nod.Begin(" found download %s...", filepath.Base(lfn))
-				if confirm {
-					if err := os.Remove(lfn); err != nil {
-						return rda.EndWithError(err)
-					}
-					rda.EndWithResult("removed")
-				}
-				rda.End()
-			}
-		}
-	}
+	//if links, ok := rdx.GetAllValues(data.DownloadLinksProperty, id); ok {
+	//	for _, link := range links {
+	//		lfn, err := data.AbsFileDownloadPath(idi, filepath.Base(link))
+	//		if err != nil {
+	//			return pa.EndWithError(err)
+	//		}
+	//		if _, err := os.Stat(lfn); err == nil {
+	//			rda := nod.Begin(" found download %s...", filepath.Base(lfn))
+	//			if confirm {
+	//				if err := os.Remove(lfn); err != nil {
+	//					return rda.EndWithError(err)
+	//				}
+	//				rda.EndWithResult("removed")
+	//			}
+	//			rda.End()
+	//		}
+	//	}
+	//}
 
 	// details
 
+	//TODO: Likely need to add Arts data types
 	dataTypes := []fmt.Stringer{
 		// LitResDataTypes
-		litres_integration.LitResMyBooksFresh,
-		litres_integration.LitResMyBooksDetails,
+		litres_integration.LitResHistoryLog,
 
 		// LiveLibDataTypes
 		livelib_integration.LiveLibDetails,
 
 		// ArtsType
-		litres_integration.ArtsDetails,
-		litres_integration.ArtsSimilar,
-		litres_integration.ArtsQuotes,
-		litres_integration.ArtsFiles,
-		litres_integration.ArtsReviews,
+		litres_integration.ArtsTypeDetails,
+		litres_integration.ArtsTypeSimilar,
+		litres_integration.ArtsTypeQuotes,
+		litres_integration.ArtsTypeFiles,
+		litres_integration.ArtsTypeReviews,
 
 		// AuthorTypes
 		litres_integration.AuthorDetails,
@@ -158,13 +152,6 @@ func Purge(id string, webhookUrl string, confirm bool) error {
 				cra.EndWithResult("removed")
 			}
 			cra.End()
-		}
-	}
-
-	// make sure to post completion to update static versions
-	if confirm {
-		if err := PostCompletion(webhookUrl); err != nil {
-			return pa.EndWithError(err)
 		}
 	}
 

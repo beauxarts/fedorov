@@ -4,7 +4,6 @@ import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/stencil_app"
 	"github.com/boggydigital/nod"
-	"golang.org/x/exp/slices"
 	"net/http"
 	"strconv"
 	"time"
@@ -26,28 +25,28 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	myBooks, ok := rdx.GetAllValues(data.MyBooksIdsProperty, data.MyBooksIdsProperty)
+	artsIds, ok := rdx.GetAllValues(data.ArtsHistoryOrderProperty, data.ArtsHistoryOrderProperty)
 	if !ok {
-		http.Error(w, nod.ErrorStr("no my books found"), http.StatusInternalServerError)
+		http.Error(w, nod.ErrorStr("no artsIds history order found"), http.StatusInternalServerError)
 		return
 	}
 
-	if missingDetails, ok := rdx.GetAllValues(data.MissingDetailsIdsProperty, data.MissingDetailsIdsProperty); ok {
-		filteredBooks := make([]string, 0, len(myBooks))
-		for _, id := range myBooks {
-			if slices.Contains(missingDetails, id) {
-				continue
-			}
-			filteredBooks = append(filteredBooks, id)
-		}
-		myBooks = filteredBooks
-	}
+	//if missingDetails, ok := rdx.GetAllValues(data.MissingDetailsIdsProperty, data.MissingDetailsIdsProperty); ok {
+	//	filteredBooks := make([]string, 0, len(artsIds))
+	//	for _, id := range artsIds {
+	//		if slices.Contains(missingDetails, id) {
+	//			continue
+	//		}
+	//		filteredBooks = append(filteredBooks, id)
+	//	}
+	//	artsIds = filteredBooks
+	//}
 
 	booksByType := make(map[string][]string)
 	bookTypeTotals := make(map[string]int)
 
-	for _, id := range myBooks {
-		bt, _ := rdx.GetFirstVal(data.BookTypeProperty, id)
+	for _, id := range artsIds {
+		bt, _ := rdx.GetFirstVal("" /*data.BookTypeProperty*/, id)
 		bookTypeTotals[bt]++
 		if !showAll && len(booksByType[bt]) >= latestBooksLimit {
 			continue
@@ -68,7 +67,7 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
 		stencil_app.NavLatestBooks,
 		stencil_app.BookTypeOrder,
 		booksByType,
-		stencil_app.BookTypeTitles,
+		nil, //stencil_app.BookTypeTitles,
 		bookTypeTotals,
 		updated,
 		r.URL,
