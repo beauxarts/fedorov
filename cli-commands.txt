@@ -21,6 +21,7 @@ dehydrate
 
 download-litres-books
     id^&
+    force
 
 download-litres-covers
     id^&

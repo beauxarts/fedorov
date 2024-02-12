@@ -6,31 +6,14 @@ import (
 	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/coost"
 	"github.com/boggydigital/dolo"
+	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/pasu"
 	"net/url"
+	"os"
 	"path/filepath"
 	"strings"
 )
-
-var skipFormatDownloads = map[string]bool{
-	// download
-	data.FormatEPUB: false,
-	data.FormatAZW3: false,
-	data.FormatMOBI: false, // should be replaced by AZW3 - hasn't happened yet
-	data.FormatMP4:  false,
-	data.FormatZIP:  false,
-	// don't download
-	data.FormatPDFA4:   true,
-	data.FormatPDFA6:   true,
-	data.FormatTXT:     true,
-	data.FormatFB2:     true,
-	data.FormatFB3:     true,
-	data.FormatRTF:     true,
-	data.FormatTXTZIP:  true,
-	data.FormatIOSEPUB: true,
-	data.FormatMP3:     true,
-}
 
 func DownloadLitResBooksHandler(u *url.URL) error {
 	var ids []string
@@ -38,10 +21,12 @@ func DownloadLitResBooksHandler(u *url.URL) error {
 		ids = strings.Split(idstr, ",")
 	}
 
-	return DownloadLitResBooks(ids...)
+	force := u.Query().Has("force")
+
+	return DownloadLitResBooks(force, ids...)
 }
 
-func DownloadLitResBooks(ids ...string) error {
+func DownloadLitResBooks(force bool, ids ...string) error {
 
 	da := nod.NewProgress("downloading LitRes books...")
 	defer da.End()
@@ -49,11 +34,16 @@ func DownloadLitResBooks(ids ...string) error {
 	rdx, err := data.NewReduxReader(
 		data.ArtsHistoryOrderProperty,
 		data.TitleProperty,
-		//data.AuthorsProperty,
+		data.PersonsIdsProperty,
+		data.PersonsRolesProperty,
+		data.PersonFullNameProperty,
 		data.ImportedProperty,
-		//data.DownloadLinksProperty)
 	)
+	if err != nil {
+		return da.EndWithError(err)
+	}
 
+	kv, err := data.NewArtsReader(litres_integration.ArtsTypeFiles)
 	if err != nil {
 		return da.EndWithError(err)
 	}
@@ -62,7 +52,7 @@ func DownloadLitResBooks(ids ...string) error {
 		var ok bool
 		ids, ok = rdx.GetAllValues(data.ArtsHistoryOrderProperty, data.ArtsHistoryOrderProperty)
 		if !ok {
-			err = errors.New("no my books found")
+			err = errors.New("no arts history order found")
 			return da.EndWithError(err)
 		}
 	}
@@ -96,30 +86,35 @@ func DownloadLitResBooks(ids ...string) error {
 		}
 
 		title, _ := rdx.GetFirstVal(data.TitleProperty, id)
-		authors := []string{}
+		authorsNames, err := authorsFullNames(id, rdx)
+		if err != nil {
+			return da.EndWithError(err)
+		}
 
-		//authors, _ := rdx.GetAllValues(data.AuthorsProperty, id)
+		bdla := nod.Begin("%s - %s", strings.Join(authorsNames, ","), title)
 
-		dls := []string{}
-		//dls, ok := rdx.GetAllValues(data.DownloadLinksProperty, id)
-		//if !ok {
-		//	nod.Log("book %s is missing download links", id)
-		//	continue
-		//}
+		artFiles, err := kv.ArtsFiles(id)
+		if err != nil {
+			return da.EndWithError(err)
+		}
 
-		bdla := nod.Begin("%s - %s", strings.Join(authors, ","), title)
+		for _, afd := range artFiles.DownloadsTypes() {
 
-		for _, link := range dls {
+			u := afd.Url(id)
 
-			if f := data.LinkFormat(link); skipFormatDownloads[f] {
-				continue
+			_, relFn := filepath.Split(u.Path)
+
+			tpw := nod.NewProgress(" %s", relFn)
+
+			if !force {
+				absFn := filepath.Join(absDownloadsDir, id, relFn)
+				if _, err := os.Stat(absFn); err == nil {
+					tpw.EndWithResult("already exists")
+					continue
+				}
 			}
 
-			_, fname := filepath.Split(link)
-
-			tpw := nod.NewProgress(" %s", fname)
-
-			if err := dc.Download(litres_integration.HrefUrl(link), tpw, absDownloadsDir, id, fname); err != nil {
+			if err := dc.Download(afd.Url(id), tpw, absDownloadsDir, id, relFn); err != nil {
 				nod.Log(err.Error())
 				continue
 			}
@@ -138,4 +133,33 @@ func DownloadLitResBooks(ids ...string) error {
 	da.EndWithResult("done")
 
 	return nil
+}
+
+func authorsFullNames(id string, rdx kvas.ReadableRedux) ([]string, error) {
+
+	if err := rdx.MustHave(
+		data.PersonsIdsProperty,
+		data.PersonsRolesProperty,
+		data.PersonFullNameProperty,
+	); err != nil {
+		return nil, err
+	}
+
+	authorsNames := make([]string, 0)
+
+	if pids, ok := rdx.GetAllValues(data.PersonsIdsProperty, id); ok && len(pids) > 0 {
+		if prs, sure := rdx.GetAllValues(data.PersonsRolesProperty, id); sure && len(prs) == len(pids) {
+
+			for i := 0; i < len(prs); i++ {
+				if prs[i] != "author" {
+					continue
+				}
+				if afn, fine := rdx.GetLastVal(data.PersonFullNameProperty, pids[i]); fine {
+					authorsNames = append(authorsNames, afn)
+				}
+			}
+		}
+	}
+
+	return authorsNames, nil
 }

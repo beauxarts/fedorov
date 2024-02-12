@@ -67,7 +67,7 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
 		stencil_app.NavLatestBooks,
 		stencil_app.BookTypeOrder,
 		booksByType,
-		stencil_app.BookTypeTitles,
+		nil, //stencil_app.BookTypeTitles,
 		bookTypeTotals,
 		updated,
 		r.URL,

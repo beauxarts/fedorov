@@ -1,21 +1,23 @@
 package stencil_app
 
-import "github.com/beauxarts/fedorov/data"
-
-const (
-	BookTypeText  = data.BookTypeText
-	BookTypePDF   = data.BookTypePDF
-	BookTypeAudio = data.BookTypeAudio
+import (
+	"github.com/beauxarts/scrinium/litres_integration"
 )
 
-var BookTypeOrder = []string{
-	BookTypeText,
-	BookTypePDF,
-	BookTypeAudio,
-}
+const (
+	BookTypeText  = litres_integration.ArtTypeText
+	BookTypePDF   = litres_integration.ArtTypePDF
+	BookTypeAudio = litres_integration.ArtTypeAudio
+)
 
-var BookTypeTitles = map[string]string{
+var BookTypeTitles = map[litres_integration.ArtType]string{
 	BookTypeText:  "Текст",
 	BookTypePDF:   "PDF",
 	BookTypeAudio: "Аудио",
+}
+
+var BookTypeOrder = []string{
+	BookTypeTitles[BookTypeText],
+	BookTypeTitles[BookTypePDF],
+	BookTypeTitles[BookTypeAudio],
 }

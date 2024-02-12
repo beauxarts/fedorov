@@ -87,6 +87,35 @@ func main() {
 		os.Exit(1)
 	}
 
+	//encodings := make(map[string]interface{})
+	//
+	//kv, err := data.NewArtsReader(litres_integration.ArtsTypeFiles)
+	//if err != nil {
+	//	panic(err)
+	//}
+	//
+	//tpw := nod.NewProgress("art-files encodings...")
+	//defer tpw.End()
+	//
+	//tpw.TotalInt(len(kv.Keys()))
+	//
+	//for _, id := range kv.Keys() {
+	//
+	//	artFiles, err := kv.ArtsFiles(id)
+	//	if err != nil {
+	//		panic(err)
+	//	}
+	//
+	//	for _, f := range artFiles.Payload.Data {
+	//		encodings[f.EncodingType] = nil
+	//	}
+	//
+	//	tpw.Increment()
+	//
+	//}
+	//
+	//fmt.Println(maps.Keys(encodings))
+
 	if err := defs.Serve(os.Args[1:]); err != nil {
 		_ = ns.EndWithError(err)
 		os.Exit(1)

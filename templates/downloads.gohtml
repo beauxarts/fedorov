@@ -4,7 +4,7 @@
         {{$titles := .Titles}}
         {{range $index, $file := .Files}}
             <li>
-                {{$format := linkFormat $file}}
+                {{$format := $file}}
                 {{$title := ""}}
                 {{if $titles}}
                     {{$title = index $titles $index}}
@@ -14,7 +14,7 @@
                     {{if $title}}
                         <div class="title">{{$title}}</div>
                     {{end}}
-                    <div class="desc">{{formatDesc $format}}</div>
+                    <div class="desc">{{$format}}</div>
                 </a>
                 {{if eq $format "PDF"}}
                     <a class="link inline" href="/file?id={{$id}}&file={{$file}}&inline" target="_blank">
@@ -22,7 +22,7 @@
                         {{if $title}}
                             <div class="title">{{$title}}</div>
                         {{end}}
-                        <div class="desc">{{formatDesc $format}}</div>
+                        <div class="desc">{{$format}}</div>
                     </a>
                 {{end}}
             </li>
