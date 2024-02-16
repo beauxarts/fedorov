@@ -30,20 +30,39 @@
                 color: var(--color-light-green)
             }
 
+            img {
+                height: 100px;
+                width: 100px;
+                object-fit: contain;
+            }
+
+            li.book a {
+                display: flex;
+                flex-direction: row;
+                gap: 1rem;
+            }
+
+            li.book h2 {
+                margin: 0
+            }
+
         </style>
     </head>
     <body>
     <ul class="books">
-    {{range $book := .}}
-        <li>
-            <a href="/new_book?id={{.Id}}">
-                <span class="title">"{{.Title}}"</span>
-                <span class="authors">
-                    {{range $author := .Authors}}{{$author}}&nbsp;{{end}}
-                </span>
-            </a>
-        </li>
-    {{end}}
+        {{range $book := .}}
+            <li class="book">
+                <a href="/new_book?id={{.Id}}">
+                    <img src="/list_cover?id={{.Id}}"/>
+                    <ul>
+                        <li><h2 class="title">"{{.Title}}"</h2></li>
+                        <li><span class="authors">
+                            {{range $author := .Authors}}{{$author}}&nbsp;{{end}}
+                        </span></li>
+                    </ul>
+                </a>
+            </li>
+        {{end}}
     </ul>
     </body>
 {{end}}

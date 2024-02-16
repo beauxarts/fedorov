@@ -26,8 +26,6 @@ func HandleFuncs(p int) {
 		//// unauth data endpoints
 		//"GET /books":       Log(http.HandlerFunc(GetBooks)),
 		//"GET /book":        Log(http.HandlerFunc(GetBook)),
-		//"GET /list_cover":  Log(http.HandlerFunc(GetListCover)),
-		//"GET /book_cover":  Log(http.HandlerFunc(GetBookCover)),
 		//"GET /search":      Log(http.HandlerFunc(GetSearch)),
 		//"GET /digest":      Log(http.HandlerFunc(GetDigest)),
 		//"GET /downloads":   Log(http.HandlerFunc(GetDownloads)),
@@ -41,6 +39,9 @@ func HandleFuncs(p int) {
 		//"GET /file": Auth(Log(http.HandlerFunc(GetFile)), AdminRole, SharedRole),
 		// start at the books
 		//"/": http.RedirectHandler("/books", http.StatusPermanentRedirect),
+
+		"GET /list_cover": Log(http.HandlerFunc(GetListCover)),
+		"GET /book_cover": Log(http.HandlerFunc(GetBookCover)),
 
 		"GET /latest":   Log(http.HandlerFunc(GetLatest)),
 		"GET /new_book": Log(http.HandlerFunc(GetNewBook)),
