@@ -37,8 +37,8 @@
             }
 
             li.book a {
-                display: flex;
-                flex-direction: row;
+                display: grid;
+                grid-template-columns: 100px 1fr;
                 gap: 1rem;
             }
 
@@ -49,6 +49,14 @@
 
             li.book ul {
                 gap: 0.25rem
+            }
+
+            a.action {
+                display: block;
+                margin-block: var(--large);
+                font-weight: var(--fw-bolder);
+                color: var(--color-light-blue);
+                font-size: var(--fs-larger)
             }
 
         </style>
@@ -69,5 +77,6 @@
             </li>
         {{end}}
     </ul>
+    <a class="action" href="/latest?all">Show all books</a>
     </body>
 {{end}}

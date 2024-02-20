@@ -23,10 +23,17 @@ func GetLatest(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	all := r.URL.Query().Has("all")
+
 	lbvm := make([]*LatestBookViewModel, 0, latestBooksLimit)
 
 	if ahop, ok := rdx.GetAllValues(data.ArtsHistoryOrderProperty, data.ArtsHistoryOrderProperty); ok {
-		for _, id := range ahop[:latestBooksLimit] {
+
+		if !all {
+			ahop = ahop[:latestBooksLimit]
+		}
+
+		for _, id := range ahop {
 			title := ""
 			if t, ok := rdx.GetLastVal(data.TitleProperty, id); ok {
 				title = t

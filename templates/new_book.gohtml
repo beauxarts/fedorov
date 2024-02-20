@@ -34,9 +34,19 @@
                 margin-block: var(--large)
             }
 
+            img {
+                width: 320px;
+                height: 320px;
+                object-fit: contain;
+                object-position: left;
+            }
+
         </style>
     </head>
     <body>
+
+    <img src="/book_cover?id={{.Id}}"/>
+
     <h1>{{.Title}}</h1>
     <h2>{{range $author := .Authors}}{{$author}}&nbsp;{{end}}</h2>
 
