@@ -18,7 +18,7 @@ require (
 	github.com/boggydigital/stencil v0.2.24
 	github.com/boggydigital/wits v0.2.3
 	golang.org/x/exp v0.0.0-20240205201215-2c58cdc269a3
-	golang.org/x/net v0.21.0
+	golang.org/x/net v0.23.0
 	golang.org/x/text v0.14.0
 )
 
