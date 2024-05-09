@@ -73,12 +73,10 @@ func GetLitResSeries(seriesTypes []litres_integration.SeriesType, force bool, id
 		return glsa.EndWithError(err)
 	}
 
-	cj, err := coost.NewJar(absCookiesFilename)
+	hc, err := coost.NewHttpClientFromFile(absCookiesFilename)
 	if err != nil {
 		return glsa.EndWithError(err)
 	}
-
-	hc := cj.NewHttpClient()
 
 	dc := dolo.NewClient(hc, dolo.Defaults())
 

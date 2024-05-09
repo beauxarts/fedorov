@@ -46,12 +46,10 @@ func GetLitresContents(force bool, ids ...string) error {
 		return dlca.EndWithError(err)
 	}
 
-	cj, err := coost.NewJar(absCookiesFilename)
+	hc, err := coost.NewHttpClientFromFile(absCookiesFilename)
 	if err != nil {
 		return dlca.EndWithError(err)
 	}
-
-	hc := cj.NewHttpClient()
 
 	dc := dolo.NewClient(hc, dolo.Defaults())
 

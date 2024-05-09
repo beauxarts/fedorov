@@ -63,12 +63,10 @@ func DownloadLitResBooks(force bool, ids ...string) error {
 		return da.EndWithError(err)
 	}
 
-	cj, err := coost.NewJar(absCookiesFilename)
+	hc, err := coost.NewHttpClientFromFile(absCookiesFilename)
 	if err != nil {
 		return da.EndWithError(err)
 	}
-
-	hc := cj.NewHttpClient()
 
 	dc := dolo.NewClient(hc, dolo.Defaults())
 
@@ -115,10 +113,6 @@ func DownloadLitResBooks(force bool, ids ...string) error {
 			if err := dc.Download(afd.Url(id), tpw, absDownloadsDir, id, relFn); err != nil {
 				nod.Log(err.Error())
 				continue
-			}
-
-			if err := cj.Store(absCookiesFilename); err != nil {
-				return da.EndWithError(err)
 			}
 
 			tpw.EndWithResult("done")

@@ -43,22 +43,16 @@ func GetLitResHistoryLog() error {
 		return ghla.EndWithError(err)
 	}
 
-	cj, err := coost.NewJar(absCookiesFilename)
+	hc, err := coost.NewHttpClientFromFile(absCookiesFilename)
 	if err != nil {
 		return ghla.EndWithError(err)
 	}
-
-	hc := cj.NewHttpClient()
 
 	// get the first page and extract total pages
 
 	page := 1
 
 	if err := getHistoryLogPage(page, hc, kv, ghla); err != nil {
-		return ghla.EndWithError(err)
-	}
-
-	if err := cj.Store(absCookiesFilename); err != nil {
 		return ghla.EndWithError(err)
 	}
 
@@ -74,10 +68,6 @@ func GetLitResHistoryLog() error {
 
 	for page = 2; page <= totalPages; page++ {
 		if err := getHistoryLogPage(page, hc, kv, ghla); err != nil {
-			return ghla.EndWithError(err)
-		}
-
-		if err := cj.Store(absCookiesFilename); err != nil {
 			return ghla.EndWithError(err)
 		}
 	}

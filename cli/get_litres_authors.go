@@ -73,12 +73,10 @@ func GetLitResAuthors(authorTypes []litres_integration.AuthorType, force bool, i
 		return glaa.EndWithError(err)
 	}
 
-	cj, err := coost.NewJar(absCookiesFilename)
+	hc, err := coost.NewHttpClientFromFile(absCookiesFilename)
 	if err != nil {
 		return glaa.EndWithError(err)
 	}
-
-	hc := cj.NewHttpClient()
 
 	dc := dolo.NewClient(hc, dolo.Defaults())
 
