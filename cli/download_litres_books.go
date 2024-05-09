@@ -37,7 +37,6 @@ func DownloadLitResBooks(force bool, ids ...string) error {
 		data.PersonsIdsProperty,
 		data.PersonsRolesProperty,
 		data.PersonFullNameProperty,
-		data.ImportedProperty,
 	)
 	if err != nil {
 		return da.EndWithError(err)
@@ -79,11 +78,6 @@ func DownloadLitResBooks(force bool, ids ...string) error {
 	}
 
 	for _, id := range ids {
-
-		// don't attempt downloading imported books
-		if IsImported(id, rdx) {
-			continue
-		}
 
 		title, _ := rdx.GetFirstVal(data.TitleProperty, id)
 		authorsNames, err := authorsFullNames(id, rdx)

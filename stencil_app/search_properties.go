@@ -29,5 +29,4 @@ var SearchProperties = []string{
 	//data.LanguageProperty,
 	data.SortProperty,
 	data.DescendingProperty,
-	data.ImportedProperty,
 }

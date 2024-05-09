@@ -31,8 +31,6 @@ services:
       - /docker/fedorov/metadata:/var/lib/fedorov/metadata
       # input dir (cold storage)
       - /docker/fedorov:/var/lib/fedorov/input
-      # output dir (cold storage)
-      - /docker/fedorov:/var/lib/fedorov/output
       # covers dir (hot storage)
       - /docker/fedorov/covers:/var/lib/fedorov/covers
       # downloads dir (cold storage)

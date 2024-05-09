@@ -40,10 +40,6 @@ func fmtLabel(_, property, link string, _ kvas.ReadableRedux) string {
 	//	} else {
 	//		return ""
 	//	}
-	case data.ImportedProperty:
-		if link == "true" {
-			return "Импорт"
-		}
 	}
 	return label
 }
@@ -64,12 +60,6 @@ func fmtTitle(id, property, link string, rdx kvas.ReadableRedux) string {
 	//	} else {
 	//		return "Нет"
 	//	}
-	case data.ImportedProperty:
-		if link == "true" {
-			return "Да"
-		} else {
-			return "Нет"
-		}
 	default:
 		// do nothing
 	}

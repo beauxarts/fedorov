@@ -14,7 +14,6 @@ const (
 	Backups   pasu.AbsDir = "backups"
 	Metadata  pasu.AbsDir = "metadata"
 	Input     pasu.AbsDir = "input"
-	Output    pasu.AbsDir = "output"
 	Covers    pasu.AbsDir = "covers"
 	Downloads pasu.AbsDir = "downloads"
 	Imported  pasu.AbsDir = "_imported"
@@ -24,7 +23,6 @@ var AllAbsDirs = []pasu.AbsDir{
 	Backups,
 	Metadata,
 	Input,
-	Output,
 	Covers,
 	Downloads,
 	Imported,
@@ -42,8 +40,6 @@ var RelToAbsDirs = map[pasu.RelDir]pasu.AbsDir{
 
 const (
 	relCookiesFilename = "cookies.txt"
-	relExportFilename  = "export.txt"
-	relImportFilename  = "import.txt"
 
 	DefaultCoverExt = ".jpg"
 )
@@ -117,22 +113,4 @@ func AbsCookiesFilename() (string, error) {
 	}
 
 	return filepath.Join(absInputDir, relCookiesFilename), nil
-}
-
-func AbsExportFilename() (string, error) {
-	absOutputDir, err := pasu.GetAbsDir(Output)
-	if err != nil {
-		return "", err
-	}
-
-	return filepath.Join(absOutputDir, relExportFilename), nil
-}
-
-func AbsImportFilename() (string, error) {
-	absInputDir, err := pasu.GetAbsDir(Input)
-	if err != nil {
-		return "", err
-	}
-
-	return filepath.Join(absInputDir, relImportFilename), nil
 }

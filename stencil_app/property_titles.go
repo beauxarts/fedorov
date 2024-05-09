@@ -34,7 +34,6 @@ var PropertyTitles = map[string]string{
 	//data.TagsProperty:             "Теги",
 	//data.LocalTagsProperty:        "Свои теги",
 	//data.LanguageProperty:         "Язык",
-	data.ImportedProperty: "Импорт",
 	// sorting properties
 	data.SortProperty:             "Порядок",
 	data.DescendingProperty:       "По убыванию",

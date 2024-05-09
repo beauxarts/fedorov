@@ -20,7 +20,6 @@ var DigestProperties = []string{
 	//data.AuthorsProperty,
 	//data.GenresProperty,
 	//data.TagsProperty,
-	data.ImportedProperty,
 	data.SortProperty,
 	data.DescendingProperty,
 }

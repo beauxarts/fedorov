@@ -28,9 +28,6 @@ download-litres-covers
     force-imported
     skip-existing
 
-export
-    id^&
-
 get-litres-arts
     id^&
     arts-type*&={arts-types^}
@@ -57,13 +54,6 @@ get-litres-series
 
 get-livelib-details
     id^&
-
-import
-
-purge
-    id*^
-    confirm
-    webhook-url$
 
 reduce-litres-arts-details
 

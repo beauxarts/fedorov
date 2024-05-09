@@ -76,17 +76,13 @@ func ReduceLitResHistoryLog() error {
 
 	rdx, err := data.NewReduxWriter(
 		data.ArtsHistoryOrderProperty,
-		data.ArtsHistoryEventTimeProperty,
-		data.ImportedProperty)
+		data.ArtsHistoryEventTimeProperty)
 	if err != nil {
 		return rhla.EndWithError(err)
 	}
 
 	sra := nod.Begin(" saving redux...")
 	defer sra.End()
-
-	// add previously imported book to my books before saving that set
-	artsHistoryOrder = append(artsHistoryOrder, rdx.Keys(data.ImportedProperty)...)
 
 	if err := rdx.ReplaceValues(data.ArtsHistoryOrderProperty, data.ArtsHistoryOrderProperty, artsHistoryOrder...); err != nil {
 		return rhla.EndWithError(err)

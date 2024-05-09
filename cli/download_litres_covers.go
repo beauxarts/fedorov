@@ -32,8 +32,7 @@ func DownloadLitResCovers(skipExisting, forceImported bool, ids ...string) error
 	defer gca.End()
 
 	rdx, err := data.NewReduxReader(
-		data.ArtsHistoryOrderProperty,
-		data.ImportedProperty)
+		data.ArtsHistoryOrderProperty)
 	if err != nil {
 		return gca.EndWithError(err)
 	}
@@ -59,11 +58,6 @@ func DownloadLitResCovers(skipExisting, forceImported bool, ids ...string) error
 	}
 
 	for _, id := range ids {
-
-		// don't attempt downloading covers for imported books
-		if !forceImported && IsImported(id, rdx) {
-			continue
-		}
 
 		idn, err := strconv.ParseInt(id, 10, 64)
 		if err != nil {

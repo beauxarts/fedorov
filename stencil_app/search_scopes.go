@@ -38,11 +38,5 @@ func SearchScopeQueries() map[string]string {
 	q.Set(data.DescendingProperty, "true")
 	scopeUrls[ScopeKidsBooks] = strings.ToLower(q.Encode())
 
-	q = url.Values{}
-	q.Set(data.ImportedProperty, "true")
-	//q.Set(data.SortProperty, data.DateCreatedProperty)
-	q.Set(data.DescendingProperty, "true")
-	scopeUrls[ScopeImportedBooks] = strings.ToLower(q.Encode())
-
 	return scopeUrls
 }

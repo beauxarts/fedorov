@@ -100,9 +100,6 @@ const (
 	DescendingProperty = "desc"
 	// sync events
 	SyncCompletedProperty = "sync-completed"
-	// imported
-	ImportedProperty   = "imported"
-	DataSourceProperty = "data-source"
 	// dehydrated images
 	DehydratedListImageProperty         = "dehydrated-list-image"
 	DehydratedListImageModifiedProperty = "dehydrated-list-image-modified"
@@ -206,34 +203,7 @@ func ReduxProperties() []string {
 			ArtsHistoryEventTimeProperty,
 			//
 			SyncCompletedProperty,
-			ImportedProperty,
-			DataSourceProperty,
 			DehydratedListImageProperty,
 			DehydratedItemImageProperty,
 		}...)
 }
-
-func ImportedProperties() []string {
-	return []string{
-		ImportedProperty,
-		DataSourceProperty,
-	}
-}
-
-//var LiveLibPropertyMap = map[string]string{
-//	livelib_integration.TitleProperty:          TitleProperty,
-//	livelib_integration.AuthorsProperty:        AuthorsProperty,
-//	livelib_integration.TranslatorsProperty:    TranslatorsProperty,
-//	livelib_integration.DescriptionProperty:    DescriptionProperty,
-//	livelib_integration.ISBNProperty:           ISBNProperty,
-//	livelib_integration.SequenceNameProperty:   SequenceNameProperty,
-//	livelib_integration.SequenceNumberProperty: SequenceNumberProperty,
-//	livelib_integration.GenresProperty:         GenresProperty,
-//	livelib_integration.TagsProperty:           TagsProperty,
-//	livelib_integration.AgeRatingProperty:      AgeRatingProperty,
-//	livelib_integration.PublishersProperty:     PublishersProperty,
-//	livelib_integration.YearPublishedProperty:  DateCreatedProperty,
-//	livelib_integration.LanguageProperty:       LanguageProperty,
-//	//livelib_integration.ImageProperty
-//	//livelib_integration.EditionSeriesProperty
-//}

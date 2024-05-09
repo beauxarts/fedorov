@@ -20,8 +20,6 @@ VOLUME /var/lib/fedorov/backups
 VOLUME /var/lib/fedorov/metadata
 #input
 VOLUME /var/lib/fedorov/input
-#output
-VOLUME /var/lib/fedorov/output
 #covers
 VOLUME /var/lib/fedorov/covers
 #downloads
