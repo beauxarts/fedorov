@@ -25,7 +25,7 @@ download-litres-books
 
 download-litres-covers
     id^&
-    force-imported
+    force
     skip-existing
 
 get-litres-arts
@@ -51,9 +51,6 @@ get-litres-series
     series-type*&={series-types^}
     all-series-types
     force
-
-get-livelib-details
-    id^&
 
 reduce-litres-arts-details
 

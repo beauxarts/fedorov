@@ -9,7 +9,7 @@ import (
 	"github.com/beauxarts/fedorov/rest"
 	"github.com/boggydigital/clo"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pasu"
+	"github.com/boggydigital/pathways"
 	"os"
 	"sync"
 )
@@ -41,7 +41,7 @@ func main() {
 		rest.InitTemplates(templates, stencilAppStyles)
 	})
 
-	if err := pasu.Setup(
+	if err := pathways.Setup(
 		dirsOverrideFilename,
 		data.DefaultFedorovRootDir,
 		data.RelToAbsDirs,
@@ -71,7 +71,6 @@ func main() {
 		"get-litres-contents":        cli.GetLitResContentsHandler,
 		"get-litres-history-log":     cli.GetLitResHistoryLogHandler,
 		"get-litres-series":          cli.GetLitResSeriesHandler,
-		"get-livelib-details":        cli.GetLiveLibDetailsHandler,
 		"reduce-litres-arts-details": cli.ReduceLitResArtsDetailsHandler,
 		"reduce-litres-history-log":  cli.ReduceLitResHistoryLogHandler,
 		"serve":                      cli.ServeHandler,
@@ -79,39 +78,45 @@ func main() {
 		"version":                    cli.VersionHandler,
 	})
 
-	if err := defs.AssertCommandsHaveHandlers(); err != nil {
-		_ = ns.EndWithError(err)
-		os.Exit(1)
-	}
-
-	//encodings := make(map[string]interface{})
-	//
-	//kv, err := data.NewArtsReader(litres_integration.ArtsTypeFiles)
+	//acf, err := data.AbsCookiesFilename()
 	//if err != nil {
 	//	panic(err)
 	//}
 	//
-	//tpw := nod.NewProgress("art-files encodings...")
-	//defer tpw.End()
-	//
-	//tpw.TotalInt(len(kv.Keys()))
-	//
-	//for _, id := range kv.Keys() {
-	//
-	//	artFiles, err := kv.ArtsFiles(id)
-	//	if err != nil {
-	//		panic(err)
-	//	}
-	//
-	//	for _, f := range artFiles.Payload.Data {
-	//		encodings[f.EncodingType] = nil
-	//	}
-	//
-	//	tpw.Increment()
-	//
+	//cj, err := coost.NewJar(acf)
+	//if err != nil {
+	//	panic(err)
 	//}
 	//
-	//fmt.Println(maps.Keys(encodings))
+	//fmt.Println(cj)
+
+	//u := litres_integration.StatsUrl()
+	//
+	//fmt.Println(u)
+	//
+	//req, err := http.NewRequest("GET", u.String(), nil)
+	//if err != nil {
+	//	panic(err)
+	//}
+	//req.Header.Add("app-id", "115")
+	//req.Header.Add("Session-Id", "6v9d6ycb3yc5cn4k4sduale148f9a533")
+	//
+	//resp, err := http.DefaultClient.Do(req)
+	//if err != nil {
+	//	panic(err)
+	//}
+	//defer resp.Body.Close()
+	//
+	//if _, err := io.Copy(os.Stdout, resp.Body); err != nil {
+	//	panic(err)
+	//}
+	//
+	//return
+
+	if err := defs.AssertCommandsHaveHandlers(); err != nil {
+		_ = ns.EndWithError(err)
+		os.Exit(1)
+	}
 
 	if err := defs.Serve(os.Args[1:]); err != nil {
 		_ = ns.EndWithError(err)

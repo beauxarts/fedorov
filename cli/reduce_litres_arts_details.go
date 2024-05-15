@@ -5,7 +5,7 @@ import (
 	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pasu"
+	"github.com/boggydigital/pathways"
 	"net/url"
 	"strconv"
 )
@@ -60,7 +60,7 @@ func ReduceLitResArtsDetails() error {
 	wra := nod.NewProgress("writing redux values...")
 	defer wra.End()
 
-	reduxDir, err := pasu.GetAbsRelDir(data.Redux)
+	reduxDir, err := pathways.GetAbsRelDir(data.Redux)
 	if err != nil {
 		return wra.EndWithError(err)
 	}
@@ -226,10 +226,6 @@ func getArtsDetailsPropertyValues(ad *litres_integration.ArtsDetails, property s
 		val = add.HTMLAnnotationLitres
 	case data.FirstTimeSaleAtProperty:
 		val = add.FirstTimeSaleAt
-	case data.LiveLibRatedAvgProperty:
-		val = fmtFloat(add.LivelibRatedAvg)
-	case data.LiveLibRatedTotalCountProperty:
-		val = fmtInt(add.LivelibRatedCount)
 	case data.GenresIdsProperty:
 		values = make([]string, 0, len(add.Genres))
 		for _, genre := range add.Genres {

@@ -3,7 +3,7 @@ package data
 import (
 	"fmt"
 	"github.com/beauxarts/scrinium/litres_integration"
-	"github.com/boggydigital/pasu"
+	"github.com/boggydigital/pathways"
 	"path/filepath"
 	"strconv"
 )
@@ -11,15 +11,15 @@ import (
 const DefaultFedorovRootDir = "/var/lib/fedorov"
 
 const (
-	Backups   pasu.AbsDir = "backups"
-	Metadata  pasu.AbsDir = "metadata"
-	Input     pasu.AbsDir = "input"
-	Covers    pasu.AbsDir = "covers"
-	Downloads pasu.AbsDir = "downloads"
-	Imported  pasu.AbsDir = "_imported"
+	Backups   pathways.AbsDir = "backups"
+	Metadata  pathways.AbsDir = "metadata"
+	Input     pathways.AbsDir = "input"
+	Covers    pathways.AbsDir = "covers"
+	Downloads pathways.AbsDir = "downloads"
+	Imported  pathways.AbsDir = "_imported"
 )
 
-var AllAbsDirs = []pasu.AbsDir{
+var AllAbsDirs = []pathways.AbsDir{
 	Backups,
 	Metadata,
 	Input,
@@ -29,11 +29,11 @@ var AllAbsDirs = []pasu.AbsDir{
 }
 
 const (
-	Redux    pasu.RelDir = "_redux"
-	Contents pasu.RelDir = "contents"
+	Redux    pathways.RelDir = "_redux"
+	Contents pathways.RelDir = "contents"
 )
 
-var RelToAbsDirs = map[pasu.RelDir]pasu.AbsDir{
+var RelToAbsDirs = map[pathways.RelDir]pathways.AbsDir{
 	Redux:    Metadata,
 	Contents: Metadata,
 }
@@ -45,7 +45,7 @@ const (
 )
 
 func AbsDataTypeDir(stringer fmt.Stringer) (string, error) {
-	absMetadataDir, err := pasu.GetAbsDir(Metadata)
+	absMetadataDir, err := pathways.GetAbsDir(Metadata)
 	if err != nil {
 		return "", err
 	}
@@ -53,7 +53,7 @@ func AbsDataTypeDir(stringer fmt.Stringer) (string, error) {
 }
 
 func absStringerDir(stringer fmt.Stringer) (string, error) {
-	absMetadataDir, err := pasu.GetAbsDir(Metadata)
+	absMetadataDir, err := pathways.GetAbsDir(Metadata)
 	if err != nil {
 		return "", err
 	}
@@ -73,7 +73,7 @@ func AbsAuthorTypeDir(at litres_integration.AuthorType) (string, error) {
 }
 
 func AbsFileDownloadPath(id int64, file string) (string, error) {
-	absDownloadsDir, err := pasu.GetAbsDir(Downloads)
+	absDownloadsDir, err := pathways.GetAbsDir(Downloads)
 	if err != nil {
 		return "", err
 	}
@@ -82,7 +82,7 @@ func AbsFileDownloadPath(id int64, file string) (string, error) {
 }
 
 func AbsCoverImagePath(id int64, size litres_integration.CoverSize) (string, error) {
-	absCoverDir, err := pasu.GetAbsDir(Covers)
+	absCoverDir, err := pathways.GetAbsDir(Covers)
 	if err != nil {
 		return "", err
 	}
@@ -107,7 +107,7 @@ func RelCoverFilename(id string, size litres_integration.CoverSize) string {
 }
 
 func AbsCookiesFilename() (string, error) {
-	absInputDir, err := pasu.GetAbsDir(Input)
+	absInputDir, err := pathways.GetAbsDir(Input)
 	if err != nil {
 		return "", err
 	}

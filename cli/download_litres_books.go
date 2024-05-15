@@ -8,7 +8,7 @@ import (
 	"github.com/boggydigital/dolo"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pasu"
+	"github.com/boggydigital/pathways"
 	"net/url"
 	"os"
 	"path/filepath"
@@ -70,7 +70,7 @@ func DownloadLitResBooks(force bool, ids ...string) error {
 
 	dc := dolo.NewClient(hc, dolo.Defaults())
 
-	absDownloadsDir, err := pasu.GetAbsDir(data.Downloads)
+	absDownloadsDir, err := pathways.GetAbsDir(data.Downloads)
 	if err != nil {
 		return da.EndWithError(err)
 	}
@@ -110,7 +110,7 @@ func DownloadLitResBooks(force bool, ids ...string) error {
 				}
 			}
 
-			if err := dc.Download(afd.Url(id), tpw, absDownloadsDir, id, relFn); err != nil {
+			if err := dc.Download(afd.Url(id), force, tpw, absDownloadsDir, id, relFn); err != nil {
 				nod.Log(err.Error())
 				continue
 			}

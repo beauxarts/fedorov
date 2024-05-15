@@ -9,7 +9,7 @@ import (
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/kvas_dolo"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pasu"
+	"github.com/boggydigital/pathways"
 	"net/url"
 	"strings"
 )
@@ -72,7 +72,7 @@ func getSetContents(dc *dolo.Client, force bool, rdx kvas.ReadableRedux, ids ...
 		return gsc.EndWithError(err)
 	}
 
-	absContentsDir, err := pasu.GetAbsRelDir(data.Contents)
+	absContentsDir, err := pathways.GetAbsRelDir(data.Contents)
 	if err != nil {
 		return gsc.EndWithError(err)
 	}

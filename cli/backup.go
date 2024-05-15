@@ -2,9 +2,9 @@ package cli
 
 import (
 	"github.com/beauxarts/fedorov/data"
-	"github.com/boggydigital/konpo"
+	"github.com/boggydigital/backups"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pasu"
+	"github.com/boggydigital/pathways"
 	"net/url"
 )
 
@@ -17,17 +17,17 @@ func Backup() error {
 	ba := nod.NewProgress("backing up metadata...")
 	defer ba.End()
 
-	absBackupsDir, err := pasu.GetAbsDir(data.Backups)
+	absBackupsDir, err := pathways.GetAbsDir(data.Backups)
 	if err != nil {
 		return ba.EndWithError(err)
 	}
 
-	absMetadataDir, err := pasu.GetAbsDir(data.Metadata)
+	absMetadataDir, err := pathways.GetAbsDir(data.Metadata)
 	if err != nil {
 		return ba.EndWithError(err)
 	}
 
-	if err := konpo.Compress(absMetadataDir, absBackupsDir); err != nil {
+	if err := backups.Compress(absMetadataDir, absBackupsDir); err != nil {
 		return ba.EndWithError(err)
 	}
 
@@ -36,7 +36,7 @@ func Backup() error {
 	cba := nod.NewProgress("cleaning up old backups...")
 	defer cba.End()
 
-	if err := konpo.Cleanup(absBackupsDir, true, cba); err != nil {
+	if err := backups.Cleanup(absBackupsDir, true, cba); err != nil {
 		return cba.EndWithError(err)
 	}
 

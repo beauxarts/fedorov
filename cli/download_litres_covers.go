@@ -6,7 +6,7 @@ import (
 	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/dolo"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pasu"
+	"github.com/boggydigital/pathways"
 	"net/url"
 	"os"
 	"path/filepath"
@@ -20,13 +20,13 @@ func DownloadLitResCoversHandler(u *url.URL) error {
 		ids = strings.Split(idstr, ",")
 	}
 
-	forceImported := u.Query().Has("force-imported")
+	force := u.Query().Has("force")
 	skipExisting := u.Query().Has("skip-existing")
 
-	return DownloadLitResCovers(skipExisting, forceImported, ids...)
+	return DownloadLitResCovers(skipExisting, force, ids...)
 }
 
-func DownloadLitResCovers(skipExisting, forceImported bool, ids ...string) error {
+func DownloadLitResCovers(skipExisting, force bool, ids ...string) error {
 
 	gca := nod.NewProgress("downloading LitRes covers...")
 	defer gca.End()
@@ -52,7 +52,7 @@ func DownloadLitResCovers(skipExisting, forceImported bool, ids ...string) error
 
 	dc := dolo.DefaultClient
 
-	absCoversDir, err := pasu.GetAbsDir(data.Covers)
+	absCoversDir, err := pathways.GetAbsDir(data.Covers)
 	if err != nil {
 		return gca.EndWithError(err)
 	}
@@ -78,7 +78,7 @@ func DownloadLitResCovers(skipExisting, forceImported bool, ids ...string) error
 				}
 			}
 
-			if err := dc.Download(cu, nil, absCoversDir, relFn); err != nil {
+			if err := dc.Download(cu, force, nil, absCoversDir, relFn); err != nil {
 				gca.Error(err)
 			}
 
