@@ -18,10 +18,10 @@ require (
 	github.com/boggydigital/stencil v0.2.26
 	golang.org/x/exp v0.0.0-20240506185415-9bf2ced13842
 	golang.org/x/net v0.25.0
-	golang.org/x/text v0.15.0
+	golang.org/x/text v0.16.0
 )
 
 require (
 	github.com/boggydigital/wits v0.2.3 // indirect
-	golang.org/x/image v0.16.0 // indirect
+	golang.org/x/image v0.18.0 // indirect
 )
