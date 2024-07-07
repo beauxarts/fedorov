@@ -16,6 +16,10 @@ func Migrate() error {
 	ma := nod.Begin("migrating data...")
 	defer ma.End()
 
+	if err := Backup(); err != nil {
+		return ma.EndWithError(err)
+	}
+
 	dir, err := pathways.GetAbsDir(data.Metadata)
 	if err != nil {
 		return err
