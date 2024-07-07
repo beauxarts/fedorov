@@ -23,7 +23,7 @@ func GetDescription(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	desc, ok := rdx.GetFirstVal("" /*data.DescriptionProperty*/, id)
+	desc, ok := rdx.GetLastVal("" /*data.DescriptionProperty*/, id)
 
 	if !ok {
 		http.Error(w, nod.ErrorStr("book has no downloads"), http.StatusInternalServerError)

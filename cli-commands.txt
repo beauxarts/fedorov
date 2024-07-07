@@ -52,6 +52,8 @@ get-litres-series
     all-series-types
     force
 
+migrate
+
 reduce-litres-arts-details
 
 reduce-litres-history-log

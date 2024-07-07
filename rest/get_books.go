@@ -46,7 +46,7 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
 	bookTypeTotals := make(map[string]int)
 
 	for _, id := range artsIds {
-		bt, _ := rdx.GetFirstVal("" /*data.BookTypeProperty*/, id)
+		bt, _ := rdx.GetLastVal("" /*data.BookTypeProperty*/, id)
 		bookTypeTotals[bt]++
 		if !showAll && len(booksByType[bt]) >= latestBooksLimit {
 			continue
@@ -57,7 +57,7 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
 	DefaultHeaders(w)
 
 	updated := "recently"
-	if scu, ok := rdx.GetFirstVal(data.SyncCompletedProperty, data.SyncCompletedProperty); ok {
+	if scu, ok := rdx.GetLastVal(data.SyncCompletedProperty, data.SyncCompletedProperty); ok {
 		if scui, err := strconv.ParseInt(scu, 10, 64); err == nil {
 			updated = time.Unix(scui, 0).Format(time.RFC1123)
 		}

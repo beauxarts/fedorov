@@ -3,7 +3,7 @@ package cli
 import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/scrinium/litres_integration"
-	"github.com/boggydigital/kvas"
+	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/pathways"
 	"net/url"
@@ -26,7 +26,10 @@ func ReduceLitResArtsDetails() error {
 		return rlaa.EndWithError(err)
 	}
 
-	ids := atr.Keys()
+	ids, err := atr.Keys()
+	if err != nil {
+		return rlaa.EndWithError(err)
+	}
 
 	rlaa.TotalInt(len(ids))
 
@@ -65,7 +68,7 @@ func ReduceLitResArtsDetails() error {
 		return wra.EndWithError(err)
 	}
 
-	rdx, err := kvas.NewReduxWriter(reduxDir, data.ReduxProperties()...)
+	rdx, err := kevlar.NewReduxWriter(reduxDir, data.ReduxProperties()...)
 	if err != nil {
 		return wra.EndWithError(err)
 	}

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/scrinium/litres_integration"
-	"github.com/boggydigital/kvas"
+	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/match_node"
 	"github.com/boggydigital/nod"
 	"golang.org/x/net/html"
@@ -33,12 +33,17 @@ func ReduceLitResHistoryLog() error {
 		return rhla.EndWithError(err)
 	}
 
-	kv, err := kvas.ConnectLocal(absLitResHistoryLogDir, kvas.HtmlExt)
+	kv, err := kevlar.NewKeyValues(absLitResHistoryLogDir, kevlar.HtmlExt)
 	if err != nil {
 		return rhla.EndWithError(err)
 	}
 
-	totalPages := len(kv.Keys())
+	keys, err := kv.Keys()
+	if err != nil {
+		return rhla.EndWithError(err)
+	}
+
+	totalPages := len(keys)
 	artsHistoryOrder := make([]string, 0, totalPages*historyEventsPerPage)
 	artsHistoryEventTime := make(map[string][]string, totalPages*historyEventsPerPage)
 	//artsIds := make(map[string][]string, totalPages*historyEventsPerPage)

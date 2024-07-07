@@ -2,7 +2,7 @@ package cli
 
 import (
 	"github.com/beauxarts/fedorov/data"
-	"github.com/boggydigital/kvas"
+	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/nod"
 	"net/url"
 )
@@ -32,7 +32,7 @@ func Cascade() error {
 	return nil
 }
 
-func cascadeBookCompletedProperty(rdx kvas.WriteableRedux) error {
+func cascadeBookCompletedProperty(rdx kevlar.WriteableRedux) error {
 
 	bca := nod.NewProgress(" " + data.BookCompletedProperty)
 	defer bca.End()
@@ -48,7 +48,7 @@ func cascadeBookCompletedProperty(rdx kvas.WriteableRedux) error {
 
 	for _, id := range ids {
 		bca.Increment()
-		if val, ok := rdx.GetFirstVal(data.BookCompletedProperty, id); ok && val != "" {
+		if val, ok := rdx.GetLastVal(data.BookCompletedProperty, id); ok && val != "" {
 			completed[id] = []string{"true"}
 		}
 		completed[id] = []string{"false"}

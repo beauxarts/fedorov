@@ -5,7 +5,7 @@ import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/stencil_app"
 	"github.com/beauxarts/fedorov/view_models"
-	"github.com/boggydigital/kvas"
+	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/middleware"
 	"github.com/boggydigital/stencil"
 	"html/template"
@@ -17,7 +17,7 @@ const (
 )
 
 var (
-	rdx  kvas.ReadableRedux
+	rdx  kevlar.ReadableRedux
 	tmpl *template.Template
 	app  *stencil.AppConfiguration
 )

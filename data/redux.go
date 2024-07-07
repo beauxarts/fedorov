@@ -1,24 +1,24 @@
 package data
 
 import (
-	"github.com/boggydigital/kvas"
+	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/pathways"
 )
 
-func NewReduxReader(assets ...string) (kvas.ReadableRedux, error) {
+func NewReduxReader(assets ...string) (kevlar.ReadableRedux, error) {
 	reduxDir, err := pathways.GetAbsRelDir(Redux)
 	if err != nil {
 		return nil, err
 	}
 
-	return kvas.NewReduxReader(reduxDir, assets...)
+	return kevlar.NewReduxReader(reduxDir, assets...)
 }
 
-func NewReduxWriter(assets ...string) (kvas.WriteableRedux, error) {
+func NewReduxWriter(assets ...string) (kevlar.WriteableRedux, error) {
 	reduxDir, err := pathways.GetAbsRelDir(Redux)
 	if err != nil {
 		return nil, err
 	}
 
-	return kvas.NewReduxWriter(reduxDir, assets...)
+	return kevlar.NewReduxWriter(reduxDir, assets...)
 }

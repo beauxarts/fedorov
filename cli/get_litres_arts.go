@@ -6,8 +6,8 @@ import (
 	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/coost"
 	"github.com/boggydigital/dolo"
-	"github.com/boggydigital/kvas"
-	"github.com/boggydigital/kvas_dolo"
+	"github.com/boggydigital/kevlar"
+	"github.com/boggydigital/kevlar_dolo"
 	"github.com/boggydigital/nod"
 	"net/url"
 	"strings"
@@ -91,20 +91,24 @@ func getSetArtsType(dc *dolo.Client, at litres_integration.ArtsType, force bool,
 		return gsat.EndWithError(err)
 	}
 
-	kv, err := kvas.ConnectLocal(absArtsTypeDir, kvas.JsonExt)
+	kv, err := kevlar.NewKeyValues(absArtsTypeDir, kevlar.JsonExt)
 	if err != nil {
 		return gsat.EndWithError(err)
 	}
 
 	newIds := make([]string, 0, len(ids))
 	for _, id := range ids {
-		if !force && kv.Has(id) {
+		ok, err := kv.Has(id)
+		if err != nil {
+			return gsat.EndWithError(err)
+		}
+		if ok && !force {
 			continue
 		}
 		newIds = append(newIds, id)
 	}
 
-	indexSetter := kvas_dolo.NewIndexSetter(kv, newIds...)
+	indexSetter := kevlar_dolo.NewIndexSetter(kv, newIds...)
 	urls := make([]*url.URL, 0, len(newIds))
 	for _, id := range newIds {
 		urls = append(urls, litres_integration.ArtsTypeUrl(at, id))

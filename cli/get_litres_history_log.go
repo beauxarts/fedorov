@@ -6,7 +6,7 @@ import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/coost"
-	"github.com/boggydigital/kvas"
+	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/match_node"
 	"github.com/boggydigital/nod"
 	"golang.org/x/net/html"
@@ -33,7 +33,7 @@ func GetLitResHistoryLog() error {
 		return ghla.EndWithError(err)
 	}
 
-	kv, err := kvas.ConnectLocal(absLitResHistoryLogDir, kvas.HtmlExt)
+	kv, err := kevlar.NewKeyValues(absLitResHistoryLogDir, kevlar.HtmlExt)
 	if err != nil {
 		return ghla.EndWithError(err)
 	}
@@ -75,7 +75,7 @@ func GetLitResHistoryLog() error {
 	return nil
 }
 
-func getHistoryLogPage(page int, hc *http.Client, kv kvas.KeyValues, tpw nod.TotalProgressWriter) error {
+func getHistoryLogPage(page int, hc *http.Client, kv kevlar.KeyValues, tpw nod.TotalProgressWriter) error {
 	resp, err := hc.Get(litres_integration.HistoryLogPageUrl(page).String())
 	if err != nil {
 		return tpw.EndWithError(err)
@@ -103,7 +103,7 @@ type PersonalCabinetHistoryLog struct {
 	Pages int `json:"pages"`
 }
 
-func getTotalHistoryLogPages(kv kvas.KeyValues) (int, error) {
+func getTotalHistoryLogPages(kv kevlar.KeyValues) (int, error) {
 
 	if fp, err := kv.Get("1"); err != nil {
 		return 1, err

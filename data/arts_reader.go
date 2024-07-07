@@ -4,14 +4,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/beauxarts/scrinium/litres_integration"
-	"github.com/boggydigital/kvas"
-	"github.com/boggydigital/nod"
+	"github.com/boggydigital/kevlar"
 	"io"
 )
 
 type ArtsReader struct {
 	artsType  litres_integration.ArtsType
-	keyValues kvas.KeyValues
+	keyValues kevlar.KeyValues
 }
 
 func NewArtsReader(at litres_integration.ArtsType) (*ArtsReader, error) {
@@ -25,7 +24,7 @@ func NewArtsReader(at litres_integration.ArtsType) (*ArtsReader, error) {
 		artsType: at,
 	}
 
-	atr.keyValues, err = kvas.ConnectLocal(absArtsTypeDir, kvas.JsonExt)
+	atr.keyValues, err = kevlar.NewKeyValues(absArtsTypeDir, kevlar.JsonExt)
 	if err != nil {
 		return nil, err
 	}
@@ -33,11 +32,11 @@ func NewArtsReader(at litres_integration.ArtsType) (*ArtsReader, error) {
 	return atr, nil
 }
 
-func (ar *ArtsReader) Keys() []string {
+func (ar *ArtsReader) Keys() ([]string, error) {
 	return ar.keyValues.Keys()
 }
 
-func (ar *ArtsReader) Has(id string) bool { return ar.keyValues.Has(id) }
+func (ar *ArtsReader) Has(id string) (bool, error) { return ar.keyValues.Has(id) }
 
 func (ar *ArtsReader) Get(id string) (io.ReadCloser, error) { return ar.keyValues.Get(id) }
 
@@ -53,16 +52,21 @@ func (ar *ArtsReader) Cut(id string) (bool, error) {
 	return ar.keyValues.Cut(id)
 }
 
-func (ar *ArtsReader) CreatedAfter(timestamp int64) []string {
+func (ar *ArtsReader) CreatedAfter(timestamp int64) ([]string, error) {
 	return ar.keyValues.CreatedAfter(timestamp)
 }
 
-func (ar *ArtsReader) ModifiedAfter(timestamp int64, excludeCreated bool) []string {
-	return ar.keyValues.ModifiedAfter(timestamp, excludeCreated)
+func (ar *ArtsReader) ModifiedAfter(timestamp int64) ([]string, error) {
+	return ar.keyValues.UpdatedAfter(timestamp)
 }
 
-func (ar *ArtsReader) IsModifiedAfter(id string, timestamp int64) bool {
-	return ar.keyValues.IsModifiedAfter(id, timestamp)
+func (ar *ArtsReader) CreatedOrModifiedAfter(timestamp int64) ([]string, error) {
+	return ar.keyValues.CreatedOrUpdatedAfter(timestamp)
+
+}
+
+func (ar *ArtsReader) IsModifiedAfter(id string, timestamp int64) (bool, error) {
+	return ar.keyValues.IsUpdatedAfter(id, timestamp)
 }
 
 func (ar *ArtsReader) readValue(id string, val interface{}) error {
@@ -130,22 +134,6 @@ func (ar *ArtsReader) ArtsType() litres_integration.ArtsType {
 	return ar.artsType
 }
 
-func (ar *ArtsReader) IndexCurrentModTime() (int64, error) {
-	return ar.keyValues.IndexCurrentModTime()
-}
-
-func (ar *ArtsReader) CurrentModTime(id string) (int64, error) {
-	return ar.keyValues.CurrentModTime(id)
-}
-
-func (ar *ArtsReader) IndexRefresh() error {
-	return ar.keyValues.IndexRefresh()
-}
-
-func (ar *ArtsReader) VetIndexOnly(fix bool, tpw nod.TotalProgressWriter) ([]string, error) {
-	return ar.keyValues.VetIndexOnly(fix, tpw)
-}
-
-func (ar *ArtsReader) VetIndexMissing(fix bool, tpw nod.TotalProgressWriter) ([]string, error) {
-	return ar.keyValues.VetIndexMissing(fix, tpw)
+func (ar *ArtsReader) ModTime(id string) (int64, error) {
+	return ar.keyValues.ModTime(id)
 }

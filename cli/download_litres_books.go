@@ -6,7 +6,7 @@ import (
 	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/coost"
 	"github.com/boggydigital/dolo"
-	"github.com/boggydigital/kvas"
+	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/pathways"
 	"net/url"
@@ -77,7 +77,7 @@ func DownloadLitResBooks(force bool, ids ...string) error {
 
 	for _, id := range ids {
 
-		title, _ := rdx.GetFirstVal(data.TitleProperty, id)
+		title, _ := rdx.GetLastVal(data.TitleProperty, id)
 		authorsNames, err := authorsFullNames(id, rdx)
 		if err != nil {
 			return da.EndWithError(err)
@@ -85,7 +85,11 @@ func DownloadLitResBooks(force bool, ids ...string) error {
 
 		bdla := nod.Begin("%s %s - %s", id, strings.Join(authorsNames, ","), title)
 
-		if !kv.Has(id) {
+		ok, err := kv.Has(id)
+		if err != nil {
+			return da.EndWithError(err)
+		}
+		if !ok {
 			continue
 		}
 
@@ -127,7 +131,7 @@ func DownloadLitResBooks(force bool, ids ...string) error {
 	return nil
 }
 
-func authorsFullNames(id string, rdx kvas.ReadableRedux) ([]string, error) {
+func authorsFullNames(id string, rdx kevlar.ReadableRedux) ([]string, error) {
 
 	if err := rdx.MustHave(
 		data.PersonsIdsProperty,

@@ -6,8 +6,8 @@ import (
 	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/coost"
 	"github.com/boggydigital/dolo"
-	"github.com/boggydigital/kvas"
-	"github.com/boggydigital/kvas_dolo"
+	"github.com/boggydigital/kevlar"
+	"github.com/boggydigital/kevlar_dolo"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/pathways"
 	"net/url"
@@ -63,7 +63,7 @@ func GetLitresContents(force bool, ids ...string) error {
 
 }
 
-func getSetContents(dc *dolo.Client, force bool, rdx kvas.ReadableRedux, ids ...string) error {
+func getSetContents(dc *dolo.Client, force bool, rdx kevlar.ReadableRedux, ids ...string) error {
 
 	gsc := nod.NewProgress(" contents...")
 	defer gsc.End()
@@ -77,20 +77,24 @@ func getSetContents(dc *dolo.Client, force bool, rdx kvas.ReadableRedux, ids ...
 		return gsc.EndWithError(err)
 	}
 
-	kv, err := kvas.ConnectLocal(absContentsDir, kvas.XmlExt)
+	kv, err := kevlar.NewKeyValues(absContentsDir, kevlar.XmlExt)
 	if err != nil {
 		return gsc.EndWithError(err)
 	}
 
 	newIds := make([]string, 0, len(ids))
 	for _, id := range ids {
-		if !force && kv.Has(id) {
+		ok, err := kv.Has(id)
+		if err != nil {
+			return gsc.EndWithError(err)
+		}
+		if ok && !force {
 			continue
 		}
 		newIds = append(newIds, id)
 	}
 
-	indexSetter := kvas_dolo.NewIndexSetter(kv, newIds...)
+	indexSetter := kevlar_dolo.NewIndexSetter(kv, newIds...)
 	urls := make([]*url.URL, 0, len(newIds))
 	for _, id := range newIds {
 		if path, ok := rdx.GetLastVal(data.ContentsUrlProperty, id); ok && path != "" {

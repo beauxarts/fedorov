@@ -3,14 +3,14 @@ package stencil_app
 import (
 	"fmt"
 	"github.com/beauxarts/fedorov/data"
-	"github.com/boggydigital/kvas"
+	"github.com/boggydigital/kevlar"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 )
 
 var caser = cases.Title(language.Russian)
 
-func fmtSequenceNameNumber(id, name string, rdx kvas.ReadableRedux) string {
+func fmtSequenceNameNumber(id, name string, rdx kevlar.ReadableRedux) string {
 	//if err := rdx.MustHave(
 	//	data.SequenceNameProperty,
 	//	data.SequenceNumberProperty); err != nil {
@@ -31,7 +31,7 @@ func fmtSequenceNameNumber(id, name string, rdx kvas.ReadableRedux) string {
 	return name
 }
 
-func fmtLabel(_, property, link string, _ kvas.ReadableRedux) string {
+func fmtLabel(_, property, link string, _ kevlar.ReadableRedux) string {
 	label := link
 	switch property {
 	//case data.BookCompletedProperty:
@@ -44,7 +44,7 @@ func fmtLabel(_, property, link string, _ kvas.ReadableRedux) string {
 	return label
 }
 
-func fmtTitle(id, property, link string, rdx kvas.ReadableRedux) string {
+func fmtTitle(id, property, link string, rdx kevlar.ReadableRedux) string {
 	title := link
 
 	switch property {
@@ -67,7 +67,7 @@ func fmtTitle(id, property, link string, rdx kvas.ReadableRedux) string {
 	return title
 }
 
-func fmtHref(_, property, link string, _ kvas.ReadableRedux) string {
+func fmtHref(_, property, link string, _ kevlar.ReadableRedux) string {
 	switch property {
 	//case data.SequenceNameProperty:
 	//	fallthrough
@@ -97,7 +97,7 @@ func fmtHref(_, property, link string, _ kvas.ReadableRedux) string {
 	return fmt.Sprintf("/search?%s=%s", property, link)
 }
 
-func fmtAction(id, property, link string, _ kvas.ReadableRedux) string {
+func fmtAction(id, property, link string, _ kevlar.ReadableRedux) string {
 	switch property {
 	//case data.BookCompletedProperty:
 	//	if link == "true" {
@@ -111,7 +111,7 @@ func fmtAction(id, property, link string, _ kvas.ReadableRedux) string {
 	return ""
 }
 
-func fmtActionHref(id, property, link string, _ kvas.ReadableRedux) string {
+func fmtActionHref(id, property, link string, _ kevlar.ReadableRedux) string {
 	switch property {
 	//case data.BookCompletedProperty:
 	//	switch link {

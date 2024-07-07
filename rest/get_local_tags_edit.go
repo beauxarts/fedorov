@@ -29,7 +29,7 @@ func GetLocalTagsEdit(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	title, _ := rdx.GetFirstVal(data.TitleProperty, id)
+	title, _ := rdx.GetLastVal(data.TitleProperty, id)
 
 	if err := app.RenderPropertyEditor(
 		id,

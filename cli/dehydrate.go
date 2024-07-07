@@ -4,7 +4,7 @@ import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/issa"
-	"github.com/boggydigital/kvas"
+	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/nod"
 	"image"
 	"image/color"
@@ -78,7 +78,7 @@ func Dehydrate(idSet map[string]bool, all, overwrite bool) error {
 
 func dehydrateImages(
 	idSet map[string]bool,
-	rdx kvas.WriteableRedux,
+	rdx kevlar.WriteableRedux,
 	imageProperty, modifiedProperty string,
 	sizes []litres_integration.CoverSize,
 	overwrite bool) error {
@@ -95,7 +95,7 @@ func dehydrateImages(
 
 	for idStr := range idSet {
 
-		if _, ok := rdx.GetFirstVal(imageProperty, idStr); ok && !overwrite {
+		if _, ok := rdx.GetLastVal(imageProperty, idStr); ok && !overwrite {
 			continue
 		}
 

@@ -2,7 +2,7 @@ package stencil_app
 
 import (
 	"github.com/beauxarts/fedorov/data"
-	"github.com/boggydigital/kvas"
+	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/stencil"
 )
 
@@ -11,7 +11,7 @@ const (
 	appFavIconEmoji = "📇"
 )
 
-func Init(rdx kvas.ReadableRedux) (*stencil.AppConfiguration, error) {
+func Init(rdx kevlar.ReadableRedux) (*stencil.AppConfiguration, error) {
 
 	app := stencil.NewAppConfig(appTitle, appFavIconEmoji)
 

@@ -2,7 +2,7 @@ package rest
 
 import (
 	"github.com/beauxarts/fedorov/data"
-	"github.com/boggydigital/kvas"
+	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/nod"
 	"net/http"
 )
@@ -60,7 +60,7 @@ func GetLatest(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func authorsFullNames(id string, rdx kvas.ReadableRedux) ([]string, error) {
+func authorsFullNames(id string, rdx kevlar.ReadableRedux) ([]string, error) {
 
 	if err := rdx.MustHave(
 		data.PersonsIdsProperty,
