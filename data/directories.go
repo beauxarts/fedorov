@@ -16,7 +16,6 @@ const (
 	Input     pathways.AbsDir = "input"
 	Covers    pathways.AbsDir = "covers"
 	Downloads pathways.AbsDir = "downloads"
-	Imported  pathways.AbsDir = "_imported"
 )
 
 var AllAbsDirs = []pathways.AbsDir{
@@ -25,7 +24,6 @@ var AllAbsDirs = []pathways.AbsDir{
 	Input,
 	Covers,
 	Downloads,
-	Imported,
 }
 
 const (
