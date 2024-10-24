@@ -79,41 +79,6 @@ func main() {
 		"version":                    cli.VersionHandler,
 	})
 
-	//acf, err := data.AbsCookiesFilename()
-	//if err != nil {
-	//	panic(err)
-	//}
-	//
-	//cj, err := coost.NewJar(acf)
-	//if err != nil {
-	//	panic(err)
-	//}
-	//
-	//fmt.Println(cj)
-
-	//u := litres_integration.StatsUrl()
-	//
-	//fmt.Println(u)
-	//
-	//req, err := http.NewRequest("GET", u.String(), nil)
-	//if err != nil {
-	//	panic(err)
-	//}
-	//req.Header.Add("app-id", "115")
-	//req.Header.Add("Session-Id", "6v9d6ycb3yc5cn4k4sduale148f9a533")
-	//
-	//resp, err := http.DefaultClient.Do(req)
-	//if err != nil {
-	//	panic(err)
-	//}
-	//defer resp.Body.Close()
-	//
-	//if _, err := io.Copy(os.Stdout, resp.Body); err != nil {
-	//	panic(err)
-	//}
-	//
-	//return
-
 	if err := defs.AssertCommandsHaveHandlers(); err != nil {
 		_ = ns.EndWithError(err)
 		os.Exit(1)

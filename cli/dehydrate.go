@@ -88,7 +88,7 @@ func dehydrateImages(
 
 	di.TotalInt(len(idSet))
 
-	plt := issa.StdPalette()
+	plt := issa.ColorPalette()
 
 	dehydratedImages := make(map[string][]string)
 	dehydratedImageModified := make(map[string][]string)
@@ -148,7 +148,7 @@ func dehydrateImage(absImagePath string, plt color.Palette) (string, error) {
 		return dhi, err
 	}
 
-	gif := issa.GIFImage(img, plt, issa.DefaultDownSampling)
+	gif := issa.GIFImage(img, plt, issa.DefaultSampling)
 
-	return issa.Dehydrate(gif)
+	return issa.DehydrateColor(gif)
 }

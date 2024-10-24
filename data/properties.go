@@ -1,7 +1,8 @@
 package data
 
 const (
-	IdProperty = "id"
+	IdProperty         = "id"
+	MyBooksIdsProperty = "my-books-ids"
 
 	// arts history
 	ArtsHistoryOrderProperty     = "arts-history-order"
