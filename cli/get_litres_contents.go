@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/scrinium/litres_integration"
-	"github.com/boggydigital/coost"
 	"github.com/boggydigital/dolo"
 	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/kevlar_dolo"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/pathways"
+	"net/http"
 	"net/url"
 	"strings"
 )
@@ -20,12 +20,14 @@ func GetLitResContentsHandler(u *url.URL) error {
 		ids = strings.Split(idstr, ",")
 	}
 
+	sessionId := u.Query().Get("session-id")
+
 	force := u.Query().Has("force")
 
-	return GetLitresContents(force, ids...)
+	return GetLitresContents(sessionId, nil, force, ids...)
 }
 
-func GetLitresContents(force bool, ids ...string) error {
+func GetLitresContents(sessionId string, hc *http.Client, force bool, ids ...string) error {
 
 	dlca := nod.NewProgress("downloading litres contents...")
 	defer dlca.End()
@@ -41,14 +43,11 @@ func GetLitresContents(force bool, ids ...string) error {
 
 	dlca.TotalInt(len(ids))
 
-	absCookiesFilename, err := data.AbsCookiesFilename()
-	if err != nil {
-		return dlca.EndWithError(err)
-	}
-
-	hc, err := coost.NewHttpClientFromFile(absCookiesFilename)
-	if err != nil {
-		return dlca.EndWithError(err)
+	if hc == nil {
+		hc, err = getHttpClient()
+		if err != nil {
+			return dlca.EndWithError(err)
+		}
 	}
 
 	dc := dolo.NewClient(hc, dolo.Defaults())

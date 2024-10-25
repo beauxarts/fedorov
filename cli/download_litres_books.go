@@ -4,11 +4,11 @@ import (
 	"errors"
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/scrinium/litres_integration"
-	"github.com/boggydigital/coost"
 	"github.com/boggydigital/dolo"
 	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/pathways"
+	"net/http"
 	"net/url"
 	"os"
 	"path/filepath"
@@ -21,12 +21,14 @@ func DownloadLitResBooksHandler(u *url.URL) error {
 		ids = strings.Split(idstr, ",")
 	}
 
+	sessionId := u.Query().Get("session-id")
+
 	force := u.Query().Has("force")
 
-	return DownloadLitResBooks(force, ids...)
+	return DownloadLitResBooks(sessionId, nil, force, ids...)
 }
 
-func DownloadLitResBooks(force bool, ids ...string) error {
+func DownloadLitResBooks(sessionId string, hc *http.Client, force bool, ids ...string) error {
 
 	da := nod.NewProgress("downloading LitRes books...")
 	defer da.End()
@@ -58,14 +60,11 @@ func DownloadLitResBooks(force bool, ids ...string) error {
 
 	da.TotalInt(len(ids))
 
-	absCookiesFilename, err := data.AbsCookiesFilename()
-	if err != nil {
-		return da.EndWithError(err)
-	}
-
-	hc, err := coost.NewHttpClientFromFile(absCookiesFilename)
-	if err != nil {
-		return da.EndWithError(err)
+	if hc == nil {
+		hc, err = getHttpClient()
+		if err != nil {
+			return da.EndWithError(err)
+		}
 	}
 
 	dc := dolo.NewClient(hc, dolo.Defaults())

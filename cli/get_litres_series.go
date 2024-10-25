@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/scrinium/litres_integration"
-	"github.com/boggydigital/coost"
 	"github.com/boggydigital/dolo"
 	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/kevlar_dolo"
 	"github.com/boggydigital/nod"
 	"golang.org/x/exp/maps"
+	"net/http"
 	"net/url"
 	"strings"
 )
@@ -35,12 +35,14 @@ func GetLitResSeriesHandler(u *url.URL) error {
 		}
 	}
 
+	sessionId := u.Query().Get("session-id")
+
 	force := u.Query().Has("force")
 
-	return GetLitResSeries(seriesTypes, force, ids...)
+	return GetLitResSeries(seriesTypes, sessionId, nil, force, ids...)
 }
 
-func GetLitResSeries(seriesTypes []litres_integration.SeriesType, force bool, ids ...string) error {
+func GetLitResSeries(seriesTypes []litres_integration.SeriesType, sessionId string, hc *http.Client, force bool, ids ...string) error {
 	glsa := nod.NewProgress("getting litres series...")
 	defer glsa.End()
 
@@ -68,14 +70,12 @@ func GetLitResSeries(seriesTypes []litres_integration.SeriesType, force bool, id
 
 	glsa.TotalInt(len(ids))
 
-	absCookiesFilename, err := data.AbsCookiesFilename()
-	if err != nil {
-		return glsa.EndWithError(err)
-	}
-
-	hc, err := coost.NewHttpClientFromFile(absCookiesFilename)
-	if err != nil {
-		return glsa.EndWithError(err)
+	if hc == nil {
+		var err error
+		hc, err = getHttpClient()
+		if err != nil {
+			return glsa.EndWithError(err)
+		}
 	}
 
 	dc := dolo.NewClient(hc, dolo.Defaults())

@@ -71,6 +71,8 @@ func main() {
 		"get-litres-contents":        cli.GetLitResContentsHandler,
 		"get-litres-history-log":     cli.GetLitResHistoryLogHandler,
 		"get-litres-series":          cli.GetLitResSeriesHandler,
+		"get-session-id":             cli.GetSessionIdHandler,
+		"has-arts":                   cli.HasArtsHandler,
 		"migrate":                    cli.MigrateHandler,
 		"reduce-litres-arts-details": cli.ReduceLitResArtsDetailsHandler,
 		"reduce-litres-history-log":  cli.ReduceLitResHistoryLogHandler,

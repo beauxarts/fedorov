@@ -3,6 +3,8 @@ package cli
 import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/scrinium/litres_integration"
+	"github.com/boggydigital/coost"
+	"net/http"
 	"net/url"
 	"strconv"
 	"time"
@@ -15,7 +17,18 @@ func SyncHandler(u *url.URL) error {
 }
 func Sync(force bool) error {
 
-	if err := GetLitResHistoryLog(); err != nil {
+	hc, err := getHttpClient()
+	if err != nil {
+		return err
+	}
+
+	sessionId, err := GetSessionId(hc)
+
+	if err := HasArts(sessionId, hc); err != nil {
+		return err
+	}
+
+	if err := GetLitResHistoryLog(sessionId, hc); err != nil {
 		return err
 	}
 
@@ -23,7 +36,7 @@ func Sync(force bool) error {
 		return err
 	}
 
-	if err := GetLitResArts(litres_integration.AllArtsTypes(), force); err != nil {
+	if err := GetLitResArts(litres_integration.AllArtsTypes(), sessionId, hc, force); err != nil {
 		return err
 	}
 
@@ -31,15 +44,15 @@ func Sync(force bool) error {
 		return err
 	}
 
-	if err := GetLitResAuthors(litres_integration.AllAuthorTypes(), force); err != nil {
+	if err := GetLitResAuthors(litres_integration.AllAuthorTypes(), sessionId, hc, force); err != nil {
 		return err
 	}
 
-	if err := GetLitResSeries(litres_integration.AllSeriesTypes(), force); err != nil {
+	if err := GetLitResSeries(litres_integration.AllSeriesTypes(), sessionId, hc, force); err != nil {
 		return err
 	}
 
-	if err := GetLitresContents(force); err != nil {
+	if err := GetLitresContents(sessionId, hc, force); err != nil {
 		return err
 	}
 
@@ -47,7 +60,7 @@ func Sync(force bool) error {
 		return err
 	}
 
-	if err := DownloadLitResBooks(false); err != nil {
+	if err := DownloadLitResBooks(sessionId, hc, false); err != nil {
 		return err
 	}
 
@@ -72,4 +85,18 @@ func Sync(force bool) error {
 		data.SyncCompletedProperty,
 		data.SyncCompletedProperty,
 		strconv.FormatInt(time.Now().UTC().Unix(), 10))
+}
+
+func getHttpClient() (*http.Client, error) {
+	absCookiesFilename, err := data.AbsCookiesFilename()
+	if err != nil {
+		return nil, err
+	}
+
+	hc, err := coost.NewHttpClientFromFile(absCookiesFilename)
+	if err != nil {
+		return nil, err
+	}
+
+	return hc, err
 }

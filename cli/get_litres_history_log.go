@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/scrinium/litres_integration"
-	"github.com/boggydigital/coost"
 	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/match_node"
 	"github.com/boggydigital/nod"
@@ -20,11 +19,12 @@ import (
 const maxSupportedPages = 1000
 
 func GetLitResHistoryLogHandler(u *url.URL) error {
-	return GetLitResHistoryLog()
+	sessionId := u.Query().Get("session-id")
+
+	return GetLitResHistoryLog(sessionId, nil)
 }
 
-func GetLitResHistoryLog() error {
-
+func GetLitResHistoryLog(sessionId string, hc *http.Client) error {
 	ghla := nod.NewProgress("fetching LitRes history log...")
 	defer ghla.End()
 
@@ -38,14 +38,11 @@ func GetLitResHistoryLog() error {
 		return ghla.EndWithError(err)
 	}
 
-	absCookiesFilename, err := data.AbsCookiesFilename()
-	if err != nil {
-		return ghla.EndWithError(err)
-	}
-
-	hc, err := coost.NewHttpClientFromFile(absCookiesFilename)
-	if err != nil {
-		return ghla.EndWithError(err)
+	if hc == nil {
+		hc, err = getHttpClient()
+		if err != nil {
+			return ghla.EndWithError(err)
+		}
 	}
 
 	// get the first page and extract total pages

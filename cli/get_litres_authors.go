@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/scrinium/litres_integration"
-	"github.com/boggydigital/coost"
 	"github.com/boggydigital/dolo"
 	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/kevlar_dolo"
 	"github.com/boggydigital/nod"
 	"golang.org/x/exp/maps"
+	"net/http"
 	"net/url"
 	"strings"
 )
@@ -35,12 +35,13 @@ func GetLitResAuthorsHandler(u *url.URL) error {
 		}
 	}
 
+	sessionId := u.Query().Get("session-id")
 	force := u.Query().Has("force")
 
-	return GetLitResAuthors(authorTypes, force, ids...)
+	return GetLitResAuthors(authorTypes, sessionId, nil, force, ids...)
 }
 
-func GetLitResAuthors(authorTypes []litres_integration.AuthorType, force bool, ids ...string) error {
+func GetLitResAuthors(authorTypes []litres_integration.AuthorType, sessionId string, hc *http.Client, force bool, ids ...string) error {
 	glaa := nod.NewProgress("getting litres authors...")
 	defer glaa.End()
 
@@ -68,14 +69,12 @@ func GetLitResAuthors(authorTypes []litres_integration.AuthorType, force bool, i
 
 	glaa.TotalInt(len(ids))
 
-	absCookiesFilename, err := data.AbsCookiesFilename()
-	if err != nil {
-		return glaa.EndWithError(err)
-	}
-
-	hc, err := coost.NewHttpClientFromFile(absCookiesFilename)
-	if err != nil {
-		return glaa.EndWithError(err)
+	if hc == nil {
+		var err error
+		hc, err = getHttpClient()
+		if err != nil {
+			return glaa.EndWithError(err)
+		}
 	}
 
 	dc := dolo.NewClient(hc, dolo.Defaults())
