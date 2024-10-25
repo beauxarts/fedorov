@@ -35,39 +35,24 @@ func GetLitResAuthorsHandler(u *url.URL) error {
 		}
 	}
 
-	sessionId := u.Query().Get("session-id")
 	force := u.Query().Has("force")
 
-	return GetLitResAuthors(authorTypes, sessionId, nil, force, ids...)
+	return GetLitResAuthors(authorTypes, nil, force, ids...)
 }
 
-func GetLitResAuthors(authorTypes []litres_integration.AuthorType, sessionId string, hc *http.Client, force bool, ids ...string) error {
+func GetLitResAuthors(authorTypes []litres_integration.AuthorType, hc *http.Client, force bool, personsIds ...string) error {
 	glaa := nod.NewProgress("getting litres authors...")
 	defer glaa.End()
 
-	if len(ids) == 0 {
-
-		persons := make(map[string]interface{})
-
-		rdx, err := data.NewReduxReader(data.ArtsHistoryOrderProperty, data.PersonsIdsProperty)
+	if len(personsIds) == 0 {
+		var err error
+		personsIds, err = getPersonsIds(force)
 		if err != nil {
 			return glaa.EndWithError(err)
 		}
-
-		if artsIds, ok := rdx.GetAllValues(data.ArtsHistoryOrderProperty, data.ArtsHistoryOrderProperty); ok {
-			for _, id := range artsIds {
-				if personsIds, sure := rdx.GetAllValues(data.PersonsIdsProperty, id); sure {
-					for _, pid := range personsIds {
-						persons[pid] = nil
-					}
-				}
-			}
-		}
-
-		ids = maps.Keys(persons)
 	}
 
-	glaa.TotalInt(len(ids))
+	glaa.TotalInt(len(personsIds))
 
 	if hc == nil {
 		var err error
@@ -80,7 +65,7 @@ func GetLitResAuthors(authorTypes []litres_integration.AuthorType, sessionId str
 	dc := dolo.NewClient(hc, dolo.Defaults())
 
 	for _, at := range authorTypes {
-		if err := getSetAuthorType(dc, at, force, ids...); err != nil {
+		if err := getSetAuthorType(dc, at, force, personsIds...); err != nil {
 			return glaa.EndWithError(err)
 		}
 	}
@@ -88,6 +73,31 @@ func GetLitResAuthors(authorTypes []litres_integration.AuthorType, sessionId str
 	glaa.EndWithResult("done")
 
 	return nil
+}
+
+func getPersonsIds(force bool, artsIds ...string) ([]string, error) {
+	persons := make(map[string]interface{})
+
+	rdx, err := data.NewReduxReader(data.ArtsHistoryOrderProperty, data.PersonsIdsProperty)
+	if err != nil {
+		return nil, err
+	}
+
+	if len(artsIds) == 0 && force {
+		if allArtsIds, ok := rdx.GetAllValues(data.ArtsHistoryOrderProperty, data.ArtsHistoryOrderProperty); ok {
+			artsIds = allArtsIds
+		}
+	}
+
+	for _, id := range artsIds {
+		if personsIds, sure := rdx.GetAllValues(data.PersonsIdsProperty, id); sure {
+			for _, pid := range personsIds {
+				persons[pid] = nil
+			}
+		}
+	}
+
+	return maps.Keys(persons), nil
 }
 
 func getSetAuthorType(dc *dolo.Client, at litres_integration.AuthorType, force bool, ids ...string) error {

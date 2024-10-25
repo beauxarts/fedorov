@@ -35,40 +35,24 @@ func GetLitResSeriesHandler(u *url.URL) error {
 		}
 	}
 
-	sessionId := u.Query().Get("session-id")
-
 	force := u.Query().Has("force")
 
-	return GetLitResSeries(seriesTypes, sessionId, nil, force, ids...)
+	return GetLitResSeries(seriesTypes, nil, force, ids...)
 }
 
-func GetLitResSeries(seriesTypes []litres_integration.SeriesType, sessionId string, hc *http.Client, force bool, ids ...string) error {
+func GetLitResSeries(seriesTypes []litres_integration.SeriesType, hc *http.Client, force bool, seriesIds ...string) error {
 	glsa := nod.NewProgress("getting litres series...")
 	defer glsa.End()
 
-	if len(ids) == 0 {
-
-		series := make(map[string]interface{})
-
-		rdx, err := data.NewReduxReader(data.ArtsHistoryOrderProperty, data.SeriesIdProperty)
+	if len(seriesIds) == 0 {
+		var err error
+		seriesIds, err = getSeriesIds(force)
 		if err != nil {
 			return glsa.EndWithError(err)
 		}
-
-		if artsIds, ok := rdx.GetAllValues(data.ArtsHistoryOrderProperty, data.ArtsHistoryOrderProperty); ok {
-			for _, id := range artsIds {
-				if seriesIds, sure := rdx.GetAllValues(data.SeriesIdProperty, id); sure {
-					for _, sid := range seriesIds {
-						series[sid] = nil
-					}
-				}
-			}
-		}
-
-		ids = maps.Keys(series)
 	}
 
-	glsa.TotalInt(len(ids))
+	glsa.TotalInt(len(seriesIds))
 
 	if hc == nil {
 		var err error
@@ -81,7 +65,7 @@ func GetLitResSeries(seriesTypes []litres_integration.SeriesType, sessionId stri
 	dc := dolo.NewClient(hc, dolo.Defaults())
 
 	for _, st := range seriesTypes {
-		if err := getSetSeriesType(dc, st, force, ids...); err != nil {
+		if err := getSetSeriesType(dc, st, force, seriesIds...); err != nil {
 			return glsa.EndWithError(err)
 		}
 	}
@@ -89,6 +73,31 @@ func GetLitResSeries(seriesTypes []litres_integration.SeriesType, sessionId stri
 	glsa.EndWithResult("done")
 
 	return nil
+}
+
+func getSeriesIds(force bool, artsIds ...string) ([]string, error) {
+	series := make(map[string]interface{})
+
+	rdx, err := data.NewReduxReader(data.ArtsHistoryOrderProperty, data.SeriesIdProperty)
+	if err != nil {
+		return nil, err
+	}
+
+	if len(artsIds) == 0 && force {
+		if allArtsIds, ok := rdx.GetAllValues(data.ArtsHistoryOrderProperty, data.ArtsHistoryOrderProperty); ok {
+			artsIds = allArtsIds
+		}
+	}
+
+	for _, id := range artsIds {
+		if seriesIds, sure := rdx.GetAllValues(data.SeriesIdProperty, id); sure {
+			for _, sid := range seriesIds {
+				series[sid] = nil
+			}
+		}
+	}
+
+	return maps.Keys(series), nil
 }
 
 func getSetSeriesType(dc *dolo.Client, st litres_integration.SeriesType, force bool, ids ...string) error {

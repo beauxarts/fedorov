@@ -20,14 +20,12 @@ func GetLitResContentsHandler(u *url.URL) error {
 		ids = strings.Split(idstr, ",")
 	}
 
-	sessionId := u.Query().Get("session-id")
-
 	force := u.Query().Has("force")
 
-	return GetLitresContents(sessionId, nil, force, ids...)
+	return GetLitresContents(nil, force, ids...)
 }
 
-func GetLitresContents(sessionId string, hc *http.Client, force bool, ids ...string) error {
+func GetLitresContents(hc *http.Client, force bool, ids ...string) error {
 
 	dlca := nod.NewProgress("downloading litres contents...")
 	defer dlca.End()
@@ -38,7 +36,10 @@ func GetLitresContents(sessionId string, hc *http.Client, force bool, ids ...str
 	}
 
 	if len(ids) == 0 {
-		ids = rdx.Keys(data.ContentsUrlProperty)
+		ids, err = GetRecentArts(force) // = rdx.Keys(data.ContentsUrlProperty)
+		if err != nil {
+			return dlca.EndWithError(err)
+		}
 	}
 
 	dlca.TotalInt(len(ids))

@@ -1,7 +1,6 @@
 package cli
 
 import (
-	"errors"
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/dolo"
@@ -26,29 +25,22 @@ func DownloadLitResCoversHandler(u *url.URL) error {
 	return DownloadLitResCovers(skipExisting, force, ids...)
 }
 
-func DownloadLitResCovers(skipExisting, force bool, ids ...string) error {
+func DownloadLitResCovers(skipExisting, force bool, artsIds ...string) error {
 
 	gca := nod.NewProgress("downloading LitRes covers...")
 	defer gca.End()
 
-	rdx, err := data.NewReduxReader(
-		data.ArtsHistoryOrderProperty)
-	if err != nil {
-		return gca.EndWithError(err)
-	}
-
-	if len(ids) == 0 {
-		var ok bool
-		ids, ok = rdx.GetAllValues(data.ArtsHistoryOrderProperty, data.ArtsHistoryOrderProperty)
-		if !ok {
-			err = errors.New("no arts history order found")
+	if len(artsIds) == 0 {
+		var err error
+		artsIds, err = GetRecentArts(force)
+		if err != nil {
 			return gca.EndWithError(err)
 		}
 	}
 
 	sizes := litres_integration.AllCoverSizes()
 
-	gca.TotalInt(len(ids) * len(sizes))
+	gca.TotalInt(len(artsIds) * len(sizes))
 
 	dc := dolo.DefaultClient
 
@@ -57,7 +49,7 @@ func DownloadLitResCovers(skipExisting, force bool, ids ...string) error {
 		return gca.EndWithError(err)
 	}
 
-	for _, id := range ids {
+	for _, id := range artsIds {
 
 		idn, err := strconv.ParseInt(id, 10, 64)
 		if err != nil {

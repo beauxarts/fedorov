@@ -34,32 +34,25 @@ func GetLitResArtsHandler(u *url.URL) error {
 		}
 	}
 
-	sessionId := u.Query().Get("session-id")
-
 	force := u.Query().Has("force")
 
-	return GetLitResArts(artsTypes, sessionId, nil, force, ids...)
+	return GetLitResArts(artsTypes, nil, force, ids...)
 }
 
-func GetLitResArts(artsTypes []litres_integration.ArtsType, sessionId string, hc *http.Client, force bool, ids ...string) error {
+func GetLitResArts(artsTypes []litres_integration.ArtsType, hc *http.Client, force bool, artsIds ...string) error {
 
 	glaa := nod.NewProgress("getting litres arts...")
 	defer glaa.End()
 
-	if len(ids) == 0 {
-		rdx, err := data.NewReduxReader(data.ArtsHistoryOrderProperty)
+	if len(artsIds) == 0 {
+		var err error
+		artsIds, err = GetRecentArts(force)
 		if err != nil {
 			return glaa.EndWithError(err)
 		}
-
-		if artsIds, ok := rdx.GetAllValues(data.ArtsHistoryOrderProperty, data.ArtsHistoryOrderProperty); ok {
-			for _, mbid := range artsIds {
-				ids = append(ids, mbid)
-			}
-		}
 	}
 
-	glaa.TotalInt(len(ids))
+	glaa.TotalInt(len(artsIds))
 
 	if hc == nil {
 		var err error
@@ -72,7 +65,7 @@ func GetLitResArts(artsTypes []litres_integration.ArtsType, sessionId string, hc
 	dc := dolo.NewClient(hc, dolo.Defaults())
 
 	for _, at := range artsTypes {
-		if err := getSetArtsType(dc, at, force, ids...); err != nil {
+		if err := getSetArtsType(dc, at, force, artsIds...); err != nil {
 			return glaa.EndWithError(err)
 		}
 	}

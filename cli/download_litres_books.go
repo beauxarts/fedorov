@@ -1,7 +1,6 @@
 package cli
 
 import (
-	"errors"
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/dolo"
@@ -21,14 +20,12 @@ func DownloadLitResBooksHandler(u *url.URL) error {
 		ids = strings.Split(idstr, ",")
 	}
 
-	sessionId := u.Query().Get("session-id")
-
 	force := u.Query().Has("force")
 
-	return DownloadLitResBooks(sessionId, nil, force, ids...)
+	return DownloadLitResBooks(nil, force, ids...)
 }
 
-func DownloadLitResBooks(sessionId string, hc *http.Client, force bool, ids ...string) error {
+func DownloadLitResBooks(hc *http.Client, force bool, artsIds ...string) error {
 
 	da := nod.NewProgress("downloading LitRes books...")
 	defer da.End()
@@ -49,16 +46,14 @@ func DownloadLitResBooks(sessionId string, hc *http.Client, force bool, ids ...s
 		return da.EndWithError(err)
 	}
 
-	if ids == nil {
-		var ok bool
-		ids, ok = rdx.GetAllValues(data.ArtsHistoryOrderProperty, data.ArtsHistoryOrderProperty)
-		if !ok {
-			err = errors.New("no arts history order found")
+	if artsIds == nil {
+		artsIds, err = GetRecentArts(force)
+		if err != nil {
 			return da.EndWithError(err)
 		}
 	}
 
-	da.TotalInt(len(ids))
+	da.TotalInt(len(artsIds))
 
 	if hc == nil {
 		hc, err = getHttpClient()
@@ -74,7 +69,7 @@ func DownloadLitResBooks(sessionId string, hc *http.Client, force bool, ids ...s
 		return da.EndWithError(err)
 	}
 
-	for _, id := range ids {
+	for _, id := range artsIds {
 
 		title, _ := rdx.GetLastVal(data.TitleProperty, id)
 		authorsNames, err := authorsFullNames(id, rdx)

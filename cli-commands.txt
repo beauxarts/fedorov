@@ -16,11 +16,9 @@ complete
 
 dehydrate
     id^&
-    all
-    overwrite
+    force
 
 download-litres-books
-    session-id*
     id^&
     force
 
@@ -30,21 +28,18 @@ download-litres-covers
     skip-existing
 
 get-litres-arts
-    session-id*
     id^&
     arts-type*&={arts-types^}
     all-arts-types
     force
 
 get-litres-authors
-    session-id*
     id^&
     author-type*&={author-types^}
     all-author-types
     force
 
 get-litres-contents
-    session-id*
     id^&
     force
 
@@ -52,10 +47,20 @@ get-litres-history-log
     session-id*
 
 get-litres-series
-    session-id*
     id^&
     series-type*&={series-types^}
     all-series-types
+    force
+
+get-recent-arts
+    force
+
+get-recent-persons
+    art-id^&
+    force
+
+get-recent-series
+    art-id^&
     force
 
 get-session-id

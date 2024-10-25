@@ -38,6 +38,11 @@ func GetLitResHistoryLog(sessionId string, hc *http.Client) error {
 		return ghla.EndWithError(err)
 	}
 
+	currentKeys, err := kv.Keys()
+	if err != nil {
+		return ghla.EndWithError(err)
+	}
+
 	if hc == nil {
 		hc, err = getHttpClient()
 		if err != nil {
@@ -58,6 +63,12 @@ func GetLitResHistoryLog(sessionId string, hc *http.Client) error {
 		return ghla.EndWithError(err)
 	}
 
+	if totalPages == len(currentKeys) {
+		// no new pages were added since the last sync, no need to download the rest
+		ghla.EndWithResult("no need to download more pages")
+		return nil
+	}
+
 	ghla.TotalInt(totalPages)
 
 	for page = 2; page <= totalPages; page++ {
@@ -65,6 +76,8 @@ func GetLitResHistoryLog(sessionId string, hc *http.Client) error {
 			return ghla.EndWithError(err)
 		}
 	}
+
+	ghla.EndWithResult("done")
 
 	return nil
 }

@@ -15,6 +15,7 @@ func SyncHandler(u *url.URL) error {
 
 	return Sync(force)
 }
+
 func Sync(force bool) error {
 
 	hc, err := getHttpClient()
@@ -36,7 +37,12 @@ func Sync(force bool) error {
 		return err
 	}
 
-	if err := GetLitResArts(litres_integration.AllArtsTypes(), sessionId, hc, force); err != nil {
+	recentArtsIds, err := GetRecentArts(force)
+	if err != nil {
+		return err
+	}
+
+	if err := GetLitResArts(litres_integration.AllArtsTypes(), hc, force, recentArtsIds...); err != nil {
 		return err
 	}
 
@@ -44,15 +50,25 @@ func Sync(force bool) error {
 		return err
 	}
 
-	if err := GetLitResAuthors(litres_integration.AllAuthorTypes(), sessionId, hc, force); err != nil {
+	recentPersonsIds, err := GetRecentPersons(force, recentArtsIds...)
+	if err != nil {
 		return err
 	}
 
-	if err := GetLitResSeries(litres_integration.AllSeriesTypes(), sessionId, hc, force); err != nil {
+	if err := GetLitResAuthors(litres_integration.AllAuthorTypes(), hc, force, recentPersonsIds...); err != nil {
 		return err
 	}
 
-	if err := GetLitresContents(sessionId, hc, force); err != nil {
+	recentSeriesIds, err := GetRecentSeries(force, recentArtsIds...)
+	if err != nil {
+		return err
+	}
+
+	if err := GetLitResSeries(litres_integration.AllSeriesTypes(), hc, force, recentSeriesIds...); err != nil {
+		return err
+	}
+
+	if err := GetLitresContents(hc, force, recentArtsIds...); err != nil {
 		return err
 	}
 
@@ -60,15 +76,15 @@ func Sync(force bool) error {
 		return err
 	}
 
-	if err := DownloadLitResBooks(sessionId, hc, false); err != nil {
+	if err := DownloadLitResBooks(hc, force, recentArtsIds...); err != nil {
 		return err
 	}
 
-	if err := DownloadLitResCovers(true, false); err != nil {
+	if err := DownloadLitResCovers(true, force, recentArtsIds...); err != nil {
 		return err
 	}
 
-	if err := Dehydrate(map[string]bool{}, true, false); err != nil {
+	if err := Dehydrate(force, recentArtsIds...); err != nil {
 		return err
 	}
 

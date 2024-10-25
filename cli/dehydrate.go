@@ -17,20 +17,17 @@ import (
 )
 
 func DehydrateHandler(u *url.URL) error {
-	idSet := make(map[string]bool)
-	if idstr := u.Query().Get("id"); idstr != "" {
-		for _, id := range strings.Split(idstr, ",") {
-			idSet[id] = true
-		}
+	var artsIds []string
+	if idstr := u.Query().Get("arts-id"); idstr != "" {
+		artsIds = strings.Split(idstr, ",")
 	}
 
-	all := u.Query().Has("all")
-	overwrite := u.Query().Has("overwrite")
+	force := u.Query().Has("force")
 
-	return Dehydrate(idSet, all, overwrite)
+	return Dehydrate(force, artsIds...)
 }
 
-func Dehydrate(idSet map[string]bool, all, overwrite bool) error {
+func Dehydrate(force bool, artsIds ...string) error {
 
 	di := nod.Begin("dehydrating images...")
 	defer di.End()
@@ -45,31 +42,30 @@ func Dehydrate(idSet map[string]bool, all, overwrite bool) error {
 		return di.EndWithError(err)
 	}
 
-	if all {
-		if all, ok := rdx.GetAllValues(data.ArtsHistoryOrderProperty, data.ArtsHistoryOrderProperty); ok {
-			for _, id := range all {
-				idSet[id] = true
-			}
+	if force {
+		artsIds, err = GetRecentArts(force)
+		if err != nil {
+			return di.EndWithError(err)
 		}
 	}
 
 	if err := dehydrateImages(
-		idSet,
 		rdx,
 		data.DehydratedItemImageProperty,
 		data.DehydratedItemImageModifiedProperty,
 		data.CoverSizesDesc,
-		overwrite); err != nil {
+		force,
+		artsIds...); err != nil {
 		return di.EndWithError(err)
 	}
 
 	if err := dehydrateImages(
-		idSet,
 		rdx,
 		data.DehydratedListImageProperty,
 		data.DehydratedListImageModifiedProperty,
 		data.CoverSizesAsc,
-		overwrite); err != nil {
+		force,
+		artsIds...); err != nil {
 		return di.EndWithError(err)
 	}
 
@@ -77,25 +73,25 @@ func Dehydrate(idSet map[string]bool, all, overwrite bool) error {
 }
 
 func dehydrateImages(
-	idSet map[string]bool,
 	rdx kevlar.WriteableRedux,
 	imageProperty, modifiedProperty string,
 	sizes []litres_integration.CoverSize,
-	overwrite bool) error {
+	force bool,
+	ids ...string) error {
 
 	di := nod.NewProgress(" dehydrating %s...", imageProperty)
 	defer di.End()
 
-	di.TotalInt(len(idSet))
+	di.TotalInt(len(ids))
 
 	plt := issa.ColorPalette()
 
 	dehydratedImages := make(map[string][]string)
 	dehydratedImageModified := make(map[string][]string)
 
-	for idStr := range idSet {
+	for _, idStr := range ids {
 
-		if _, ok := rdx.GetLastVal(imageProperty, idStr); ok && !overwrite {
+		if _, ok := rdx.GetLastVal(imageProperty, idStr); ok && !force {
 			continue
 		}
 
@@ -130,6 +126,8 @@ func dehydrateImages(
 	if err := rdx.BatchReplaceValues(modifiedProperty, dehydratedImageModified); err != nil {
 		return di.EndWithError(err)
 	}
+
+	di.EndWithResult("done")
 
 	return nil
 }
