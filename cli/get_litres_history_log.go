@@ -60,9 +60,6 @@ func GetLitResHistoryLog(sessionId string, hc *http.Client) error {
 
 	ghla.TotalInt(totalPages)
 
-	// increment to account for the first page downloaded
-	ghla.Increment()
-
 	for page = 2; page <= totalPages; page++ {
 		if err := getHistoryLogPage(page, hc, kv, ghla); err != nil {
 			return ghla.EndWithError(err)
