@@ -52,8 +52,6 @@ func GetLatest(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	DefaultHeaders(w)
-
 	if err := tmpl.ExecuteTemplate(w, "latest", lbvm); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return

@@ -54,8 +54,6 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
 		booksByType[bt] = append(booksByType[bt], id)
 	}
 
-	DefaultHeaders(w)
-
 	updated := "recently"
 	if scu, ok := rdx.GetLastVal(data.SyncCompletedProperty, data.SyncCompletedProperty); ok {
 		if scui, err := strconv.ParseInt(scu, 10, 64); err == nil {

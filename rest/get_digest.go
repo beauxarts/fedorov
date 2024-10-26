@@ -44,8 +44,6 @@ func GetDigest(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	DefaultHeaders(w)
-
 	if err := json.NewEncoder(w).Encode(valueTitles); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return

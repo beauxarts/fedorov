@@ -63,8 +63,6 @@ func GetDownloads(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	DefaultHeaders(w)
-
 	if err := app.RenderSection(idstr, stencil_app.DownloadsSection, sb.String(), w); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return

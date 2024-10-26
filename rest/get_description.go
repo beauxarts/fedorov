@@ -30,8 +30,6 @@ func GetDescription(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	DefaultHeaders(w)
-
 	if err := app.RenderSection(id, stencil_app.DescriptionSection, desc, w); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return

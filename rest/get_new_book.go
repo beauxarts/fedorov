@@ -77,8 +77,6 @@ func GetNewBook(w http.ResponseWriter, r *http.Request) {
 		nbvm.Downloads = append(nbvm.Downloads, dvm)
 	}
 
-	DefaultHeaders(w)
-
 	if err := tmpl.ExecuteTemplate(w, "new_book", nbvm); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return
