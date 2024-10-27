@@ -23,6 +23,7 @@ require (
 
 require (
 	github.com/boggydigital/busan v0.1.0 // indirect
+	github.com/boggydigital/compton v0.1.90 // indirect
 	github.com/boggydigital/wits v0.2.3 // indirect
 	golang.org/x/image v0.21.0 // indirect
 )

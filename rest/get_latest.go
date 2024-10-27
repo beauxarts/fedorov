@@ -2,6 +2,12 @@ package rest
 
 import (
 	"github.com/beauxarts/fedorov/data"
+	"github.com/beauxarts/fedorov/rest/compton_fragments"
+	"github.com/beauxarts/fedorov/rest/compton_styles"
+	"github.com/boggydigital/compton"
+	"github.com/boggydigital/compton/consts/align"
+	"github.com/boggydigital/compton/consts/direction"
+	"github.com/boggydigital/compton/consts/input_types"
 	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/nod"
 	"net/http"
@@ -25,7 +31,14 @@ func GetLatest(w http.ResponseWriter, r *http.Request) {
 
 	all := r.URL.Query().Has("all")
 
-	lbvm := make([]*LatestBookViewModel, 0, latestBooksLimit)
+	page := compton.Page("Latest")
+	page.RegisterStyles(compton_styles.Styles, "book-labels.css")
+
+	stack := compton.FlexItems(page, direction.Column)
+	page.Append(stack)
+
+	gridItems := compton.GridItems(page).JustifyContent(align.Center)
+	stack.Append(gridItems)
 
 	if ahop, ok := rdx.GetAllValues(data.ArtsHistoryOrderProperty, data.ArtsHistoryOrderProperty); ok {
 
@@ -34,25 +47,18 @@ func GetLatest(w http.ResponseWriter, r *http.Request) {
 		}
 
 		for _, id := range ahop {
-			title := ""
-			if t, ok := rdx.GetLastVal(data.TitleProperty, id); ok {
-				title = t
-			}
-
-			var authors []string
-			if aus, err := authorsFullNames(id, rdx); err == nil {
-				authors = aus
-			}
-
-			lbvm = append(lbvm, &LatestBookViewModel{
-				Id:      id,
-				Title:   title,
-				Authors: authors,
-			})
+			bookLink := compton.A("/new_book?id=" + id)
+			bookCard := compton_fragments.BookCard(page, id, false, rdx)
+			bookLink.Append(bookCard)
+			gridItems.Append(bookLink)
 		}
 	}
 
-	if err := tmpl.ExecuteTemplate(w, "latest", lbvm); err != nil {
+	showAllLink := compton.A("/latest?all")
+	showAllLink.Append(compton.InputValue(page, input_types.Button, "Show All"))
+	stack.Append(compton.FICenter(page, showAllLink))
+
+	if err := page.WriteResponse(w); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return
 	}
