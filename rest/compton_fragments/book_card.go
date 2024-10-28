@@ -2,6 +2,7 @@ package compton_fragments
 
 import (
 	"github.com/beauxarts/fedorov/data"
+	"github.com/beauxarts/fedorov/rest/compton_data"
 	"github.com/boggydigital/compton"
 	"github.com/boggydigital/compton/consts/size"
 	"github.com/boggydigital/kevlar"
@@ -18,8 +19,8 @@ func BookCard(r compton.Registrar, id string, hydrated bool, rdx kevlar.Readable
 	placeholderSrc := dhSrc
 	bc.AppendPoster(placeholderSrc, posterUrl, hydrated)
 
-	bc.WidthPixels(100)
-	bc.HeightPixels(100)
+	bc.WidthPixels(80)
+	bc.HeightPixels(120)
 
 	if title, ok := rdx.GetLastVal(data.TitleProperty, id); ok {
 		bc.AppendTitle(title)
@@ -33,20 +34,32 @@ func BookCard(r compton.Registrar, id string, hydrated bool, rdx kevlar.Readable
 	}
 
 	if authors, ok := rdx.GetAllValues(data.AuthorsProperty, id); ok && len(authors) > 0 {
-		bc.AppendProperty("Автор", compton.Text(strings.Join(authors, ", ")))
+		bc.AppendProperty(compton_data.PropertyTitles[data.AuthorsProperty], compton.Text(strings.Join(authors, ", ")))
+	}
+
+	if readers, ok := rdx.GetAllValues(data.ReadersProperty, id); ok && len(readers) > 0 {
+		bc.AppendProperty(compton_data.PropertyTitles[data.ReadersProperty], compton.Text(strings.Join(readers, ", ")))
+	} else if illustrators, ok := rdx.GetAllValues(data.IllustratorsProperty, id); ok && len(illustrators) > 0 {
+		bc.AppendProperty(compton_data.ShortPropertyTitles[data.IllustratorsProperty], compton.Text(strings.Join(illustrators, ", ")))
+	} else if translators, ok := rdx.GetAllValues(data.TranslatorsProperty, id); ok && len(translators) > 0 {
+		bc.AppendProperty(compton_data.PropertyTitles[data.TranslatorsProperty], compton.Text(strings.Join(translators, ", ")))
 	}
 
 	if dwa, ok := rdx.GetLastVal(data.DateWrittenAtProperty, id); ok {
-		yearWrittenAt := 0
-		if dateWrittenAt, err := time.Parse("2006-01-02", dwa); err == nil {
-			if dateWrittenAt.Month() == 1 && dateWrittenAt.Day() == 1 {
-				yearWrittenAt = dateWrittenAt.Year() - 1
-			} else {
-				yearWrittenAt = dateWrittenAt.Year()
-			}
-		}
-		bc.AppendProperty("Написано", compton.Text(strconv.Itoa(yearWrittenAt)))
+		bc.AppendProperty(compton_data.PropertyTitles[data.DateWrittenAtProperty], compton.Text(fmtYearWrittenAt(dwa)))
 	}
 
 	return bc
+}
+
+func fmtYearWrittenAt(dwa string) string {
+	yearWrittenAt := 0
+	if dateWrittenAt, err := time.Parse("2006-01-02", dwa); err == nil {
+		if dateWrittenAt.Month() == 1 && dateWrittenAt.Day() == 1 {
+			yearWrittenAt = dateWrittenAt.Year() - 1
+		} else {
+			yearWrittenAt = dateWrittenAt.Year()
+		}
+	}
+	return strconv.Itoa(yearWrittenAt)
 }

@@ -3,8 +3,8 @@ package compton_data
 import "github.com/boggydigital/compton"
 
 const (
-	AppNavLatest = "Latest"
-	AppNavSearch = "Search"
+	AppNavLatest = "Книги"
+	AppNavSearch = "Поиск"
 )
 
 var AppNavOrder = []string{AppNavLatest, AppNavSearch}
@@ -15,6 +15,6 @@ var AppNavIcons = map[string]compton.Symbol{
 }
 
 var AppNavLinks = map[string]string{
-	AppNavLatest: "/updates",
+	AppNavLatest: "/latest",
 	AppNavSearch: "/search",
 }

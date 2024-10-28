@@ -67,7 +67,7 @@ func cascadePersonsRolesProperties(rdx kevlar.WriteableRedux) error {
 						propertyMap = performers
 					case "publisher":
 						propertyMap = publishers
-					case "readers":
+					case "reader":
 						propertyMap = readers
 					case "translator":
 						propertyMap = translators

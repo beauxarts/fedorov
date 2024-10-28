@@ -16,6 +16,8 @@ import (
 	"net/http"
 )
 
+const dehydratedCount = 10
+
 type LatestBookViewModel struct {
 	Id      string
 	Title   string
@@ -34,7 +36,18 @@ func GetLatest(w http.ResponseWriter, r *http.Request) {
 
 	all := r.URL.Query().Has("all")
 
-	p := compton.Page("Latest")
+	var ids []string
+	var total int
+
+	if ahop, ok := rdx.GetAllValues(data.ArtsHistoryOrderProperty, data.ArtsHistoryOrderProperty); ok {
+		total = len(ahop)
+		if !all {
+			ahop = ahop[:latestBooksLimit]
+		}
+		ids = ahop
+	}
+
+	p := compton.Page(compton_data.AppNavLatest)
 	p.RegisterStyles(compton_styles.Styles, "book-labels.css")
 
 	stack := compton.FlexItems(p, direction.Column)
@@ -43,7 +56,7 @@ func GetLatest(w http.ResponseWriter, r *http.Request) {
 	appNav := compton_fragments.AppNavLinks(p, compton_data.AppNavLatest)
 
 	showAllLink := compton.A("/latest?all")
-	showAllLink.Append(compton.InputValue(p, input_types.Button, "Show All"))
+	showAllLink.Append(compton.InputValue(p, input_types.Button, "Показать все"))
 
 	topNav := compton.FICenter(p, appNav)
 	if !all {
@@ -52,33 +65,31 @@ func GetLatest(w http.ResponseWriter, r *http.Request) {
 
 	stack.Append(topNav)
 
-	lpTitle := compton.DSTitle(p, "Последние приобретения")
+	title := "Последние приобретения"
+	if all {
+		title = "Все книги"
+	}
+	lpTitle := compton.DSTitle(p, title)
+
 	latestPurchases := compton.DSLarge(p, lpTitle, true).
 		BackgroundColor(color.Highlight).
 		SummaryMarginBlockEnd(size.Normal).
 		DetailsMarginBlockEnd(size.Unset).
 		SummaryRowGap(size.XXSmall)
 
-	//itemsCount := compton_fragments.ItemsCount(p, 0, len(ids), updateTotals[section])
-	//sectionDetailsToggle.AppendSummary(itemsCount)
+	itemsCount := compton_fragments.ItemsCount(p, 0, len(ids), total)
+	latestPurchases.AppendSummary(itemsCount)
 
 	stack.Append(latestPurchases)
 
 	gridItems := compton.GridItems(p).JustifyContent(align.Center)
 	latestPurchases.Append(gridItems)
 
-	if ahop, ok := rdx.GetAllValues(data.ArtsHistoryOrderProperty, data.ArtsHistoryOrderProperty); ok {
-
-		if !all {
-			ahop = ahop[:latestBooksLimit]
-		}
-
-		for _, id := range ahop {
-			bookLink := compton.A("/new_book?id=" + id)
-			bookCard := compton_fragments.BookCard(p, id, false, rdx)
-			bookLink.Append(bookCard)
-			gridItems.Append(bookLink)
-		}
+	for ii, id := range ids {
+		bookLink := compton.A("/new_book?id=" + id)
+		bookCard := compton_fragments.BookCard(p, id, ii < dehydratedCount, rdx)
+		bookLink.Append(bookCard)
+		gridItems.Append(bookLink)
 	}
 
 	if !all {
