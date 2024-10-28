@@ -2,6 +2,7 @@ package compton_fragments
 
 import (
 	"github.com/beauxarts/fedorov/data"
+	"github.com/beauxarts/fedorov/rest/compton_data"
 	"github.com/boggydigital/compton"
 	"github.com/boggydigital/kevlar"
 )
@@ -15,7 +16,9 @@ var artTypesTitles = map[string]string{
 func FormatLabels(id string, rdx kevlar.ReadableRedux) []compton.FormattedLabel {
 	fmtLabels := make([]compton.FormattedLabel, 0)
 
-	fmtLabels = append(fmtLabels, formatLabel(id, data.ArtTypeProperty, rdx))
+	for _, p := range compton_data.LabelProperties {
+		fmtLabels = append(fmtLabels, formatLabel(id, p, rdx))
+	}
 
 	return fmtLabels
 }
@@ -26,11 +29,15 @@ func formatLabel(id, property string, rdx kevlar.ReadableRedux) compton.Formatte
 		Property: property,
 	}
 
-	fmtLabel.Title, _ = rdx.GetLastVal(property, id)
+	val, _ := rdx.GetLastVal(property, id)
 
 	switch property {
+	//case data.BookCompletedProperty:
+	//	if val == "true" {
+	//		fmtLabel.Title = "Прочитано"
+	//	}
 	case data.ArtTypeProperty:
-		fmtLabel.Title = artTypesTitles[fmtLabel.Title]
+		fmtLabel.Title = artTypesTitles[val]
 	}
 
 	return fmtLabel

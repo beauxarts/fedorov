@@ -89,6 +89,28 @@ func main() {
 		os.Exit(1)
 	}
 
+	//rd, err := pathways.GetAbsRelDir(data.Redux)
+	//if err != nil {
+	//	panic(err)
+	//}
+	//
+	//rdx, err := kevlar.NewReduxReader(rd, data.ReduxProperties()...)
+	//if err != nil {
+	//	panic(err)
+	//}
+	//
+	//uniqueRoles := make(map[string]int)
+	//
+	//for _, id := range rdx.Keys(data.PersonsRolesProperty) {
+	//	if roles, ok := rdx.GetAllValues(data.PersonsRolesProperty, id); ok {
+	//		for _, role := range roles {
+	//			uniqueRoles[role] = uniqueRoles[role] + 1
+	//		}
+	//	}
+	//}
+	//
+	//fmt.Println(uniqueRoles)
+
 	if err := defs.Serve(os.Args[1:]); err != nil {
 		_ = ns.EndWithError(err)
 		os.Exit(1)

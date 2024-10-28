@@ -32,18 +32,7 @@ func BookCard(r compton.Registrar, id string, hydrated bool, rdx kevlar.Readable
 		bc.AppendLabels(labels)
 	}
 
-	persons, _ := rdx.GetAllValues(data.PersonsIdsProperty, id)
-	roles, _ := rdx.GetAllValues(data.PersonsRolesProperty, id)
-
-	if len(persons) == len(roles) {
-		authors := make([]string, 0)
-		for ii, person := range persons {
-			if roles[ii] == "author" {
-				if fullName, ok := rdx.GetLastVal(data.PersonFullNameProperty, person); ok {
-					authors = append(authors, fullName)
-				}
-			}
-		}
+	if authors, ok := rdx.GetAllValues(data.AuthorsProperty, id); ok && len(authors) > 0 {
 		bc.AppendProperty("Автор", compton.Text(strings.Join(authors, ", ")))
 	}
 
@@ -59,7 +48,6 @@ func BookCard(r compton.Registrar, id string, hydrated bool, rdx kevlar.Readable
 		bc.AppendProperty("Написано", compton.Text(strconv.Itoa(yearWrittenAt)))
 
 	}
-	//data.Date
 
 	return bc
 }

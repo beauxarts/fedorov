@@ -1,42 +1,39 @@
 package data
 
 const (
-	IdProperty         = "id"
-	MyBooksIdsProperty = "my-books-ids"
+	IdProperty = "id"
 
 	// arts history
 	ArtsHistoryOrderProperty     = "arts-history-order"
 	ArtsHistoryEventTimeProperty = "arts-history-event-time"
 
 	// arts details properties
-	CoverUrlProperty             = "cover-url"
-	TitleProperty                = "title"
-	ArtTypeProperty              = "art-type"
-	PriceProperty                = "price"
-	MinAgeProperty               = "min-age"
-	SymbolsCountProperty         = "symbols-count"
-	LastUpdatedAtProperty        = "last-updated-at"
-	LastReleasedAtProperty       = "last-released-at"
-	AvailableFromProperty        = "available-from"
-	PersonsIdsProperty           = "persons-ids"
-	PersonsRolesProperty         = "persons-roles"
-	PersonFullNameProperty       = "person-full-name"
-	PersonUrlProperty            = "person-url"
-	RatedAvgProperty             = "rated-avg"
-	RatedTotalCountProperty      = "rated-total-count"
-	LinkedArtsIdsProperty        = "linked-arts-ids"
-	SeriesIdProperty             = "series-ids"
-	SeriesArtOrderProperty       = "series-art-order"
-	SeriesArtsCountProperty      = "series-arts-count"
-	SeriesNameProperty           = "series-name"
-	SeriesUrlProperty            = "series-url"
-	DateWrittenAtProperty        = "date-written-at"
-	AlternativeVersionsProperty  = "alternative-versions"
-	HTMLAnnotationProperty       = "html-annotation"
-	HTMLAnnotationLitResProperty = "html-annotation-litres"
-	FirstTimeSaleAtProperty      = "first-time-sale-at"
-	//LiveLibRatedAvgProperty        = "livelib-rated-avg"
-	//LiveLibRatedTotalCountProperty = "livelib-rated-total-count"
+	CoverUrlProperty              = "cover-url"
+	TitleProperty                 = "title"
+	ArtTypeProperty               = "art-type"
+	PriceProperty                 = "price"
+	MinAgeProperty                = "min-age"
+	SymbolsCountProperty          = "symbols-count"
+	LastUpdatedAtProperty         = "last-updated-at"
+	LastReleasedAtProperty        = "last-released-at"
+	AvailableFromProperty         = "available-from"
+	PersonsIdsProperty            = "persons-ids"
+	PersonsRolesProperty          = "persons-roles"
+	PersonFullNameProperty        = "person-full-name"
+	PersonUrlProperty             = "person-url"
+	RatedAvgProperty              = "rated-avg"
+	RatedTotalCountProperty       = "rated-total-count"
+	LinkedArtsIdsProperty         = "linked-arts-ids"
+	SeriesIdProperty              = "series-ids"
+	SeriesArtOrderProperty        = "series-art-order"
+	SeriesArtsCountProperty       = "series-arts-count"
+	SeriesNameProperty            = "series-name"
+	SeriesUrlProperty             = "series-url"
+	DateWrittenAtProperty         = "date-written-at"
+	AlternativeVersionsProperty   = "alternative-versions"
+	HTMLAnnotationProperty        = "html-annotation"
+	HTMLAnnotationLitResProperty  = "html-annotation-litres"
+	FirstTimeSaleAtProperty       = "first-time-sale-at"
 	GenresIdsProperty             = "genres-ids"
 	GenreNameProperty             = "genre-name"
 	GenreUrlProperty              = "genre-url"
@@ -57,41 +54,16 @@ const (
 	RightholderNameProperty       = "rightholder-name"
 	RightholderUrlProperty        = "rightholder-url"
 
-	// arts files properties
+	// persons roles
+	AuthorsProperty      = "authors"
+	IllustratorsProperty = "illustrators"
+	PaintersProperty     = "painters"
+	PerformersProperty   = "performers"
+	PublishersProperty   = "publishers"
+	ReadersProperty      = "readers"
+	TranslatorsProperty  = "translators"
 
-	//legacy reduced from detail page
-	LegacyAuthorsProperty           = "authors"
-	LegacyCoauthorsProperty         = "coauthors"
-	LegacyDescriptionProperty       = "description"
-	LegacyDownloadLinksProperty     = "download-links"
-	LegacyDownloadTitlesProperty    = "download-titles"
-	LegacySequenceNameProperty      = "sequence-name"
-	LegacySequenceNumberProperty    = "sequence-number"
-	LegacyDateReleasedProperty      = "date-released"
-	LegacyDateTranslatedProperty    = "date-translated"
-	LegacyDateCreatedProperty       = "date-created"
-	LegacyAgeRatingProperty         = "age-rating"
-	LegacyVolumeProperty            = "volume"
-	LegacyDurationProperty          = "duration"
-	LegacyISBNProperty              = "isbn"
-	LegacyTranslatorsProperty       = "translators"
-	LegacyReadersProperty           = "readers"
-	LegacyIllustratorsProperty      = "illustrators"
-	LegacyCopyrightHoldersProperty  = "copyright-holders"
-	LegacyComposersProperty         = "composers"
-	LegacyAdapterProperty           = "adapter"
-	LegacyPerformersProperty        = "performers"
-	LegacyDirectorsProperty         = "directors"
-	LegacySoundDirectorsProperty    = "sound-directors"
-	LegacyPublishersProperty        = "publishers"
-	LegacyTotalSizeProperty         = "total-size"
-	LegacyTotalPagesProperty        = "total-pages"
-	LegacyMissingDetailsIdsProperty = "missing-details-ids"
-	LegacyBookTypeProperty          = "book-type"
-	LegacyGenresProperty            = "genres"
-	LegacyTagsProperty              = "tags"
-	LegacyImageProperty             = "image"
-	LegacyLanguageProperty          = "language"
+	// arts files properties
 
 	// local properties
 	LocalTagsProperty     = "local-tags"
@@ -136,8 +108,6 @@ func ArtsDetailsReduxProperties() []string {
 		HTMLAnnotationProperty,
 		HTMLAnnotationLitResProperty,
 		FirstTimeSaleAtProperty,
-		//LiveLibRatedAvgProperty,
-		//LiveLibRatedTotalCountProperty,
 		GenresIdsProperty,
 		GenreNameProperty,
 		GenreUrlProperty,
@@ -160,51 +130,30 @@ func ArtsDetailsReduxProperties() []string {
 	}
 }
 
-func LegacyReduxProperties() []string {
+func PersonsRolesProperties() []string {
 	return []string{
-		LegacyAuthorsProperty,
-		LegacyCoauthorsProperty,
-		LegacyDescriptionProperty,
-		LegacyDownloadLinksProperty,
-		LegacyDownloadTitlesProperty,
-		LegacySequenceNameProperty,
-		LegacySequenceNumberProperty,
-		LegacyDateReleasedProperty,
-		LegacyDateTranslatedProperty,
-		LegacyDateCreatedProperty,
-		LegacyAgeRatingProperty,
-		LegacyVolumeProperty,
-		LegacyDurationProperty,
-		LegacyISBNProperty,
-		LegacyTranslatorsProperty,
-		LegacyReadersProperty,
-		LegacyIllustratorsProperty,
-		LegacyCopyrightHoldersProperty,
-		LegacyComposersProperty,
-		LegacyAdapterProperty,
-		LegacyPerformersProperty,
-		LegacyDirectorsProperty,
-		LegacySoundDirectorsProperty,
-		LegacyPublishersProperty,
-		LegacyTotalSizeProperty,
-		LegacyTotalPagesProperty,
-		LegacyMissingDetailsIdsProperty,
-		LegacyBookTypeProperty,
-		LegacyGenresProperty,
-		LegacyTagsProperty,
-		LegacyImageProperty,
-		LegacyLanguageProperty,
+		AuthorsProperty,
+		IllustratorsProperty,
+		PaintersProperty,
+		PerformersProperty,
+		PublishersProperty,
+		ReadersProperty,
+		TranslatorsProperty,
 	}
 }
 
 func ReduxProperties() []string {
-	return append(ArtsDetailsReduxProperties(),
-		[]string{
-			ArtsHistoryOrderProperty,
-			ArtsHistoryEventTimeProperty,
-			//
-			SyncCompletedProperty,
-			DehydratedListImageProperty,
-			DehydratedItemImageProperty,
-		}...)
+	properties := ArtsDetailsReduxProperties()
+	properties = append(properties, PersonsRolesProperties()...)
+	properties = append(properties, []string{
+		ArtsHistoryOrderProperty,
+		ArtsHistoryEventTimeProperty,
+		//
+		BookCompletedProperty,
+		//
+		SyncCompletedProperty,
+		DehydratedListImageProperty,
+		DehydratedItemImageProperty,
+	}...)
+	return properties
 }
