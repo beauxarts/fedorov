@@ -46,7 +46,6 @@ func BookCard(r compton.Registrar, id string, hydrated bool, rdx kevlar.Readable
 			}
 		}
 		bc.AppendProperty("Написано", compton.Text(strconv.Itoa(yearWrittenAt)))
-
 	}
 
 	return bc

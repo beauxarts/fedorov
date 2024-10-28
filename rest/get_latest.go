@@ -2,12 +2,15 @@ package rest
 
 import (
 	"github.com/beauxarts/fedorov/data"
+	"github.com/beauxarts/fedorov/rest/compton_data"
 	"github.com/beauxarts/fedorov/rest/compton_fragments"
 	"github.com/beauxarts/fedorov/rest/compton_styles"
 	"github.com/boggydigital/compton"
 	"github.com/boggydigital/compton/consts/align"
+	"github.com/boggydigital/compton/consts/color"
 	"github.com/boggydigital/compton/consts/direction"
 	"github.com/boggydigital/compton/consts/input_types"
+	"github.com/boggydigital/compton/consts/size"
 	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/nod"
 	"net/http"
@@ -31,14 +34,38 @@ func GetLatest(w http.ResponseWriter, r *http.Request) {
 
 	all := r.URL.Query().Has("all")
 
-	page := compton.Page("Latest")
-	page.RegisterStyles(compton_styles.Styles, "book-labels.css")
+	p := compton.Page("Latest")
+	p.RegisterStyles(compton_styles.Styles, "book-labels.css")
 
-	stack := compton.FlexItems(page, direction.Column)
-	page.Append(stack)
+	stack := compton.FlexItems(p, direction.Column)
+	p.Append(stack)
 
-	gridItems := compton.GridItems(page).JustifyContent(align.Center)
-	stack.Append(gridItems)
+	appNav := compton_fragments.AppNavLinks(p, compton_data.AppNavLatest)
+
+	showAllLink := compton.A("/latest?all")
+	showAllLink.Append(compton.InputValue(p, input_types.Button, "Show All"))
+
+	topNav := compton.FICenter(p, appNav)
+	if !all {
+		topNav.Append(showAllLink)
+	}
+
+	stack.Append(topNav)
+
+	lpTitle := compton.DSTitle(p, "Последние приобретения")
+	latestPurchases := compton.DSLarge(p, lpTitle, true).
+		BackgroundColor(color.Highlight).
+		SummaryMarginBlockEnd(size.Normal).
+		DetailsMarginBlockEnd(size.Unset).
+		SummaryRowGap(size.XXSmall)
+
+	//itemsCount := compton_fragments.ItemsCount(p, 0, len(ids), updateTotals[section])
+	//sectionDetailsToggle.AppendSummary(itemsCount)
+
+	stack.Append(latestPurchases)
+
+	gridItems := compton.GridItems(p).JustifyContent(align.Center)
+	latestPurchases.Append(gridItems)
 
 	if ahop, ok := rdx.GetAllValues(data.ArtsHistoryOrderProperty, data.ArtsHistoryOrderProperty); ok {
 
@@ -48,17 +75,20 @@ func GetLatest(w http.ResponseWriter, r *http.Request) {
 
 		for _, id := range ahop {
 			bookLink := compton.A("/new_book?id=" + id)
-			bookCard := compton_fragments.BookCard(page, id, false, rdx)
+			bookCard := compton_fragments.BookCard(p, id, false, rdx)
 			bookLink.Append(bookCard)
 			gridItems.Append(bookLink)
 		}
 	}
 
-	showAllLink := compton.A("/latest?all")
-	showAllLink.Append(compton.InputValue(page, input_types.Button, "Show All"))
-	stack.Append(compton.FICenter(page, showAllLink))
+	if !all {
+		stack.Append(compton.FICenter(p, showAllLink))
+	}
 
-	if err := page.WriteResponse(w); err != nil {
+	stack.Append(compton.Br(),
+		compton.Footer(p, "Tokyo", "https://github.com/beauxarts", "🇯🇵"))
+
+	if err := p.WriteResponse(w); err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return
 	}
