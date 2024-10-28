@@ -2,11 +2,10 @@ package rest
 
 import (
 	"github.com/beauxarts/fedorov/data"
+	"github.com/beauxarts/fedorov/rest/compton_pages"
 	"github.com/beauxarts/fedorov/stencil_app"
 	"github.com/boggydigital/nod"
-	"golang.org/x/exp/maps"
 	"net/http"
-	"sort"
 	"strconv"
 	"strings"
 )
@@ -82,28 +81,35 @@ func GetSearch(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	if err := app.RenderSearch("Поиск", query, ids[from:to], from, to, len(ids), r.URL, rdx, w); err != nil {
-		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
-		return
+	if p := compton_pages.Search(ids[from:to], from, to, len(ids), rdx); p != nil {
+		if err := p.WriteResponse(w); err != nil {
+			http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
+			return
+		}
 	}
+
+	//if err := app.RenderSearch("Поиск", query, ids[from:to], from, to, len(ids), r.URL, rdx, w); err != nil {
+	//	http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
+	//	return
+	//}
 }
 
-func getDigests(properties ...string) map[string][]string {
-	digests := make(map[string][]string)
-	for _, p := range properties {
-		dv := make(map[string]interface{})
-		for _, id := range rdx.Keys(p) {
-			values, ok := rdx.GetAllValues(p, id)
-			if !ok {
-				continue
-			}
-			for _, v := range values {
-				dv[v] = nil
-			}
-		}
-		sortedDv := maps.Keys(dv)
-		sort.Strings(sortedDv)
-		digests[p] = sortedDv
-	}
-	return digests
-}
+//func getDigests(properties ...string) map[string][]string {
+//	digests := make(map[string][]string)
+//	for _, p := range properties {
+//		dv := make(map[string]interface{})
+//		for _, id := range rdx.Keys(p) {
+//			values, ok := rdx.GetAllValues(p, id)
+//			if !ok {
+//				continue
+//			}
+//			for _, v := range values {
+//				dv[v] = nil
+//			}
+//		}
+//		sortedDv := maps.Keys(dv)
+//		sort.Strings(sortedDv)
+//		digests[p] = sortedDv
+//	}
+//	return digests
+//}

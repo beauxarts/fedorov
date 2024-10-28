@@ -33,7 +33,7 @@ func GetDigest(w http.ResponseWriter, r *http.Request) {
 			"true",
 			"false"}
 	default:
-		values = getDigests(property)[property]
+		//values = getDigests(property)[property]
 	}
 
 	for _, v := range values {

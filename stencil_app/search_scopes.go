@@ -10,14 +10,12 @@ const (
 	ScopeNewSearch        = "Новый"
 	ScopeBacklogTextBooks = "Бэклог"
 	ScopeKidsBooks        = "Детские"
-	ScopeImportedBooks    = "Импорт"
 )
 
 var SearchScopes = []string{
 	ScopeNewSearch,
 	ScopeBacklogTextBooks,
 	ScopeKidsBooks,
-	ScopeImportedBooks,
 }
 
 func SearchScopeQueries() map[string]string {

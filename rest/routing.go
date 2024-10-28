@@ -26,7 +26,6 @@ func HandleFuncs(p int) {
 		//// unauth data endpoints
 		//"GET /books":       Log(http.HandlerFunc(GetBooks)),
 		//"GET /book":        Log(http.HandlerFunc(GetBook)),
-		//"GET /search":      Log(http.HandlerFunc(GetSearch)),
 		//"GET /digest":      Log(http.HandlerFunc(GetDigest)),
 		//"GET /downloads":   Log(http.HandlerFunc(GetDownloads)),
 		//"GET /description": Log(http.HandlerFunc(GetDescription)),
@@ -40,12 +39,15 @@ func HandleFuncs(p int) {
 		// start at the books
 		//"/": http.RedirectHandler("/books", http.StatusPermanentRedirect),
 
+		"GET /latest": Log(http.HandlerFunc(GetLatest)),
+		"GET /search": Log(http.HandlerFunc(GetSearch)),
+
 		"GET /list_cover": Log(http.HandlerFunc(GetListCover)),
 		"GET /book_cover": Log(http.HandlerFunc(GetBookCover)),
 
-		"GET /latest":   Log(http.HandlerFunc(GetLatest)),
-		"GET /new_book": Log(http.HandlerFunc(GetNewBook)),
-		"GET /file":     Auth(Log(http.HandlerFunc(GetFile)), AdminRole, SharedRole),
+		"GET /file": Auth(Log(http.HandlerFunc(GetFile)), AdminRole, SharedRole),
+
+		"GET /book": Log(http.HandlerFunc(GetBook)),
 
 		"/": http.RedirectHandler("/latest", http.StatusPermanentRedirect),
 	}

@@ -6,7 +6,7 @@ require (
 	github.com/beauxarts/scrinium v0.1.31
 	github.com/boggydigital/backups v0.1.3
 	github.com/boggydigital/clo v1.0.4
-	github.com/boggydigital/compton v0.1.91
+	github.com/boggydigital/compton v0.1.93
 	github.com/boggydigital/coost v0.3.9
 	github.com/boggydigital/dolo v0.2.18
 	github.com/boggydigital/issa v0.1.12

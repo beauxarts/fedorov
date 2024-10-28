@@ -2,21 +2,13 @@ package rest
 
 import (
 	"github.com/beauxarts/fedorov/data"
-	"github.com/beauxarts/fedorov/rest/compton_data"
-	"github.com/beauxarts/fedorov/rest/compton_fragments"
-	"github.com/beauxarts/fedorov/rest/compton_styles"
-	"github.com/boggydigital/compton"
-	"github.com/boggydigital/compton/consts/align"
-	"github.com/boggydigital/compton/consts/color"
-	"github.com/boggydigital/compton/consts/direction"
-	"github.com/boggydigital/compton/consts/input_types"
-	"github.com/boggydigital/compton/consts/size"
+	"github.com/beauxarts/fedorov/rest/compton_pages"
 	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/nod"
 	"net/http"
 )
 
-const dehydratedCount = 10
+const latestBooksLimit = 60
 
 type LatestBookViewModel struct {
 	Id      string
@@ -47,61 +39,11 @@ func GetLatest(w http.ResponseWriter, r *http.Request) {
 		ids = ahop
 	}
 
-	p := compton.Page(compton_data.AppNavLatest)
-	p.RegisterStyles(compton_styles.Styles, "book-labels.css")
-
-	stack := compton.FlexItems(p, direction.Column)
-	p.Append(stack)
-
-	appNav := compton_fragments.AppNavLinks(p, compton_data.AppNavLatest)
-
-	showAllLink := compton.A("/latest?all")
-	showAllLink.Append(compton.InputValue(p, input_types.Button, "Показать все"))
-
-	topNav := compton.FICenter(p, appNav)
-	if !all {
-		topNav.Append(showAllLink)
-	}
-
-	stack.Append(topNav)
-
-	title := "Последние приобретения"
-	if all {
-		title = "Все книги"
-	}
-	lpTitle := compton.DSTitle(p, title)
-
-	latestPurchases := compton.DSLarge(p, lpTitle, true).
-		BackgroundColor(color.Highlight).
-		SummaryMarginBlockEnd(size.Normal).
-		DetailsMarginBlockEnd(size.Unset).
-		SummaryRowGap(size.XXSmall)
-
-	itemsCount := compton_fragments.ItemsCount(p, 0, len(ids), total)
-	latestPurchases.AppendSummary(itemsCount)
-
-	stack.Append(latestPurchases)
-
-	gridItems := compton.GridItems(p).JustifyContent(align.Center)
-	latestPurchases.Append(gridItems)
-
-	for ii, id := range ids {
-		bookLink := compton.A("/new_book?id=" + id)
-		bookCard := compton_fragments.BookCard(p, id, ii < dehydratedCount, rdx)
-		bookLink.Append(bookCard)
-		gridItems.Append(bookLink)
-	}
-
-	if !all {
-		stack.Append(compton.FICenter(p, showAllLink))
-	}
-
-	stack.Append(compton.Br(),
-		compton.Footer(p, "Tokyo", "https://github.com/beauxarts", "🇯🇵"))
-
-	if err := p.WriteResponse(w); err != nil {
-		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
-		return
+	if p := compton_pages.Latest(ids, total, rdx); p != nil {
+		if err := p.WriteResponse(w); err != nil {
+			http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
+			return
+		}
 	}
 }
 
