@@ -22,7 +22,7 @@ func SearchForm(r compton.Registrar, query map[string][]string, searchQuery comp
 	}
 
 	submitRow := compton.FlexItems(r, direction.Row).JustifyContent(align.Center)
-	submit := compton.InputValue(r, input_types.Submit, "Submit Query")
+	submit := compton.InputValue(r, input_types.Submit, "Искать")
 	submitRow.Append(submit)
 	formStack.Append(submitRow)
 
