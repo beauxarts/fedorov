@@ -12,10 +12,6 @@ import (
 	"io/fs"
 )
 
-const (
-	SearchResultsLimit = 24 // divides by 2,3,4,6 to allow that many columns
-)
-
 var (
 	rdx  kevlar.ReadableRedux
 	tmpl *template.Template

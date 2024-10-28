@@ -5,7 +5,6 @@ import (
 	"github.com/beauxarts/fedorov/rest/compton_fragments"
 	"github.com/beauxarts/fedorov/rest/compton_styles"
 	"github.com/boggydigital/compton"
-	"github.com/boggydigital/compton/consts/align"
 	"github.com/boggydigital/compton/consts/color"
 	"github.com/boggydigital/compton/consts/direction"
 	"github.com/boggydigital/compton/consts/input_types"
@@ -19,8 +18,8 @@ func Latest(ids []string, total int, rdx kevlar.ReadableRedux) compton.PageEleme
 	p := compton.Page(compton_data.AppNavLatest)
 	p.RegisterStyles(compton_styles.Styles, "book-labels.css")
 
-	stack := compton.FlexItems(p, direction.Column)
-	p.Append(stack)
+	pageStack := compton.FlexItems(p, direction.Column)
+	p.Append(pageStack)
 
 	appNav := compton_fragments.AppNavLinks(p, compton_data.AppNavLatest)
 
@@ -32,7 +31,7 @@ func Latest(ids []string, total int, rdx kevlar.ReadableRedux) compton.PageEleme
 		topNav.Append(showAllLink)
 	}
 
-	stack.Append(topNav)
+	pageStack.Append(topNav)
 
 	title := "Последние приобретения"
 	if len(ids) == total {
@@ -46,26 +45,23 @@ func Latest(ids []string, total int, rdx kevlar.ReadableRedux) compton.PageEleme
 		DetailsMarginBlockEnd(size.Unset).
 		SummaryRowGap(size.XXSmall)
 
-	itemsCount := compton_fragments.ItemsCount(p, 0, len(ids), total)
-	latestPurchases.AppendSummary(itemsCount)
+	cf := compton.NewCountFormatter(
+		compton_data.SingleItem,
+		compton_data.ManyItemsSinglePage,
+		compton_data.ManyItemsManyPages)
 
-	stack.Append(latestPurchases)
+	latestPurchases.AppendSummary(cf.TitleElement(p, 0, len(ids), total))
 
-	gridItems := compton.GridItems(p).JustifyContent(align.Center)
-	latestPurchases.Append(gridItems)
+	pageStack.Append(latestPurchases)
 
-	for ii, id := range ids {
-		bookLink := compton.A("/book?id=" + id)
-		bookCard := compton_fragments.BookCard(p, id, ii < dehydratedCount, rdx)
-		bookLink.Append(bookCard)
-		gridItems.Append(bookLink)
-	}
+	booksList := compton_fragments.BooksList(p, ids, 0, len(ids), rdx)
+	latestPurchases.Append(booksList)
 
 	if len(ids) < total {
-		stack.Append(compton.FICenter(p, showAllLink))
+		pageStack.Append(compton.FICenter(p, showAllLink))
 	}
 
-	stack.Append(compton.Br(),
+	pageStack.Append(compton.Br(),
 		compton.Footer(p, "Tokyo", "https://github.com/beauxarts", "🇯🇵"))
 
 	return p

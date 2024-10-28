@@ -3,6 +3,7 @@ package compton_data
 import "github.com/beauxarts/fedorov/data"
 
 var PropertyTitles = map[string]string{
+	data.TitleProperty:        "Hазвание",
 	data.AuthorsProperty:      "Автор",
 	data.ReadersProperty:      "Чтец",
 	data.TranslatorsProperty:  "Перевод",

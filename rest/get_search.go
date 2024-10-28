@@ -2,12 +2,16 @@ package rest
 
 import (
 	"github.com/beauxarts/fedorov/data"
+	"github.com/beauxarts/fedorov/rest/compton_data"
 	"github.com/beauxarts/fedorov/rest/compton_pages"
-	"github.com/beauxarts/fedorov/stencil_app"
 	"github.com/boggydigital/nod"
 	"net/http"
 	"strconv"
 	"strings"
+)
+
+const (
+	searchResultsLimit = 60 // divides by 2,3,4,5,6 to allow that many columns
 )
 
 func GetSearch(w http.ResponseWriter, r *http.Request) {
@@ -29,7 +33,7 @@ func GetSearch(w http.ResponseWriter, r *http.Request) {
 	query := make(map[string][]string)
 
 	shortQuery := false
-	queryProperties := stencil_app.SearchProperties
+	queryProperties := compton_data.SearchProperties
 	for _, p := range queryProperties {
 		if v := q.Get(p); v != "" {
 			query[p] = strings.Split(v, ",")
@@ -58,40 +62,39 @@ func GetSearch(w http.ResponseWriter, r *http.Request) {
 
 	if len(query) > 0 {
 
-		ids = rdx.Match(query)
+		sort := q.Get(data.SortProperty)
+		if sort == "" {
+			sort = data.TitleProperty
+		}
+		desc := q.Get(data.DescendingProperty) == "true"
 
-		if sort := r.URL.Query().Get(data.SortProperty); sort != "" {
-			desc := r.URL.Query().Get(data.DescendingProperty) == "true"
-			ids, err = rdx.Sort(ids, desc, sort, data.TitleProperty)
-			if err != nil {
-				http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
-				return
-			}
+		found := rdx.Match(query)
+
+		var err error
+		ids, err = rdx.Sort(found, desc, sort, data.TitleProperty)
+		if err != nil {
+			http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
+			return
 		}
 
 		if from > len(ids)-1 {
 			from = 0
 		}
 
-		to = from + SearchResultsLimit
+		to = from + searchResultsLimit
 		if to > len(ids) {
 			to = len(ids)
-		} else if to+SearchResultsLimit > len(ids) {
+		} else if to+searchResultsLimit > len(ids) {
 			to = len(ids)
 		}
 	}
 
-	if p := compton_pages.Search(ids[from:to], from, to, len(ids), rdx); p != nil {
+	if p := compton_pages.Search(query, ids, from, to, rdx); p != nil {
 		if err := p.WriteResponse(w); err != nil {
 			http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 			return
 		}
 	}
-
-	//if err := app.RenderSearch("Поиск", query, ids[from:to], from, to, len(ids), r.URL, rdx, w); err != nil {
-	//	http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
-	//	return
-	//}
 }
 
 //func getDigests(properties ...string) map[string][]string {
