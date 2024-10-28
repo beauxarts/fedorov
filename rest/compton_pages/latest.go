@@ -33,7 +33,7 @@ func Latest(ids []string, total int, rdx kevlar.ReadableRedux) compton.PageEleme
 
 	pageStack.Append(topNav)
 
-	title := "Последние приобретения"
+	title := "Новинки"
 	if len(ids) == total {
 		title = "Все книги"
 	}

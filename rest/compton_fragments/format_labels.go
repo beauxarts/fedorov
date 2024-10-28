@@ -7,12 +7,6 @@ import (
 	"github.com/boggydigital/kevlar"
 )
 
-var artTypesTitles = map[string]string{
-	"0": "Текст",
-	"1": "Аудио",
-	"4": "PDF",
-}
-
 func FormatLabels(id string, rdx kevlar.ReadableRedux) []compton.FormattedLabel {
 	fmtLabels := make([]compton.FormattedLabel, 0)
 
@@ -37,7 +31,7 @@ func formatLabel(id, property string, rdx kevlar.ReadableRedux) compton.Formatte
 	//		fmtLabel.Title = "Прочитано"
 	//	}
 	case data.ArtTypeProperty:
-		fmtLabel.Title = artTypesTitles[val]
+		fmtLabel.Title = compton_data.ArtTypes[val]
 	}
 
 	return fmtLabel

@@ -1,6 +1,7 @@
 package compton_fragments
 
 import (
+	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/rest/compton_data"
 	"github.com/boggydigital/compton"
 	"github.com/boggydigital/compton/consts/align"
@@ -8,6 +9,7 @@ import (
 	"github.com/boggydigital/compton/consts/input_types"
 	"github.com/boggydigital/compton/consts/size"
 	"github.com/boggydigital/kevlar"
+	"golang.org/x/exp/slices"
 	"strings"
 )
 
@@ -46,27 +48,19 @@ func searchInputs(r compton.Registrar, query map[string][]string, container comp
 		var datalist map[string]string
 		var listId string
 
-		//if slices.Contains(compton_data.BinaryDigestProperties, property) {
-		//	datalist = binDatalist
-		//	listId = "bin-list"
-		//} else if slices.Contains(compton_data.DigestProperties, property) {
-		//	switch property {
-		//	case vangogh_local_data.TypesProperty:
-		//		datalist = typesDatalist()
-		//	case vangogh_local_data.OperatingSystemsProperty:
-		//		datalist = operatingSystemsDatalist()
-		//	case vangogh_local_data.SortProperty:
-		//		datalist = sortDatalist()
-		//	case vangogh_local_data.ProductTypeProperty:
-		//		datalist = productTypesDatalist()
-		//	case vangogh_local_data.SteamDeckAppCompatibilityCategoryProperty:
-		//		datalist = steamDeckDatalist()
-		//	case vangogh_local_data.LanguageCodeProperty:
-		//		datalist = languagesDatalist()
-		//	case vangogh_local_data.TagIdProperty:
-		//		datalist = tagsDatalist(rdx)
-		//	}
-		//}
+		if slices.Contains(compton_data.BinaryProperties, property) {
+			datalist = binDatalist
+			listId = "bin-list"
+		} else if slices.Contains(compton_data.DigestProperties, property) {
+			switch property {
+			case data.ArtTypeProperty:
+				datalist = compton_data.ArtTypes
+			case data.SortProperty:
+				datalist = sortDatalist
+			default:
+				datalist = propertyDatalist(property, rdx)
+			}
+		}
 
 		if len(datalist) > 0 {
 			titleInput.SetDatalist(datalist, listId)
@@ -74,4 +68,25 @@ func searchInputs(r compton.Registrar, query map[string][]string, container comp
 
 		container.Append(titleInput)
 	}
+}
+
+var binDatalist = map[string]string{
+	"true":  "Да",
+	"false": "Нет",
+}
+
+var sortDatalist = map[string]string{
+	data.ArtsHistoryOrderProperty: compton_data.PropertyTitles[data.ArtsHistoryOrderProperty],
+}
+
+func propertyDatalist(property string, rdx kevlar.ReadableRedux) map[string]string {
+	values := make(map[string]string)
+	for _, id := range rdx.Keys(property) {
+		if vals, ok := rdx.GetAllValues(property, id); ok {
+			for _, val := range vals {
+				values[val] = val
+			}
+		}
+	}
+	return values
 }

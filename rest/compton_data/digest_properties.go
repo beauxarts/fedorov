@@ -2,12 +2,8 @@ package compton_data
 
 import "github.com/beauxarts/fedorov/data"
 
-var SearchProperties = []string{
-	data.TitleProperty,
+var DigestProperties = []string{
 	data.ArtTypeProperty,
-	data.BookCompletedProperty,
-	data.LocalTagsProperty,
-	data.MinAgeProperty,
 	data.AuthorsProperty,
 	data.ReadersProperty,
 	data.TranslatorsProperty,
@@ -15,6 +11,11 @@ var SearchProperties = []string{
 	data.PaintersProperty,
 	data.PerformersProperty,
 	data.PublishersProperty,
+	data.MinAgeProperty,
 	data.SortProperty,
+}
+
+var BinaryProperties = []string{
+	data.BookCompletedProperty,
 	data.DescendingProperty,
 }
