@@ -9,14 +9,14 @@ import (
 )
 
 const (
-	SearchNew     = "Новый"
-	SearchBacklog = "Бэклог"
-	SearchKids    = "Детские"
+	SearchNew    = "Новый"
+	SearchAdults = "Взрослые"
+	SearchKids   = "Детские"
 )
 
 var SearchOrder = []string{
 	SearchNew,
-	SearchBacklog,
+	SearchAdults,
 	SearchKids,
 }
 
@@ -31,7 +31,7 @@ func SearchScopes() map[string]string {
 	q.Set(data.ArtTypeProperty, strconv.Itoa(int(litres_integration.ArtTypeText)))
 	q.Set(data.SortProperty, data.ArtsHistoryEventTimeProperty)
 	q.Set(data.DescendingProperty, "true")
-	queries[SearchBacklog] = q.Encode()
+	queries[SearchAdults] = q.Encode()
 
 	q = url.Values{}
 	q.Set(data.GenresProperty, "детские")

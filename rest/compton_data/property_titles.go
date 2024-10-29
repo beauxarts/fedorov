@@ -34,6 +34,9 @@ var PropertyTitles = map[string]string{
 	data.DescendingProperty:           "По убыванию",
 
 	data.BookCompletedProperty: "Прочитано",
+
+	"true":  "Да",
+	"false": "Нет",
 }
 
 var ShortPropertyTitles = map[string]string{
