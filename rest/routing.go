@@ -23,6 +23,8 @@ func HandleFuncs(p int) {
 	port = p
 
 	patternHandlers := map[string]http.Handler{
+		"GET /manifest.json": Log(http.HandlerFunc(GetManifest)),
+		"GET /icon.png":      Log(http.HandlerFunc(GetIcon)),
 		//// unauth data endpoints
 		//"GET /books":       Log(http.HandlerFunc(GetBooks)),
 		//"GET /book":        Log(http.HandlerFunc(GetBook)),

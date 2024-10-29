@@ -1,0 +1,11 @@
+{
+  "short_name": "Fedorov",
+  "name": "Fedorov",
+  "start_url": "/",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "icon.png"
+    }
+  ]
+}
