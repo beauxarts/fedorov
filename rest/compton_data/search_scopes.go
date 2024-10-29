@@ -2,7 +2,9 @@ package compton_data
 
 import (
 	"github.com/beauxarts/fedorov/data"
+	"github.com/beauxarts/scrinium/litres_integration"
 	"net/url"
+	"strconv"
 	"strings"
 )
 
@@ -24,15 +26,16 @@ func SearchScopes() map[string]string {
 	queries[SearchNew] = ""
 
 	q := url.Values{}
-	//q.Set(data.BookCompletedProperty, "false")
-	//q.Set(data.BookTypeProperty, BookTypeText)
-	q.Set(data.SortProperty, data.ArtsHistoryOrderProperty)
+	q.Set(data.BookCompletedProperty, "false")
+	q.Set(data.MinAgeProperty, "16")
+	q.Set(data.ArtTypeProperty, strconv.Itoa(int(litres_integration.ArtTypeText)))
+	q.Set(data.SortProperty, data.ArtsHistoryEventTimeProperty)
+	q.Set(data.DescendingProperty, "true")
 	queries[SearchBacklog] = q.Encode()
 
 	q = url.Values{}
-	//q.Set(data.GenresProperty, "детские,сказки")
-	//q.Set(data.BookTypeProperty, strings.Join([]string{BookTypeText, BookTypePDF}, ","))
-	//q.Set(data.SortProperty, data.DateCreatedProperty)
+	q.Set(data.GenresProperty, "детские")
+	q.Set(data.SortProperty, data.ArtsHistoryEventTimeProperty)
 	q.Set(data.DescendingProperty, "true")
 	queries[SearchKids] = q.Encode()
 

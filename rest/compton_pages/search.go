@@ -23,7 +23,11 @@ func Search(query map[string][]string, ids []string, from, to int, rdx kevlar.Re
 	p.Append(pageStack)
 
 	appNav := compton_fragments.AppNavLinks(p, compton_data.AppNavSearch)
-	pageStack.Append(appNav)
+
+	searchScope := compton_data.SearchScopeFromQuery(query)
+	searchLinks := compton_fragments.SearchLinks(p, searchScope)
+
+	pageStack.Append(compton.FICenter(p, appNav, searchLinks))
 
 	filterSearchHeading := compton.DSTitle(p, filterSearchTitle)
 

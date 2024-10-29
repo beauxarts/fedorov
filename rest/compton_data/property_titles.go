@@ -29,9 +29,9 @@ var PropertyTitles = map[string]string{
 	data.RegisteredAtProperty:    "Зарегистрировано",
 	data.TranslatedAtProperty:    "Переведено",
 
-	data.SortProperty:             "Порядок",
-	data.ArtsHistoryOrderProperty: "По дате приобретения",
-	data.DescendingProperty:       "По убыванию",
+	data.SortProperty:                 "Порядок",
+	data.ArtsHistoryEventTimeProperty: "По дате приобретения",
+	data.DescendingProperty:           "По убыванию",
 
 	data.BookCompletedProperty: "Прочитано",
 }
