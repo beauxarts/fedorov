@@ -1,0 +1,23 @@
+@scope (h1) {
+    :scope {
+        text-align: center;
+    }
+}
+
+@scope (.book-cover) {
+    :scope {
+        & img {
+            --w: 400px;
+            --h: 400px;
+        }
+    }
+
+    @media only screen and (max-width: 800px) {
+        :scope {
+            & img {
+                max-width: 100%;
+                --h: unset;
+            }
+        }
+    }
+}
