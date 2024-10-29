@@ -10,8 +10,13 @@ var DigestProperties = []string{
 	data.IllustratorsProperty,
 	data.PaintersProperty,
 	data.PerformersProperty,
-	data.PublishersProperty,
 	data.MinAgeProperty,
+	data.GenresProperty,
+	data.TagsProperty,
+	data.LocalTagsProperty,
+	data.PublishersProperty,
+	data.RightholdersProperty,
+	data.SeriesProperty,
 	data.SortProperty,
 }
 

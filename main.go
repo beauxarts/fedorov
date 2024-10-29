@@ -99,6 +99,19 @@ func main() {
 	//	panic(err)
 	//}
 	//
+	//for _, id := range rdx.Keys(data.GenresIdsProperty) {
+	//
+	//	if genres, ok := rdx.GetAllValues(data.GenresIdsProperty, id); ok {
+	//		fmt.Print(id)
+	//		for _, genre := range genres {
+	//			if genreName, sure := rdx.GetLastVal(data.GenreNameProperty, genre); sure {
+	//				fmt.Print(genreName)
+	//			}
+	//		}
+	//		fmt.Println()
+	//	}
+	//}
+
 	//uniqueRoles := make(map[string]int)
 	//
 	//for _, id := range rdx.Keys(data.PersonsRolesProperty) {

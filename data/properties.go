@@ -29,6 +29,7 @@ const (
 	SeriesArtsCountProperty       = "series-arts-count"
 	SeriesNameProperty            = "series-name"
 	SeriesUrlProperty             = "series-url"
+	SeriesProperty                = "series"
 	DateWrittenAtProperty         = "date-written-at"
 	AlternativeVersionsProperty   = "alternative-versions"
 	HTMLAnnotationProperty        = "html-annotation"
@@ -37,9 +38,11 @@ const (
 	GenresIdsProperty             = "genres-ids"
 	GenreNameProperty             = "genre-name"
 	GenreUrlProperty              = "genre-url"
+	GenresProperty                = "genres"
 	TagsIdsProperty               = "tags-ids"
 	TagNameProperty               = "tag-name"
 	TagUrlProperty                = "tag-url"
+	TagsProperty                  = "tags"
 	ISBNProperty                  = "isbn"
 	PublicationDateProperty       = "publication-date"
 	YouTubeVideosProperty         = "youtube-videos"
@@ -50,16 +53,17 @@ const (
 	PublisherIdProperty           = "publisher-id"
 	PublisherNameProperty         = "publisher-name"
 	PublisherUrlProperty          = "publisher-url"
+	PublishersProperty            = "publishers"
 	RightholdersIdsProperty       = "rightholders-ids"
 	RightholderNameProperty       = "rightholder-name"
 	RightholderUrlProperty        = "rightholder-url"
+	RightholdersProperty          = "rightholders"
 
 	// persons roles
 	AuthorsProperty      = "authors"
 	IllustratorsProperty = "illustrators"
 	PaintersProperty     = "painters"
 	PerformersProperty   = "performers"
-	PublishersProperty   = "publishers"
 	ReadersProperty      = "readers"
 	TranslatorsProperty  = "translators"
 
@@ -136,15 +140,25 @@ func PersonsRolesProperties() []string {
 		IllustratorsProperty,
 		PaintersProperty,
 		PerformersProperty,
-		PublishersProperty,
 		ReadersProperty,
 		TranslatorsProperty,
+	}
+}
+
+func IdNameProperties() []string {
+	return []string{
+		GenresProperty,
+		TagsProperty,
+		PublishersProperty,
+		RightholdersProperty,
+		SeriesProperty,
 	}
 }
 
 func ReduxProperties() []string {
 	properties := ArtsDetailsReduxProperties()
 	properties = append(properties, PersonsRolesProperties()...)
+	properties = append(properties, IdNameProperties()...)
 	properties = append(properties, []string{
 		ArtsHistoryOrderProperty,
 		ArtsHistoryEventTimeProperty,

@@ -25,6 +25,10 @@ func Cascade() error {
 		return ca.EndWithError(err)
 	}
 
+	if err := cascadeIdNameProperties(rdx); err != nil {
+		return ca.EndWithError(err)
+	}
+
 	if err := cascadeBookCompletedProperty(rdx); err != nil {
 		return ca.EndWithError(err)
 	}
@@ -43,7 +47,6 @@ func cascadePersonsRolesProperties(rdx kevlar.WriteableRedux) error {
 	illustrators := make(map[string][]string)
 	painters := make(map[string][]string)
 	performers := make(map[string][]string)
-	publishers := make(map[string][]string)
 	readers := make(map[string][]string)
 	translators := make(map[string][]string)
 
@@ -65,8 +68,6 @@ func cascadePersonsRolesProperties(rdx kevlar.WriteableRedux) error {
 						propertyMap = painters
 					case "performer":
 						propertyMap = performers
-					case "publisher":
-						propertyMap = publishers
 					case "reader":
 						propertyMap = readers
 					case "translator":
@@ -98,9 +99,6 @@ func cascadePersonsRolesProperties(rdx kevlar.WriteableRedux) error {
 	if err := rdx.BatchReplaceValues(data.PerformersProperty, performers); err != nil {
 		return cprpa.EndWithError(err)
 	}
-	if err := rdx.BatchReplaceValues(data.PublishersProperty, publishers); err != nil {
-		return cprpa.EndWithError(err)
-	}
 	if err := rdx.BatchReplaceValues(data.ReadersProperty, readers); err != nil {
 		return cprpa.EndWithError(err)
 	}
@@ -110,6 +108,59 @@ func cascadePersonsRolesProperties(rdx kevlar.WriteableRedux) error {
 
 	cprpa.EndWithResult("done")
 	return nil
+}
+
+func cascadeIdNameProperties(rdx kevlar.WriteableRedux) error {
+
+	cinpa := nod.NewProgress(" id, name properties...")
+	defer cinpa.End()
+
+	idNameProperties := map[string]string{
+		data.GenresIdsProperty:       data.GenreNameProperty,
+		data.TagsIdsProperty:         data.TagNameProperty,
+		data.PublisherIdProperty:     data.PublisherNameProperty,
+		data.RightholdersIdsProperty: data.RightholderNameProperty,
+		data.SeriesIdProperty:        data.SeriesNameProperty,
+	}
+	outputProperties := map[string]string{
+		data.GenresIdsProperty:       data.GenresProperty,
+		data.TagsIdsProperty:         data.TagsProperty,
+		data.PublisherIdProperty:     data.PublishersProperty,
+		data.RightholdersIdsProperty: data.RightholdersProperty,
+		data.SeriesIdProperty:        data.SeriesProperty,
+	}
+
+	cinpa.TotalInt(len(idNameProperties))
+
+	for idp, np := range idNameProperties {
+		propertyValues := cascadeIdNameProperty(idp, np, rdx)
+		if err := rdx.BatchReplaceValues(outputProperties[idp], propertyValues); err != nil {
+			return err
+		}
+		cinpa.Increment()
+	}
+
+	cinpa.EndWithResult("done")
+
+	return nil
+}
+
+func cascadeIdNameProperty(idProperty, nameProperty string, rdx kevlar.WriteableRedux) map[string][]string {
+
+	values := make(map[string][]string)
+
+	for _, id := range rdx.Keys(idProperty) {
+
+		if nameIds, ok := rdx.GetAllValues(idProperty, id); ok {
+			for _, nameId := range nameIds {
+				if name, sure := rdx.GetLastVal(nameProperty, nameId); sure {
+					values[id] = append(values[id], name)
+				}
+			}
+		}
+	}
+
+	return values
 }
 
 func cascadeBookCompletedProperty(rdx kevlar.WriteableRedux) error {
