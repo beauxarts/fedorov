@@ -7,7 +7,7 @@ var PropertyTitles = map[string]string{
 	data.HTMLAnnotationProperty: "Аннотация",
 
 	data.AuthorsProperty:      "Автор",
-	data.ReadersProperty:      "Чтец",
+	data.ReadersProperty:      "Читает",
 	data.TranslatorsProperty:  "Перевод",
 	data.IllustratorsProperty: "Иллюстратор",
 	data.PerformersProperty:   "Исполнитель",
