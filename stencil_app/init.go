@@ -58,7 +58,7 @@ func Init(rdx kevlar.ReadableRedux) (*stencil.AppConfiguration, error) {
 		fmtLabel, fmtTitle, fmtHref, nil, fmtAction, fmtActionHref)
 
 	if err := app.SetSearchConfiguration(
-		SearchProperties,
+		nil,
 		DigestProperties,
 		SearchScopes,
 		SearchScopeQueries()); err != nil {
