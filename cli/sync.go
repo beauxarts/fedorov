@@ -84,6 +84,10 @@ func Sync(force bool) error {
 		return err
 	}
 
+	if err := GetVideosMetadata(force); err != nil {
+		return err
+	}
+
 	if err := Dehydrate(force, recentArtsIds...); err != nil {
 		return err
 	}

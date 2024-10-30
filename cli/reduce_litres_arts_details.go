@@ -34,7 +34,7 @@ func ReduceLitResArtsDetails() error {
 	rlaa.TotalInt(len(ids))
 
 	propertyIdValues := make(map[string]map[string][]string)
-	for _, p := range data.ArtsDetailsReduxProperties() {
+	for _, p := range data.ArtsDetailsProperties() {
 		propertyIdValues[p] = make(map[string][]string)
 	}
 
@@ -45,7 +45,7 @@ func ReduceLitResArtsDetails() error {
 			return rlaa.EndWithError(err)
 		}
 
-		for _, p := range data.ArtsDetailsReduxProperties() {
+		for _, p := range data.ArtsDetailsProperties() {
 			propertyIdValues[p][id] = getArtsDetailsPropertyValues(ad, p)
 		}
 

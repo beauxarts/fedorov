@@ -46,7 +46,8 @@ func HandleFuncs(p int) {
 		"GET /book":   Log(http.HandlerFunc(GetBook)),
 
 		// book page sections
-		"GET /files": Log(http.HandlerFunc(GetFiles)),
+		"GET /files":  Log(http.HandlerFunc(GetFiles)),
+		"GET /videos": Log(http.HandlerFunc(GetVideos)),
 
 		"GET /list_cover": Log(http.HandlerFunc(GetListCover)),
 		"GET /book_cover": Log(http.HandlerFunc(GetBookCover)),

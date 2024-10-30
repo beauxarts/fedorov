@@ -65,6 +65,9 @@ get-recent-series
 
 get-session-id
 
+get-videos-metadata
+    force
+
 has-arts
     session-id*
 

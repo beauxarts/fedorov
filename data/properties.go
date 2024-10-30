@@ -46,6 +46,9 @@ const (
 	ISBNProperty                  = "isbn"
 	PublicationDateProperty       = "publication-date"
 	YouTubeVideosProperty         = "youtube-videos"
+	VideoTitleProperty            = "video-title"
+	VideoDurationProperty         = "video-duration"
+	VideoErrorProperty            = "video-error"
 	ContentsUrlProperty           = "contents-url"
 	RegisteredAtProperty          = "registered-at"
 	TranslatedAtProperty          = "translated-at"
@@ -84,7 +87,7 @@ const (
 	DehydratedItemImageModifiedProperty = "dehydrated-item-image-modified"
 )
 
-func ArtsDetailsReduxProperties() []string {
+func ArtsDetailsProperties() []string {
 	return []string{
 		CoverUrlProperty,
 		TitleProperty,
@@ -120,7 +123,6 @@ func ArtsDetailsReduxProperties() []string {
 		TagUrlProperty,
 		ISBNProperty,
 		PublicationDateProperty,
-		YouTubeVideosProperty,
 		ContentsUrlProperty,
 		RegisteredAtProperty,
 		TranslatedAtProperty,
@@ -155,10 +157,20 @@ func IdNameProperties() []string {
 	}
 }
 
+func VideoProperties() []string {
+	return []string{
+		YouTubeVideosProperty,
+		VideoTitleProperty,
+		VideoErrorProperty,
+		VideoDurationProperty,
+	}
+}
+
 func ReduxProperties() []string {
-	properties := ArtsDetailsReduxProperties()
+	properties := ArtsDetailsProperties()
 	properties = append(properties, PersonsRolesProperties()...)
 	properties = append(properties, IdNameProperties()...)
+	properties = append(properties, VideoProperties()...)
 	properties = append(properties, []string{
 		ArtsHistoryOrderProperty,
 		ArtsHistoryEventTimeProperty,

@@ -13,7 +13,7 @@ func GetFiles(w http.ResponseWriter, r *http.Request) {
 	id := r.URL.Query().Get("id")
 
 	if id == "" {
-		http.Error(w, nod.ErrorStr("missing required book id"), http.StatusInternalServerError)
+		http.Error(w, nod.ErrorStr("missing book id"), http.StatusInternalServerError)
 		return
 	}
 
