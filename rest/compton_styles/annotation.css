@@ -1,0 +1,5 @@
+* {
+    font-size: var(--fs-n);
+    font-weight: var(--fs-n);
+    line-height: calc(1.5 * var(--s-n));
+}
