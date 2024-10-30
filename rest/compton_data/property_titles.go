@@ -13,6 +13,9 @@ var PropertyTitles = map[string]string{
 	data.PerformersProperty:   "Исполнитель",
 	data.PaintersProperty:     "Художник",
 
+	data.PriceProperty:    "Цена",
+	data.RatedAvgProperty: "Рейтинг",
+
 	data.ArtTypeProperty:      "Тип",
 	data.GenresProperty:       "Жанры",
 	data.TagsProperty:         "Тэги",

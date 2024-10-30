@@ -37,7 +37,7 @@ func Book(id string, hasSections []string, rdx kevlar.ReadableRedux) compton.Pag
 
 		sectionTitle := compton_data.SectionTitles[section]
 		summaryHeading := compton.DSTitle(p, sectionTitle)
-		detailsSummary := compton.DSLarge(p, summaryHeading, ii == len(hasSections)-1).
+		detailsSummary := compton.DSLarge(p, summaryHeading, ii == 0).
 			BackgroundColor(color.Highlight).
 			ForegroundColor(color.Foreground).
 			MarkerColor(color.Gray).
@@ -46,6 +46,9 @@ func Book(id string, hasSections []string, rdx kevlar.ReadableRedux) compton.Pag
 		detailsSummary.SetId(sectionTitle)
 
 		switch section {
+		case compton_data.InformationSection:
+			detailsSummary.Append(compton_fragments.BookProperties(p, id, rdx))
+		case compton_data.ExternalLinksSection:
 		default:
 			ifh := compton.IframeExpandHost(p, section, "/"+section+"?id="+id)
 			detailsSummary.Append(ifh)
