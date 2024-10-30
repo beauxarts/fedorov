@@ -92,7 +92,7 @@ func DownloadLitResBooks(hc *http.Client, force bool, artsIds ...string) error {
 			return da.EndWithError(err)
 		}
 
-		for _, afd := range artFiles.DownloadsTypes() {
+		for _, afd := range artFiles.PreferredDownloadsTypes() {
 
 			u := afd.Url(id)
 

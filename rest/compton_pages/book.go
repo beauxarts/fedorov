@@ -2,14 +2,16 @@ package compton_pages
 
 import (
 	"github.com/beauxarts/fedorov/data"
+	"github.com/beauxarts/fedorov/rest/compton_data"
 	"github.com/beauxarts/fedorov/rest/compton_fragments"
 	"github.com/beauxarts/fedorov/rest/compton_styles"
 	"github.com/boggydigital/compton"
+	"github.com/boggydigital/compton/consts/color"
 	"github.com/boggydigital/compton/consts/size"
 	"github.com/boggydigital/kevlar"
 )
 
-func Book(id string, rdx kevlar.ReadableRedux) compton.PageElement {
+func Book(id string, hasSections []string, rdx kevlar.ReadableRedux) compton.PageElement {
 
 	title, _ := rdx.GetLastVal(data.TitleProperty, id)
 
@@ -30,6 +32,30 @@ func Book(id string, rdx kevlar.ReadableRedux) compton.PageElement {
 	fmtLabels := compton_fragments.FormatLabels(id, rdx)
 	productLabels := compton.Labels(p, fmtLabels...).FontSize(size.Small).RowGap(size.XSmall).ColumnGap(size.XSmall)
 	pageStack.Append(compton.FICenter(p, productTitle, productLabels))
+
+	for ii, section := range hasSections {
+
+		sectionTitle := compton_data.SectionTitles[section]
+		summaryHeading := compton.DSTitle(p, sectionTitle)
+		detailsSummary := compton.DSLarge(p, summaryHeading, ii == len(hasSections)-1).
+			BackgroundColor(color.Highlight).
+			ForegroundColor(color.Foreground).
+			MarkerColor(color.Gray).
+			SummaryMarginBlockEnd(size.Normal).
+			DetailsMarginBlockEnd(size.Unset)
+		detailsSummary.SetId(sectionTitle)
+
+		switch section {
+		default:
+			ifh := compton.IframeExpandHost(p, section, "/"+section+"?id="+id)
+			detailsSummary.Append(ifh)
+		}
+
+		pageStack.Append(detailsSummary)
+	}
+
+	pageStack.Append(compton.Br(),
+		compton.Footer(p, "Tokyo", "https://github.com/beauxarts", "🇯🇵"))
 
 	return p
 }

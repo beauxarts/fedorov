@@ -4,6 +4,8 @@ github.com/beauxarts/scrinium v0.1.30 h1:Flp9t7ES0WhGpkBKNurO30wweMmkIvCPJ13aL9+
 github.com/beauxarts/scrinium v0.1.30/go.mod h1:6OdPkfSXl2sfHxM0pQGiQQlIZKVxFDbwMYhUpOS8gco=
 github.com/beauxarts/scrinium v0.1.31 h1:xfHNTLFk7gDGx5upZDUWIZ8+TrUg2/e298ITbCb7PNs=
 github.com/beauxarts/scrinium v0.1.31/go.mod h1:6OdPkfSXl2sfHxM0pQGiQQlIZKVxFDbwMYhUpOS8gco=
+github.com/beauxarts/scrinium v0.1.33 h1:cUh6ACE9ieCbDC2JABNWCXJ0ja6/pkUhNM77lt/kS/Y=
+github.com/beauxarts/scrinium v0.1.33/go.mod h1:bYQShDJ1omuQDm3NDZ2mJ/+iubkf0Y38NYPITf1g87I=
 github.com/boggydigital/backups v0.1.3 h1:Yq4/2kVxpexc0bAVA5tQPgdcKXPWsqihzgI759VPgVM=
 github.com/boggydigital/backups v0.1.3/go.mod h1:xIV5pr0U178hTV3mHfStSU+s1IOJUH4fOU81ad4Cq7Y=
 github.com/boggydigital/busan v0.1.0 h1:mUpe4b3vdt9Kcf4Z/C2YSuX5L7ru+J/iZW+IcSfW0cM=
@@ -22,6 +24,10 @@ github.com/boggydigital/compton v0.1.95 h1:0TP++8sGf5qe9mBrDIEdhdHhSJ+dJxWtBp0t2
 github.com/boggydigital/compton v0.1.95/go.mod h1:dj/yZ2cCfts6+heUS60Favateu+gNTIsoxfX6yNZWLg=
 github.com/boggydigital/compton v0.1.97 h1:xRe+lOILJtmav9a+njNtkBqBQsefnwa2VUV5AnBuwAg=
 github.com/boggydigital/compton v0.1.97/go.mod h1:dj/yZ2cCfts6+heUS60Favateu+gNTIsoxfX6yNZWLg=
+github.com/boggydigital/compton v0.1.98 h1:JmCitMZk7xPsqyA5P9IxIFGBnm0RXhB3v8OFDbCbO5c=
+github.com/boggydigital/compton v0.1.98/go.mod h1:dj/yZ2cCfts6+heUS60Favateu+gNTIsoxfX6yNZWLg=
+github.com/boggydigital/compton v0.1.99 h1:qv3P3vKXxjeHWbHak9luoPvTfzeALFcTqm49MD3hdFc=
+github.com/boggydigital/compton v0.1.99/go.mod h1:dj/yZ2cCfts6+heUS60Favateu+gNTIsoxfX6yNZWLg=
 github.com/boggydigital/coost v0.3.9 h1:lMfR5PyexBDR4xDOQp0zWZWUk/Dqlrx7gw7i7XdsC4c=
 github.com/boggydigital/coost v0.3.9/go.mod h1:w7ChGaah1DKsBIXb9ANdILg2pe2Jp7JkNpnK2R6rBec=
 github.com/boggydigital/dolo v0.2.17 h1:BiXflk2VHtCAnfYnfPIQgRnJKQxv1L/r6x7DqTma4A8=

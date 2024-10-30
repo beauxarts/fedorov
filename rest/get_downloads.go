@@ -1,24 +1,18 @@
 package rest
 
 import (
-	"github.com/beauxarts/fedorov/data"
-	"github.com/beauxarts/fedorov/stencil_app"
-	"github.com/beauxarts/fedorov/view_models"
+	"github.com/beauxarts/fedorov/rest/compton_pages"
 	"github.com/boggydigital/nod"
 	"net/http"
-	"os"
-	"path/filepath"
-	"strconv"
-	"strings"
 )
 
-func GetDownloads(w http.ResponseWriter, r *http.Request) {
+func GetFiles(w http.ResponseWriter, r *http.Request) {
 
-	// GET /downloads?id
+	// GET /files?id
 
-	idstr := r.URL.Query().Get("id")
+	id := r.URL.Query().Get("id")
 
-	if idstr == "" {
+	if id == "" {
 		http.Error(w, nod.ErrorStr("missing required book id"), http.StatusInternalServerError)
 		return
 	}
@@ -29,43 +23,49 @@ func GetDownloads(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	links, ok := rdx.GetAllValues("" /*data.DownloadLinksProperty*/, idstr)
-	titles, _ := rdx.GetAllValues("" /*data.DownloadTitlesProperty*/, idstr)
-
-	if !ok {
-		http.Error(w, nod.ErrorStr("book has no downloads"), http.StatusInternalServerError)
-		return
-	}
-
-	files := make([]string, 0, len(links))
-
-	if id, err := strconv.ParseInt(idstr, 10, 64); err == nil {
-		for _, link := range links {
-			filename := filepath.Base(link)
-			absDownloadFilename, err := data.AbsFileDownloadPath(id, filename)
-			if err != nil {
-				http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
-				return
-			}
-			if _, err := os.Stat(absDownloadFilename); err == nil {
-				files = append(files, filename)
-			} else {
-				nod.Log(err.Error())
-			}
+	if p := compton_pages.Files(id); p != nil {
+		if err := p.WriteResponse(w); err != nil {
+			http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		}
 	}
 
-	sb := &strings.Builder{}
-	dvm := view_models.NewDownloads(idstr, files, titles)
-
-	if err := tmpl.ExecuteTemplate(sb, "downloads", dvm); err != nil {
-		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
-		return
-	}
-
-	if err := app.RenderSection(idstr, stencil_app.DownloadsSection, sb.String(), w); err != nil {
-		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
-		return
-	}
+	//links, ok := rdx.GetAllValues("" /*data.DownloadLinksProperty*/, idstr)
+	//titles, _ := rdx.GetAllValues("" /*data.DownloadTitlesProperty*/, idstr)
+	//
+	//if !ok {
+	//	http.Error(w, nod.ErrorStr("book has no downloads"), http.StatusInternalServerError)
+	//	return
+	//}
+	//
+	//files := make([]string, 0, len(links))
+	//
+	//if id, err := strconv.ParseInt(idstr, 10, 64); err == nil {
+	//	for _, link := range links {
+	//		filename := filepath.Base(link)
+	//		absDownloadFilename, err := data.AbsFileDownloadPath(id, filename)
+	//		if err != nil {
+	//			http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
+	//			return
+	//		}
+	//		if _, err := os.Stat(absDownloadFilename); err == nil {
+	//			files = append(files, filename)
+	//		} else {
+	//			nod.Log(err.Error())
+	//		}
+	//	}
+	//}
+	//
+	//sb := &strings.Builder{}
+	//dvm := view_models.NewDownloads(idstr, files, titles)
+	//
+	//if err := tmpl.ExecuteTemplate(sb, "downloads", dvm); err != nil {
+	//	http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
+	//	return
+	//}
+	//
+	//if err := app.RenderSection(idstr, stencil_app.DownloadsSection, sb.String(), w); err != nil {
+	//	http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
+	//	return
+	//}
 
 }

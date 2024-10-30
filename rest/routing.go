@@ -29,7 +29,7 @@ func HandleFuncs(p int) {
 		//"GET /books":       Log(http.HandlerFunc(GetBooks)),
 		//"GET /book":        Log(http.HandlerFunc(GetBook)),
 		//"GET /digest":      Log(http.HandlerFunc(GetDigest)),
-		//"GET /downloads":   Log(http.HandlerFunc(GetDownloads)),
+		//"GET /downloads":   Log(http.HandlerFunc(GetFiles)),
 		//"GET /description": Log(http.HandlerFunc(GetDescription)),
 		//// auth data endpoints
 		//"GET /completed/set":    Auth(Log(http.HandlerFunc(GetCompletedSet)), AdminRole),
@@ -43,13 +43,15 @@ func HandleFuncs(p int) {
 
 		"GET /latest": Log(http.HandlerFunc(GetLatest)),
 		"GET /search": Log(http.HandlerFunc(GetSearch)),
+		"GET /book":   Log(http.HandlerFunc(GetBook)),
+
+		// book page sections
+		"GET /files": Log(http.HandlerFunc(GetFiles)),
 
 		"GET /list_cover": Log(http.HandlerFunc(GetListCover)),
 		"GET /book_cover": Log(http.HandlerFunc(GetBookCover)),
 
 		"GET /file": Auth(Log(http.HandlerFunc(GetFile)), AdminRole, SharedRole),
-
-		"GET /book": Log(http.HandlerFunc(GetBook)),
 
 		"/": http.RedirectHandler("/latest", http.StatusPermanentRedirect),
 	}
