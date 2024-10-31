@@ -11,7 +11,6 @@ import (
 	"github.com/boggydigital/compton/consts/direction"
 	"github.com/boggydigital/compton/consts/font_weight"
 	"strconv"
-	"time"
 )
 
 var typeColors = map[string]color.Color{
@@ -101,12 +100,13 @@ func fmtSeconds(ts int) string {
 		return "unknown"
 	}
 
-	t := time.Unix(int64(ts), 0).UTC()
+	hours := ts / (60 * 60)
+	minutes := (ts / 60) % 60
+	seconds := ts % 60
 
-	layout := "4:05"
-	if t.Hour() > 0 {
-		layout = "15:04:05"
+	if hours == 0 {
+		return fmt.Sprintf("%2d:%2d", minutes, seconds)
+	} else {
+		return fmt.Sprintf("%d:%2d:%2d", hours, minutes, seconds)
 	}
-
-	return t.Format(layout)
 }

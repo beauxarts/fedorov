@@ -2,6 +2,7 @@ package compton_fragments
 
 import (
 	"fmt"
+	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/rest/compton_data"
 	"github.com/boggydigital/compton"
 	"github.com/boggydigital/compton/consts/align"
@@ -11,6 +12,7 @@ import (
 	"github.com/boggydigital/kevlar"
 	"golang.org/x/exp/maps"
 	"golang.org/x/exp/slices"
+	"strings"
 )
 
 type formattedProperty struct {
@@ -48,6 +50,27 @@ func formatProperty(id, property string, rdx kevlar.ReadableRedux) formattedProp
 
 	for _, value := range values {
 		switch property {
+		case data.DateWrittenAtProperty:
+			fallthrough
+		case data.PublicationDateProperty:
+			fallthrough
+		case data.TranslatedAtProperty:
+			fallthrough
+		case data.RegisteredAtProperty:
+			fallthrough
+		case data.AvailableFromProperty:
+			fallthrough
+		case data.FirstTimeSaleAtProperty:
+			fallthrough
+		case data.LastReleasedAtProperty:
+			fallthrough
+		case data.LastUpdatedAtProperty:
+			value, _, _ = strings.Cut(value, "T")
+			fmtProperty.values[value] = noHref()
+		case data.RatedAvgProperty:
+			fallthrough
+		case data.PriceProperty:
+			fmtProperty.values[value] = noHref()
 		//case vangogh_local_data.WishlistedProperty:
 		//	if owned {
 		//		break
@@ -205,4 +228,8 @@ func propertyTitleValues(r compton.Registrar, property string, fmtProperty forma
 	}
 
 	return tv
+}
+
+func noHref() string {
+	return ""
 }
