@@ -9,7 +9,15 @@ import (
 	"github.com/boggydigital/compton/consts/color"
 	"github.com/boggydigital/compton/consts/size"
 	"github.com/boggydigital/kevlar"
+	"golang.org/x/exp/slices"
 )
+
+var completedSections = []string{
+	compton_data.InformationSection,
+	compton_data.AnnotationSection,
+	compton_data.VideosSection,
+	compton_data.FilesSection,
+}
 
 func Book(id string, hasSections []string, rdx kevlar.ReadableRedux) compton.PageElement {
 
@@ -35,11 +43,19 @@ func Book(id string, hasSections []string, rdx kevlar.ReadableRedux) compton.Pag
 
 	for ii, section := range hasSections {
 
+		sbg := color.Highlight
+		sfg := color.Foreground
+
+		if !slices.Contains(completedSections, section) {
+			sbg = color.Red
+			sfg = color.White
+		}
+
 		sectionTitle := compton_data.SectionTitles[section]
 		summaryHeading := compton.DSTitle(p, sectionTitle)
 		detailsSummary := compton.DSLarge(p, summaryHeading, ii == 0).
-			BackgroundColor(color.Highlight).
-			ForegroundColor(color.Foreground).
+			BackgroundColor(sbg).
+			ForegroundColor(sfg).
 			MarkerColor(color.Gray).
 			SummaryMarginBlockEnd(size.Normal).
 			DetailsMarginBlockEnd(size.Unset)
