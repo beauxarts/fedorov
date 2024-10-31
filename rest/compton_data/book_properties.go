@@ -4,7 +4,7 @@ import "github.com/beauxarts/fedorov/data"
 
 var BookProperties = []string{
 	data.AuthorsProperty,
-	data.SymbolsCountProperty,
+	//data.SymbolsCountProperty,
 	data.SeriesProperty,
 	data.ReadersProperty,
 	data.IllustratorsProperty,
