@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/rest/compton_data"
+	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/compton"
 	"github.com/boggydigital/compton/consts/align"
 	"github.com/boggydigital/compton/consts/color"
@@ -12,6 +13,7 @@ import (
 	"github.com/boggydigital/kevlar"
 	"golang.org/x/exp/maps"
 	"golang.org/x/exp/slices"
+	"strconv"
 	"strings"
 )
 
@@ -24,9 +26,11 @@ type formattedProperty struct {
 func BookProperties(r compton.Registrar, id string, rdx kevlar.ReadableRedux) compton.Element {
 	grid := compton.GridItems(r).JustifyContent(align.Center)
 
+	artType, _ := rdx.GetLastVal(data.ArtTypeProperty, id)
+
 	for _, property := range compton_data.BookProperties {
 
-		fmtProperty := formatProperty(id, property, rdx)
+		fmtProperty := formatProperty(id, property, artType, rdx)
 		if tv := propertyTitleValues(r, property, fmtProperty); tv != nil {
 			grid.Append(tv)
 		}
@@ -35,11 +39,26 @@ func BookProperties(r compton.Registrar, id string, rdx kevlar.ReadableRedux) co
 	return grid
 }
 
-func formatProperty(id, property string, rdx kevlar.ReadableRedux) formattedProperty {
+func formatProperty(id, property string, artType string, rdx kevlar.ReadableRedux) formattedProperty {
 
 	fmtProperty := formattedProperty{
 		actions: make(map[string]string),
 		values:  make(map[string]string),
+	}
+
+	var seriesNames []string
+	var seriesArtOrder []string
+	//var seriesArtCounts []string
+	if property == data.SeriesProperty {
+		seriesArtOrder, _ = rdx.GetAllValues(data.SeriesArtOrderProperty, id)
+		seriesIds, _ := rdx.GetAllValues(data.SeriesIdProperty, id)
+		for _, seriesId := range seriesIds {
+			seriesName, _ := rdx.GetLastVal(data.SeriesNameProperty, seriesId)
+			seriesNames = append(seriesNames, seriesName)
+
+			//seriesArtCount, _ := rdx.GetLastVal(data.SeriesArtsCountProperty, seriesId)
+			//seriesArtCounts = append(seriesArtCounts, seriesArtCount)
+		}
 	}
 
 	values, _ := rdx.GetAllValues(property, id)
@@ -47,8 +66,19 @@ func formatProperty(id, property string, rdx kevlar.ReadableRedux) formattedProp
 	//if len(values) > 0 {
 	//	firstValue = values[0]
 	//}
+	//seriesNames := make([]string, 0)
+	//
+	//seriesIds, _ := rdx.GetAllValues(data.SeriesIdProperty, id)
+	//for _, seriesId := range seriesIds {
+	//	if seriesName, ok := rdx.GetLastVal(data.SeriesNameProperty, seriesId); ok {
+	//		seriesNames = append(seriesNames, seriesName)
+	//	}
+	//}
+	//
+	//seriesArtOrder, _ := rdx.GetAllValues(data.SeriesArtOrderProperty, id)
+	//fmt.Println(seriesNames, seriesArtOrder)
 
-	for _, value := range values {
+	for ii, value := range values {
 		switch property {
 		case data.DateWrittenAtProperty:
 			fallthrough
@@ -64,6 +94,8 @@ func formatProperty(id, property string, rdx kevlar.ReadableRedux) formattedProp
 			fallthrough
 		case data.LastReleasedAtProperty:
 			fallthrough
+		case data.ISBNProperty:
+			fallthrough
 		case data.LastUpdatedAtProperty:
 			value, _, _ = strings.Cut(value, "T")
 			fmtProperty.values[value] = noHref()
@@ -71,6 +103,33 @@ func formatProperty(id, property string, rdx kevlar.ReadableRedux) formattedProp
 			fallthrough
 		case data.PriceProperty:
 			fmtProperty.values[value] = noHref()
+		case data.SymbolsCountProperty:
+			switch artType {
+			case strconv.Itoa(int(litres_integration.ArtTypeText)):
+				fallthrough
+			case strconv.Itoa(int(litres_integration.ArtTypePDF)):
+				value += " стр"
+			case strconv.Itoa(int(litres_integration.ArtTypeAudio)):
+				if vi, err := strconv.ParseInt(value, 10, 32); err == nil {
+					value = fmtSeconds(int(vi))
+				}
+			}
+			fmtProperty.values[value] = noHref()
+		case data.SeriesProperty:
+			if ii < len(seriesNames) {
+				value = seriesNames[ii]
+				if ii < len(seriesArtOrder) {
+					if seriesArtOrder[ii] != "0" {
+						value += " " + seriesArtOrder[ii]
+					}
+				}
+				//if ii < len(seriesArtCounts) {
+				//	if seriesArtOrder[ii] != "0" {
+				//		value += " из " + seriesArtCounts[ii]
+				//	}
+				//}
+				fmtProperty.values[value] = searchHref(data.SeriesProperty, seriesNames[ii])
+			}
 		//case vangogh_local_data.WishlistedProperty:
 		//	if owned {
 		//		break
@@ -179,7 +238,7 @@ func formatProperty(id, property string, rdx kevlar.ReadableRedux) formattedProp
 }
 
 func searchHref(property, value string) string {
-	return fmt.Sprintf("/search?%s=%s", property, value)
+	return fmt.Sprintf("/search?%s=%s&sort=date-written-at&desc=true", property, value)
 }
 
 func propertyTitleValues(r compton.Registrar, property string, fmtProperty formattedProperty) *compton.TitleValuesElement {
