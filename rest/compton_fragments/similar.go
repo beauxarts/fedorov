@@ -19,6 +19,12 @@ func Similar(r compton.Registrar, id string, artsSimilar *litres_integration.Art
 
 	stack := compton.FlexItems(r, direction.Column)
 
+	if len(artsSimilar.Payload.Data) == 0 {
+		stack.Append(compton.Fspan(r, "Для данной книги пока нет сходных книг").
+			ForegroundColor(color.Gray).
+			TextAlign(align.Center))
+	}
+
 	for ii, art := range artsSimilar.Payload.Data {
 
 		linkHref := "https://litres.ru" + art.Url

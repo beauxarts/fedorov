@@ -3,6 +3,8 @@ package compton_fragments
 import (
 	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/compton"
+	"github.com/boggydigital/compton/consts/align"
+	"github.com/boggydigital/compton/consts/color"
 	"github.com/boggydigital/compton/consts/direction"
 	"strconv"
 	"strings"
@@ -11,6 +13,12 @@ import (
 func Reviews(r compton.Registrar, id string, artsReviews *litres_integration.ArtsReviews) compton.Element {
 
 	stack := compton.FlexItems(r, direction.Column)
+
+	if len(artsReviews.Payload.Data) == 0 {
+		stack.Append(compton.Fspan(r, "Для данной книги пока нет отзывов").
+			ForegroundColor(color.Gray).
+			TextAlign(align.Center))
+	}
 
 	for ii, review := range artsReviews.Payload.Data {
 
