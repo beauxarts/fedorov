@@ -90,16 +90,6 @@ func main() {
 		os.Exit(1)
 	}
 
-	//rd, err := pathways.GetAbsRelDir(data.Redux)
-	//if err != nil {
-	//	panic(err)
-	//}
-	//
-	//rdx, err := kevlar.NewReduxReader(rd, data.ReduxProperties()...)
-	//if err != nil {
-	//	panic(err)
-	//}
-	//
 	//for _, id := range rdx.Keys(data.GenresIdsProperty) {
 	//
 	//	if genres, ok := rdx.GetAllValues(data.GenresIdsProperty, id); ok {

@@ -48,61 +48,60 @@ func externalLinks(id string, rdx kevlar.ReadableRedux) map[string][]string {
 			encodeLink(altType, "/book/"+avId))
 	}
 
-	if personsIds, ok := rdx.GetAllValues(data.PersonsIdsProperty, id); ok {
-		for _, personId := range personsIds {
-			name, _ := rdx.GetLastVal(data.PersonFullNameProperty, personId)
-			path, _ := rdx.GetLastVal(data.PersonUrlProperty, personId)
-			links[data.LitresAuthorLinksProperty] = append(links[data.LitresAuthorLinksProperty],
-				encodeLink(name, path))
-		}
-	}
+	appendLink(links, id, rdx,
+		data.PersonsIdsProperty,
+		data.PersonFullNameProperty,
+		data.PersonUrlProperty,
+		data.LitresSeriesLinksProperty)
 
-	if seriesIds, ok := rdx.GetAllValues(data.SeriesIdProperty, id); ok {
-		for _, seriesId := range seriesIds {
-			name, _ := rdx.GetLastVal(data.SeriesNameProperty, seriesId)
-			path, _ := rdx.GetLastVal(data.SeriesUrlProperty, seriesId)
-			links[data.LitresSeriesLinksProperty] = append(links[data.LitresSeriesLinksProperty],
-				encodeLink(name, path))
-		}
-	}
+	appendLink(links, id, rdx,
+		data.SeriesIdProperty,
+		data.SeriesNameProperty,
+		data.SeriesUrlProperty,
+		data.LitresAuthorLinksProperty)
 
-	if publishersIds, ok := rdx.GetAllValues(data.PublisherIdProperty, id); ok {
-		for _, publisherId := range publishersIds {
-			name, _ := rdx.GetLastVal(data.PublisherNameProperty, publisherId)
-			path, _ := rdx.GetLastVal(data.PublisherUrlProperty, publisherId)
-			links[data.LitresPublishersLinksProperty] = append(links[data.LitresPublishersLinksProperty],
-				encodeLink(name, path))
-		}
-	}
+	appendLink(links, id, rdx,
+		data.SeriesIdProperty,
+		data.SeriesNameProperty,
+		data.SeriesUrlProperty,
+		data.LitresAuthorLinksProperty)
 
-	if rightholdersIds, ok := rdx.GetAllValues(data.RightholdersIdsProperty, id); ok {
-		for _, rightholderId := range rightholdersIds {
-			name, _ := rdx.GetLastVal(data.RightholderNameProperty, rightholderId)
-			path, _ := rdx.GetLastVal(data.RightholderUrlProperty, rightholderId)
-			links[data.LitresRightholdersLinksProperty] = append(links[data.LitresRightholdersLinksProperty],
-				encodeLink(name, path))
-		}
-	}
+	appendLink(links, id, rdx,
+		data.PublisherIdProperty,
+		data.PublisherNameProperty,
+		data.PublisherUrlProperty,
+		data.LitresPublishersLinksProperty)
 
-	if genresIds, ok := rdx.GetAllValues(data.GenresIdsProperty, id); ok {
-		for _, genreId := range genresIds {
-			name, _ := rdx.GetLastVal(data.GenreNameProperty, genreId)
-			path, _ := rdx.GetLastVal(data.GenreUrlProperty, genreId)
-			links[data.LitresGenresLinksProperty] = append(links[data.LitresGenresLinksProperty],
-				encodeLink(name, path))
-		}
-	}
+	appendLink(links, id, rdx,
+		data.RightholdersIdsProperty,
+		data.RightholderNameProperty,
+		data.RightholderUrlProperty,
+		data.LitresRightholdersLinksProperty)
 
-	if tagsIds, ok := rdx.GetAllValues(data.TagsIdsProperty, id); ok {
-		for _, tagId := range tagsIds {
-			name, _ := rdx.GetLastVal(data.TagNameProperty, tagId)
-			path, _ := rdx.GetLastVal(data.TagUrlProperty, tagId)
-			links[data.LitresTagsLinksProperty] = append(links[data.LitresTagsLinksProperty],
-				encodeLink(name, path))
-		}
-	}
+	appendLink(links, id, rdx,
+		data.GenresIdsProperty,
+		data.GenreNameProperty,
+		data.GenreUrlProperty,
+		data.LitresGenresLinksProperty)
+
+	appendLink(links, id, rdx,
+		data.TagsIdsProperty,
+		data.TagNameProperty,
+		data.TagUrlProperty,
+		data.LitresTagsLinksProperty)
 
 	return links
+}
+
+func appendLink(links map[string][]string, id string, rdx kevlar.ReadableRedux, idsProperty, nameProperty, urlProperty, linkProperty string) {
+	if pids, ok := rdx.GetAllValues(idsProperty, id); ok {
+		for _, pid := range pids {
+			name, _ := rdx.GetLastVal(nameProperty, pid)
+			path, _ := rdx.GetLastVal(urlProperty, pid)
+
+			links[linkProperty] = append(links[linkProperty], encodeLink(name, path))
+		}
+	}
 }
 
 func encodeLink(name, path string) string {

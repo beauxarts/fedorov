@@ -120,40 +120,52 @@ func getDetailedPropertyValues(ad *litres_integration.ArtsDetails) (pkv map[stri
 	}
 
 	for _, person := range ad.Payload.Data.Persons {
-		pid := fmtInt(person.Id)
-		pkv[data.PersonFullNameProperty][pid] = []string{person.FullName}
-		pkv[data.PersonUrlProperty][pid] = []string{person.Url}
+		if person.Id > 0 {
+			pid := fmtInt(person.Id)
+			pkv[data.PersonFullNameProperty][pid] = []string{person.FullName}
+			pkv[data.PersonUrlProperty][pid] = []string{person.Url}
+		}
 	}
 
 	for _, series := range ad.Payload.Data.Series {
-		sid := fmtInt(series.Id)
-		pkv[data.SeriesNameProperty][sid] = []string{series.Name}
-		pkv[data.SeriesUrlProperty][sid] = []string{series.Url}
-		pkv[data.SeriesArtsCountProperty][sid] = []string{fmtInt(series.ArtsCount)}
+		if series.Id > 0 {
+			sid := fmtInt(series.Id)
+			pkv[data.SeriesNameProperty][sid] = []string{series.Name}
+			pkv[data.SeriesUrlProperty][sid] = []string{series.Url}
+			pkv[data.SeriesArtsCountProperty][sid] = []string{fmtInt(series.ArtsCount)}
+		}
 	}
 
 	for _, genre := range ad.Payload.Data.Genres {
-		gid := fmtInt(genre.Id)
-		pkv[data.GenreNameProperty][gid] = []string{genre.Name}
-		pkv[data.GenreUrlProperty][gid] = []string{genre.Url}
+		if genre.Id > 0 {
+			gid := fmtInt(genre.Id)
+			pkv[data.GenreNameProperty][gid] = []string{genre.Name}
+			pkv[data.GenreUrlProperty][gid] = []string{genre.Url}
+		}
 	}
 
 	for _, tag := range ad.Payload.Data.Tags {
-		tid := fmtInt(tag.Id)
-		pkv[data.TagNameProperty][tid] = []string{tag.Name}
-		pkv[data.TagUrlProperty][tid] = []string{tag.Url}
+		if tag.Id > 0 {
+			tid := fmtInt(tag.Id)
+			pkv[data.TagNameProperty][tid] = []string{tag.Name}
+			pkv[data.TagUrlProperty][tid] = []string{tag.Url}
+		}
 	}
 
 	if pub := ad.Payload.Data.Publisher; pub != nil {
-		pid := fmtInt(pub.Id)
-		pkv[data.PublisherNameProperty][pid] = []string{pub.Name}
-		pkv[data.PublisherUrlProperty][pid] = []string{pub.Url}
+		if pub.Id > 0 {
+			pid := fmtInt(pub.Id)
+			pkv[data.PublisherNameProperty][pid] = []string{pub.Name}
+			pkv[data.PublisherUrlProperty][pid] = []string{pub.Url}
+		}
 	}
 
 	for _, rh := range ad.Payload.Data.Rightholders {
-		rid := fmtInt(rh.Id)
-		pkv[data.RightholderNameProperty][rid] = []string{rh.Name}
-		pkv[data.RightholderUrlProperty][rid] = []string{rh.Url}
+		if rh.Id > 0 {
+			rid := fmtInt(rh.Id)
+			pkv[data.RightholderNameProperty][rid] = []string{rh.Name}
+			pkv[data.RightholderUrlProperty][rid] = []string{rh.Url}
+		}
 	}
 
 	return pkv
