@@ -52,19 +52,13 @@ func externalLinks(id string, rdx kevlar.ReadableRedux) map[string][]string {
 		data.PersonsIdsProperty,
 		data.PersonFullNameProperty,
 		data.PersonUrlProperty,
+		data.LitresAuthorLinksProperty)
+
+	appendLink(links, id, rdx,
+		data.SeriesIdProperty,
+		data.SeriesNameProperty,
+		data.SeriesUrlProperty,
 		data.LitresSeriesLinksProperty)
-
-	appendLink(links, id, rdx,
-		data.SeriesIdProperty,
-		data.SeriesNameProperty,
-		data.SeriesUrlProperty,
-		data.LitresAuthorLinksProperty)
-
-	appendLink(links, id, rdx,
-		data.SeriesIdProperty,
-		data.SeriesNameProperty,
-		data.SeriesUrlProperty,
-		data.LitresAuthorLinksProperty)
 
 	appendLink(links, id, rdx,
 		data.PublisherIdProperty,
