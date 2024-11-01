@@ -6,7 +6,7 @@ var SectionStyles = map[string]string{
 	ExternalLinksSection: "external-links.css",
 	ReviewsSection:       "",
 	QuotesSection:        "",
-	SimilarSection:       "",
+	SimilarSection:       "similar.css",
 	VideosSection:        "",
 	ContentsSection:      "",
 	FilesSection:         "",

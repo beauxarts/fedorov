@@ -1,0 +1,3 @@
+.label {
+    line-height: calc(1.5 * var(--s-s));
+}
