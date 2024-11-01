@@ -2,20 +2,24 @@ package compton_data
 
 import (
 	"github.com/beauxarts/fedorov/data"
+	"github.com/beauxarts/scrinium/litres_integration"
 	"net/url"
+	"strconv"
 	"strings"
 )
 
 const (
-	SearchNew    = "Новый"
-	SearchAdults = "Взрослые"
-	SearchKids   = "Детские"
+	SearchNew   = "Новый"
+	SearchText  = "Текст"
+	SearchAudio = "Аудио"
+	SearchPDF   = "PDF"
 )
 
 var SearchOrder = []string{
 	SearchNew,
-	SearchAdults,
-	SearchKids,
+	SearchText,
+	SearchAudio,
+	SearchPDF,
 }
 
 func SearchScopes() map[string]string {
@@ -24,17 +28,22 @@ func SearchScopes() map[string]string {
 	queries[SearchNew] = ""
 
 	q := url.Values{}
-	q.Set(data.BookCompletedProperty, "false")
-	q.Set(data.MinAgeProperty, "16")
+	q.Set(data.ArtTypeProperty, strconv.Itoa(int(litres_integration.ArtTypeText)))
 	q.Set(data.SortProperty, data.ArtsHistoryEventTimeProperty)
 	q.Set(data.DescendingProperty, "true")
-	queries[SearchAdults] = q.Encode()
+	queries[SearchText] = q.Encode()
 
 	q = url.Values{}
-	q.Set(data.GenresProperty, "детские")
+	q.Set(data.ArtTypeProperty, strconv.Itoa(int(litres_integration.ArtTypeAudio)))
 	q.Set(data.SortProperty, data.ArtsHistoryEventTimeProperty)
 	q.Set(data.DescendingProperty, "true")
-	queries[SearchKids] = q.Encode()
+	queries[SearchAudio] = q.Encode()
+
+	q = url.Values{}
+	q.Set(data.ArtTypeProperty, strconv.Itoa(int(litres_integration.ArtTypePDF)))
+	q.Set(data.SortProperty, data.ArtsHistoryEventTimeProperty)
+	q.Set(data.DescendingProperty, "true")
+	queries[SearchPDF] = q.Encode()
 
 	return queries
 }
