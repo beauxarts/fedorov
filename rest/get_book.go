@@ -12,7 +12,6 @@ import (
 var artTypeSection = map[litres_integration.ArtsType]string{
 	litres_integration.ArtsTypeSimilar: compton_data.SimilarSection,
 	litres_integration.ArtsTypeReviews: compton_data.ReviewsSection,
-	litres_integration.ArtsTypeQuotes:  compton_data.QuotesSection,
 	litres_integration.ArtsTypeFiles:   compton_data.FilesSection,
 }
 
@@ -48,7 +47,6 @@ func GetBook(w http.ResponseWriter, r *http.Request) {
 	artsTypes := []litres_integration.ArtsType{
 		litres_integration.ArtsTypeSimilar,
 		litres_integration.ArtsTypeReviews,
-		litres_integration.ArtsTypeQuotes,
 	}
 
 	for _, at := range artsTypes {

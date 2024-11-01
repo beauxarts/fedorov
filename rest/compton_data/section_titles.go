@@ -6,7 +6,6 @@ const (
 	ExternalLinksSection = "external-links"
 	SimilarSection       = "similar"
 	ReviewsSection       = "reviews"
-	QuotesSection        = "quotes"
 	VideosSection        = "videos"
 	ContentsSection      = "contents"
 	FilesSection         = "files"
@@ -17,7 +16,6 @@ var SectionTitles = map[string]string{
 	AnnotationSection:    "Аннотация",
 	ExternalLinksSection: "Ссылки Литрес",
 	ReviewsSection:       "Отзывы",
-	QuotesSection:        "Цитаты",
 	SimilarSection:       "Сходные книги",
 	VideosSection:        "Видео",
 	ContentsSection:      "Оглавление",

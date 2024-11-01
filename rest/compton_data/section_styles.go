@@ -5,7 +5,6 @@ var SectionStyles = map[string]string{
 	AnnotationSection:    "annotation.css",
 	ExternalLinksSection: "external-links.css",
 	ReviewsSection:       "",
-	QuotesSection:        "",
 	SimilarSection:       "similar.css",
 	VideosSection:        "",
 	ContentsSection:      "",
