@@ -132,6 +132,7 @@ func ArtsDetailsProperties() []string {
 		TagsIdsProperty,
 		TagNameProperty,
 		TagUrlProperty,
+		YouTubeVideosProperty,
 		ISBNProperty,
 		PublicationDateProperty,
 		ContentsUrlProperty,
@@ -170,7 +171,6 @@ func IdNameProperties() []string {
 
 func VideoProperties() []string {
 	return []string{
-		YouTubeVideosProperty,
 		VideoTitleProperty,
 		VideoErrorProperty,
 		VideoDurationProperty,

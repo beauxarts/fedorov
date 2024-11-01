@@ -28,7 +28,7 @@ func GetVideosMetadata(force bool) error {
 		return gvma.EndWithError(err)
 	}
 
-	rdx, err := kevlar.NewReduxWriter(rp, data.VideoProperties()...)
+	rdx, err := kevlar.NewReduxWriter(rp, data.ReduxProperties()...)
 	if err != nil {
 		return gvma.EndWithError(err)
 	}

@@ -6,6 +6,7 @@ import (
 	"github.com/beauxarts/fedorov/rest/compton_fragments"
 	"github.com/beauxarts/fedorov/rest/compton_styles"
 	"github.com/boggydigital/compton"
+	"github.com/boggydigital/compton/consts/align"
 	"github.com/boggydigital/compton/consts/color"
 	"github.com/boggydigital/compton/consts/size"
 	"github.com/boggydigital/kevlar"
@@ -35,16 +36,19 @@ func Book(id string, hasSections []string, rdx kevlar.ReadableRedux) compton.Pag
 		pageStack.Append(cover)
 	}
 
-	productTitle := compton.HeadingText(title, 1)
-	productTitle.AddClass("product-title")
+	productTitle := compton.Heading(1)
+	productTitle.Append(compton.Fspan(p, title).TextAlign(align.Center))
 
 	fmtLabels := compton_fragments.FormatLabels(id, rdx)
 	productLabels := compton.Labels(p, fmtLabels...).FontSize(size.Small).RowGap(size.XSmall).ColumnGap(size.XSmall)
 	pageStack.Append(compton.FICenter(p, productTitle, productLabels))
 
 	if subtitle, ok := rdx.GetLastVal(data.SubtitleProperty, id); ok {
-		productSubtitle := compton.Fspan(p, subtitle).ForegroundColor(color.Gray).FontSize(size.Small)
-		pageStack.Append(compton.FICenter(p, productSubtitle))
+		productSubtitle := compton.Fspan(p, subtitle).
+			ForegroundColor(color.Gray).
+			FontSize(size.Small).
+			TextAlign(align.Center)
+		pageStack.Append(productSubtitle)
 	}
 
 	for ii, section := range hasSections {
