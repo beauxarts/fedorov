@@ -23,7 +23,7 @@ type formattedProperty struct {
 	actions map[string]string
 }
 
-func BookProperties(r compton.Registrar, id string, rdx kevlar.ReadableRedux) compton.Element {
+func Information(r compton.Registrar, id string, rdx kevlar.ReadableRedux) compton.Element {
 	grid := compton.GridItems(r).JustifyContent(align.Center)
 
 	artType, _ := rdx.GetLastVal(data.ArtTypeProperty, id)

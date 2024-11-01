@@ -85,6 +85,11 @@ const (
 	DehydratedListImageModifiedProperty = "dehydrated-list-image-modified"
 	DehydratedItemImageProperty         = "dehydrated-item-image"
 	DehydratedItemImageModifiedProperty = "dehydrated-item-image-modified"
+
+	// Litres links
+	LitresBookLinksProperty   = "litres-book-links"
+	LitresAuthorLinksProperty = "litres-author-links"
+	LitresSeriesLinksProperty = "litres-series-links"
 )
 
 func ArtsDetailsProperties() []string {

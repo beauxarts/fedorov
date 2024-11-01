@@ -61,14 +61,8 @@ func Book(id string, hasSections []string, rdx kevlar.ReadableRedux) compton.Pag
 			DetailsMarginBlockEnd(size.Unset)
 		detailsSummary.SetId(sectionTitle)
 
-		switch section {
-		case compton_data.InformationSection:
-			detailsSummary.Append(compton_fragments.BookProperties(p, id, rdx))
-		case compton_data.ExternalLinksSection:
-		default:
-			ifh := compton.IframeExpandHost(p, section, "/"+section+"?id="+id)
-			detailsSummary.Append(ifh)
-		}
+		ifh := compton.IframeExpandHost(p, section, "/"+section+"?id="+id)
+		detailsSummary.Append(ifh)
 
 		pageStack.Append(detailsSummary)
 	}

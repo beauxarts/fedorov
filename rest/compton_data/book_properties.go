@@ -26,3 +26,9 @@ var BookProperties = []string{
 	data.LastReleasedAtProperty,
 	data.LastUpdatedAtProperty,
 }
+
+var BookExternalLinksProperties = []string{
+	data.LitresBookLinksProperty,
+	data.LitresAuthorLinksProperty,
+	data.LitresSeriesLinksProperty,
+}
