@@ -10,6 +10,7 @@ const (
 	// arts details properties
 	CoverUrlProperty              = "cover-url"
 	TitleProperty                 = "title"
+	SubtitleProperty              = "subtitle"
 	ArtTypeProperty               = "art-type"
 	PriceProperty                 = "price"
 	MinAgeProperty                = "min-age"
@@ -100,6 +101,7 @@ func ArtsDetailsProperties() []string {
 	return []string{
 		CoverUrlProperty,
 		TitleProperty,
+		SubtitleProperty,
 		ArtTypeProperty,
 		PriceProperty,
 		MinAgeProperty,

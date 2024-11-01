@@ -10,7 +10,7 @@ import (
 	"strconv"
 )
 
-func ReduceLitResArtsDetailsHandler(u *url.URL) error {
+func ReduceLitResArtsDetailsHandler(_ *url.URL) error {
 
 	//TODO: add vangogh style since-hours-ago
 	return ReduceLitResArtsDetails()
@@ -176,6 +176,8 @@ func getArtsDetailsPropertyValues(ad *litres_integration.ArtsDetails, property s
 	switch property {
 	case data.TitleProperty:
 		val = add.Title
+	case data.SubtitleProperty:
+		val = add.Subtitle
 	case data.CoverUrlProperty:
 		val = add.CoverUrl
 	case data.ArtTypeProperty:

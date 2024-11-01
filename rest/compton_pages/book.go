@@ -42,6 +42,11 @@ func Book(id string, hasSections []string, rdx kevlar.ReadableRedux) compton.Pag
 	productLabels := compton.Labels(p, fmtLabels...).FontSize(size.Small).RowGap(size.XSmall).ColumnGap(size.XSmall)
 	pageStack.Append(compton.FICenter(p, productTitle, productLabels))
 
+	if subtitle, ok := rdx.GetLastVal(data.SubtitleProperty, id); ok {
+		productSubtitle := compton.Fspan(p, subtitle).ForegroundColor(color.Gray).FontSize(size.Small)
+		pageStack.Append(compton.FICenter(p, productSubtitle))
+	}
+
 	for ii, section := range hasSections {
 
 		sbg := color.Highlight
