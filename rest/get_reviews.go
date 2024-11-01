@@ -8,9 +8,9 @@ import (
 	"net/http"
 )
 
-func GetSimilar(w http.ResponseWriter, r *http.Request) {
+func GetReviews(w http.ResponseWriter, r *http.Request) {
 
-	// GET /similar?id
+	// GET /reviews?id
 
 	id := r.URL.Query().Get("id")
 
@@ -25,19 +25,19 @@ func GetSimilar(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	saReader, err := data.NewArtsReader(litres_integration.ArtsTypeSimilar)
+	raReader, err := data.NewArtsReader(litres_integration.ArtsTypeReviews)
 	if err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return
 	}
 
-	similarArts, err := saReader.ArtsSimilar(id)
+	artsReviews, err := raReader.ArtsReviews(id)
 	if err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return
 	}
 
-	if p := compton_pages.Similar(id, similarArts, rdx); p != nil {
+	if p := compton_pages.Reviews(id, artsReviews); p != nil {
 		if err = p.WriteResponse(w); err != nil {
 			http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		}

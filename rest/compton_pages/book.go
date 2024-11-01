@@ -18,6 +18,7 @@ var completedSections = []string{
 	compton_data.ExternalLinksSection,
 	compton_data.AnnotationSection,
 	compton_data.SimilarSection,
+	compton_data.ReviewsSection,
 	compton_data.VideosSection,
 	compton_data.FilesSection,
 }
