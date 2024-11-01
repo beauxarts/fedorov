@@ -15,7 +15,7 @@ const (
 var SectionTitles = map[string]string{
 	InformationSection:   "Информация",
 	AnnotationSection:    "Аннотация",
-	ExternalLinksSection: "Ссылки",
+	ExternalLinksSection: "Ссылки Литрес",
 	ReviewsSection:       "Отзывы",
 	QuotesSection:        "Цитаты",
 	SimilarSection:       "Сходные книги",

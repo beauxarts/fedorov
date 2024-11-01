@@ -14,6 +14,7 @@ import (
 
 var completedSections = []string{
 	compton_data.InformationSection,
+	compton_data.ExternalLinksSection,
 	compton_data.AnnotationSection,
 	compton_data.VideosSection,
 	compton_data.FilesSection,

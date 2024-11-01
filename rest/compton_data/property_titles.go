@@ -43,6 +43,14 @@ var PropertyTitles = map[string]string{
 
 	data.BookCompletedProperty: "Прочитано",
 
+	data.LitresBookLinksProperty:         "Книги",
+	data.LitresAuthorLinksProperty:       "Авторы",
+	data.LitresSeriesLinksProperty:       "Серии",
+	data.LitresPublishersLinksProperty:   "Издатели",
+	data.LitresRightholdersLinksProperty: "Правообладатели",
+	data.LitresGenresLinksProperty:       "Жанры",
+	data.LitresTagsLinksProperty:         "Tэги",
+
 	"true":  "Да",
 	"false": "Нет",
 }

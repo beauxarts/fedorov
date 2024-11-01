@@ -140,14 +140,14 @@ func getDetailedPropertyValues(ad *litres_integration.ArtsDetails) (pkv map[stri
 
 	for _, tag := range ad.Payload.Data.Tags {
 		tid := fmtInt(tag.Id)
-		pkv[data.GenreNameProperty][tid] = []string{tag.Name}
-		pkv[data.GenreUrlProperty][tid] = []string{tag.Url}
+		pkv[data.TagNameProperty][tid] = []string{tag.Name}
+		pkv[data.TagUrlProperty][tid] = []string{tag.Url}
 	}
 
 	if pub := ad.Payload.Data.Publisher; pub != nil {
 		pid := fmtInt(pub.Id)
 		pkv[data.PublisherNameProperty][pid] = []string{pub.Name}
-		pkv[data.GenreUrlProperty][pid] = []string{pub.Url}
+		pkv[data.PublisherUrlProperty][pid] = []string{pub.Url}
 	}
 
 	for _, rh := range ad.Payload.Data.Rightholders {

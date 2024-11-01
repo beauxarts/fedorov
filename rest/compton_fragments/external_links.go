@@ -26,9 +26,8 @@ func ExternalLinks(r compton.Registrar, extLinks map[string][]string) compton.El
 func externalLinks(r compton.Registrar, property string, links []string) compton.Element {
 	linksHrefs := make(map[string]string)
 	for _, link := range links {
-		if linkProperty, value, ok := strings.Cut(link, "="); ok {
-			linkPropertyTitle := compton_data.PropertyTitles[linkProperty]
-			linksHrefs[linkPropertyTitle] = value
+		if title, value, ok := strings.Cut(link, "="); ok {
+			linksHrefs[title] = value
 		}
 	}
 	propertyTitle := compton_data.PropertyTitles[property]

@@ -11,6 +11,7 @@ var BookProperties = []string{
 	data.TranslatorsProperty,
 	data.PerformersProperty,
 	data.PaintersProperty,
+	data.PublishersProperty,
 	data.GenresProperty,
 	data.TagsProperty,
 	data.RightholdersProperty,
@@ -30,5 +31,9 @@ var BookProperties = []string{
 var BookExternalLinksProperties = []string{
 	data.LitresBookLinksProperty,
 	data.LitresAuthorLinksProperty,
+	data.LitresPublishersLinksProperty,
+	data.LitresRightholdersLinksProperty,
 	data.LitresSeriesLinksProperty,
+	data.LitresGenresLinksProperty,
+	data.LitresTagsLinksProperty,
 }

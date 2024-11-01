@@ -87,9 +87,13 @@ const (
 	DehydratedItemImageModifiedProperty = "dehydrated-item-image-modified"
 
 	// Litres links
-	LitresBookLinksProperty   = "litres-book-links"
-	LitresAuthorLinksProperty = "litres-author-links"
-	LitresSeriesLinksProperty = "litres-series-links"
+	LitresBookLinksProperty         = "litres-book-links"
+	LitresAuthorLinksProperty       = "litres-author-links"
+	LitresSeriesLinksProperty       = "litres-series-links"
+	LitresPublishersLinksProperty   = "litres-publishers-links"
+	LitresRightholdersLinksProperty = "litres-rightholders-links"
+	LitresGenresLinksProperty       = "litres-genres-links"
+	LitresTagsLinksProperty         = "litres-tags-links"
 )
 
 func ArtsDetailsProperties() []string {
