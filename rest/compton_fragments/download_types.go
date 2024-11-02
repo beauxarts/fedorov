@@ -20,6 +20,7 @@ var typeColors = map[string]color.Color{
 func DownloadType(r compton.Registrar, id string, dt *litres_integration.ArtsFilesData) compton.Element {
 
 	downloadStack := compton.FlexItems(r, direction.Column)
+	downloadStack.AddClass("download-type")
 
 	downloadLink := compton.A("/file?id=" + id + "&file=" + dt.TypeFilename())
 

@@ -6,6 +6,8 @@ github.com/beauxarts/scrinium v0.1.31 h1:xfHNTLFk7gDGx5upZDUWIZ8+TrUg2/e298ITbCb
 github.com/beauxarts/scrinium v0.1.31/go.mod h1:6OdPkfSXl2sfHxM0pQGiQQlIZKVxFDbwMYhUpOS8gco=
 github.com/beauxarts/scrinium v0.1.33 h1:cUh6ACE9ieCbDC2JABNWCXJ0ja6/pkUhNM77lt/kS/Y=
 github.com/beauxarts/scrinium v0.1.33/go.mod h1:bYQShDJ1omuQDm3NDZ2mJ/+iubkf0Y38NYPITf1g87I=
+github.com/beauxarts/scrinium v0.1.34 h1:Ry3fBbH+iInN2Gbyn4a6YzOb8lHg0CunpeOyhMloVpc=
+github.com/beauxarts/scrinium v0.1.34/go.mod h1:bYQShDJ1omuQDm3NDZ2mJ/+iubkf0Y38NYPITf1g87I=
 github.com/boggydigital/backups v0.1.3 h1:Yq4/2kVxpexc0bAVA5tQPgdcKXPWsqihzgI759VPgVM=
 github.com/boggydigital/backups v0.1.3/go.mod h1:xIV5pr0U178hTV3mHfStSU+s1IOJUH4fOU81ad4Cq7Y=
 github.com/boggydigital/busan v0.1.0 h1:mUpe4b3vdt9Kcf4Z/C2YSuX5L7ru+J/iZW+IcSfW0cM=

@@ -1,0 +1,12 @@
+@scope(.download-type) {
+    :scope {
+        width: 100%;
+
+        & a {
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+}

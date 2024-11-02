@@ -8,5 +8,5 @@ var SectionStyles = map[string]string{
 	SimilarSection:       "similar.css",
 	VideosSection:        "",
 	ContentsSection:      "",
-	FilesSection:         "",
+	FilesSection:         "files.css",
 }
