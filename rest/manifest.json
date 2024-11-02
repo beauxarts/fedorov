@@ -1,11 +1,13 @@
 {
-  "short_name": "Fedorov",
-  "name": "Fedorov",
-  "start_url": "/",
+  "name": "fedorov",
+  "short_name": "fedorov",
+  "start_url": "https://fedorov.frmnt.io/latest",
   "display": "standalone",
   "icons": [
     {
-      "src": "icon.png"
+      "src": "icon.png",
+      "type": "image/png",
+      "sizes": "512x512"
     }
   ]
 }

@@ -53,6 +53,7 @@ func HandleFuncs(p int) {
 		"GET /annotation":     Log(http.HandlerFunc(GetAnnotation)),
 		"GET /similar":        Log(http.HandlerFunc(GetSimilar)),
 		"GET /reviews":        Log(http.HandlerFunc(GetReviews)),
+		"GET /contents":       Log(http.HandlerFunc(GetContents)),
 
 		"GET /list_cover": Log(http.HandlerFunc(GetListCover)),
 		"GET /book_cover": Log(http.HandlerFunc(GetBookCover)),

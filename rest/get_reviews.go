@@ -37,7 +37,7 @@ func GetReviews(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if p := compton_pages.Reviews(id, artsReviews); p != nil {
+	if p := compton_pages.Reviews(artsReviews); p != nil {
 		if err = p.WriteResponse(w); err != nil {
 			http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		}

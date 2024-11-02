@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-func Reviews(r compton.Registrar, id string, artsReviews *litres_integration.ArtsReviews) compton.Element {
+func Reviews(r compton.Registrar, artsReviews *litres_integration.ArtsReviews) compton.Element {
 
 	stack := compton.FlexItems(r, direction.Column)
 
