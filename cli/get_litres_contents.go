@@ -94,14 +94,17 @@ func getSetContents(dc *dolo.Client, force bool, rdx kevlar.ReadableRedux, ids .
 		newIds = append(newIds, id)
 	}
 
-	indexSetter := kevlar_dolo.NewIndexSetter(kv, newIds...)
+	// filtering ids to only those that actually have contents-url
+	filteredIds := make([]string, 0)
 	urls := make([]*url.URL, 0, len(newIds))
 	for _, id := range newIds {
 		if path, ok := rdx.GetLastVal(data.ContentsUrlProperty, id); ok && path != "" {
 			urls = append(urls, litres_integration.ContentsUrl(path))
+			filteredIds = append(filteredIds, id)
 		}
 	}
 
+	indexSetter := kevlar_dolo.NewIndexSetter(kv, filteredIds...)
 	result := "done"
 
 	if errs := dc.GetSet(urls, indexSetter, gsc, force); len(errs) > 0 {

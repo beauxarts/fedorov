@@ -1,14 +1,19 @@
 package rest
 
 import (
+	"encoding/xml"
+	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/rest/compton_pages"
+	"github.com/beauxarts/scrinium/litres_integration"
+	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/nod"
+	"github.com/boggydigital/pathways"
 	"net/http"
 )
 
 func GetContents(w http.ResponseWriter, r *http.Request) {
 
-	// GET /contents?id
+	// GET /contXml?id
 
 	id := r.URL.Query().Get("id")
 
@@ -23,19 +28,31 @@ func GetContents(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	//raReader, err := data.NewArtsReader(litres_integration.ArtsTypeReviews)
-	//if err != nil {
-	//	http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
-	//	return
-	//}
-	//
-	//artsReviews, err := raReader.ArtsReviews(id)
-	//if err != nil {
-	//	http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
-	//	return
-	//}
+	contentsDir, err := pathways.GetAbsRelDir(data.Contents)
+	if err != nil {
+		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
+		return
+	}
 
-	if p := compton_pages.Contents(); p != nil {
+	contReader, err := kevlar.NewKeyValues(contentsDir, kevlar.XmlExt)
+	if err != nil {
+		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
+		return
+	}
+
+	contXml, err := contReader.Get(id)
+	if err != nil {
+		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
+		return
+	}
+
+	var contents *litres_integration.Contents
+	if err = xml.NewDecoder(contXml).Decode(&contents); err != nil {
+		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if p := compton_pages.Contents(contents); p != nil {
 		if err = p.WriteResponse(w); err != nil {
 			http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		}

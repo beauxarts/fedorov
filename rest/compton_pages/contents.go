@@ -3,12 +3,13 @@ package compton_pages
 import (
 	"github.com/beauxarts/fedorov/rest/compton_data"
 	"github.com/beauxarts/fedorov/rest/compton_fragments"
+	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/compton"
 )
 
-func Contents() compton.PageElement {
+func Contents(contents *litres_integration.Contents) compton.PageElement {
 	s := compton_fragments.ProductSection(compton_data.ContentsSection)
-	if contents := compton_fragments.Contents(); contents != nil {
+	if contents := compton_fragments.Contents(s, contents); contents != nil {
 		s.Append(contents)
 	}
 	return s
