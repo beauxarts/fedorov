@@ -257,7 +257,7 @@ func propertyTitleValues(r compton.Registrar, property string, fmtProperty forma
 		if len(fmtProperty.values) < 4 {
 			tv.AppendLinkValues(fmtProperty.values)
 		} else {
-			summaryTitle := fmt.Sprintf("%d values", len(fmtProperty.values))
+			summaryTitle := fmt.Sprintf("%d штук(и)", len(fmtProperty.values))
 			summaryElement := compton.Fspan(r, summaryTitle).
 				ForegroundColor(color.Foreground)
 			ds := compton.DSSmall(r, summaryElement, false).

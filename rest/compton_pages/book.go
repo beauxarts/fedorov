@@ -8,6 +8,7 @@ import (
 	"github.com/boggydigital/compton"
 	"github.com/boggydigital/compton/consts/align"
 	"github.com/boggydigital/compton/consts/color"
+	"github.com/boggydigital/compton/consts/input_types"
 	"github.com/boggydigital/compton/consts/size"
 	"github.com/boggydigital/kevlar"
 )
@@ -20,8 +21,14 @@ func Book(id string, hasSections []string, rdx kevlar.ReadableRedux) compton.Pag
 	p.RegisterStyles(compton_styles.Styles, "app.css")
 
 	appNav := compton_fragments.AppNavLinks(p, "")
-	topNav := compton.FICenter(p, appNav)
-	pageStack.Append(topNav)
+	showToc := compton.InputValue(p, input_types.Button, "Секции")
+
+	pageStack.Append(compton.FICenter(p, appNav, showToc))
+
+	productSectionsLinks := compton_fragments.BookSectionsLinks(p, hasSections)
+	pageStack.Append(productSectionsLinks)
+
+	pageStack.Append(compton.Attach(p, showToc, productSectionsLinks))
 
 	if cover := compton_fragments.BookCover(p, id, rdx); cover != nil {
 		pageStack.Append(cover)
