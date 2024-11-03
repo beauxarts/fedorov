@@ -31,10 +31,11 @@ func GetSimilar(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	similarArts, err := saReader.ArtsSimilar(id)
-	if err != nil {
-		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
-		return
+	var similarArts *litres_integration.ArtsSimilar
+	if sa, err := saReader.ArtsSimilar(id); err == nil {
+		similarArts = sa
+	} else {
+		_ = nod.Error(err)
 	}
 
 	if p := compton_pages.Similar(id, similarArts, rdx); p != nil {

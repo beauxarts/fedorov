@@ -19,10 +19,11 @@ func Similar(r compton.Registrar, id string, artsSimilar *litres_integration.Art
 
 	stack := compton.FlexItems(r, direction.Column)
 
-	if len(artsSimilar.Payload.Data) == 0 {
+	if artsSimilar == nil || len(artsSimilar.Payload.Data) == 0 {
 		stack.Append(compton.Fspan(r, "Для данной книги пока нет сходных книг").
 			ForegroundColor(color.Gray).
 			TextAlign(align.Center))
+		return stack
 	}
 
 	for ii, art := range artsSimilar.Payload.Data {
