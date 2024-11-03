@@ -1,0 +1,16 @@
+ul {
+    list-style: none;
+
+    & li.deep1 {
+        margin-inline: var(--s-n)
+    }
+    & li.deep2 {
+        margin-inline: calc(var(--s-n) * 2)
+    }
+    & li.deep3 {
+        margin-inline: calc(var(--s-n) * 3)
+    }
+    & li.deep4 {
+        margin-inline: calc(var(--s-n) * 4)
+    }
+}

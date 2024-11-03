@@ -7,6 +7,6 @@ var SectionStyles = map[string]string{
 	ReviewsSection:       "",
 	SimilarSection:       "similar.css",
 	VideosSection:        "",
-	ContentsSection:      "",
+	ContentsSection:      "contents.css",
 	FilesSection:         "files.css",
 }
