@@ -9,6 +9,7 @@ import (
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/pathways"
 	"net/http"
+	"os"
 )
 
 func GetContents(w http.ResponseWriter, r *http.Request) {
@@ -40,16 +41,21 @@ func GetContents(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var contents *litres_integration.Contents
+
 	contXml, err := contReader.Get(id)
 	if err != nil {
-		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
-		return
-	}
-
-	var contents *litres_integration.Contents
-	if err = xml.NewDecoder(contXml).Decode(&contents); err != nil {
-		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
-		return
+		if !os.IsNotExist(err) {
+			http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
+			return
+		}
+	} else {
+		if contXml != nil {
+			if err = xml.NewDecoder(contXml).Decode(&contents); err != nil {
+				http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
+				return
+			}
+		}
 	}
 
 	if p := compton_pages.Contents(contents); p != nil {

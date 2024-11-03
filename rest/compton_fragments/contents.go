@@ -3,6 +3,8 @@ package compton_fragments
 import (
 	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/compton"
+	"github.com/boggydigital/compton/consts/align"
+	"github.com/boggydigital/compton/consts/color"
 	"github.com/boggydigital/compton/consts/direction"
 	"github.com/boggydigital/compton/consts/font_weight"
 )
@@ -10,6 +12,13 @@ import (
 func Contents(r compton.Registrar, contents *litres_integration.Contents) compton.Element {
 
 	stack := compton.FlexItems(r, direction.Column)
+
+	if contents == nil {
+		stack.Append(compton.Fspan(r, "Для данной книги оглавление не найдено").
+			ForegroundColor(color.Gray).
+			TextAlign(align.Center))
+		return stack
+	}
 
 	list := compton.Ul()
 
