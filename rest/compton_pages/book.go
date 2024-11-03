@@ -21,7 +21,7 @@ func Book(id string, hasSections []string, rdx kevlar.ReadableRedux) compton.Pag
 	p.RegisterStyles(compton_styles.Styles, "app.css")
 
 	appNav := compton_fragments.AppNavLinks(p, "")
-	showToc := compton.InputValue(p, input_types.Button, "Секции")
+	showToc := compton.InputValue(p, input_types.Button, "Разделы")
 
 	pageStack.Append(compton.FICenter(p, appNav, showToc))
 
