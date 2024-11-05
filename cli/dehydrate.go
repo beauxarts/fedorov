@@ -32,12 +32,10 @@ func Dehydrate(force bool, artsIds ...string) error {
 	di := nod.Begin("dehydrating images...")
 	defer di.End()
 
-	rdx, err := data.NewReduxWriter(
-		data.DehydratedListImageProperty,
-		data.DehydratedListImageModifiedProperty,
-		data.DehydratedItemImageProperty,
-		data.DehydratedItemImageModifiedProperty,
-		data.ArtsHistoryOrderProperty)
+	properties := data.DehydratedProperties()
+	properties = append(properties, data.ArtsHistoryOrderProperty)
+
+	rdx, err := data.NewReduxWriter(properties...)
 	if err != nil {
 		return di.EndWithError(err)
 	}
@@ -53,6 +51,7 @@ func Dehydrate(force bool, artsIds ...string) error {
 		rdx,
 		data.DehydratedItemImageProperty,
 		data.DehydratedItemImageModifiedProperty,
+		data.RepItemImageColorProperty,
 		data.CoverSizesDesc,
 		force,
 		artsIds...); err != nil {
@@ -63,6 +62,7 @@ func Dehydrate(force bool, artsIds ...string) error {
 		rdx,
 		data.DehydratedListImageProperty,
 		data.DehydratedListImageModifiedProperty,
+		data.RepListImageColorProperty,
 		data.CoverSizesAsc,
 		force,
 		artsIds...); err != nil {
@@ -74,7 +74,7 @@ func Dehydrate(force bool, artsIds ...string) error {
 
 func dehydrateImages(
 	rdx kevlar.WriteableRedux,
-	imageProperty, modifiedProperty string,
+	imageProperty, modifiedProperty, repColorProperty string,
 	sizes []litres_integration.CoverSize,
 	force bool,
 	ids ...string) error {
@@ -88,6 +88,7 @@ func dehydrateImages(
 
 	dehydratedImages := make(map[string][]string)
 	dehydratedImageModified := make(map[string][]string)
+	repColors := make(map[string][]string)
 
 	for _, idStr := range ids {
 
@@ -107,9 +108,10 @@ func dehydrateImages(
 			if err != nil {
 				return di.EndWithError(err)
 			}
-			if dhi, err := dehydrateImage(acp, plt); err == nil {
+			if dhi, rc, err := dehydrateImage(acp, plt); err == nil {
 				dehydratedImages[idStr] = []string{dhi}
 				dehydratedImageModified[idStr] = []string{strconv.FormatInt(time.Now().Unix(), 10)}
+				repColors[idStr] = []string{rc}
 				// stop dehydrating at the best quality available
 				break
 			} else {
@@ -127,26 +129,37 @@ func dehydrateImages(
 		return di.EndWithError(err)
 	}
 
+	if err := rdx.BatchReplaceValues(repColorProperty, repColors); err != nil {
+		return di.EndWithError(err)
+	}
+
 	di.EndWithResult("done")
 
 	return nil
 }
 
-func dehydrateImage(absImagePath string, plt color.Palette) (string, error) {
-	dhi := ""
+func dehydrateImage(absImagePath string, plt color.Palette) (string, string, error) {
+	dhi, rc := "", ""
 
 	fi, err := os.Open(absImagePath)
 	if err != nil {
-		return dhi, err
+		return dhi, rc, err
 	}
 	defer fi.Close()
 
 	img, _, err := image.Decode(fi)
 	if err != nil {
-		return dhi, err
+		return dhi, rc, err
 	}
 
 	gif := issa.GIFImage(img, plt, issa.DefaultSampling)
 
-	return issa.DehydrateColor(gif)
+	dhi, err = issa.DehydrateColor(gif)
+	if err != nil {
+		return dhi, rc, err
+	}
+
+	rc = issa.ColorHex(issa.RepColor(gif))
+
+	return dhi, rc, err
 }

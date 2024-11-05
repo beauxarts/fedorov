@@ -16,8 +16,9 @@ func BookCard(r compton.Registrar, id string, hydrated bool, rdx kevlar.Readable
 
 	posterUrl := "/list_cover?id=" + id
 	dhSrc, _ := rdx.GetLastVal(data.DehydratedListImageProperty, id)
+	repColor, _ := rdx.GetLastVal(data.RepListImageColorProperty, id)
 	placeholderSrc := dhSrc
-	bc.AppendPoster(placeholderSrc, posterUrl, hydrated)
+	bc.AppendPoster(repColor, placeholderSrc, posterUrl, hydrated)
 
 	bc.WidthPixels(80)
 	bc.HeightPixels(120)

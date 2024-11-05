@@ -13,7 +13,8 @@ func BookCover(r compton.Registrar, id string, rdx kevlar.ReadableRedux) compton
 	var cover compton.Element
 	if dehydSrc, sure := rdx.GetLastVal(data.DehydratedItemImageProperty, id); sure {
 		hydSrc := issa.HydrateColor(dehydSrc)
-		cover = compton.IssaImageHydrated(r, hydSrc, imgSrc)
+		repColor, _ := rdx.GetLastVal(data.RepItemImageColorProperty, id)
+		cover = compton.IssaImageHydrated(r, repColor, hydSrc, imgSrc)
 	} else {
 		cover = compton.Img(imgSrc)
 	}

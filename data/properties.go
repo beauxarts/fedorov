@@ -86,6 +86,8 @@ const (
 	DehydratedListImageModifiedProperty = "dehydrated-list-image-modified"
 	DehydratedItemImageProperty         = "dehydrated-item-image"
 	DehydratedItemImageModifiedProperty = "dehydrated-item-image-modified"
+	RepItemImageColorProperty           = "rep-item-image-color"
+	RepListImageColorProperty           = "rep-list-image-color"
 
 	// Litres links
 	LitresBookLinksProperty         = "litres-book-links"
@@ -177,11 +179,23 @@ func VideoProperties() []string {
 	}
 }
 
+func DehydratedProperties() []string {
+	return []string{
+		DehydratedItemImageProperty,
+		DehydratedItemImageModifiedProperty,
+		RepItemImageColorProperty,
+		DehydratedListImageProperty,
+		DehydratedListImageModifiedProperty,
+		RepListImageColorProperty,
+	}
+}
+
 func ReduxProperties() []string {
 	properties := ArtsDetailsProperties()
 	properties = append(properties, PersonsRolesProperties()...)
 	properties = append(properties, IdNameProperties()...)
 	properties = append(properties, VideoProperties()...)
+	properties = append(properties, DehydratedProperties()...)
 	properties = append(properties, []string{
 		ArtsHistoryOrderProperty,
 		ArtsHistoryEventTimeProperty,
@@ -189,8 +203,6 @@ func ReduxProperties() []string {
 		BookCompletedProperty,
 		//
 		SyncCompletedProperty,
-		DehydratedListImageProperty,
-		DehydratedItemImageProperty,
 	}...)
 	return properties
 }
