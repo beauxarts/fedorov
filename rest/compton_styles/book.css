@@ -1,7 +1,7 @@
 @scope (.book-cover) {
     :scope {
         & img {
-            --h: 400px;
+            --w: 400px;
         }
     }
 
@@ -9,7 +9,6 @@
         :scope {
             & img {
                 max-width: 100%;
-                --h: unset;
             }
         }
     }
