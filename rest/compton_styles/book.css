@@ -1,7 +1,6 @@
 @scope (.book-cover) {
     :scope {
         & img {
-            --w: 400px;
             --h: 400px;
         }
     }

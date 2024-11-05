@@ -180,6 +180,8 @@ func getArtsDetailsPropertyValues(ad *litres_integration.ArtsDetails, property s
 		val = add.Subtitle
 	case data.CoverUrlProperty:
 		val = add.CoverUrl
+	case data.CoverAspectRatioProperty:
+		val = fmtFloat(add.CoverRatio)
 	case data.ArtTypeProperty:
 		val = fmtInt(add.ArtType)
 	case data.PriceProperty:

@@ -5,6 +5,7 @@ import (
 	"github.com/boggydigital/compton"
 	"github.com/boggydigital/issa"
 	"github.com/boggydigital/kevlar"
+	"strconv"
 )
 
 func BookCover(r compton.Registrar, id string, rdx kevlar.ReadableRedux) compton.Element {
@@ -14,7 +15,15 @@ func BookCover(r compton.Registrar, id string, rdx kevlar.ReadableRedux) compton
 	if dehydSrc, sure := rdx.GetLastVal(data.DehydratedItemImageProperty, id); sure {
 		hydSrc := issa.HydrateColor(dehydSrc)
 		repColor, _ := rdx.GetLastVal(data.RepItemImageColorProperty, id)
-		cover = compton.IssaImageHydrated(r, repColor, hydSrc, imgSrc)
+
+		issaImg := compton.IssaImageHydrated(r, repColor, hydSrc, imgSrc)
+		if ar, ok := rdx.GetLastVal(data.CoverAspectRatioProperty, id); ok {
+			if arf, err := strconv.ParseFloat(ar, 64); err == nil {
+				issaImg.AspectRatio(arf)
+			}
+		}
+
+		cover = issaImg
 	} else {
 		cover = compton.Img(imgSrc)
 	}

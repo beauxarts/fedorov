@@ -18,7 +18,7 @@ func Book(id string, hasSections []string, rdx kevlar.ReadableRedux) compton.Pag
 	title, _ := rdx.GetLastVal(data.TitleProperty, id)
 
 	p, pageStack := compton_fragments.AppPage(title)
-	p.RegisterStyles(compton_styles.Styles, "app.css")
+	p.RegisterStyles(compton_styles.Styles, "book.css")
 
 	// tinting document background color to the representative product color
 	alpha := "5%"

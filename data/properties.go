@@ -9,6 +9,7 @@ const (
 
 	// arts details properties
 	CoverUrlProperty              = "cover-url"
+	CoverAspectRatioProperty      = "cover-aspect-ratio"
 	TitleProperty                 = "title"
 	SubtitleProperty              = "subtitle"
 	ArtTypeProperty               = "art-type"
@@ -102,6 +103,7 @@ const (
 func ArtsDetailsProperties() []string {
 	return []string{
 		CoverUrlProperty,
+		CoverAspectRatioProperty,
 		TitleProperty,
 		SubtitleProperty,
 		ArtTypeProperty,
