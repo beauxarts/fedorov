@@ -20,6 +20,12 @@ func Book(id string, hasSections []string, rdx kevlar.ReadableRedux) compton.Pag
 	p, pageStack := compton_fragments.AppPage(title)
 	p.RegisterStyles(compton_styles.Styles, "app.css")
 
+	// tinting document background color to the representative product color
+	alpha := "5%"
+	if repColor, ok := rdx.GetLastVal(data.RepItemImageColorProperty, id); ok {
+		p.SetAttribute("style", "background-color:color-mix(in display-p3,"+repColor+" "+alpha+",var(--c-background))")
+	}
+
 	appNav := compton_fragments.AppNavLinks(p, "")
 	showToc := compton.InputValue(p, input_types.Button, "Разделы")
 
