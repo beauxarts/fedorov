@@ -37,7 +37,7 @@ func Book(id string, hasSections []string, rdx kevlar.ReadableRedux) compton.Pag
 	pageStack.Append(compton.Attach(p, showToc, productSectionsLinks))
 
 	if cover := compton_fragments.BookCover(p, id, rdx); cover != nil {
-		pageStack.Append(cover)
+		pageStack.Append(compton.FICenter(p, cover))
 	}
 
 	productTitle := compton.Heading(1)
