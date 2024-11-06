@@ -3,6 +3,7 @@ package compton_pages
 import (
 	"github.com/beauxarts/fedorov/rest/compton_data"
 	"github.com/beauxarts/fedorov/rest/compton_fragments"
+	"github.com/beauxarts/fedorov/rest/compton_styles"
 	"github.com/boggydigital/compton"
 	"github.com/boggydigital/compton/consts/color"
 	"github.com/boggydigital/compton/consts/size"
@@ -15,6 +16,7 @@ const filterSearchTitle = "Фильтр и поиск"
 func Search(query map[string][]string, ids []string, from, to int, rdx kevlar.ReadableRedux) compton.PageElement {
 
 	p, pageStack := compton_fragments.AppPage(compton_data.AppNavSearch)
+	p.RegisterStyles(compton_styles.Styles, "book-card.css")
 
 	appNav := compton_fragments.AppNavLinks(p, compton_data.AppNavSearch)
 

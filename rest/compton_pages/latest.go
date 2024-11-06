@@ -3,6 +3,7 @@ package compton_pages
 import (
 	"github.com/beauxarts/fedorov/rest/compton_data"
 	"github.com/beauxarts/fedorov/rest/compton_fragments"
+	"github.com/beauxarts/fedorov/rest/compton_styles"
 	"github.com/boggydigital/compton"
 	"github.com/boggydigital/compton/consts/color"
 	"github.com/boggydigital/compton/consts/input_types"
@@ -15,6 +16,7 @@ const dehydratedCount = 10
 func Latest(ids []string, total int, rdx kevlar.ReadableRedux) compton.PageElement {
 
 	p, pageStack := compton_fragments.AppPage(compton_data.AppNavLatest)
+	p.RegisterStyles(compton_styles.Styles, "book-card.css")
 
 	appNav := compton_fragments.AppNavLinks(p, compton_data.AppNavLatest)
 

@@ -1,0 +1,9 @@
+card {
+    --cma: 10%
+}
+
+@media screen and (prefers-color-scheme:dark) {
+    card {
+        --cma: 15%;
+    }
+}

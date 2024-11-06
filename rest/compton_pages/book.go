@@ -13,8 +13,6 @@ import (
 	"github.com/boggydigital/kevlar"
 )
 
-const bookAlpha = "7.5%"
-
 func Book(id string, hasSections []string, rdx kevlar.ReadableRedux) compton.PageElement {
 
 	title, _ := rdx.GetLastVal(data.TitleProperty, id)
@@ -24,7 +22,7 @@ func Book(id string, hasSections []string, rdx kevlar.ReadableRedux) compton.Pag
 
 	// tinting document background color to the representative product color
 	if repColor, ok := rdx.GetLastVal(data.RepItemImageColorProperty, id); ok {
-		p.SetAttribute("style", "background-color:color-mix(in display-p3,"+repColor+" "+bookAlpha+",var(--c-background))")
+		p.SetAttribute("style", "background-color:color-mix(in display-p3,"+repColor+" var(--cma),var(--c-background))")
 	}
 
 	appNav := compton_fragments.AppNavLinks(p, "")
