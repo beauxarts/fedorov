@@ -3,19 +3,12 @@ package rest
 import (
 	"crypto/sha256"
 	"github.com/beauxarts/fedorov/data"
-	"github.com/beauxarts/fedorov/stencil_app"
-	"github.com/beauxarts/fedorov/view_models"
 	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/middleware"
-	"github.com/boggydigital/stencil"
-	"html/template"
-	"io/fs"
 )
 
 var (
-	rdx  kevlar.ReadableRedux
-	tmpl *template.Template
-	app  *stencil.AppConfiguration
+	rdx kevlar.ReadableRedux
 )
 
 func SetUsername(role, u string) {
@@ -26,25 +19,11 @@ func SetPassword(role, p string) {
 	middleware.SetPassword(role, sha256.Sum256([]byte(p)))
 }
 
-func InitTemplates(templatesFS fs.FS, stencilAppStyles fs.FS) {
-	tmpl = template.Must(
-		template.
-			New("").
-			Funcs(view_models.FuncMap()).
-			ParseFS(templatesFS, "templates/*.gohtml"))
-
-	stencil.InitAppTemplates(stencilAppStyles, "stencil_app/styles/css.gohtml")
-}
-
 func Init() error {
 
 	var err error
 
 	if rdx, err = data.NewReduxReader(data.ReduxProperties()...); err != nil {
-		return err
-	}
-
-	if app, err = stencil_app.Init(rdx); err != nil {
 		return err
 	}
 

@@ -16,11 +16,9 @@ require (
 	github.com/boggydigital/middleware v0.1.16
 	github.com/boggydigital/nod v0.1.21
 	github.com/boggydigital/pathways v0.1.14
-	github.com/boggydigital/stencil v0.2.29
 	github.com/boggydigital/yet_urls v0.1.54
 	golang.org/x/exp v0.0.0-20241009180824-f66d83c29e7c
 	golang.org/x/net v0.30.0
-	golang.org/x/text v0.19.0
 )
 
 require (

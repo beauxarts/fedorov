@@ -10,10 +10,6 @@ backup
 
 cascade
 
-complete
-    id^&
-    action=set^,clear
-
 dehydrate
     id^&
     force

@@ -18,13 +18,12 @@ var PropertyTitles = map[string]string{
 	data.PriceProperty:    "Цена",
 	data.RatedAvgProperty: "Рейтинг",
 
-	data.ArtTypeProperty:   "Тип",
-	data.GenresProperty:    "Жанры",
-	data.TagsProperty:      "Тэги",
-	data.LocalTagsProperty: "Свои тэги",
-	data.MinAgeProperty:    "Возрастное ограничение",
-	data.ISBNProperty:      "ISBN",
-	data.SeriesProperty:    "Серия",
+	data.ArtTypeProperty: "Тип",
+	data.GenresProperty:  "Жанры",
+	data.TagsProperty:    "Тэги",
+	data.MinAgeProperty:  "Возрастное ограничение",
+	data.ISBNProperty:    "ISBN",
+	data.SeriesProperty:  "Серия",
 
 	data.DateWrittenAtProperty:   "Написано",
 	data.PublicationDateProperty: "Опубликовано",
@@ -40,8 +39,6 @@ var PropertyTitles = map[string]string{
 	data.SortProperty:                 "Порядок",
 	data.ArtsHistoryEventTimeProperty: "По дате приобретения",
 	data.DescendingProperty:           "По убыванию",
-
-	data.BookCompletedProperty: "Прочитано",
 
 	data.LitresBookLinksProperty:         "Книги",
 	data.LitresAuthorLinksProperty:       "Авторы",

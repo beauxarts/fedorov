@@ -2,16 +2,14 @@ package main
 
 import (
 	"bytes"
-	"embed"
+	_ "embed"
 	"github.com/beauxarts/fedorov/cli"
 	"github.com/beauxarts/fedorov/clo_delegates"
 	"github.com/beauxarts/fedorov/data"
-	"github.com/beauxarts/fedorov/rest"
 	"github.com/boggydigital/clo"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/pathways"
 	"os"
-	"sync"
 )
 
 const (
@@ -19,11 +17,6 @@ const (
 )
 
 var (
-	once = sync.Once{}
-	//go:embed "templates/*.gohtml"
-	templates embed.FS
-	//go:embed "stencil_app/styles/css.gohtml"
-	stencilAppStyles embed.FS
 	//go:embed "cli-commands.txt"
 	cliCommands []byte
 	//go:embed "cli-help.txt"
@@ -36,10 +29,6 @@ func main() {
 
 	ns := nod.NewProgress("fedorov is serving your DRM-free books")
 	defer ns.End()
-
-	once.Do(func() {
-		rest.InitTemplates(templates, stencilAppStyles)
-	})
 
 	if err := pathways.Setup(
 		dirsOverrideFilename,
@@ -62,7 +51,6 @@ func main() {
 	clo.HandleFuncs(map[string]clo.Handler{
 		"backup":                     cli.BackupHandler,
 		"cascade":                    cli.CascadeHandler,
-		"complete":                   cli.CompleteHandler,
 		"dehydrate":                  cli.DehydrateHandler,
 		"download-litres-books":      cli.DownloadLitResBooksHandler,
 		"download-litres-covers":     cli.DownloadLitResCoversHandler,

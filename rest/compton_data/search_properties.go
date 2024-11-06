@@ -5,7 +5,6 @@ import "github.com/beauxarts/fedorov/data"
 var SearchProperties = []string{
 	data.TitleProperty,
 	data.HTMLAnnotationProperty,
-	data.BookCompletedProperty,
 
 	data.AuthorsProperty,
 	data.ReadersProperty,
@@ -18,7 +17,6 @@ var SearchProperties = []string{
 	data.SeriesProperty,
 	data.GenresProperty,
 	data.TagsProperty,
-	data.LocalTagsProperty,
 	data.PublishersProperty,
 	data.RightholdersProperty,
 	data.MinAgeProperty,

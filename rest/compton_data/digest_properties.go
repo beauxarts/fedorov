@@ -13,7 +13,6 @@ var DigestProperties = []string{
 	data.MinAgeProperty,
 	data.GenresProperty,
 	data.TagsProperty,
-	data.LocalTagsProperty,
 	data.PublishersProperty,
 	data.RightholdersProperty,
 	data.SeriesProperty,
@@ -21,6 +20,5 @@ var DigestProperties = []string{
 }
 
 var BinaryProperties = []string{
-	data.BookCompletedProperty,
 	data.DescendingProperty,
 }

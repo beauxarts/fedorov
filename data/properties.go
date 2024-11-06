@@ -75,8 +75,9 @@ const (
 	// arts files properties
 
 	// local properties
-	LocalTagsProperty     = "local-tags"
-	BookCompletedProperty = "book-completed"
+	//LocalTagsProperty     = "local-tags"
+	//BookCompletedProperty = "book-completed"
+
 	// sorting
 	SortProperty       = "sort"
 	DescendingProperty = "desc"
@@ -201,8 +202,6 @@ func ReduxProperties() []string {
 	properties = append(properties, []string{
 		ArtsHistoryOrderProperty,
 		ArtsHistoryEventTimeProperty,
-		//
-		BookCompletedProperty,
 		//
 		SyncCompletedProperty,
 	}...)
