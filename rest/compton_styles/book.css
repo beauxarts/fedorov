@@ -23,3 +23,7 @@ html {
         --cma: 10%;
     }
 }
+
+.color-blend {
+    opacity: 0.8
+}

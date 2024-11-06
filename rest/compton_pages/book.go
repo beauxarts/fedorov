@@ -13,6 +13,8 @@ import (
 	"github.com/boggydigital/kevlar"
 )
 
+const colorBlendClass = "color-blend"
+
 func Book(id string, hasSections []string, rdx kevlar.ReadableRedux) compton.PageElement {
 
 	title, _ := rdx.GetLastVal(data.TitleProperty, id)
@@ -26,7 +28,9 @@ func Book(id string, hasSections []string, rdx kevlar.ReadableRedux) compton.Pag
 	}
 
 	appNav := compton_fragments.AppNavLinks(p, "")
+	appNav.AddClass(colorBlendClass)
 	showToc := compton.InputValue(p, input_types.Button, "Разделы")
+	showToc.AddClass(colorBlendClass)
 
 	pageStack.Append(compton.FICenter(p, appNav, showToc))
 
@@ -40,6 +44,7 @@ func Book(id string, hasSections []string, rdx kevlar.ReadableRedux) compton.Pag
 	}
 
 	productTitle := compton.Heading(1)
+	productTitle.AddClass(colorBlendClass)
 	productTitle.Append(compton.Fspan(p, title).TextAlign(align.Center))
 
 	fmtLabels := compton_fragments.FormatLabels(id, rdx)
@@ -64,6 +69,7 @@ func Book(id string, hasSections []string, rdx kevlar.ReadableRedux) compton.Pag
 			MarkerColor(color.Gray).
 			SummaryMarginBlockEnd(size.Normal).
 			DetailsMarginBlockEnd(size.Unset)
+		detailsSummary.AddClassSummary(colorBlendClass)
 		detailsSummary.SetId(sectionTitle)
 
 		ifh := compton.IframeExpandHost(p, section, "/"+section+"?id="+id)
