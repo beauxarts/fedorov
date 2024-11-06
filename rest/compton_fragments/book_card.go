@@ -11,14 +11,15 @@ import (
 	"time"
 )
 
+const bookCardAlpha = "12.5%"
+
 func BookCard(r compton.Registrar, id string, hydrated bool, rdx kevlar.ReadableRedux) compton.Element {
 	bc := compton.Card(r, id)
 
 	repColor := ""
-	alpha := "15%"
 	if rc, ok := rdx.GetLastVal(data.RepListImageColorProperty, id); ok {
 		repColor = rc
-		bc.SetAttribute("style", "background-color:color-mix(in display-p3,"+rc+" "+alpha+", var(--c-highlight))")
+		bc.SetAttribute("style", "background-color:color-mix(in display-p3,"+rc+" "+bookCardAlpha+", var(--c-highlight))")
 	}
 
 	posterUrl := "/list_cover?id=" + id
