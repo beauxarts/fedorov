@@ -62,6 +62,8 @@ github.com/boggydigital/issa v0.1.16 h1:C6FediEHTgvvnUpdoeAtIFheqsBCvDmkTAZqP2gb
 github.com/boggydigital/issa v0.1.16/go.mod h1:Za10zkG7QvOGC7dDRjvzVr6GWDQm4f7FwO8/fH8usZY=
 github.com/boggydigital/issa v0.1.17 h1:ebhzG4DA3I7Vy1PhW+C3cii7ID5ghDZpqAPdM2x8cr8=
 github.com/boggydigital/issa v0.1.17/go.mod h1:Za10zkG7QvOGC7dDRjvzVr6GWDQm4f7FwO8/fH8usZY=
+github.com/boggydigital/issa v0.1.18 h1:Scgbrp/hMM/PmvD/cYP7DIz6Edy9hyB67zyNfNB8WaE=
+github.com/boggydigital/issa v0.1.18/go.mod h1:Za10zkG7QvOGC7dDRjvzVr6GWDQm4f7FwO8/fH8usZY=
 github.com/boggydigital/kevlar v0.5.14 h1:GnUm7bCS4/HN1TgviMenlD1Ab8Ma/lZsNAxZuuVVfAA=
 github.com/boggydigital/kevlar v0.5.14/go.mod h1:eR+LJdemg0A8W+c/mTDaJH9n5xEFAGe3cuDoK7eSVBs=
 github.com/boggydigital/kevlar v0.5.15 h1:4peRYGWuGwuaEoHp1qKM0/I0gkDFW9Fz2L5PO768Uok=
