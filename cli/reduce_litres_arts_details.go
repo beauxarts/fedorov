@@ -210,6 +210,8 @@ func getArtsDetailsPropertyValues(ad *litres_integration.ArtsDetails, property s
 		// do nothing
 	case data.RatedAvgProperty:
 		val = fmtFloat(add.Rating.RatedAvg)
+	case data.LivelibRatedAvgProperty:
+		val = fmtFloat(add.LivelibRatedAvg)
 	case data.RatedTotalCountProperty:
 		val = fmtInt(add.Rating.RatedTotalCount)
 	case data.LinkedArtsIdsProperty:

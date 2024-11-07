@@ -13,7 +13,6 @@ import (
 	"github.com/boggydigital/kevlar"
 	"golang.org/x/exp/maps"
 	"golang.org/x/exp/slices"
-	"strconv"
 	"strings"
 )
 
@@ -102,6 +101,10 @@ func formatProperty(id, property string, at litres_integration.ArtType, rdx kevl
 		case data.LastUpdatedAtProperty:
 			value, _, _ = strings.Cut(value, "T")
 			fmtProperty.values[value] = noHref()
+		case data.LivelibRatedAvgProperty:
+			if value != "0.00" && value != "0.0" {
+				fmtProperty.values[value] = noHref()
+			}
 		case data.RatedAvgProperty:
 			fallthrough
 		case data.PriceProperty:
@@ -299,18 +302,4 @@ func propertyTitleValues(r compton.Registrar, property string, fmtProperty forma
 
 func noHref() string {
 	return ""
-}
-
-func fmtCurrentPagesOrSeconds(cpos string, at litres_integration.ArtType) string {
-	switch at {
-	case litres_integration.ArtTypeText:
-		fallthrough
-	case litres_integration.ArtTypePDF:
-		cpos += " стр"
-	case litres_integration.ArtTypeAudio:
-		if vi, err := strconv.ParseInt(cpos, 10, 32); err == nil {
-			cpos = fmtSeconds(int(vi))
-		}
-	}
-	return cpos
 }

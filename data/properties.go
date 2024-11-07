@@ -23,6 +23,7 @@ const (
 	PersonFullNameProperty        = "person-full-name"
 	PersonUrlProperty             = "person-url"
 	RatedAvgProperty              = "rated-avg"
+	LivelibRatedAvgProperty       = "livelib-rated-avg"
 	RatedTotalCountProperty       = "rated-total-count"
 	LinkedArtsIdsProperty         = "linked-arts-ids"
 	SeriesIdProperty              = "series-ids"
@@ -117,6 +118,7 @@ func ArtsDetailsProperties() []string {
 		PersonFullNameProperty,
 		PersonUrlProperty,
 		RatedAvgProperty,
+		LivelibRatedAvgProperty,
 		RatedTotalCountProperty,
 		LinkedArtsIdsProperty,
 		SeriesIdProperty,

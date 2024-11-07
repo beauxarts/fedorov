@@ -15,8 +15,9 @@ var PropertyTitles = map[string]string{
 	data.PublishersProperty:   "Издатель",
 	data.RightholdersProperty: "Правообладатель",
 
-	data.PriceProperty:    "Цена",
-	data.RatedAvgProperty: "Рейтинг",
+	data.PriceProperty:           "Цена",
+	data.RatedAvgProperty:        "Рейтинг (ЛитРес)",
+	data.LivelibRatedAvgProperty: "Рейтинг (LiveLib)",
 
 	data.ArtTypeProperty: "Тип",
 	data.GenresProperty:  "Жанры",

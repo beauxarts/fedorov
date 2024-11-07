@@ -1,6 +1,10 @@
 package compton_fragments
 
-import "fmt"
+import (
+	"fmt"
+	"github.com/beauxarts/scrinium/litres_integration"
+	"strconv"
+)
 
 func fmtBytes(b int) string {
 	const unit = 1000
@@ -30,4 +34,18 @@ func fmtSeconds(ts int) string {
 	} else {
 		return fmt.Sprintf("%d:%02d:%02d", hours, minutes, seconds)
 	}
+}
+
+func fmtCurrentPagesOrSeconds(cpos string, at litres_integration.ArtType) string {
+	switch at {
+	case litres_integration.ArtTypeText:
+		fallthrough
+	case litres_integration.ArtTypePDF:
+		cpos += " стр"
+	case litres_integration.ArtTypeAudio:
+		if vi, err := strconv.ParseInt(cpos, 10, 32); err == nil {
+			cpos = fmtSeconds(int(vi))
+		}
+	}
+	return cpos
 }

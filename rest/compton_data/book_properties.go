@@ -17,6 +17,7 @@ var BookProperties = []string{
 	data.RightholdersProperty,
 	data.MinAgeProperty,
 	data.RatedAvgProperty,
+	data.LivelibRatedAvgProperty,
 	data.ISBNProperty,
 	data.DateWrittenAtProperty,
 	data.PublicationDateProperty,
