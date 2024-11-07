@@ -26,8 +26,8 @@ func fmtSeconds(ts int) string {
 	seconds := ts % 60
 
 	if hours == 0 {
-		return fmt.Sprintf("%2d:%2d", minutes, seconds)
+		return fmt.Sprintf("%d:%02d", minutes, seconds)
 	} else {
-		return fmt.Sprintf("%d:%2d:%2d", hours, minutes, seconds)
+		return fmt.Sprintf("%d:%02d:%02d", hours, minutes, seconds)
 	}
 }

@@ -8,11 +8,11 @@ import (
 	"strings"
 )
 
-const (
+var (
 	SearchNew   = "Новый"
-	SearchText  = "Текст"
-	SearchAudio = "Аудио"
-	SearchPDF   = "PDF"
+	SearchText  = litres_integration.ArtTypeText.String()
+	SearchAudio = litres_integration.ArtTypeAudio.String()
+	SearchPDF   = litres_integration.ArtTypePDF.String()
 )
 
 var SearchOrder = []string{

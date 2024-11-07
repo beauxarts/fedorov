@@ -26,7 +26,10 @@ type formattedProperty struct {
 func Information(r compton.Registrar, id string, rdx kevlar.ReadableRedux) compton.Element {
 	grid := compton.GridItems(r).JustifyContent(align.Center)
 
-	artType, _ := rdx.GetLastVal(data.ArtTypeProperty, id)
+	artType := litres_integration.ArtTypeText
+	if ats, ok := rdx.GetLastVal(data.ArtTypeProperty, id); ok {
+		artType = litres_integration.ParseArtType(ats)
+	}
 
 	for _, property := range compton_data.BookProperties {
 
@@ -39,7 +42,7 @@ func Information(r compton.Registrar, id string, rdx kevlar.ReadableRedux) compt
 	return grid
 }
 
-func formatProperty(id, property string, artType string, rdx kevlar.ReadableRedux) formattedProperty {
+func formatProperty(id, property string, at litres_integration.ArtType, rdx kevlar.ReadableRedux) formattedProperty {
 
 	fmtProperty := formattedProperty{
 		actions: make(map[string]string),
@@ -103,17 +106,18 @@ func formatProperty(id, property string, artType string, rdx kevlar.ReadableRedu
 			fallthrough
 		case data.PriceProperty:
 			fmtProperty.values[value] = noHref()
-		case data.SymbolsCountProperty:
-			switch artType {
-			case strconv.Itoa(int(litres_integration.ArtTypeText)):
-				fallthrough
-			case strconv.Itoa(int(litres_integration.ArtTypePDF)):
-				value += " стр"
-			case strconv.Itoa(int(litres_integration.ArtTypeAudio)):
-				if vi, err := strconv.ParseInt(value, 10, 32); err == nil {
-					value = fmtSeconds(int(vi))
-				}
-			}
+		case data.CurrentPagesOrSecondsProperty:
+			value = fmtCurrentPagesOrSeconds(value, at)
+			//switch at {
+			//case litres_integration.ArtTypeText:
+			//	fallthrough
+			//case litres_integration.ArtTypePDF:
+			//	value += " стр"
+			//case litres_integration.ArtTypeAudio:
+			//	if vi, err := strconv.ParseInt(value, 10, 32); err == nil {
+			//		value = fmtSeconds(int(vi))
+			//	}
+			//}
 			fmtProperty.values[value] = noHref()
 		case data.SeriesProperty:
 			if ii < len(seriesNames) {
@@ -295,4 +299,18 @@ func propertyTitleValues(r compton.Registrar, property string, fmtProperty forma
 
 func noHref() string {
 	return ""
+}
+
+func fmtCurrentPagesOrSeconds(cpos string, at litres_integration.ArtType) string {
+	switch at {
+	case litres_integration.ArtTypeText:
+		fallthrough
+	case litres_integration.ArtTypePDF:
+		cpos += " стр"
+	case litres_integration.ArtTypeAudio:
+		if vi, err := strconv.ParseInt(cpos, 10, 32); err == nil {
+			cpos = fmtSeconds(int(vi))
+		}
+	}
+	return cpos
 }

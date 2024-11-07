@@ -34,7 +34,7 @@ var PropertyTitles = map[string]string{
 	data.LastReleasedAtProperty:  "Выпущено",
 	data.LastUpdatedAtProperty:   "Обновлено",
 
-	data.SymbolsCountProperty: "Объем",
+	data.CurrentPagesOrSecondsProperty: "Объем",
 
 	data.SortProperty:                 "Порядок",
 	data.ArtsHistoryEventTimeProperty: "По дате приобретения",

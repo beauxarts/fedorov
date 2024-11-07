@@ -188,8 +188,6 @@ func getArtsDetailsPropertyValues(ad *litres_integration.ArtsDetails, property s
 		val = fmtFloat(add.Prices.FinalPrice)
 	case data.MinAgeProperty:
 		val = fmtInt(add.MinAge)
-	case data.SymbolsCountProperty:
-		val = fmtInt(add.SymbolsCount)
 	case data.LastUpdatedAtProperty:
 		val = add.LastUpdatedAt
 	case data.LastReleasedAtProperty:

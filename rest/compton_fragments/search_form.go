@@ -3,6 +3,7 @@ package compton_fragments
 import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/rest/compton_data"
+	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/compton"
 	"github.com/boggydigital/compton/consts/align"
 	"github.com/boggydigital/compton/consts/direction"
@@ -54,7 +55,14 @@ func searchInputs(r compton.Registrar, query map[string][]string, container comp
 		} else if slices.Contains(compton_data.DigestProperties, property) {
 			switch property {
 			case data.ArtTypeProperty:
-				datalist = compton_data.ArtTypes
+				datalist = make(map[string]string)
+				for _, ats := range []string{
+					litres_integration.ArtTypeText.String(),
+					litres_integration.ArtTypeAudio.String(),
+					litres_integration.ArtTypePDF.String(),
+				} {
+					datalist[ats] = ats
+				}
 			case data.SortProperty:
 				datalist = sortDatalist
 			default:

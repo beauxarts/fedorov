@@ -3,6 +3,7 @@ package compton_fragments
 import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/rest/compton_data"
+	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/compton"
 	"github.com/boggydigital/kevlar"
 )
@@ -26,12 +27,9 @@ func formatLabel(id, property string, rdx kevlar.ReadableRedux) compton.Formatte
 	val, _ := rdx.GetLastVal(property, id)
 
 	switch property {
-	//case data.BookCompletedProperty:
-	//	if val == "true" {
-	//		fmtLabel.Title = "Прочитано"
-	//	}
 	case data.ArtTypeProperty:
-		fmtLabel.Title = compton_data.ArtTypes[val]
+		at := litres_integration.ParseArtType(val)
+		fmtLabel.Title = at.String()
 	}
 
 	return fmtLabel

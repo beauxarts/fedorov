@@ -30,13 +30,13 @@ func externalLinks(id string, rdx kevlar.ReadableRedux) map[string][]string {
 	links := make(map[string][]string)
 
 	var bookType, altType string
-	if at, ok := rdx.GetLastVal(data.ArtTypeProperty, id); ok {
-		bookType = compton_data.ArtTypes[at]
+	if ats, ok := rdx.GetLastVal(data.ArtTypeProperty, id); ok {
+		at := litres_integration.ParseArtType(ats)
 		switch at {
-		case textType:
-			altType = compton_data.ArtTypes[audioType]
-		case audioType:
-			altType = compton_data.ArtTypes[textType]
+		case litres_integration.ArtTypeText:
+			altType = litres_integration.ArtTypeAudio.String()
+		case litres_integration.ArtTypeAudio:
+			altType = litres_integration.ArtTypeText.String()
 		}
 	}
 
