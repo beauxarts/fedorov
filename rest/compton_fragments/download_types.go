@@ -34,13 +34,16 @@ func DownloadType(r compton.Registrar, id string, dt *litres_integration.ArtsFil
 	row.PropVal("Формат", dt.Type())
 	row.PropVal("Размер", fmtBytes(dt.Size))
 
+	artType := litres_integration.ArtTypeText
+	cpos := ""
 	if dt.Pages != nil {
-		row.PropVal("Объем (страниц)", strconv.Itoa(*dt.Pages))
+		cpos = strconv.Itoa(*dt.Pages)
 	}
-
 	if dt.Seconds != nil {
-		row.PropVal("Длительность", fmtSeconds(*dt.Seconds))
+		artType = litres_integration.ArtTypeAudio
+		cpos = strconv.Itoa(*dt.Seconds)
 	}
+	row.PropVal("Объем", fmtCurrentPagesOrSeconds(cpos, artType))
 
 	downloadLink.Append(row)
 
