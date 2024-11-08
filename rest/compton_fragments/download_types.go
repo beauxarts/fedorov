@@ -29,7 +29,7 @@ func DownloadType(r compton.Registrar, id string, dt *litres_integration.ArtsFil
 
 	row := compton.Frow(r)
 
-	row.IconColor(typeColors[dt.Type()])
+	row.CircleIconColor(typeColors[dt.Type()])
 	row.PropVal("Тип", dt.TypeDescription())
 	row.PropVal("Формат", dt.Type())
 	row.PropVal("Размер", fmtBytes(dt.Size))
