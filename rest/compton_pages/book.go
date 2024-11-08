@@ -11,6 +11,7 @@ import (
 	"github.com/boggydigital/compton/consts/input_types"
 	"github.com/boggydigital/compton/consts/size"
 	"github.com/boggydigital/kevlar"
+	"strings"
 )
 
 const colorBlendClass = "color-blend"
@@ -58,6 +59,13 @@ func Book(id string, hasSections []string, rdx kevlar.ReadableRedux) compton.Pag
 			TextAlign(align.Center)
 		pageStack.Append(productSubtitle)
 	}
+
+	summaryRow := compton.Frow(p)
+	properties, values := compton_fragments.SummarizeBookProperties(id, rdx)
+	for _, p := range properties {
+		summaryRow.PropVal(compton_data.PropertyTitles[p], strings.Join(values[p], ", "))
+	}
+	pageStack.Append(compton.FICenter(p, summaryRow))
 
 	for _, section := range hasSections {
 

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/beauxarts/scrinium/litres_integration"
 	"strconv"
+	"time"
 )
 
 func fmtBytes(b int) string {
@@ -48,4 +49,16 @@ func fmtCurrentPagesOrSeconds(cpos string, at litres_integration.ArtType) string
 		}
 	}
 	return cpos
+}
+
+func fmtYearWrittenAt(dwa string) string {
+	yearWrittenAt := 0
+	if dateWrittenAt, err := time.Parse("2006-01-02", dwa); err == nil {
+		if dateWrittenAt.Month() == 1 && dateWrittenAt.Day() == 1 {
+			yearWrittenAt = dateWrittenAt.Year() - 1
+		} else {
+			yearWrittenAt = dateWrittenAt.Year()
+		}
+	}
+	return strconv.Itoa(yearWrittenAt)
 }

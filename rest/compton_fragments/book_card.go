@@ -5,12 +5,43 @@ import (
 	"github.com/beauxarts/fedorov/rest/compton_data"
 	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/compton"
-	"github.com/boggydigital/compton/consts/size"
 	"github.com/boggydigital/kevlar"
-	"strconv"
 	"strings"
-	"time"
 )
+
+func SummarizeBookProperties(id string, rdx kevlar.ReadableRedux) ([]string, map[string][]string) {
+	properties := make([]string, 0)
+	values := make(map[string][]string)
+
+	properties = append(properties, data.AuthorsProperty)
+	values[data.AuthorsProperty], _ = rdx.GetAllValues(data.AuthorsProperty, id)
+
+	artType := litres_integration.ArtTypeText
+	if ats, ok := rdx.GetLastVal(data.ArtTypeProperty, id); ok {
+		artType = litres_integration.ParseArtType(ats)
+	}
+
+	if readers, ok := rdx.GetAllValues(data.ReadersProperty, id); ok && len(readers) > 0 {
+		properties = append(properties, data.ReadersProperty)
+		values[data.ReadersProperty] = readers
+	} else if illustrators, ok := rdx.GetAllValues(data.IllustratorsProperty, id); ok && len(illustrators) > 0 {
+		properties = append(properties, data.IllustratorsProperty)
+		values[data.IllustratorsProperty] = illustrators
+	} else if translators, ok := rdx.GetAllValues(data.TranslatorsProperty, id); ok && len(translators) > 0 {
+		properties = append(properties, data.TranslatorsProperty)
+		values[data.TranslatorsProperty] = translators
+	} else if dwa, ok := rdx.GetLastVal(data.DateWrittenAtProperty, id); ok {
+		properties = append(properties, data.DateWrittenAtProperty)
+		values[data.DateWrittenAtProperty] = []string{fmtYearWrittenAt(dwa)}
+	}
+
+	if cpos, ok := rdx.GetLastVal(data.CurrentPagesOrSecondsProperty, id); ok {
+		properties = append(properties, data.CurrentPagesOrSecondsProperty)
+		values[data.CurrentPagesOrSecondsProperty] = []string{fmtCurrentPagesOrSeconds(cpos, artType)}
+	}
+
+	return properties, values
+}
 
 func BookCard(r compton.Registrar, id string, hydrated bool, rdx kevlar.ReadableRedux) compton.Element {
 	bc := compton.Card(r, id)
@@ -33,48 +64,10 @@ func BookCard(r compton.Registrar, id string, hydrated bool, rdx kevlar.Readable
 		bc.AppendTitle(title)
 	}
 
-	artType := litres_integration.ArtTypeText
-	if ats, ok := rdx.GetLastVal(data.ArtTypeProperty, id); ok {
-		artType = litres_integration.ParseArtType(ats)
-	}
-
-	if labels := compton.Labels(r, FormatLabels(id, rdx)...).
-		FontSize(size.XSmall).
-		ColumnGap(size.XXSmall).
-		RowGap(size.XXSmall); labels != nil {
-		bc.AppendLabels(labels)
-	}
-
-	if authors, ok := rdx.GetAllValues(data.AuthorsProperty, id); ok && len(authors) > 0 {
-		bc.AppendProperty(compton_data.PropertyTitles[data.AuthorsProperty], compton.Text(strings.Join(authors, ", ")))
-	}
-
-	if readers, ok := rdx.GetAllValues(data.ReadersProperty, id); ok && len(readers) > 0 {
-		bc.AppendProperty(compton_data.PropertyTitles[data.ReadersProperty], compton.Text(strings.Join(readers, ", ")))
-	} else if illustrators, ok := rdx.GetAllValues(data.IllustratorsProperty, id); ok && len(illustrators) > 0 {
-		bc.AppendProperty(compton_data.ShortPropertyTitles[data.IllustratorsProperty], compton.Text(strings.Join(illustrators, ", ")))
-	} else if translators, ok := rdx.GetAllValues(data.TranslatorsProperty, id); ok && len(translators) > 0 {
-		bc.AppendProperty(compton_data.PropertyTitles[data.TranslatorsProperty], compton.Text(strings.Join(translators, ", ")))
-	} else if dwa, ok := rdx.GetLastVal(data.DateWrittenAtProperty, id); ok {
-		bc.AppendProperty(compton_data.PropertyTitles[data.DateWrittenAtProperty], compton.Text(fmtYearWrittenAt(dwa)))
-	}
-
-	if cpos, ok := rdx.GetLastVal(data.CurrentPagesOrSecondsProperty, id); ok {
-		bc.AppendProperty(compton_data.PropertyTitles[data.CurrentPagesOrSecondsProperty],
-			compton.Text(fmtCurrentPagesOrSeconds(cpos, artType)))
+	properties, values := SummarizeBookProperties(id, rdx)
+	for _, p := range properties {
+		bc.AppendProperty(compton_data.PropertyTitles[p], compton.Text(strings.Join(values[p], ", ")))
 	}
 
 	return bc
-}
-
-func fmtYearWrittenAt(dwa string) string {
-	yearWrittenAt := 0
-	if dateWrittenAt, err := time.Parse("2006-01-02", dwa); err == nil {
-		if dateWrittenAt.Month() == 1 && dateWrittenAt.Day() == 1 {
-			yearWrittenAt = dateWrittenAt.Year() - 1
-		} else {
-			yearWrittenAt = dateWrittenAt.Year()
-		}
-	}
-	return strconv.Itoa(yearWrittenAt)
 }
