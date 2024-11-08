@@ -5,6 +5,7 @@ import (
 	"github.com/beauxarts/fedorov/rest/compton_data"
 	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/compton"
+	"github.com/boggydigital/compton/consts/size"
 	"github.com/boggydigital/kevlar"
 	"strings"
 )
@@ -62,6 +63,13 @@ func BookCard(r compton.Registrar, id string, hydrated bool, rdx kevlar.Readable
 
 	if title, ok := rdx.GetLastVal(data.TitleProperty, id); ok {
 		bc.AppendTitle(title)
+	}
+
+	if labels := compton.Labels(r, FormatLabels(id, rdx)...).
+		FontSize(size.XSmall).
+		ColumnGap(size.XXSmall).
+		RowGap(size.XXSmall); labels != nil {
+		bc.AppendLabels(labels)
 	}
 
 	properties, values := SummarizeBookProperties(id, rdx)

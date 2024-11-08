@@ -29,23 +29,24 @@ func externalLinks(id string, rdx kevlar.ReadableRedux) map[string][]string {
 
 	links := make(map[string][]string)
 
-	var bookType, altType string
+	bookType := litres_integration.ArtTypeText
+	altType := litres_integration.ArtTypeAudio
 	if ats, ok := rdx.GetLastVal(data.ArtTypeProperty, id); ok {
-		at := litres_integration.ParseArtType(ats)
-		switch at {
+		bookType = litres_integration.ParseArtType(ats)
+		switch bookType {
 		case litres_integration.ArtTypeText:
-			altType = litres_integration.ArtTypeAudio.String()
+			altType = litres_integration.ArtTypeAudio
 		case litres_integration.ArtTypeAudio:
-			altType = litres_integration.ArtTypeText.String()
+			altType = litres_integration.ArtTypeText
 		}
 	}
 
 	links[data.LitresBookLinksProperty] = append(links[data.LitresBookLinksProperty],
-		encodeLink(bookType, "/book/"+id))
+		encodeLink(bookType.String(), "/book/"+id))
 
 	if avId, ok := rdx.GetLastVal(data.AlternativeVersionsProperty, id); ok && avId != "0" {
 		links[data.LitresBookLinksProperty] = append(links[data.LitresBookLinksProperty],
-			encodeLink(altType, "/book/"+avId))
+			encodeLink(altType.String(), "/book/"+avId))
 	}
 
 	appendLink(links, id, rdx,

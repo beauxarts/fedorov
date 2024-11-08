@@ -40,11 +40,11 @@ func Similar(r compton.Registrar, id string, artsSimilar *litres_integration.Art
 		link := compton.A(linkHref)
 		link.SetAttribute("target", "_top")
 
-		linkStack := compton.FlexItems(r, direction.Column).RowGap(size.Unset)
+		linkStack := compton.FlexItems(r, direction.Column).RowGap(size.Small)
 
 		linkTitleRow := compton.FlexItems(r, direction.Row).
 			ColumnGap(size.Small).
-			RowGap(size.XSmall).
+			RowGap(size.Small).
 			JustifyContent(align.Center).
 			AlignItems(align.Center)
 

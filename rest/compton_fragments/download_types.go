@@ -6,6 +6,7 @@ import (
 	"github.com/boggydigital/compton/consts/color"
 	"github.com/boggydigital/compton/consts/direction"
 	"github.com/boggydigital/compton/consts/font_weight"
+	"github.com/boggydigital/compton/consts/size"
 	"strconv"
 )
 
@@ -19,13 +20,16 @@ var typeColors = map[string]color.Color{
 
 func DownloadType(r compton.Registrar, id string, dt *litres_integration.ArtsFilesData) compton.Element {
 
-	downloadStack := compton.FlexItems(r, direction.Column)
+	downloadStack := compton.FlexItems(r, direction.Column).RowGap(size.Small)
 	downloadStack.AddClass("download-type")
 
 	downloadLink := compton.A("/file?id=" + id + "&file=" + dt.TypeFilename())
 
+	downloadLinkStack := compton.FlexItems(r, direction.Column).RowGap(size.Small)
+	downloadLink.Append(downloadLinkStack)
+
 	filename := compton.Fspan(r, dt.TypeFilenameSansExt()).FontWeight(font_weight.Bolder)
-	downloadLink.Append(filename)
+	downloadLinkStack.Append(filename)
 
 	row := compton.Frow(r)
 
@@ -45,7 +49,7 @@ func DownloadType(r compton.Registrar, id string, dt *litres_integration.ArtsFil
 	}
 	row.PropVal("Объем", fmtCurrentPagesOrSeconds(cpos, artType))
 
-	downloadLink.Append(row)
+	downloadLinkStack.Append(row)
 
 	downloadStack.Append(downloadLink)
 

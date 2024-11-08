@@ -14,7 +14,7 @@ func Annotation(id string, rdx kevlar.ReadableRedux) compton.PageElement {
 
 	if annotation, ok := rdx.GetLastVal(data.HTMLAnnotationProperty, id); ok {
 
-		s.Append(compton.Text(annotation))
+		s.Append(compton.PreText(annotation))
 
 	}
 

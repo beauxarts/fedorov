@@ -33,7 +33,7 @@ func Reviews(r compton.Registrar, artsReviews *litres_integration.ArtsReviews) c
 
 		stack.Append(metadataFrow)
 
-		stack.Append(compton.DivText(review.Text))
+		stack.Append(compton.PreText(review.Text))
 
 		likesFrow := compton.Frow(r)
 

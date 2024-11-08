@@ -1,5 +1,6 @@
 ul {
     list-style: none;
+    line-height: calc(1.5 * var(--s-n));
 
     & li.deep1 {
         margin-inline: var(--s-n)
