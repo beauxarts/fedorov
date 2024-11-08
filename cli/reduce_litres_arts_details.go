@@ -2,6 +2,7 @@ package cli
 
 import (
 	"github.com/beauxarts/fedorov/data"
+	"github.com/beauxarts/fedorov/rest/compton_data"
 	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/nod"
@@ -297,6 +298,19 @@ func getArtsDetailsPropertyValues(ad *litres_integration.ArtsDetails, property s
 		// do nothing
 	case data.RightholderUrlProperty:
 		// do nothing
+	case data.LitresLabelsProperty:
+		if add.Labels.IsNew {
+			values = append(values, compton_data.LitresLabelNew)
+		}
+		if add.Labels.IsBestseller {
+			values = append(values, compton_data.LitresLabelBestseller)
+		}
+		if add.Labels.IsLitresExclusive {
+			values = append(values, compton_data.LitresLabelExclusive)
+		}
+		if add.Labels.IsSalesHit {
+			values = append(values, compton_data.LitresLabelSalesHit)
+		}
 	default:
 		panic("unknown property " + property)
 	}

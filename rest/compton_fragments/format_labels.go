@@ -12,25 +12,36 @@ func FormatLabels(id string, rdx kevlar.ReadableRedux) []compton.FormattedLabel 
 	fmtLabels := make([]compton.FormattedLabel, 0)
 
 	for _, p := range compton_data.LabelProperties {
-		fmtLabels = append(fmtLabels, formatLabel(id, p, rdx))
+		fmtLabels = append(fmtLabels, formatLabel(id, p, rdx)...)
 	}
 
 	return fmtLabels
 }
 
-func formatLabel(id, property string, rdx kevlar.ReadableRedux) compton.FormattedLabel {
+func formatLabel(id, property string, rdx kevlar.ReadableRedux) []compton.FormattedLabel {
 
-	fmtLabel := compton.FormattedLabel{
-		Property: property,
-	}
+	labels := make([]compton.FormattedLabel, 0)
 
 	val, _ := rdx.GetLastVal(property, id)
+	values, _ := rdx.GetAllValues(property, id)
 
 	switch property {
 	case data.ArtTypeProperty:
 		at := litres_integration.ParseArtType(val)
-		fmtLabel.Title = at.String()
+		label := compton.FormattedLabel{
+			Property: property,
+			Title:    at.String(),
+		}
+		labels = append(labels, label)
+	case data.LitresLabelsProperty:
+		for _, value := range values {
+			label := compton.FormattedLabel{
+				Property: property,
+				Title:    value,
+			}
+			labels = append(labels, label)
+		}
 	}
 
-	return fmtLabel
+	return labels
 }
