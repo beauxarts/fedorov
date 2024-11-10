@@ -31,12 +31,13 @@ func DownloadType(r compton.Registrar, id string, dt *litres_integration.ArtsFil
 	filename := compton.Fspan(r, dt.TypeFilenameSansExt()).FontWeight(font_weight.Bolder)
 	downloadLinkStack.Append(filename)
 
-	row := compton.Frow(r)
+	row := compton.Frow(r).
+		FontSize(size.Small)
 
-	row.CircleIconColor(typeColors[dt.Type()])
-	row.PropVal("Тип", dt.TypeDescription())
-	row.PropVal("Формат", dt.Type())
-	row.PropVal("Размер", fmtBytes(dt.Size))
+	row.IconColor(compton.Circle, typeColors[dt.Type()]).
+		PropVal("Тип", dt.TypeDescription()).
+		PropVal("Формат", dt.Type()).
+		PropVal("Размер", fmtBytes(dt.Size))
 
 	artType := litres_integration.ArtTypeText
 	cpos := ""

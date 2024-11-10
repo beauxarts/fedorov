@@ -62,7 +62,8 @@ func Similar(r compton.Registrar, id string, artsSimilar *litres_integration.Art
 
 		linkStack.Append(linkTitleRow)
 
-		frow := compton.Frow(r)
+		frow := compton.Frow(r).
+			FontSize(size.Small)
 
 		//frow.Elements(linkLabels)
 

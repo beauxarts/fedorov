@@ -24,9 +24,7 @@ func Book(id string, hasSections []string, rdx kevlar.ReadableRedux) compton.Pag
 	p.RegisterStyles(compton_styles.Styles, "book.css")
 
 	// tinting document background color to the representative product color
-	if repColor, ok := rdx.GetLastVal(data.RepItemImageColorProperty, id); ok {
-		p.SetAttribute("style", "background-color:color-mix(in display-p3,"+repColor+" var(--cma),var(--c-background))")
-	}
+	compton_fragments.SetTint(id, p, rdx)
 
 	appNav := compton_fragments.AppNavLinks(p, "")
 	appNav.AddClass(colorBlendClass)
@@ -60,7 +58,8 @@ func Book(id string, hasSections []string, rdx kevlar.ReadableRedux) compton.Pag
 		pageStack.Append(productSubtitle)
 	}
 
-	summaryRow := compton.Frow(p)
+	summaryRow := compton.Frow(p).
+		FontSize(size.Small)
 	properties, values := compton_fragments.SummarizeBookProperties(id, rdx)
 	for _, p := range properties {
 		summaryRow.PropVal(compton_data.PropertyTitles[p], strings.Join(values[p], ", "))

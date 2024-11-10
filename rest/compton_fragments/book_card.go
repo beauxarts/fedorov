@@ -50,7 +50,7 @@ func BookCard(r compton.Registrar, id string, hydrated bool, rdx kevlar.Readable
 	repColor := ""
 	if rc, ok := rdx.GetLastVal(data.RepListImageColorProperty, id); ok {
 		repColor = rc
-		bc.SetAttribute("style", "background-color:color-mix(in display-p3,"+rc+" var(--cma), var(--c-background))")
+		SetTint(id, bc, rdx)
 	}
 
 	posterUrl := "/list_cover?id=" + id

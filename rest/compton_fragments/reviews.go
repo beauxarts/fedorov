@@ -6,6 +6,7 @@ import (
 	"github.com/boggydigital/compton/consts/align"
 	"github.com/boggydigital/compton/consts/color"
 	"github.com/boggydigital/compton/consts/direction"
+	"github.com/boggydigital/compton/consts/size"
 	"strconv"
 	"strings"
 )
@@ -22,7 +23,8 @@ func Reviews(r compton.Registrar, artsReviews *litres_integration.ArtsReviews) c
 
 	for ii, review := range artsReviews.Payload.Data {
 
-		metadataFrow := compton.Frow(r)
+		metadataFrow := compton.Frow(r).
+			FontSize(size.Small)
 		if review.ItemRating != nil {
 			ir := strconv.Itoa(*review.ItemRating)
 			metadataFrow.PropVal("Оценка", ir)
@@ -35,7 +37,8 @@ func Reviews(r compton.Registrar, artsReviews *litres_integration.ArtsReviews) c
 
 		stack.Append(compton.PreText(review.Text))
 
-		likesFrow := compton.Frow(r)
+		likesFrow := compton.Frow(r).
+			FontSize(size.Small)
 
 		if review.LikesCount > 0 {
 			likesFrow.PropVal("Оценили", strconv.Itoa(review.LikesCount))
