@@ -11,7 +11,6 @@ import (
 	"golang.org/x/exp/maps"
 	"golang.org/x/exp/slices"
 	"strconv"
-	"strings"
 )
 
 const filterSearchTitle = "Фильтр и поиск"
@@ -54,7 +53,7 @@ func Search(query map[string][]string, ids []string, from, to int, rdx kevlar.Re
 		slices.Sort(props)
 		for _, prop := range props {
 			vals := fq[prop]
-			queryFrow.PropVal(compton_data.PropertyTitles[prop], strings.Join(vals, ", "))
+			queryFrow.PropVal(compton_data.PropertyTitles[prop], vals...)
 		}
 		queryFrow.LinkColor("Очистить", "/search", color.Blue)
 	}
