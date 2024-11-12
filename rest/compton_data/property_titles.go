@@ -48,9 +48,6 @@ var PropertyTitles = map[string]string{
 	data.LitresRightholdersLinksProperty: "Правообладатели",
 	data.LitresGenresLinksProperty:       "Жанры",
 	data.LitresTagsLinksProperty:         "Tэги",
-
-	"true":  "Да",
-	"false": "Нет",
 }
 
 var ShortPropertyTitles = map[string]string{

@@ -8,7 +8,10 @@ import (
 	"github.com/boggydigital/compton/consts/color"
 	"github.com/boggydigital/compton/consts/size"
 	"github.com/boggydigital/kevlar"
+	"golang.org/x/exp/maps"
+	"golang.org/x/exp/slices"
 	"strconv"
+	"strings"
 )
 
 const filterSearchTitle = "Фильтр и поиск"
@@ -43,14 +46,24 @@ func Search(query map[string][]string, ids []string, from, to int, rdx kevlar.Re
 		filterSearchDetails.AppendSummary(cf.TitleElement(p, from, to, len(ids)))
 	}
 
-	searchQuery := compton.Query(p, query,
-		compton_data.PropertyTitles, "/search", "Очистить")
+	var queryFrow *compton.FrowElement
+	if len(query) > 0 {
+		queryFrow = compton.Frow(p).FontSize(size.Small)
+		fq := compton_fragments.FormatQuery(query)
+		props := maps.Keys(query)
+		slices.Sort(props)
+		for _, prop := range props {
+			vals := fq[prop]
+			queryFrow.PropVal(compton_data.PropertyTitles[prop], strings.Join(vals, ", "))
+		}
+		queryFrow.LinkColor("Очистить", "/search", color.Blue)
+	}
 
-	filterSearchDetails.Append(compton_fragments.SearchForm(p, query, searchQuery, rdx))
+	filterSearchDetails.Append(compton_fragments.SearchForm(p, query, queryFrow, rdx))
 	pageStack.Append(filterSearchDetails)
 
-	if searchQuery != nil {
-		pageStack.Append(searchQuery)
+	if queryFrow != nil {
+		pageStack.Append(compton.FICenter(p, queryFrow))
 	}
 
 	if len(ids) > 0 {
