@@ -6,11 +6,8 @@ import (
 	"github.com/boggydigital/issa"
 	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/nod"
-	"image"
-	"image/color"
 	_ "image/jpeg"
 	"net/url"
-	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -84,8 +81,6 @@ func dehydrateImages(
 
 	di.TotalInt(len(ids))
 
-	plt := issa.ColorPalette()
-
 	dehydratedImages := make(map[string][]string)
 	dehydratedImageModified := make(map[string][]string)
 	repColors := make(map[string][]string)
@@ -108,7 +103,7 @@ func dehydrateImages(
 			if err != nil {
 				return di.EndWithError(err)
 			}
-			if dhi, rc, err := dehydrateImage(acp, plt); err == nil {
+			if dhi, rc, err := issa.DehydrateImageRepColor(acp); err == nil {
 				dehydratedImages[idStr] = []string{dhi}
 				dehydratedImageModified[idStr] = []string{strconv.FormatInt(time.Now().Unix(), 10)}
 				repColors[idStr] = []string{rc}
@@ -136,30 +131,4 @@ func dehydrateImages(
 	di.EndWithResult("done")
 
 	return nil
-}
-
-func dehydrateImage(absImagePath string, plt color.Palette) (string, string, error) {
-	dhi, rc := "", ""
-
-	fi, err := os.Open(absImagePath)
-	if err != nil {
-		return dhi, rc, err
-	}
-	defer fi.Close()
-
-	img, _, err := image.Decode(fi)
-	if err != nil {
-		return dhi, rc, err
-	}
-
-	gif := issa.GIFImage(img, plt, issa.DefaultSampling)
-
-	dhi, err = issa.DehydrateColor(gif)
-	if err != nil {
-		return dhi, rc, err
-	}
-
-	rc = issa.ColorHex(issa.RepColor(gif))
-
-	return dhi, rc, err
 }
