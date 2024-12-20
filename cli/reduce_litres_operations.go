@@ -55,7 +55,6 @@ func ReduceLitResOperations() error {
 					artsFourthPresent[artId] = []string{strconv.FormatBool(fourthPresent)}
 				}
 			}
-
 		} else {
 			return roa.EndWithError(err)
 		}

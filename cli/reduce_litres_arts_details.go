@@ -311,6 +311,8 @@ func getArtsDetailsPropertyValues(ad *litres_integration.ArtsDetails, property s
 		if add.Labels.IsSalesHit {
 			values = append(values, compton_data.LitresLabelSalesHit)
 		}
+	case data.ArtFourthPresentProperty:
+		// do nothing
 	default:
 		panic("unknown property " + property)
 	}
