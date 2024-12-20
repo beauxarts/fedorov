@@ -40,11 +40,14 @@ func ReduceLitResOperations() error {
 
 	for p := 1; p <= totalPages; p++ {
 
-		if order, eventTimes, err := artsOperationsOrderEventTimes(p, kv); err == nil {
+		if ops, err := getArtsOperations(p, kv); err == nil {
 
-			artsOperationsOrder = append(artsOperationsOrder, order...)
-			for artId, ets := range eventTimes {
-				artsOperationsEventTimes[artId] = ets
+			for _, dt := range ops.Payload.Data {
+				for _, art := range dt.SpecificData.Arts {
+					artId := strconv.Itoa(art.Id)
+					artsOperationsOrder = append(artsOperationsOrder, artId)
+					artsOperationsEventTimes[artId] = []string{dt.Date}
+				}
 			}
 
 		} else {
@@ -75,33 +78,18 @@ func ReduceLitResOperations() error {
 	return nil
 }
 
-func artsOperationsOrderEventTimes(p int, kv kevlar.KeyValues) ([]string, map[string][]string, error) {
+func getArtsOperations(p int, kv kevlar.KeyValues) (*litres_integration.Operations, error) {
 
 	page, err := kv.Get(strconv.Itoa(p))
 	if err != nil {
-		return nil, nil, err
+		return nil, err
 	}
 	defer page.Close()
 
 	var ops litres_integration.Operations
 	if err := json.NewDecoder(page).Decode(&ops); err != nil {
-		return nil, nil, err
+		return nil, err
 	}
 
-	order := make([]string, 0, len(ops.Payload.Data)*3)
-	eventTimes := make(map[string][]string)
-
-	for _, dt := range ops.Payload.Data {
-		//et, err := time.Parse("2006-01-02T15:04:05", dt.Date)
-		//if err != nil {
-		//	return nil, nil, err
-		//}
-		for _, art := range dt.SpecificData.Arts {
-			artId := strconv.Itoa(art.Id)
-			order = append(order, artId)
-			eventTimes[artId] = []string{dt.Date}
-		}
-	}
-
-	return order, eventTimes, nil
+	return &ops, nil
 }
