@@ -78,13 +78,13 @@ func GetLitResAuthors(authorTypes []litres_integration.AuthorType, hc *http.Clie
 func getPersonsIds(force bool, artsIds ...string) ([]string, error) {
 	persons := make(map[string]interface{})
 
-	rdx, err := data.NewReduxReader(data.ArtsHistoryOrderProperty, data.PersonsIdsProperty)
+	rdx, err := data.NewReduxReader(data.ArtsOperationsOrderProperty, data.PersonsIdsProperty)
 	if err != nil {
 		return nil, err
 	}
 
 	if len(artsIds) == 0 && force {
-		if allArtsIds, ok := rdx.GetAllValues(data.ArtsHistoryOrderProperty, data.ArtsHistoryOrderProperty); ok {
+		if allArtsIds, ok := rdx.GetAllValues(data.ArtsOperationsOrderProperty, data.ArtsOperationsOrderProperty); ok {
 			artsIds = allArtsIds
 		}
 	}

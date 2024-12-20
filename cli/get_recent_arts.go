@@ -21,7 +21,7 @@ func GetRecentArts(force bool) ([]string, error) {
 	graa := nod.Begin("getting recent arts...")
 	defer graa.End()
 
-	rdx, err := data.NewReduxReader(data.ArtsHistoryEventTimeProperty)
+	rdx, err := data.NewReduxReader(data.ArtsOperationsEventTimeProperty)
 	if err != nil {
 		return nil, graa.EndWithError(err)
 	}
@@ -29,14 +29,14 @@ func GetRecentArts(force bool) ([]string, error) {
 	ids := make([]string, 0)
 
 	if force {
-		ids = rdx.Keys(data.ArtsHistoryEventTimeProperty)
+		ids = rdx.Keys(data.ArtsOperationsEventTimeProperty)
 	} else {
 
 		earliestDate := time.Now().AddDate(0, 0, -recentDays)
 
-		for _, id := range rdx.Keys(data.ArtsHistoryEventTimeProperty) {
-			if ets, ok := rdx.GetLastVal(data.ArtsHistoryEventTimeProperty, id); ok {
-				if et, err := time.Parse("2006-01-02T15:04:05Z", ets); err == nil {
+		for _, id := range rdx.Keys(data.ArtsOperationsEventTimeProperty) {
+			if ets, ok := rdx.GetLastVal(data.ArtsOperationsEventTimeProperty, id); ok {
+				if et, err := time.Parse(time.RFC3339, ets); err == nil {
 					if et.After(earliestDate) {
 						ids = append(ids, id)
 					}

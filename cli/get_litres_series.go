@@ -78,13 +78,13 @@ func GetLitResSeries(seriesTypes []litres_integration.SeriesType, hc *http.Clien
 func getSeriesIds(force bool, artsIds ...string) ([]string, error) {
 	series := make(map[string]interface{})
 
-	rdx, err := data.NewReduxReader(data.ArtsHistoryOrderProperty, data.SeriesIdProperty)
+	rdx, err := data.NewReduxReader(data.ArtsOperationsOrderProperty, data.SeriesIdProperty)
 	if err != nil {
 		return nil, err
 	}
 
 	if len(artsIds) == 0 && force {
-		if allArtsIds, ok := rdx.GetAllValues(data.ArtsHistoryOrderProperty, data.ArtsHistoryOrderProperty); ok {
+		if allArtsIds, ok := rdx.GetAllValues(data.ArtsOperationsOrderProperty, data.ArtsOperationsOrderProperty); ok {
 			artsIds = allArtsIds
 		}
 	}

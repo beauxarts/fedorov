@@ -30,7 +30,7 @@ func Dehydrate(force bool, artsIds ...string) error {
 	defer di.End()
 
 	properties := data.DehydratedProperties()
-	properties = append(properties, data.ArtsHistoryOrderProperty)
+	properties = append(properties, data.ArtsOperationsOrderProperty)
 
 	rdx, err := data.NewReduxWriter(properties...)
 	if err != nil {

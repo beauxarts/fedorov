@@ -3,9 +3,9 @@ package data
 const (
 	IdProperty = "id"
 
-	// arts history
-	ArtsHistoryOrderProperty     = "arts-history-order"
-	ArtsHistoryEventTimeProperty = "arts-history-event-time"
+	// operations
+	ArtsOperationsOrderProperty     = "arts-operations-order"
+	ArtsOperationsEventTimeProperty = "arts-operations-event-time"
 
 	// arts details properties
 	CoverUrlProperty              = "cover-url"
@@ -201,8 +201,8 @@ func ReduxProperties() []string {
 	properties = append(properties, VideoProperties()...)
 	properties = append(properties, DehydratedProperties()...)
 	properties = append(properties, []string{
-		ArtsHistoryOrderProperty,
-		ArtsHistoryEventTimeProperty,
+		ArtsOperationsOrderProperty,
+		ArtsOperationsEventTimeProperty,
 		//
 		SyncCompletedProperty,
 	}...)

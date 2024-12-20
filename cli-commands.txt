@@ -39,7 +39,7 @@ get-litres-contents
     id^&
     force
 
-get-litres-history-log
+get-litres-operations
     session-id*
 
 get-litres-series
@@ -71,7 +71,7 @@ migrate
 
 reduce-litres-arts-details
 
-reduce-litres-history-log
+reduce-litres-operations
 
 sync
     force

@@ -37,9 +37,9 @@ var PropertyTitles = map[string]string{
 
 	data.CurrentPagesOrSecondsProperty: "Объем",
 
-	data.SortProperty:                 "Порядок",
-	data.ArtsHistoryEventTimeProperty: "По дате приобретения",
-	data.DescendingProperty:           "По убыванию",
+	data.SortProperty:                    "Порядок",
+	data.ArtsOperationsEventTimeProperty: "По дате приобретения",
+	data.DescendingProperty:              "По убыванию",
 
 	data.LitresBookLinksProperty:         "Книги",
 	data.LitresAuthorLinksProperty:       "Авторы",

@@ -84,7 +84,7 @@ var binDatalist = map[string]string{
 }
 
 var sortDatalist = map[string]string{
-	data.ArtsHistoryOrderProperty: compton_data.PropertyTitles[data.ArtsHistoryOrderProperty],
+	data.ArtsOperationsOrderProperty: compton_data.PropertyTitles[data.ArtsOperationsOrderProperty],
 }
 
 func propertyDatalist(property string, rdx kevlar.ReadableRedux) map[string]string {

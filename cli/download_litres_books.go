@@ -31,7 +31,7 @@ func DownloadLitResBooks(hc *http.Client, force bool, artsIds ...string) error {
 	defer da.End()
 
 	rdx, err := data.NewReduxReader(
-		data.ArtsHistoryOrderProperty,
+		data.ArtsOperationsOrderProperty,
 		data.TitleProperty,
 		data.PersonsIdsProperty,
 		data.PersonsRolesProperty,

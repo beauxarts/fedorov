@@ -29,19 +29,19 @@ func SearchScopes() map[string]string {
 
 	q := url.Values{}
 	q.Set(data.ArtTypeProperty, strconv.Itoa(int(litres_integration.ArtTypeText)))
-	q.Set(data.SortProperty, data.ArtsHistoryEventTimeProperty)
+	q.Set(data.SortProperty, data.ArtsOperationsEventTimeProperty)
 	q.Set(data.DescendingProperty, "true")
 	queries[SearchText] = q.Encode()
 
 	q = url.Values{}
 	q.Set(data.ArtTypeProperty, strconv.Itoa(int(litres_integration.ArtTypeAudio)))
-	q.Set(data.SortProperty, data.ArtsHistoryEventTimeProperty)
+	q.Set(data.SortProperty, data.ArtsOperationsEventTimeProperty)
 	q.Set(data.DescendingProperty, "true")
 	queries[SearchAudio] = q.Encode()
 
 	q = url.Values{}
 	q.Set(data.ArtTypeProperty, strconv.Itoa(int(litres_integration.ArtTypePDF)))
-	q.Set(data.SortProperty, data.ArtsHistoryEventTimeProperty)
+	q.Set(data.SortProperty, data.ArtsOperationsEventTimeProperty)
 	q.Set(data.DescendingProperty, "true")
 	queries[SearchPDF] = q.Encode()
 

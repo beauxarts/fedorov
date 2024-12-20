@@ -29,11 +29,11 @@ func Sync(force bool) error {
 		return err
 	}
 
-	if err := GetLitResHistoryLog(sessionId, hc); err != nil {
+	if err := GetLitResOperations(sessionId, hc); err != nil {
 		return err
 	}
 
-	if err := ReduceLitResHistoryLog(); err != nil {
+	if err := ReduceLitResOperations(); err != nil {
 		return err
 	}
 
