@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"fmt"
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/rest/compton_data"
 	"github.com/beauxarts/scrinium/litres_integration"
@@ -312,6 +313,7 @@ func getArtsDetailsPropertyValues(ad *litres_integration.ArtsDetails, property s
 			values = append(values, compton_data.LitresLabelSalesHit)
 		}
 	case data.ArtFourthPresentProperty:
+		fmt.Println("")
 		// do nothing
 	default:
 		panic("unknown property " + property)

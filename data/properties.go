@@ -110,7 +110,6 @@ func ArtsDetailsProperties() []string {
 		TitleProperty,
 		SubtitleProperty,
 		ArtTypeProperty,
-		ArtFourthPresentProperty,
 		PriceProperty,
 		MinAgeProperty,
 		LastUpdatedAtProperty,
@@ -196,16 +195,22 @@ func DehydratedProperties() []string {
 	}
 }
 
+func OperationsProperties() []string {
+	return []string{
+		ArtsOperationsOrderProperty,
+		ArtsOperationsEventTimeProperty,
+		ArtFourthPresentProperty,
+	}
+}
+
 func ReduxProperties() []string {
 	properties := ArtsDetailsProperties()
 	properties = append(properties, PersonsRolesProperties()...)
 	properties = append(properties, IdNameProperties()...)
 	properties = append(properties, VideoProperties()...)
 	properties = append(properties, DehydratedProperties()...)
+	properties = append(properties, OperationsProperties()...)
 	properties = append(properties, []string{
-		ArtsOperationsOrderProperty,
-		ArtsOperationsEventTimeProperty,
-		//
 		SyncCompletedProperty,
 	}...)
 	return properties
