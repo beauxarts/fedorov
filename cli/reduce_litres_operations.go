@@ -8,7 +8,6 @@ import (
 	"github.com/boggydigital/nod"
 	"net/url"
 	"strconv"
-	"time"
 )
 
 func ReduceLitResOperationsHandler(_ *url.URL) error {
@@ -93,14 +92,14 @@ func artsOperationsOrderEventTimes(p int, kv kevlar.KeyValues) ([]string, map[st
 	eventTimes := make(map[string][]string)
 
 	for _, dt := range ops.Payload.Data {
-		et, err := time.Parse("2006-01-02T15:04:05", dt.Date)
-		if err != nil {
-			return nil, nil, err
-		}
+		//et, err := time.Parse("2006-01-02T15:04:05", dt.Date)
+		//if err != nil {
+		//	return nil, nil, err
+		//}
 		for _, art := range dt.SpecificData.Arts {
 			artId := strconv.Itoa(art.Id)
 			order = append(order, artId)
-			eventTimes[artId] = []string{et.Format(time.RFC3339)}
+			eventTimes[artId] = []string{dt.Date}
 		}
 	}
 
