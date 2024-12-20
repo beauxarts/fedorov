@@ -41,6 +41,14 @@ func formatLabel(id, property string, rdx kevlar.ReadableRedux) []compton.Format
 			}
 			labels = append(labels, label)
 		}
+	case data.ArtFourthPresentProperty:
+		if val == "true" {
+			label := compton.FormattedLabel{
+				Property: property,
+				Title:    compton_data.PropertyTitles[data.ArtFourthPresentProperty],
+			}
+			labels = append(labels, label)
+		}
 	}
 
 	return labels

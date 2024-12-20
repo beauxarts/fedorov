@@ -14,5 +14,11 @@
             color: var(--c-highlight);
             background-color: var(--c-red);
         }
+
+        &.art-fourth-present {
+            color: var(--c-foreground);
+            background-color: var(--c-highlight);
+            border: var(--s-xxxs) solid var(--c-purple);
+        }
     }
 }

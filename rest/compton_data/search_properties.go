@@ -13,6 +13,8 @@ var SearchProperties = []string{
 	data.PaintersProperty,
 	data.PerformersProperty,
 
+	data.ArtFourthPresentProperty,
+
 	data.ArtTypeProperty,
 	data.SeriesProperty,
 	data.GenresProperty,

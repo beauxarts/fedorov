@@ -37,16 +37,22 @@ func ReduceLitResOperations() error {
 	totalPages := len(keys)
 	artsOperationsOrder := make([]string, 0, totalPages*litres_integration.OperationsLimit)
 	artsOperationsEventTimes := make(map[string][]string, totalPages*litres_integration.OperationsLimit)
+	artsFourthPresent := make(map[string][]string, totalPages*litres_integration.OperationsLimit)
 
 	for p := 1; p <= totalPages; p++ {
 
 		if ops, err := getArtsOperations(p, kv); err == nil {
 
 			for _, dt := range ops.Payload.Data {
+				fourthPresent := false
+				if p := dt.SpecificData.Product; p != nil && *p == "4th_present" {
+					fourthPresent = true
+				}
 				for _, art := range dt.SpecificData.Arts {
 					artId := strconv.Itoa(art.Id)
 					artsOperationsOrder = append(artsOperationsOrder, artId)
 					artsOperationsEventTimes[artId] = []string{dt.Date}
+					artsFourthPresent[artId] = []string{strconv.FormatBool(fourthPresent)}
 				}
 			}
 
@@ -59,7 +65,8 @@ func ReduceLitResOperations() error {
 
 	rdx, err := data.NewReduxWriter(
 		data.ArtsOperationsOrderProperty,
-		data.ArtsOperationsEventTimeProperty)
+		data.ArtsOperationsEventTimeProperty,
+		data.ArtFourthPresentProperty)
 	if err != nil {
 		return roa.EndWithError(err)
 	}
@@ -72,6 +79,10 @@ func ReduceLitResOperations() error {
 	}
 
 	if err := rdx.BatchReplaceValues(data.ArtsOperationsEventTimeProperty, artsOperationsEventTimes); err != nil {
+		return roa.EndWithError(err)
+	}
+
+	if err := rdx.BatchReplaceValues(data.ArtFourthPresentProperty, artsFourthPresent); err != nil {
 		return roa.EndWithError(err)
 	}
 

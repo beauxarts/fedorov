@@ -13,6 +13,7 @@ const (
 	TitleProperty                 = "title"
 	SubtitleProperty              = "subtitle"
 	ArtTypeProperty               = "art-type"
+	ArtFourthPresentProperty      = "art-fourth-present"
 	PriceProperty                 = "price"
 	MinAgeProperty                = "min-age"
 	LastUpdatedAtProperty         = "last-updated-at"
@@ -109,6 +110,7 @@ func ArtsDetailsProperties() []string {
 		TitleProperty,
 		SubtitleProperty,
 		ArtTypeProperty,
+		ArtFourthPresentProperty,
 		PriceProperty,
 		MinAgeProperty,
 		LastUpdatedAtProperty,
