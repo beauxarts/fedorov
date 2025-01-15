@@ -3,7 +3,6 @@ package cli
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/nod"
 	"net/http"
@@ -58,8 +57,6 @@ func HasArts(sessionId string, hc *http.Client) error {
 	default:
 		haa.EndWithResult("found %d art(s)", received)
 	}
-
-	fmt.Println(userStats.Received())
 
 	return nil
 }
