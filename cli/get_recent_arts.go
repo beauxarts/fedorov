@@ -36,13 +36,14 @@ func GetRecentArts(force bool) ([]string, error) {
 
 		for _, id := range rdx.Keys(data.ArtsOperationsEventTimeProperty) {
 			if ets, ok := rdx.GetLastVal(data.ArtsOperationsEventTimeProperty, id); ok {
-				if et, err := time.Parse(time.RFC3339, ets); err == nil {
+				if et, perr := time.Parse("2006-01-02T15:04:05", ets); perr == nil {
 					if et.After(earliestDate) {
 						ids = append(ids, id)
 					}
 					continue
+				} else {
+					return nil, graa.EndWithError(perr)
 				}
-				return nil, graa.EndWithError(err)
 			}
 		}
 	}
