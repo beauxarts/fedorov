@@ -2,23 +2,23 @@
     :scope {
         &.Текст {
             color: var(--c-background);
-            background-color: var(--c-foreground);
+            --label-color: var(--c-foreground);
         }
 
         &.Аудио {
             color: var(--c-highlight);
-            background-color: var(--c-blue);
+            --label-color: var(--c-blue);
         }
 
         &.PDF {
             color: var(--c-highlight);
-            background-color: var(--c-red);
+            --label-color: var(--c-red);
         }
 
         &.art-fourth-present {
             color: var(--c-foreground);
-            background-color: var(--c-highlight);
-            border: var(--s-xxxs) solid var(--c-purple);
+            --label-color: var(--c-highlight);
+            border-color: var(--c-purple) !important;
         }
     }
 }
