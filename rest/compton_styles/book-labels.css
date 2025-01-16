@@ -16,9 +16,8 @@
         }
 
         &.art-fourth-present {
-            color: var(--c-foreground);
-            --label-color: var(--c-highlight);
-            border-color: var(--c-purple) !important;
+            color: var(--c-highlight);
+            --label-color: var(--c-purple);
         }
     }
 }
