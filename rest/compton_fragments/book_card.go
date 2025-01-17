@@ -50,7 +50,7 @@ func BookCard(r compton.Registrar, id string, hydrated bool, rdx kevlar.Readable
 	repColor := ""
 	if rc, ok := rdx.GetLastVal(data.RepListImageColorProperty, id); ok {
 		repColor = rc
-		SetTint(id, bc, rdx)
+		compton.SetTint(bc, repColor)
 	}
 
 	posterUrl := "/list_cover?id=" + id
@@ -63,6 +63,8 @@ func BookCard(r compton.Registrar, id string, hydrated bool, rdx kevlar.Readable
 
 	if title, ok := rdx.GetLastVal(data.TitleProperty, id); ok {
 		bc.AppendTitle(title)
+	} else {
+		bc.AppendTitle("[БЕЗ НАЗВАНИЯ]")
 	}
 
 	if labels := compton.Labels(r, FormatLabels(id, rdx)...).

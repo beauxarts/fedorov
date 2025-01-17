@@ -10,6 +10,7 @@ import (
 	"github.com/boggydigital/compton/consts/color"
 	"github.com/boggydigital/compton/consts/input_types"
 	"github.com/boggydigital/compton/consts/size"
+	"github.com/boggydigital/issa"
 	"github.com/boggydigital/kevlar"
 	"strings"
 )
@@ -24,7 +25,9 @@ func Book(id string, hasSections []string, rdx kevlar.ReadableRedux) compton.Pag
 	p.RegisterStyles(compton_styles.Styles, "book.css")
 
 	// tinting document background color to the representative product color
-	compton_fragments.SetTint(id, p, rdx)
+	if repColor, ok := rdx.GetLastVal(data.RepItemImageColorProperty, id); ok && repColor != issa.NeutralRepColor {
+		compton.SetTint(p, repColor)
+	}
 
 	appNav := compton_fragments.AppNavLinks(p, "")
 	appNav.AddClass(colorBlendClass)
