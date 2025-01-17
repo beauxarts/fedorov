@@ -3,7 +3,7 @@ module github.com/beauxarts/fedorov
 go 1.23.4
 
 require (
-	github.com/beauxarts/scrinium v0.1.40
+	github.com/beauxarts/scrinium v0.1.41
 	github.com/boggydigital/backups v0.1.5
 	github.com/boggydigital/clo v1.0.6
 	github.com/boggydigital/compton v0.2.34
