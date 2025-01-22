@@ -17,6 +17,8 @@ import (
 
 const colorBlendClass = "color-blend"
 
+const aprtcdUnicode = "&#x2935;" // ARROW POINTING RIGHTWARDS THEN CURVING DOWNWARDS
+
 func Book(id string, hasSections []string, rdx kevlar.ReadableRedux) compton.PageElement {
 
 	title, _ := rdx.GetLastVal(data.TitleProperty, id)
@@ -31,15 +33,18 @@ func Book(id string, hasSections []string, rdx kevlar.ReadableRedux) compton.Pag
 
 	appNav := compton_fragments.AppNavLinks(p, "")
 	appNav.AddClass(colorBlendClass)
-	showToc := compton.InputValue(p, input_types.Button, "Разделы")
+
+	showToc := compton.InputValue(p, input_types.Button, compton.SectionLinksTitle)
 	showToc.AddClass(colorBlendClass)
 
-	pageStack.Append(compton.FICenter(p, appNav, showToc))
+	topLevelNav := []compton.Element{appNav, showToc}
 
-	productSectionsLinks := compton_fragments.BookSectionsLinks(p, hasSections)
-	pageStack.Append(productSectionsLinks)
+	if bookSectionsLinks := compton.SectionsLinks(p, hasSections, compton_data.SectionTitles); bookSectionsLinks != nil {
+		pageStack.Append(compton.Attach(p, showToc, bookSectionsLinks))
+		topLevelNav = append(topLevelNav, bookSectionsLinks)
+	}
 
-	pageStack.Append(compton.Attach(p, showToc, productSectionsLinks))
+	pageStack.Append(compton.FICenter(p, topLevelNav...))
 
 	if cover := compton_fragments.BookCover(p, id, rdx); cover != nil {
 		pageStack.Append(compton.FICenter(p, cover))
