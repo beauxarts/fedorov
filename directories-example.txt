@@ -1,9 +1,10 @@
-root
-    # root fedorov state directory
+backups
+    /var/lib/fedorov/backups
+metadata
+    /var/lib/fedorov/metadata
+input
     /var/lib/fedorov
-redux
-    # reductions directory
-    /var/lib/fedorov/_redux
 covers
-    # covers directory
     /var/lib/fedorov/covers
+downloads
+    /var/lib/fedorov/downloads

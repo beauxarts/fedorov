@@ -17,6 +17,7 @@ const filterSearchTitle = "Фильтр и поиск"
 func Search(query map[string][]string, ids []string, from, to int, rdx kevlar.ReadableRedux) compton.PageElement {
 
 	p, pageStack := compton_fragments.AppPage(compton_data.AppNavSearch)
+	p.AppendSpeculationRules("/book?id=*")
 
 	appNav := compton_fragments.AppNavLinks(p, compton_data.AppNavSearch)
 
