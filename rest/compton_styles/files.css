@@ -10,3 +10,8 @@
         }
     }
 }
+
+.filename {
+    white-space: normal;
+    word-break: break-all;
+}
