@@ -87,6 +87,13 @@ func Book(id string, hasSections []string, rdx kevlar.ReadableRedux) compton.Pag
 		detailsSummary.AddClassSummary(colorBlendClass)
 		detailsSummary.SetId(sectionTitle)
 
+		switch section {
+		case compton_data.ReviewsSection:
+			if ratingAvg := compton_fragments.RatingAvg(p, id, rdx); ratingAvg != nil {
+				detailsSummary.AppendSummary(ratingAvg)
+			}
+		}
+
 		ifh := compton.IframeExpandHost(p, section, "/"+section+"?id="+id)
 		detailsSummary.Append(ifh)
 
