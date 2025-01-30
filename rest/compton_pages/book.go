@@ -74,7 +74,7 @@ func Book(id string, hasSections []string, rdx kevlar.ReadableRedux) compton.Pag
 	}
 	pageStack.Append(compton.FICenter(p, summaryRow))
 
-	for _, section := range hasSections {
+	for ii, section := range hasSections {
 
 		sectionTitle := compton_data.SectionTitles[section]
 		summaryHeading := compton.DSTitle(p, sectionTitle)
@@ -86,6 +86,7 @@ func Book(id string, hasSections []string, rdx kevlar.ReadableRedux) compton.Pag
 			DetailsMarginBlockEnd(size.Unset)
 		detailsSummary.AddClassSummary(colorBlendClass)
 		detailsSummary.SetId(sectionTitle)
+		detailsSummary.SetTabIndex(ii + 1)
 
 		switch section {
 		case compton_data.ReviewsSection:

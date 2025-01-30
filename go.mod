@@ -6,7 +6,7 @@ require (
 	github.com/beauxarts/scrinium v0.1.41
 	github.com/boggydigital/backups v0.1.5
 	github.com/boggydigital/clo v1.0.6
-	github.com/boggydigital/compton v0.2.40
+	github.com/boggydigital/compton v0.2.41
 	github.com/boggydigital/coost v0.3.9
 	github.com/boggydigital/dolo v0.2.19
 	github.com/boggydigital/issa v0.1.22
@@ -16,7 +16,7 @@ require (
 	github.com/boggydigital/nod v0.1.21
 	github.com/boggydigital/pathways v0.1.14
 	github.com/boggydigital/yet_urls v0.1.55
-	golang.org/x/exp v0.0.0-20250106191152-7588d65b2ba8
+	golang.org/x/exp v0.0.0-20250128182459-e0ece0dbea4c
 	golang.org/x/net v0.34.0
 )
 

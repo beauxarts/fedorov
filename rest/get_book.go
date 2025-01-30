@@ -67,64 +67,12 @@ func GetBook(w http.ResponseWriter, r *http.Request) {
 		hasSections = append(hasSections, artTypeSection[litres_integration.ArtsTypeFiles])
 	}
 
-	//contentsReader, err := data.NewArtsReader(compton_data.ArtTypes)
-
 	if p := compton_pages.Book(id, hasSections, rdx); p != nil {
 		if err := p.WriteResponse(w); err != nil {
 			http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 			return
 		}
 	}
-
-	//title := ""
-	//if t, ok := rdx.GetLastVal(data.TitleProperty, id); ok {
-	//	title = t
-	//}
-	//
-	//var authors []string
-	//if aus, err := authorsFullNames(id, rdx); err == nil {
-	//	authors = aus
-	//}
-	//
-	//kv, err := data.NewArtsReader(litres_integration.ArtsTypeFiles)
-	//if err != nil {
-	//	http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
-	//	return
-	//}
-	//
-	//artFiles, err := kv.ArtsFiles(id)
-	//if err != nil {
-	//	http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
-	//	return
-	//}
-	//
-	//nbvm := &NewBookViewModel{
-	//	Id:      id,
-	//	Title:   title,
-	//	Authors: authors,
-	//}
-	//
-	//for _, dt := range artFiles.DownloadsTypes() {
-	//
-	//	fn := dt.Filename
-	//	if ext := dt.Extension; ext != nil {
-	//		fn = strings.Replace(fn, "zip", *ext, 1)
-	//	}
-	//
-	//	dvm := &DownloadViewModel{
-	//		Id:          id,
-	//		Filename:    fn,
-	//		Description: dt.TypeDescription(),
-	//	}
-	//
-	//	nbvm.Files = append(nbvm.Files, dvm)
-	//}
-	//
-	//if err := tmpl.ExecuteTemplate(w, "new_book", nbvm); err != nil {
-	//	http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
-	//	return
-	//}
-
 }
 
 func hasArtsType(id string, at litres_integration.ArtsType) bool {
