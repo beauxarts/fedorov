@@ -116,11 +116,7 @@ func getSetAuthorType(dc *dolo.Client, at litres_integration.AuthorType, force b
 
 	newIds := make([]string, 0, len(ids))
 	for _, id := range ids {
-		ok, err := kv.Has(id)
-		if err != nil {
-			return gsat.EndWithError(err)
-		}
-		if ok && !force {
+		if kv.Has(id) && !force {
 			continue
 		}
 		newIds = append(newIds, id)

@@ -6,6 +6,7 @@ import (
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/pathways"
 	"net/url"
+	"path/filepath"
 )
 
 func MigrateHandler(_ *url.URL) error {
@@ -25,8 +26,19 @@ func Migrate() error {
 		return err
 	}
 
-	if err := kevlar.MigrateAll(dir); err != nil {
-		return ma.EndWithError(err)
+	metadataDirs := []string{
+		"_redux",
+		"arts-files", "arts-reviews", "arts-details", "arts-quotes", "arts-similar",
+		"author-details", "author-similar",
+		"contents",
+		"litres-operations", "litres-history-log",
+		"series-similar", "series-details",
+	}
+
+	for _, md := range metadataDirs {
+		if err := kevlar.Migrate(filepath.Join(dir, md)); err != nil {
+			return ma.EndWithError(err)
+		}
 	}
 
 	ma.EndWithResult("done")

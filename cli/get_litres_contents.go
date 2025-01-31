@@ -84,11 +84,7 @@ func getSetContents(dc *dolo.Client, force bool, rdx kevlar.ReadableRedux, ids .
 
 	newIds := make([]string, 0, len(ids))
 	for _, id := range ids {
-		ok, err := kv.Has(id)
-		if err != nil {
-			return gsc.EndWithError(err)
-		}
-		if ok && !force {
+		if kv.Has(id) && !force {
 			continue
 		}
 		newIds = append(newIds, id)

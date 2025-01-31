@@ -6,6 +6,7 @@ import (
 	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/kevlar"
 	"io"
+	"iter"
 )
 
 type ArtsReader struct {
@@ -32,11 +33,11 @@ func NewArtsReader(at litres_integration.ArtsType) (*ArtsReader, error) {
 	return atr, nil
 }
 
-func (ar *ArtsReader) Keys() ([]string, error) {
+func (ar *ArtsReader) Keys() iter.Seq[string] {
 	return ar.keyValues.Keys()
 }
 
-func (ar *ArtsReader) Has(id string) (bool, error) { return ar.keyValues.Has(id) }
+func (ar *ArtsReader) Has(id string) bool { return ar.keyValues.Has(id) }
 
 func (ar *ArtsReader) Get(id string) (io.ReadCloser, error) { return ar.keyValues.Get(id) }
 
@@ -52,20 +53,20 @@ func (ar *ArtsReader) Cut(id string) (bool, error) {
 	return ar.keyValues.Cut(id)
 }
 
-func (ar *ArtsReader) CreatedAfter(timestamp int64) ([]string, error) {
+func (ar *ArtsReader) CreatedAfter(timestamp int64) iter.Seq[string] {
 	return ar.keyValues.CreatedAfter(timestamp)
 }
 
-func (ar *ArtsReader) ModifiedAfter(timestamp int64) ([]string, error) {
+func (ar *ArtsReader) ModifiedAfter(timestamp int64) iter.Seq[string] {
 	return ar.keyValues.UpdatedAfter(timestamp)
 }
 
-func (ar *ArtsReader) CreatedOrModifiedAfter(timestamp int64) ([]string, error) {
+func (ar *ArtsReader) CreatedOrModifiedAfter(timestamp int64) iter.Seq[string] {
 	return ar.keyValues.CreatedOrUpdatedAfter(timestamp)
 
 }
 
-func (ar *ArtsReader) IsModifiedAfter(id string, timestamp int64) (bool, error) {
+func (ar *ArtsReader) IsModifiedAfter(id string, timestamp int64) bool {
 	return ar.keyValues.IsUpdatedAfter(id, timestamp)
 }
 
@@ -134,6 +135,8 @@ func (ar *ArtsReader) ArtsType() litres_integration.ArtsType {
 	return ar.artsType
 }
 
-func (ar *ArtsReader) ModTime(id string) (int64, error) {
-	return ar.keyValues.ModTime(id)
+func (ar *ArtsReader) ValueModTime(id string) int64 {
+	return ar.keyValues.ValueModTime(id)
 }
+
+func (ar *ArtsReader) Len() int { return ar.keyValues.Len() }

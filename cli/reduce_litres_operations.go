@@ -29,12 +29,7 @@ func ReduceLitResOperations() error {
 		return roa.EndWithError(err)
 	}
 
-	keys, err := kv.Keys()
-	if err != nil {
-		return roa.EndWithError(err)
-	}
-
-	totalPages := len(keys)
+	totalPages := kv.Len()
 	artsOperationsOrder := make([]string, 0, totalPages*litres_integration.OperationsLimit)
 	artsOperationsEventTimes := make(map[string][]string, totalPages*litres_integration.OperationsLimit)
 	artsFourthPresent := make(map[string][]string, totalPages*litres_integration.OperationsLimit)

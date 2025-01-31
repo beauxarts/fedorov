@@ -77,7 +77,7 @@ func GetBook(w http.ResponseWriter, r *http.Request) {
 
 func hasArtsType(id string, at litres_integration.ArtsType) bool {
 	if reader, err := data.NewArtsReader(at); err == nil {
-		if ok, err := reader.Has(id); ok && err == nil {
+		if reader.Has(id) {
 			return true
 		}
 	}

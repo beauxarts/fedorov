@@ -28,19 +28,14 @@ func ReduceLitResArtsDetails() error {
 		return rlaa.EndWithError(err)
 	}
 
-	ids, err := atr.Keys()
-	if err != nil {
-		return rlaa.EndWithError(err)
-	}
-
-	rlaa.TotalInt(len(ids))
+	rlaa.TotalInt(atr.Len())
 
 	propertyIdValues := make(map[string]map[string][]string)
 	for _, p := range data.ArtsDetailsProperties() {
 		propertyIdValues[p] = make(map[string][]string)
 	}
 
-	for _, id := range ids {
+	for id := range atr.Keys() {
 
 		ad, err := atr.ArtsDetails(id)
 		if err != nil {

@@ -79,11 +79,7 @@ func DownloadLitResBooks(hc *http.Client, force bool, artsIds ...string) error {
 
 		bdla := nod.Begin("%s %s - %s", id, strings.Join(authorsNames, ","), title)
 
-		ok, err := kv.Has(id)
-		if err != nil {
-			return da.EndWithError(err)
-		}
-		if !ok {
+		if !kv.Has(id) {
 			continue
 		}
 
