@@ -135,8 +135,12 @@ func (ar *ArtsReader) ArtsType() litres_integration.ArtsType {
 	return ar.artsType
 }
 
-func (ar *ArtsReader) ValueModTime(id string) int64 {
-	return ar.keyValues.ValueModTime(id)
+func (ar *ArtsReader) LogModTime(id string) int64 {
+	return ar.keyValues.LogModTime(id)
+}
+
+func (ar *ArtsReader) FileModTime(id string) (int64, error) {
+	return ar.keyValues.FileModTime(id)
 }
 
 func (ar *ArtsReader) Len() int { return ar.keyValues.Len() }
