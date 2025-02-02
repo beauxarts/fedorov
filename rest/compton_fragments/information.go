@@ -10,7 +10,7 @@ import (
 	"github.com/boggydigital/compton/consts/color"
 	"github.com/boggydigital/compton/consts/direction"
 	"github.com/boggydigital/compton/consts/size"
-	"github.com/boggydigital/kevlar"
+	"github.com/boggydigital/redux"
 	"golang.org/x/exp/maps"
 	"golang.org/x/exp/slices"
 	"strings"
@@ -22,7 +22,7 @@ type formattedProperty struct {
 	actions map[string]string
 }
 
-func Information(r compton.Registrar, id string, rdx kevlar.ReadableRedux) compton.Element {
+func Information(r compton.Registrar, id string, rdx redux.Readable) compton.Element {
 	grid := compton.GridItems(r).JustifyContent(align.Center)
 
 	artType := litres_integration.ArtTypeText
@@ -41,7 +41,7 @@ func Information(r compton.Registrar, id string, rdx kevlar.ReadableRedux) compt
 	return grid
 }
 
-func formatProperty(id, property string, at litres_integration.ArtType, rdx kevlar.ReadableRedux) formattedProperty {
+func formatProperty(id, property string, at litres_integration.ArtType, rdx redux.Readable) formattedProperty {
 
 	fmtProperty := formattedProperty{
 		actions: make(map[string]string),

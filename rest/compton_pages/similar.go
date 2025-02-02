@@ -6,10 +6,10 @@ import (
 	"github.com/beauxarts/fedorov/rest/compton_styles"
 	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/compton"
-	"github.com/boggydigital/kevlar"
+	"github.com/boggydigital/redux"
 )
 
-func Similar(id string, artsSimilar *litres_integration.ArtsSimilar, rdx kevlar.ReadableRedux) compton.PageElement {
+func Similar(id string, artsSimilar *litres_integration.ArtsSimilar, rdx redux.Readable) compton.PageElement {
 	s := compton_fragments.ProductSection(compton_data.SimilarSection)
 	s.RegisterStyles(compton_styles.Styles, "book-labels.css")
 

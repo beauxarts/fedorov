@@ -7,12 +7,12 @@ import (
 	"github.com/boggydigital/compton/consts/color"
 	"github.com/boggydigital/compton/consts/input_types"
 	"github.com/boggydigital/compton/consts/size"
-	"github.com/boggydigital/kevlar"
+	"github.com/boggydigital/redux"
 )
 
 const dehydratedCount = 10
 
-func Latest(ids []string, total int, rdx kevlar.ReadableRedux) compton.PageElement {
+func Latest(ids []string, total int, rdx redux.Readable) compton.PageElement {
 
 	p, pageStack := compton_fragments.AppPage(compton_data.AppNavLatest)
 	p.AppendSpeculationRules("/book?id=*")

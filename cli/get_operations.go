@@ -29,7 +29,7 @@ func GetLitResOperations(sessionId string, hc *http.Client) error {
 		return goa.EndWithError(err)
 	}
 
-	kv, err := kevlar.NewKeyValues(absLitResOperationsDir, kevlar.JsonExt)
+	kv, err := kevlar.New(absLitResOperationsDir, kevlar.JsonExt)
 	if err != nil {
 		return goa.EndWithError(err)
 	}

@@ -4,11 +4,11 @@ import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/boggydigital/compton"
 	"github.com/boggydigital/issa"
-	"github.com/boggydigital/kevlar"
+	"github.com/boggydigital/redux"
 	"strconv"
 )
 
-func BookCover(r compton.Registrar, id string, rdx kevlar.ReadableRedux) compton.Element {
+func BookCover(r compton.Registrar, id string, rdx redux.Readable) compton.Element {
 
 	imgSrc := "/book_cover?id=" + id
 	var cover compton.Element

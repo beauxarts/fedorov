@@ -6,10 +6,10 @@ import (
 	"github.com/boggydigital/compton/consts/color"
 	"github.com/boggydigital/compton/consts/font_weight"
 	"github.com/boggydigital/compton/consts/size"
-	"github.com/boggydigital/kevlar"
+	"github.com/boggydigital/redux"
 )
 
-func RatingAvg(r compton.Registrar, id string, rdx kevlar.ReadableRedux) compton.Element {
+func RatingAvg(r compton.Registrar, id string, rdx redux.Readable) compton.Element {
 	if rp, ok := rdx.GetLastVal(data.RatedAvgProperty, id); ok {
 		return compton.Fspan(r, "Рейтинг: "+rp).
 			BackgroundColor(color.Background).

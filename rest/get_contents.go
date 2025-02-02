@@ -35,7 +35,7 @@ func GetContents(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	contReader, err := kevlar.NewKeyValues(contentsDir, kevlar.XmlExt)
+	contReader, err := kevlar.New(contentsDir, kevlar.XmlExt)
 	if err != nil {
 		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		return

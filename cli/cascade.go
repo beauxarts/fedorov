@@ -2,8 +2,8 @@ package cli
 
 import (
 	"github.com/beauxarts/fedorov/data"
-	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/nod"
+	"github.com/boggydigital/redux"
 	"net/url"
 )
 
@@ -34,7 +34,7 @@ func Cascade() error {
 	return nil
 }
 
-func cascadePersonsRolesProperties(rdx kevlar.WriteableRedux) error {
+func cascadePersonsRolesProperties(rdx redux.Writeable) error {
 
 	cprpa := nod.NewProgress(" persons roles...")
 	defer cprpa.End()
@@ -106,7 +106,7 @@ func cascadePersonsRolesProperties(rdx kevlar.WriteableRedux) error {
 	return nil
 }
 
-func cascadeIdNameProperties(rdx kevlar.WriteableRedux) error {
+func cascadeIdNameProperties(rdx redux.Writeable) error {
 
 	cinpa := nod.NewProgress(" id, name properties...")
 	defer cinpa.End()
@@ -141,7 +141,7 @@ func cascadeIdNameProperties(rdx kevlar.WriteableRedux) error {
 	return nil
 }
 
-func cascadeIdNameProperty(idProperty, nameProperty string, rdx kevlar.WriteableRedux) map[string][]string {
+func cascadeIdNameProperty(idProperty, nameProperty string, rdx redux.Writeable) map[string][]string {
 
 	values := make(map[string][]string)
 

@@ -84,7 +84,7 @@ func getSetArtsType(dc *dolo.Client, at litres_integration.ArtsType, force bool,
 		return gsat.EndWithError(err)
 	}
 
-	kv, err := kevlar.NewKeyValues(absArtsTypeDir, kevlar.JsonExt)
+	kv, err := kevlar.New(absArtsTypeDir, kevlar.JsonExt)
 	if err != nil {
 		return gsat.EndWithError(err)
 	}

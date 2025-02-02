@@ -109,7 +109,7 @@ func getSetSeriesType(dc *dolo.Client, st litres_integration.SeriesType, force b
 		return gsst.EndWithError(err)
 	}
 
-	kv, err := kevlar.NewKeyValues(absSeriesTypeDir, kevlar.JsonExt)
+	kv, err := kevlar.New(absSeriesTypeDir, kevlar.JsonExt)
 	if err != nil {
 		return gsst.EndWithError(err)
 	}

@@ -24,7 +24,7 @@ func ReduceLitResOperations() error {
 		return roa.EndWithError(err)
 	}
 
-	kv, err := kevlar.NewKeyValues(absLitResOperationsDir, kevlar.JsonExt)
+	kv, err := kevlar.New(absLitResOperationsDir, kevlar.JsonExt)
 	if err != nil {
 		return roa.EndWithError(err)
 	}

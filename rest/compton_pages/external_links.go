@@ -7,7 +7,7 @@ import (
 	"github.com/beauxarts/fedorov/rest/compton_fragments"
 	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/compton"
-	"github.com/boggydigital/kevlar"
+	"github.com/boggydigital/redux"
 	"net/url"
 	"strconv"
 )
@@ -17,7 +17,7 @@ var (
 	audioType = strconv.Itoa(int(litres_integration.ArtTypeAudio))
 )
 
-func ExternalLinks(id string, rdx kevlar.ReadableRedux) compton.PageElement {
+func ExternalLinks(id string, rdx redux.Readable) compton.PageElement {
 	s := compton_fragments.ProductSection(compton_data.ExternalLinksSection)
 	if links := compton_fragments.ExternalLinks(s, externalLinks(id, rdx)); links != nil {
 		s.Append(links)
@@ -25,7 +25,7 @@ func ExternalLinks(id string, rdx kevlar.ReadableRedux) compton.PageElement {
 	return s
 }
 
-func externalLinks(id string, rdx kevlar.ReadableRedux) map[string][]string {
+func externalLinks(id string, rdx redux.Readable) map[string][]string {
 
 	links := make(map[string][]string)
 
@@ -88,7 +88,7 @@ func externalLinks(id string, rdx kevlar.ReadableRedux) map[string][]string {
 	return links
 }
 
-func appendLink(links map[string][]string, id string, rdx kevlar.ReadableRedux, idsProperty, nameProperty, urlProperty, linkProperty string) {
+func appendLink(links map[string][]string, id string, rdx redux.Readable, idsProperty, nameProperty, urlProperty, linkProperty string) {
 	if pids, ok := rdx.GetAllValues(idsProperty, id); ok {
 		for _, pid := range pids {
 			name, _ := rdx.GetLastVal(nameProperty, pid)

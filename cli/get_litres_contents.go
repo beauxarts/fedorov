@@ -9,6 +9,7 @@ import (
 	"github.com/boggydigital/kevlar_dolo"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/pathways"
+	"github.com/boggydigital/redux"
 	"net/http"
 	"net/url"
 	"strings"
@@ -63,7 +64,7 @@ func GetLitresContents(hc *http.Client, force bool, ids ...string) error {
 
 }
 
-func getSetContents(dc *dolo.Client, force bool, rdx kevlar.ReadableRedux, ids ...string) error {
+func getSetContents(dc *dolo.Client, force bool, rdx redux.Readable, ids ...string) error {
 
 	gsc := nod.NewProgress(" contents...")
 	defer gsc.End()
@@ -77,7 +78,7 @@ func getSetContents(dc *dolo.Client, force bool, rdx kevlar.ReadableRedux, ids .
 		return gsc.EndWithError(err)
 	}
 
-	kv, err := kevlar.NewKeyValues(absContentsDir, kevlar.XmlExt)
+	kv, err := kevlar.New(absContentsDir, kevlar.XmlExt)
 	if err != nil {
 		return gsc.EndWithError(err)
 	}

@@ -11,7 +11,7 @@ import (
 	"github.com/boggydigital/compton/consts/input_types"
 	"github.com/boggydigital/compton/consts/size"
 	"github.com/boggydigital/issa"
-	"github.com/boggydigital/kevlar"
+	"github.com/boggydigital/redux"
 	"strings"
 )
 
@@ -19,7 +19,7 @@ const colorBlendClass = "color-blend"
 
 const aprtcdUnicode = "&#x2935;" // ARROW POINTING RIGHTWARDS THEN CURVING DOWNWARDS
 
-func Book(id string, hasSections []string, rdx kevlar.ReadableRedux) compton.PageElement {
+func Book(id string, hasSections []string, rdx redux.Readable) compton.PageElement {
 
 	title, _ := rdx.GetLastVal(data.TitleProperty, id)
 

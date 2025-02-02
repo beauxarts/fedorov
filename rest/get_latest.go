@@ -3,8 +3,8 @@ package rest
 import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/rest/compton_pages"
-	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/nod"
+	"github.com/boggydigital/redux"
 	"net/http"
 )
 
@@ -47,7 +47,7 @@ func GetLatest(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func authorsFullNames(id string, rdx kevlar.ReadableRedux) ([]string, error) {
+func authorsFullNames(id string, rdx redux.Readable) ([]string, error) {
 
 	if err := rdx.MustHave(
 		data.PersonsIdsProperty,

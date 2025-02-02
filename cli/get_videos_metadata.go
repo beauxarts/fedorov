@@ -2,9 +2,9 @@ package cli
 
 import (
 	"github.com/beauxarts/fedorov/data"
-	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/pathways"
+	"github.com/boggydigital/redux"
 	"github.com/boggydigital/yet_urls/youtube_urls"
 	"net/http"
 	"net/url"
@@ -28,7 +28,7 @@ func GetVideosMetadata(force bool) error {
 		return gvma.EndWithError(err)
 	}
 
-	rdx, err := kevlar.NewReduxWriter(rp, data.ReduxProperties()...)
+	rdx, err := redux.NewWriter(rp, data.ReduxProperties()...)
 	if err != nil {
 		return gvma.EndWithError(err)
 	}

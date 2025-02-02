@@ -10,12 +10,12 @@ import (
 	"github.com/boggydigital/compton/consts/direction"
 	"github.com/boggydigital/compton/consts/font_weight"
 	"github.com/boggydigital/compton/consts/size"
-	"github.com/boggydigital/kevlar"
+	"github.com/boggydigital/redux"
 	"strconv"
 	"strings"
 )
 
-func Similar(r compton.Registrar, id string, artsSimilar *litres_integration.ArtsSimilar, rdx kevlar.ReadableRedux) compton.Element {
+func Similar(r compton.Registrar, id string, artsSimilar *litres_integration.ArtsSimilar, rdx redux.Readable) compton.Element {
 
 	stack := compton.FlexItems(r, direction.Column)
 

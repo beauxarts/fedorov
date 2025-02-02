@@ -5,9 +5,9 @@ import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/rest/compton_data"
 	"github.com/beauxarts/scrinium/litres_integration"
-	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/pathways"
+	"github.com/boggydigital/redux"
 	"net/url"
 	"strconv"
 )
@@ -65,7 +65,7 @@ func ReduceLitResArtsDetails() error {
 		return wra.EndWithError(err)
 	}
 
-	rdx, err := kevlar.NewReduxWriter(reduxDir, data.ReduxProperties()...)
+	rdx, err := redux.NewWriter(reduxDir, data.ReduxProperties()...)
 	if err != nil {
 		return wra.EndWithError(err)
 	}

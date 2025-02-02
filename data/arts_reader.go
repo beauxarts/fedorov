@@ -25,7 +25,7 @@ func NewArtsReader(at litres_integration.ArtsType) (*ArtsReader, error) {
 		artsType: at,
 	}
 
-	atr.keyValues, err = kevlar.NewKeyValues(absArtsTypeDir, kevlar.JsonExt)
+	atr.keyValues, err = kevlar.New(absArtsTypeDir, kevlar.JsonExt)
 	if err != nil {
 		return nil, err
 	}
@@ -49,25 +49,12 @@ func (ar *ArtsReader) Set(id string, data io.Reader) error {
 	return ar.keyValues.Set(id, data)
 }
 
-func (ar *ArtsReader) Cut(id string) (bool, error) {
+func (ar *ArtsReader) Cut(id string) error {
 	return ar.keyValues.Cut(id)
 }
 
-func (ar *ArtsReader) CreatedAfter(timestamp int64) iter.Seq[string] {
-	return ar.keyValues.CreatedAfter(timestamp)
-}
-
-func (ar *ArtsReader) ModifiedAfter(timestamp int64) iter.Seq[string] {
-	return ar.keyValues.UpdatedAfter(timestamp)
-}
-
-func (ar *ArtsReader) CreatedOrModifiedAfter(timestamp int64) iter.Seq[string] {
-	return ar.keyValues.CreatedOrUpdatedAfter(timestamp)
-
-}
-
-func (ar *ArtsReader) IsModifiedAfter(id string, timestamp int64) bool {
-	return ar.keyValues.IsUpdatedAfter(id, timestamp)
+func (ar *ArtsReader) Since(ts int64, mts ...kevlar.MutationType) iter.Seq2[string, kevlar.MutationType] {
+	return ar.keyValues.Since(ts, mts...)
 }
 
 func (ar *ArtsReader) readValue(id string, val interface{}) error {

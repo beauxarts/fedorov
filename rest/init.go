@@ -3,12 +3,12 @@ package rest
 import (
 	"crypto/sha256"
 	"github.com/beauxarts/fedorov/data"
-	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/middleware"
+	"github.com/boggydigital/redux"
 )
 
 var (
-	rdx kevlar.ReadableRedux
+	rdx redux.Readable
 )
 
 func SetUsername(role, u string) {

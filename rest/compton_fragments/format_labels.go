@@ -5,10 +5,10 @@ import (
 	"github.com/beauxarts/fedorov/rest/compton_data"
 	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/compton"
-	"github.com/boggydigital/kevlar"
+	"github.com/boggydigital/redux"
 )
 
-func FormatLabels(id string, rdx kevlar.ReadableRedux) []compton.FormattedLabel {
+func FormatLabels(id string, rdx redux.Readable) []compton.FormattedLabel {
 	fmtLabels := make([]compton.FormattedLabel, 0)
 
 	for _, p := range compton_data.LabelProperties {
@@ -18,7 +18,7 @@ func FormatLabels(id string, rdx kevlar.ReadableRedux) []compton.FormattedLabel 
 	return fmtLabels
 }
 
-func formatLabel(id, property string, rdx kevlar.ReadableRedux) []compton.FormattedLabel {
+func formatLabel(id, property string, rdx redux.Readable) []compton.FormattedLabel {
 
 	labels := make([]compton.FormattedLabel, 0)
 

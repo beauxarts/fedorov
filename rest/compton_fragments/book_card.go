@@ -6,11 +6,11 @@ import (
 	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/compton"
 	"github.com/boggydigital/compton/consts/size"
-	"github.com/boggydigital/kevlar"
+	"github.com/boggydigital/redux"
 	"strings"
 )
 
-func SummarizeBookProperties(id string, rdx kevlar.ReadableRedux) ([]string, map[string][]string) {
+func SummarizeBookProperties(id string, rdx redux.Readable) ([]string, map[string][]string) {
 	properties := make([]string, 0)
 	values := make(map[string][]string)
 
@@ -44,7 +44,7 @@ func SummarizeBookProperties(id string, rdx kevlar.ReadableRedux) ([]string, map
 	return properties, values
 }
 
-func BookCard(r compton.Registrar, id string, hydrated bool, rdx kevlar.ReadableRedux) compton.Element {
+func BookCard(r compton.Registrar, id string, hydrated bool, rdx redux.Readable) compton.Element {
 	bc := compton.Card(r, id)
 
 	repColor := ""

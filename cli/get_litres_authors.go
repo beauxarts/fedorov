@@ -109,7 +109,7 @@ func getSetAuthorType(dc *dolo.Client, at litres_integration.AuthorType, force b
 		return gsat.EndWithError(err)
 	}
 
-	kv, err := kevlar.NewKeyValues(absAuthorTypeDir, kevlar.JsonExt)
+	kv, err := kevlar.New(absAuthorTypeDir, kevlar.JsonExt)
 	if err != nil {
 		return gsat.EndWithError(err)
 	}
