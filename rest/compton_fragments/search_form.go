@@ -10,8 +10,8 @@ import (
 	"github.com/boggydigital/compton/consts/input_types"
 	"github.com/boggydigital/compton/consts/size"
 	"github.com/boggydigital/redux"
-	"golang.org/x/exp/slices"
 	"golang.org/x/net/html/atom"
+	"slices"
 	"strings"
 )
 
@@ -96,7 +96,7 @@ var sortDatalist = map[string]string{
 
 func propertyDatalist(property string, rdx redux.Readable) map[string]string {
 	values := make(map[string]string)
-	for _, id := range rdx.Keys(property) {
+	for id := range rdx.Keys(property) {
 		if vals, ok := rdx.GetAllValues(property, id); ok {
 			for _, val := range vals {
 				values[val] = val

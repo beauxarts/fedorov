@@ -6,6 +6,7 @@ import (
 	"github.com/beauxarts/fedorov/rest/compton_pages"
 	"github.com/boggydigital/nod"
 	"net/http"
+	"slices"
 	"strconv"
 	"strings"
 )
@@ -71,7 +72,7 @@ func GetSearch(w http.ResponseWriter, r *http.Request) {
 		found := rdx.Match(query)
 
 		var err error
-		ids, err = rdx.Sort(found, desc, sort, data.TitleProperty)
+		ids, err = rdx.Sort(slices.Collect(found), desc, sort, data.TitleProperty)
 		if err != nil {
 			http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 			return

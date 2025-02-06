@@ -8,9 +8,10 @@ import (
 	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/kevlar_dolo"
 	"github.com/boggydigital/nod"
-	"golang.org/x/exp/maps"
+	"maps"
 	"net/http"
 	"net/url"
+	"slices"
 	"strings"
 )
 
@@ -97,7 +98,7 @@ func getSeriesIds(force bool, artsIds ...string) ([]string, error) {
 		}
 	}
 
-	return maps.Keys(series), nil
+	return slices.Collect(maps.Keys(series)), nil
 }
 
 func getSetSeriesType(dc *dolo.Client, st litres_integration.SeriesType, force bool, ids ...string) error {

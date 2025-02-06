@@ -46,10 +46,9 @@ func cascadePersonsRolesProperties(rdx redux.Writeable) error {
 	readers := make(map[string][]string)
 	translators := make(map[string][]string)
 
-	keys := rdx.Keys(data.PersonsIdsProperty)
-	cprpa.TotalInt(len(keys))
+	cprpa.TotalInt(rdx.Len(data.PersonsIdsProperty))
 
-	for _, id := range keys {
+	for id := range rdx.Keys(data.PersonsIdsProperty) {
 
 		if persons, ok := rdx.GetAllValues(data.PersonsIdsProperty, id); ok && len(persons) > 0 {
 			if roles, sure := rdx.GetAllValues(data.PersonsRolesProperty, id); sure && len(roles) == len(persons) {
@@ -145,7 +144,7 @@ func cascadeIdNameProperty(idProperty, nameProperty string, rdx redux.Writeable)
 
 	values := make(map[string][]string)
 
-	for _, id := range rdx.Keys(idProperty) {
+	for id := range rdx.Keys(idProperty) {
 
 		if nameIds, ok := rdx.GetAllValues(idProperty, id); ok {
 			for _, nameId := range nameIds {

@@ -4,7 +4,7 @@ import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/rest/compton_data"
 	"github.com/beauxarts/scrinium/litres_integration"
-	"golang.org/x/exp/slices"
+	"slices"
 )
 
 func FormatQuery(q map[string][]string) map[string][]string {

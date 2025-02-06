@@ -4,6 +4,7 @@ import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/boggydigital/nod"
 	"net/url"
+	"slices"
 	"strings"
 	"time"
 )
@@ -29,12 +30,12 @@ func GetRecentArts(force bool) ([]string, error) {
 	ids := make([]string, 0)
 
 	if force {
-		ids = rdx.Keys(data.ArtsOperationsEventTimeProperty)
+		ids = slices.Collect(rdx.Keys(data.ArtsOperationsEventTimeProperty))
 	} else {
 
 		earliestDate := time.Now().AddDate(0, 0, -recentDays)
 
-		for _, id := range rdx.Keys(data.ArtsOperationsEventTimeProperty) {
+		for id := range rdx.Keys(data.ArtsOperationsEventTimeProperty) {
 			if ets, ok := rdx.GetLastVal(data.ArtsOperationsEventTimeProperty, id); ok {
 				if et, perr := time.Parse("2006-01-02T15:04:05", ets); perr == nil {
 					if et.After(earliestDate) {

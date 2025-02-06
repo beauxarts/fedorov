@@ -7,8 +7,8 @@ import (
 	"github.com/boggydigital/compton/consts/color"
 	"github.com/boggydigital/compton/consts/size"
 	"github.com/boggydigital/redux"
-	"golang.org/x/exp/maps"
-	"golang.org/x/exp/slices"
+	"maps"
+	"slices"
 	"strconv"
 )
 
@@ -49,8 +49,8 @@ func Search(query map[string][]string, ids []string, from, to int, rdx redux.Rea
 		queryFrow = compton.Frow(p).FontSize(size.Small)
 		fq := compton_fragments.FormatQuery(query)
 		props := maps.Keys(query)
-		slices.Sort(props)
-		for _, prop := range props {
+		sortedProps := slices.Sorted(props)
+		for _, prop := range sortedProps {
 			vals := fq[prop]
 			queryFrow.PropVal(compton_data.PropertyTitles[prop], vals...)
 		}

@@ -35,7 +35,7 @@ func GetVideosMetadata(force bool) error {
 
 	videoIds := make([]string, 0)
 
-	for _, id := range rdx.Keys(data.YouTubeVideosProperty) {
+	for id := range rdx.Keys(data.YouTubeVideosProperty) {
 		if vids, ok := rdx.GetAllValues(data.YouTubeVideosProperty, id); ok {
 			for _, vid := range vids {
 
