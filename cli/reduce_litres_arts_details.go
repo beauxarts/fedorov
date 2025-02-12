@@ -21,7 +21,7 @@ func ReduceLitResArtsDetailsHandler(_ *url.URL) error {
 func ReduceLitResArtsDetails() error {
 
 	rlaa := nod.NewProgress("reducing arts details...")
-	defer rlaa.End()
+	defer rlaa.Done()
 
 	atr, err := data.NewArtsReader(litres_integration.ArtsTypeDetails)
 	if err != nil {
@@ -55,10 +55,8 @@ func ReduceLitResArtsDetails() error {
 		rlaa.Increment()
 	}
 
-	rlaa.EndWithResult("done")
-
 	wra := nod.NewProgress("writing redux values...")
-	defer wra.End()
+	defer wra.Done()
 
 	reduxDir, err := pathways.GetAbsRelDir(data.Redux)
 	if err != nil {
@@ -80,8 +78,6 @@ func ReduceLitResArtsDetails() error {
 
 		wra.Increment()
 	}
-
-	wra.EndWithResult("done")
 
 	return nil
 }

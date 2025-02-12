@@ -13,7 +13,7 @@ require (
 	github.com/boggydigital/kevlar v0.6.6
 	github.com/boggydigital/kevlar_dolo v0.1.11
 	github.com/boggydigital/middleware v0.1.17
-	github.com/boggydigital/nod v0.1.23
+	github.com/boggydigital/nod v0.1.25
 	github.com/boggydigital/pathways v0.1.15
 	github.com/boggydigital/redux v0.1.3
 	github.com/boggydigital/yet_urls v0.1.56

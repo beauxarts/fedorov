@@ -18,7 +18,7 @@ func HasArtsHandler(u *url.URL) error {
 func HasArts(sessionId string, hc *http.Client) error {
 
 	haa := nod.Begin("checking if this user has any arts...")
-	defer haa.End()
+	defer haa.Done()
 
 	if hc == nil {
 		var err error

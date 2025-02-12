@@ -21,7 +21,7 @@ func GetVideosMetadataHandler(u *url.URL) error {
 func GetVideosMetadata(force bool) error {
 
 	gvma := nod.NewProgress("getting video metadata...")
-	defer gvma.End()
+	defer gvma.Done()
 
 	rp, err := pathways.GetAbsRelDir(data.Redux)
 	if err != nil {
@@ -99,8 +99,6 @@ func GetVideosMetadata(force bool) error {
 	if err := rdx.BatchAddValues(data.VideoErrorProperty, videoErrors); err != nil {
 		return err
 	}
-
-	gvma.EndWithResult("done")
 
 	return nil
 }

@@ -28,7 +28,7 @@ func main() {
 	nod.EnableStdOutPresenter()
 
 	ns := nod.NewProgress("fedorov is serving your DRM-free books")
-	defer ns.End()
+	defer ns.Done()
 
 	if err := pathways.Setup(
 		dirsOverrideFilename,

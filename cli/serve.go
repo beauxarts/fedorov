@@ -43,7 +43,7 @@ func Serve(port int, stderr bool) error {
 	}
 
 	sa := nod.Begin("serving at port %d...", port)
-	defer sa.End()
+	defer sa.Done()
 
 	if err := rest.Init(); err != nil {
 		return err

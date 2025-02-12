@@ -43,7 +43,7 @@ func GetLitResAuthorsHandler(u *url.URL) error {
 
 func GetLitResAuthors(authorTypes []litres_integration.AuthorType, hc *http.Client, force bool, personsIds ...string) error {
 	glaa := nod.NewProgress("getting litres authors...")
-	defer glaa.End()
+	defer glaa.Done()
 
 	if len(personsIds) == 0 {
 		var err error
@@ -70,8 +70,6 @@ func GetLitResAuthors(authorTypes []litres_integration.AuthorType, hc *http.Clie
 			return err
 		}
 	}
-
-	glaa.EndWithResult("done")
 
 	return nil
 }
@@ -103,7 +101,7 @@ func getPersonsIds(force bool, artsIds ...string) ([]string, error) {
 
 func getSetAuthorType(dc *dolo.Client, at litres_integration.AuthorType, force bool, ids ...string) error {
 	gsat := nod.NewProgress(" %s...", at)
-	defer gsat.End()
+	defer gsat.Done()
 
 	absAuthorTypeDir, err := data.AbsAuthorTypeDir(at)
 	if err != nil {

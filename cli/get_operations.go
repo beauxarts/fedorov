@@ -22,7 +22,7 @@ func GetLitResOperationsHandler(u *url.URL) error {
 
 func GetLitResOperations(sessionId string, hc *http.Client) error {
 	goa := nod.Begin("fetching LitRes operations...")
-	defer goa.EndWithResult("done")
+	defer goa.Done()
 
 	absLitResOperationsDir, err := data.AbsDataTypeDir(litres_integration.LitResOperations)
 	if err != nil {

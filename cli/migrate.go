@@ -15,7 +15,7 @@ func MigrateHandler(_ *url.URL) error {
 
 func Migrate() error {
 	ma := nod.Begin("migrating data...")
-	defer ma.End()
+	defer ma.Done()
 
 	dir, err := pathways.GetAbsDir(data.Metadata)
 	if err != nil {
@@ -36,8 +36,6 @@ func Migrate() error {
 			return err
 		}
 	}
-
-	ma.EndWithResult("done")
 
 	return nil
 }

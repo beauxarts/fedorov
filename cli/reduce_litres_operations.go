@@ -17,7 +17,7 @@ func ReduceLitResOperationsHandler(_ *url.URL) error {
 func ReduceLitResOperations() error {
 
 	roa := nod.NewProgress("reducing operations...")
-	defer roa.EndWithResult("done")
+	defer roa.Done()
 
 	absLitResOperationsDir, err := data.AbsDataTypeDir(litres_integration.LitResOperations)
 	if err != nil {
@@ -66,7 +66,7 @@ func ReduceLitResOperations() error {
 	}
 
 	sra := nod.Begin(" saving redux...")
-	defer sra.EndWithResult("done")
+	defer sra.Done()
 
 	if err := rdx.ReplaceValues(data.ArtsOperationsOrderProperty, data.ArtsOperationsOrderProperty, artsOperationsOrder...); err != nil {
 		return err

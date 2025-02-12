@@ -42,7 +42,7 @@ func GetLitResArtsHandler(u *url.URL) error {
 func GetLitResArts(artsTypes []litres_integration.ArtsType, hc *http.Client, force bool, artsIds ...string) error {
 
 	glaa := nod.NewProgress("getting litres arts...")
-	defer glaa.End()
+	defer glaa.Done()
 
 	if len(artsIds) == 0 {
 		var err error
@@ -70,14 +70,12 @@ func GetLitResArts(artsTypes []litres_integration.ArtsType, hc *http.Client, for
 		}
 	}
 
-	glaa.EndWithResult("done")
-
 	return nil
 }
 
 func getSetArtsType(dc *dolo.Client, at litres_integration.ArtsType, force bool, ids ...string) error {
 	gsat := nod.NewProgress(" %s...", at)
-	defer gsat.End()
+	defer gsat.Done()
 
 	absArtsTypeDir, err := data.AbsArtsTypeDir(at)
 	if err != nil {

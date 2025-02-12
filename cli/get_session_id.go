@@ -15,7 +15,7 @@ func GetSessionIdHandler(u *url.URL) error {
 }
 func GetSessionId(hc *http.Client) (string, error) {
 	gsia := nod.Begin("getting session-id...")
-	defer gsia.End()
+	defer gsia.Done()
 
 	if hc == nil {
 		absCookiesFilename, err := data.AbsCookiesFilename()

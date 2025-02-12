@@ -43,7 +43,7 @@ func GetLitResSeriesHandler(u *url.URL) error {
 
 func GetLitResSeries(seriesTypes []litres_integration.SeriesType, hc *http.Client, force bool, seriesIds ...string) error {
 	glsa := nod.NewProgress("getting litres series...")
-	defer glsa.End()
+	defer glsa.Done()
 
 	if len(seriesIds) == 0 {
 		var err error
@@ -70,8 +70,6 @@ func GetLitResSeries(seriesTypes []litres_integration.SeriesType, hc *http.Clien
 			return err
 		}
 	}
-
-	glsa.EndWithResult("done")
 
 	return nil
 }
@@ -103,7 +101,7 @@ func getSeriesIds(force bool, artsIds ...string) ([]string, error) {
 
 func getSetSeriesType(dc *dolo.Client, st litres_integration.SeriesType, force bool, ids ...string) error {
 	gsst := nod.NewProgress(" %s...", st)
-	defer gsst.End()
+	defer gsst.Done()
 
 	absSeriesTypeDir, err := data.AbsSeriesTypeDir(st)
 	if err != nil {

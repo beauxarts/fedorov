@@ -20,7 +20,7 @@ func GetRecentArtsHandler(u *url.URL) error {
 
 func GetRecentArts(force bool) ([]string, error) {
 	graa := nod.Begin("getting recent arts...")
-	defer graa.End()
+	defer graa.Done()
 
 	rdx, err := data.NewReduxReader(data.ArtsOperationsEventTimeProperty)
 	if err != nil {

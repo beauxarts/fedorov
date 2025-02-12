@@ -29,7 +29,7 @@ func GetLitResContentsHandler(u *url.URL) error {
 func GetLitresContents(hc *http.Client, force bool, ids ...string) error {
 
 	dlca := nod.NewProgress("downloading litres contents...")
-	defer dlca.End()
+	defer dlca.Done()
 
 	rdx, err := data.NewReduxReader(data.ContentsUrlProperty)
 	if err != nil {
@@ -58,8 +58,6 @@ func GetLitresContents(hc *http.Client, force bool, ids ...string) error {
 		return err
 	}
 
-	dlca.EndWithResult("done")
-
 	return nil
 
 }
@@ -67,7 +65,7 @@ func GetLitresContents(hc *http.Client, force bool, ids ...string) error {
 func getSetContents(dc *dolo.Client, force bool, rdx redux.Readable, ids ...string) error {
 
 	gsc := nod.NewProgress(" contents...")
-	defer gsc.End()
+	defer gsc.Done()
 
 	if err := rdx.MustHave(data.ContentsUrlProperty); err != nil {
 		return err

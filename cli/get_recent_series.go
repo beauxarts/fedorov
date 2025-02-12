@@ -21,7 +21,7 @@ func GetRecentSeriesHandler(u *url.URL) error {
 
 func GetRecentSeries(force bool, recentArtsIds ...string) ([]string, error) {
 	grsa := nod.Begin("getting recent arts series...")
-	defer grsa.End()
+	defer grsa.Done()
 
 	seriesIds, err := getSeriesIds(force, recentArtsIds...)
 	if err != nil {

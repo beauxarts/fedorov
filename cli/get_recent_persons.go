@@ -21,7 +21,7 @@ func GetRecentPersonsHandler(u *url.URL) error {
 
 func GetRecentPersons(force bool, recentArtsIds ...string) ([]string, error) {
 	grpa := nod.Begin("getting recent arts persons...")
-	defer grpa.End()
+	defer grpa.Done()
 
 	personsIds, err := getPersonsIds(force, recentArtsIds...)
 	if err != nil {

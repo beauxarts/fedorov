@@ -28,7 +28,7 @@ func DownloadLitResBooksHandler(u *url.URL) error {
 func DownloadLitResBooks(hc *http.Client, force bool, artsIds ...string) error {
 
 	da := nod.NewProgress("downloading LitRes books...")
-	defer da.End()
+	defer da.Done()
 
 	rdx, err := data.NewReduxReader(
 		data.ArtsOperationsOrderProperty,
@@ -109,14 +109,12 @@ func DownloadLitResBooks(hc *http.Client, force bool, artsIds ...string) error {
 				continue
 			}
 
-			tpw.EndWithResult("done")
+			tpw.Done()
 		}
 
-		bdla.End()
+		bdla.Done()
 		da.Increment()
 	}
-
-	da.EndWithResult("done")
 
 	return nil
 }

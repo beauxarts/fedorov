@@ -14,7 +14,7 @@ func CascadeHandler(_ *url.URL) error {
 func Cascade() error {
 
 	ca := nod.Begin("cascading reductions...")
-	defer ca.End()
+	defer ca.Done()
 
 	rdx, err := data.NewReduxWriter(data.ReduxProperties()...)
 	if err != nil {
@@ -29,15 +29,13 @@ func Cascade() error {
 		return err
 	}
 
-	ca.EndWithResult("done")
-
 	return nil
 }
 
 func cascadePersonsRolesProperties(rdx redux.Writeable) error {
 
 	cprpa := nod.NewProgress(" persons roles...")
-	defer cprpa.End()
+	defer cprpa.Done()
 
 	authors := make(map[string][]string)
 	illustrators := make(map[string][]string)
@@ -101,14 +99,13 @@ func cascadePersonsRolesProperties(rdx redux.Writeable) error {
 		return err
 	}
 
-	cprpa.EndWithResult("done")
 	return nil
 }
 
 func cascadeIdNameProperties(rdx redux.Writeable) error {
 
 	cinpa := nod.NewProgress(" id, name properties...")
-	defer cinpa.End()
+	defer cinpa.Done()
 
 	idNameProperties := map[string]string{
 		data.GenresIdsProperty:       data.GenreNameProperty,
@@ -134,8 +131,6 @@ func cascadeIdNameProperties(rdx redux.Writeable) error {
 		}
 		cinpa.Increment()
 	}
-
-	cinpa.EndWithResult("done")
 
 	return nil
 }

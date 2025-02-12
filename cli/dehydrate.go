@@ -27,7 +27,7 @@ func DehydrateHandler(u *url.URL) error {
 func Dehydrate(force bool, artsIds ...string) error {
 
 	di := nod.Begin("dehydrating images...")
-	defer di.End()
+	defer di.Done()
 
 	properties := data.DehydratedProperties()
 	properties = append(properties, data.ArtsOperationsOrderProperty)
@@ -77,7 +77,7 @@ func dehydrateImages(
 	ids ...string) error {
 
 	di := nod.NewProgress(" dehydrating %s...", imageProperty)
-	defer di.End()
+	defer di.Done()
 
 	di.TotalInt(len(ids))
 
@@ -127,8 +127,6 @@ func dehydrateImages(
 	if err := rdx.BatchReplaceValues(repColorProperty, repColors); err != nil {
 		return err
 	}
-
-	di.EndWithResult("done")
 
 	return nil
 }

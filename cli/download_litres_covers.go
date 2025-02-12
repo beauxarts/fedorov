@@ -28,7 +28,7 @@ func DownloadLitResCoversHandler(u *url.URL) error {
 func DownloadLitResCovers(skipExisting, force bool, artsIds ...string) error {
 
 	gca := nod.NewProgress("downloading LitRes covers...")
-	defer gca.End()
+	defer gca.Done()
 
 	if len(artsIds) == 0 {
 		var err error
@@ -77,8 +77,6 @@ func DownloadLitResCovers(skipExisting, force bool, artsIds ...string) error {
 			gca.Increment()
 		}
 	}
-
-	gca.EndWithResult("done")
 
 	return nil
 }
