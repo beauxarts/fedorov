@@ -21,12 +21,12 @@ func ReduceLitResOperations() error {
 
 	absLitResOperationsDir, err := data.AbsDataTypeDir(litres_integration.LitResOperations)
 	if err != nil {
-		return roa.EndWithError(err)
+		return err
 	}
 
 	kv, err := kevlar.New(absLitResOperationsDir, kevlar.JsonExt)
 	if err != nil {
-		return roa.EndWithError(err)
+		return err
 	}
 
 	totalPages := kv.Len()
@@ -51,7 +51,7 @@ func ReduceLitResOperations() error {
 				}
 			}
 		} else {
-			return roa.EndWithError(err)
+			return err
 		}
 
 		roa.Increment()
@@ -62,22 +62,22 @@ func ReduceLitResOperations() error {
 		data.ArtsOperationsEventTimeProperty,
 		data.ArtFourthPresentProperty)
 	if err != nil {
-		return roa.EndWithError(err)
+		return err
 	}
 
 	sra := nod.Begin(" saving redux...")
 	defer sra.EndWithResult("done")
 
 	if err := rdx.ReplaceValues(data.ArtsOperationsOrderProperty, data.ArtsOperationsOrderProperty, artsOperationsOrder...); err != nil {
-		return roa.EndWithError(err)
+		return err
 	}
 
 	if err := rdx.BatchReplaceValues(data.ArtsOperationsEventTimeProperty, artsOperationsEventTimes); err != nil {
-		return roa.EndWithError(err)
+		return err
 	}
 
 	if err := rdx.BatchReplaceValues(data.ArtFourthPresentProperty, artsFourthPresent); err != nil {
-		return roa.EndWithError(err)
+		return err
 	}
 
 	return nil

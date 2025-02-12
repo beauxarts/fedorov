@@ -18,15 +18,15 @@ func Cascade() error {
 
 	rdx, err := data.NewReduxWriter(data.ReduxProperties()...)
 	if err != nil {
-		return ca.EndWithError(err)
+		return err
 	}
 
 	if err := cascadePersonsRolesProperties(rdx); err != nil {
-		return ca.EndWithError(err)
+		return err
 	}
 
 	if err := cascadeIdNameProperties(rdx); err != nil {
-		return ca.EndWithError(err)
+		return err
 	}
 
 	ca.EndWithResult("done")
@@ -83,22 +83,22 @@ func cascadePersonsRolesProperties(rdx redux.Writeable) error {
 	}
 
 	if err := rdx.BatchReplaceValues(data.AuthorsProperty, authors); err != nil {
-		return cprpa.EndWithError(err)
+		return err
 	}
 	if err := rdx.BatchReplaceValues(data.IllustratorsProperty, illustrators); err != nil {
-		return cprpa.EndWithError(err)
+		return err
 	}
 	if err := rdx.BatchReplaceValues(data.PaintersProperty, painters); err != nil {
-		return cprpa.EndWithError(err)
+		return err
 	}
 	if err := rdx.BatchReplaceValues(data.PerformersProperty, performers); err != nil {
-		return cprpa.EndWithError(err)
+		return err
 	}
 	if err := rdx.BatchReplaceValues(data.ReadersProperty, readers); err != nil {
-		return cprpa.EndWithError(err)
+		return err
 	}
 	if err := rdx.BatchReplaceValues(data.TranslatorsProperty, translators); err != nil {
-		return cprpa.EndWithError(err)
+		return err
 	}
 
 	cprpa.EndWithResult("done")

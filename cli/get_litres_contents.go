@@ -33,13 +33,13 @@ func GetLitresContents(hc *http.Client, force bool, ids ...string) error {
 
 	rdx, err := data.NewReduxReader(data.ContentsUrlProperty)
 	if err != nil {
-		return dlca.EndWithError(err)
+		return err
 	}
 
 	if len(ids) == 0 {
 		ids, err = GetRecentArts(force) // = rdx.Keys(data.ContentsUrlProperty)
 		if err != nil {
-			return dlca.EndWithError(err)
+			return err
 		}
 	}
 
@@ -48,14 +48,14 @@ func GetLitresContents(hc *http.Client, force bool, ids ...string) error {
 	if hc == nil {
 		hc, err = getHttpClient()
 		if err != nil {
-			return dlca.EndWithError(err)
+			return err
 		}
 	}
 
 	dc := dolo.NewClient(hc, dolo.Defaults())
 
 	if err := getSetContents(dc, force, rdx, ids...); err != nil {
-		return dlca.EndWithError(err)
+		return err
 	}
 
 	dlca.EndWithResult("done")
@@ -70,17 +70,17 @@ func getSetContents(dc *dolo.Client, force bool, rdx redux.Readable, ids ...stri
 	defer gsc.End()
 
 	if err := rdx.MustHave(data.ContentsUrlProperty); err != nil {
-		return gsc.EndWithError(err)
+		return err
 	}
 
 	absContentsDir, err := pathways.GetAbsRelDir(data.Contents)
 	if err != nil {
-		return gsc.EndWithError(err)
+		return err
 	}
 
 	kv, err := kevlar.New(absContentsDir, kevlar.XmlExt)
 	if err != nil {
-		return gsc.EndWithError(err)
+		return err
 	}
 
 	newIds := make([]string, 0, len(ids))

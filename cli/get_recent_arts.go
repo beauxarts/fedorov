@@ -24,7 +24,7 @@ func GetRecentArts(force bool) ([]string, error) {
 
 	rdx, err := data.NewReduxReader(data.ArtsOperationsEventTimeProperty)
 	if err != nil {
-		return nil, graa.EndWithError(err)
+		return nil, err
 	}
 
 	ids := make([]string, 0)
@@ -43,7 +43,7 @@ func GetRecentArts(force bool) ([]string, error) {
 					}
 					continue
 				} else {
-					return nil, graa.EndWithError(perr)
+					return nil, perr
 				}
 			}
 		}

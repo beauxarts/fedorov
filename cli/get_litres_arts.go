@@ -48,7 +48,7 @@ func GetLitResArts(artsTypes []litres_integration.ArtsType, hc *http.Client, for
 		var err error
 		artsIds, err = GetRecentArts(force)
 		if err != nil {
-			return glaa.EndWithError(err)
+			return err
 		}
 	}
 
@@ -58,7 +58,7 @@ func GetLitResArts(artsTypes []litres_integration.ArtsType, hc *http.Client, for
 		var err error
 		hc, err = getHttpClient()
 		if err != nil {
-			return glaa.EndWithError(err)
+			return err
 		}
 	}
 
@@ -66,7 +66,7 @@ func GetLitResArts(artsTypes []litres_integration.ArtsType, hc *http.Client, for
 
 	for _, at := range artsTypes {
 		if err := getSetArtsType(dc, at, force, artsIds...); err != nil {
-			return glaa.EndWithError(err)
+			return err
 		}
 	}
 
@@ -81,12 +81,12 @@ func getSetArtsType(dc *dolo.Client, at litres_integration.ArtsType, force bool,
 
 	absArtsTypeDir, err := data.AbsArtsTypeDir(at)
 	if err != nil {
-		return gsat.EndWithError(err)
+		return err
 	}
 
 	kv, err := kevlar.New(absArtsTypeDir, kevlar.JsonExt)
 	if err != nil {
-		return gsat.EndWithError(err)
+		return err
 	}
 
 	newIds := make([]string, 0, len(ids))

@@ -26,18 +26,18 @@ func GetLitResOperations(sessionId string, hc *http.Client) error {
 
 	absLitResOperationsDir, err := data.AbsDataTypeDir(litres_integration.LitResOperations)
 	if err != nil {
-		return goa.EndWithError(err)
+		return err
 	}
 
 	kv, err := kevlar.New(absLitResOperationsDir, kevlar.JsonExt)
 	if err != nil {
-		return goa.EndWithError(err)
+		return err
 	}
 
 	if hc == nil {
 		hc, err = getHttpClient()
 		if err != nil {
-			return goa.EndWithError(err)
+			return err
 		}
 	}
 
@@ -46,7 +46,7 @@ func GetLitResOperations(sessionId string, hc *http.Client) error {
 
 	for hasMore {
 		if hasMore, err = getOperationsPage(page, sessionId, hc, kv); err != nil {
-			return goa.EndWithError(err)
+			return err
 		}
 		page++
 	}

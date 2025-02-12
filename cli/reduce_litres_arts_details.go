@@ -25,7 +25,7 @@ func ReduceLitResArtsDetails() error {
 
 	atr, err := data.NewArtsReader(litres_integration.ArtsTypeDetails)
 	if err != nil {
-		return rlaa.EndWithError(err)
+		return err
 	}
 
 	rlaa.TotalInt(atr.Len())
@@ -39,7 +39,7 @@ func ReduceLitResArtsDetails() error {
 
 		ad, err := atr.ArtsDetails(id)
 		if err != nil {
-			return rlaa.EndWithError(err)
+			return err
 		}
 
 		for _, p := range data.ArtsDetailsProperties() {
@@ -62,12 +62,12 @@ func ReduceLitResArtsDetails() error {
 
 	reduxDir, err := pathways.GetAbsRelDir(data.Redux)
 	if err != nil {
-		return wra.EndWithError(err)
+		return err
 	}
 
 	rdx, err := redux.NewWriter(reduxDir, data.ReduxProperties()...)
 	if err != nil {
-		return wra.EndWithError(err)
+		return err
 	}
 
 	wra.TotalInt(len(propertyIdValues))
@@ -75,7 +75,7 @@ func ReduceLitResArtsDetails() error {
 	for p, idValues := range propertyIdValues {
 
 		if err := rdx.BatchReplaceValues(p, idValues); err != nil {
-			return wra.EndWithError(err)
+			return err
 		}
 
 		wra.Increment()

@@ -34,13 +34,13 @@ func Dehydrate(force bool, artsIds ...string) error {
 
 	rdx, err := data.NewReduxWriter(properties...)
 	if err != nil {
-		return di.EndWithError(err)
+		return err
 	}
 
 	if force {
 		artsIds, err = GetRecentArts(force)
 		if err != nil {
-			return di.EndWithError(err)
+			return err
 		}
 	}
 
@@ -52,7 +52,7 @@ func Dehydrate(force bool, artsIds ...string) error {
 		data.CoverSizesDesc,
 		force,
 		artsIds...); err != nil {
-		return di.EndWithError(err)
+		return err
 	}
 
 	if err := dehydrateImages(
@@ -63,7 +63,7 @@ func Dehydrate(force bool, artsIds ...string) error {
 		data.CoverSizesAsc,
 		force,
 		artsIds...); err != nil {
-		return di.EndWithError(err)
+		return err
 	}
 
 	return nil
@@ -101,7 +101,7 @@ func dehydrateImages(
 
 			acp, err := data.AbsCoverImagePath(id, size)
 			if err != nil {
-				return di.EndWithError(err)
+				return err
 			}
 			if dhi, rc, err := issa.DehydrateImageRepColor(acp); err == nil {
 				dehydratedImages[idStr] = []string{dhi}
@@ -117,15 +117,15 @@ func dehydrateImages(
 	}
 
 	if err := rdx.BatchReplaceValues(imageProperty, dehydratedImages); err != nil {
-		return di.EndWithError(err)
+		return err
 	}
 
 	if err := rdx.BatchReplaceValues(modifiedProperty, dehydratedImageModified); err != nil {
-		return di.EndWithError(err)
+		return err
 	}
 
 	if err := rdx.BatchReplaceValues(repColorProperty, repColors); err != nil {
-		return di.EndWithError(err)
+		return err
 	}
 
 	di.EndWithResult("done")

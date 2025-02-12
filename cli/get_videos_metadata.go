@@ -25,12 +25,12 @@ func GetVideosMetadata(force bool) error {
 
 	rp, err := pathways.GetAbsRelDir(data.Redux)
 	if err != nil {
-		return gvma.EndWithError(err)
+		return err
 	}
 
 	rdx, err := redux.NewWriter(rp, data.ReduxProperties()...)
 	if err != nil {
-		return gvma.EndWithError(err)
+		return err
 	}
 
 	videoIds := make([]string, 0)
@@ -89,15 +89,15 @@ func GetVideosMetadata(force bool) error {
 	}
 
 	if err := rdx.BatchAddValues(data.VideoTitleProperty, videoTitles); err != nil {
-		return gvma.EndWithError(err)
+		return err
 	}
 
 	if err := rdx.BatchAddValues(data.VideoDurationProperty, videoDurations); err != nil {
-		return gvma.EndWithError(err)
+		return err
 	}
 
 	if err := rdx.BatchAddValues(data.VideoErrorProperty, videoErrors); err != nil {
-		return gvma.EndWithError(err)
+		return err
 	}
 
 	gvma.EndWithResult("done")

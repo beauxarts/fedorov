@@ -33,7 +33,7 @@ func Migrate() error {
 
 	for _, md := range metadataDirs {
 		if err := kevlar.Migrate(filepath.Join(dir, md)); err != nil {
-			return ma.EndWithError(err)
+			return err
 		}
 	}
 

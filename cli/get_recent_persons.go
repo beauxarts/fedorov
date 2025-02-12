@@ -25,7 +25,7 @@ func GetRecentPersons(force bool, recentArtsIds ...string) ([]string, error) {
 
 	personsIds, err := getPersonsIds(force, recentArtsIds...)
 	if err != nil {
-		return nil, grpa.EndWithError(err)
+		return nil, err
 	}
 
 	grpa.EndWithResult(strings.Join(personsIds, ","))

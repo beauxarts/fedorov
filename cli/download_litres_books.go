@@ -38,18 +38,18 @@ func DownloadLitResBooks(hc *http.Client, force bool, artsIds ...string) error {
 		data.PersonFullNameProperty,
 	)
 	if err != nil {
-		return da.EndWithError(err)
+		return err
 	}
 
 	kv, err := data.NewArtsReader(litres_integration.ArtsTypeFiles)
 	if err != nil {
-		return da.EndWithError(err)
+		return err
 	}
 
 	if artsIds == nil {
 		artsIds, err = GetRecentArts(force)
 		if err != nil {
-			return da.EndWithError(err)
+			return err
 		}
 	}
 
@@ -58,7 +58,7 @@ func DownloadLitResBooks(hc *http.Client, force bool, artsIds ...string) error {
 	if hc == nil {
 		hc, err = getHttpClient()
 		if err != nil {
-			return da.EndWithError(err)
+			return err
 		}
 	}
 
@@ -66,7 +66,7 @@ func DownloadLitResBooks(hc *http.Client, force bool, artsIds ...string) error {
 
 	absDownloadsDir, err := pathways.GetAbsDir(data.Downloads)
 	if err != nil {
-		return da.EndWithError(err)
+		return err
 	}
 
 	for _, id := range artsIds {
@@ -74,7 +74,7 @@ func DownloadLitResBooks(hc *http.Client, force bool, artsIds ...string) error {
 		title, _ := rdx.GetLastVal(data.TitleProperty, id)
 		authorsNames, err := authorsFullNames(id, rdx)
 		if err != nil {
-			return da.EndWithError(err)
+			return err
 		}
 
 		bdla := nod.Begin("%s %s - %s", id, strings.Join(authorsNames, ","), title)
@@ -85,7 +85,7 @@ func DownloadLitResBooks(hc *http.Client, force bool, artsIds ...string) error {
 
 		artFiles, err := kv.ArtsFiles(id)
 		if err != nil {
-			return da.EndWithError(err)
+			return err
 		}
 
 		for _, afd := range artFiles.PreferredDownloadsTypes() {

@@ -49,7 +49,7 @@ func GetLitResSeries(seriesTypes []litres_integration.SeriesType, hc *http.Clien
 		var err error
 		seriesIds, err = getSeriesIds(force)
 		if err != nil {
-			return glsa.EndWithError(err)
+			return err
 		}
 	}
 
@@ -59,7 +59,7 @@ func GetLitResSeries(seriesTypes []litres_integration.SeriesType, hc *http.Clien
 		var err error
 		hc, err = getHttpClient()
 		if err != nil {
-			return glsa.EndWithError(err)
+			return err
 		}
 	}
 
@@ -67,7 +67,7 @@ func GetLitResSeries(seriesTypes []litres_integration.SeriesType, hc *http.Clien
 
 	for _, st := range seriesTypes {
 		if err := getSetSeriesType(dc, st, force, seriesIds...); err != nil {
-			return glsa.EndWithError(err)
+			return err
 		}
 	}
 
@@ -107,12 +107,12 @@ func getSetSeriesType(dc *dolo.Client, st litres_integration.SeriesType, force b
 
 	absSeriesTypeDir, err := data.AbsSeriesTypeDir(st)
 	if err != nil {
-		return gsst.EndWithError(err)
+		return err
 	}
 
 	kv, err := kevlar.New(absSeriesTypeDir, kevlar.JsonExt)
 	if err != nil {
-		return gsst.EndWithError(err)
+		return err
 	}
 
 	newIds := make([]string, 0, len(ids))

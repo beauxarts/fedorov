@@ -25,7 +25,7 @@ func GetRecentSeries(force bool, recentArtsIds ...string) ([]string, error) {
 
 	seriesIds, err := getSeriesIds(force, recentArtsIds...)
 	if err != nil {
-		return nil, grsa.EndWithError(err)
+		return nil, err
 	}
 
 	grsa.EndWithResult(strings.Join(seriesIds, ","))

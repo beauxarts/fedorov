@@ -35,7 +35,7 @@ func main() {
 		data.DefaultFedorovRootDir,
 		data.RelToAbsDirs,
 		data.AllAbsDirs...); err != nil {
-		_ = ns.EndWithError(err)
+		_ = err
 		os.Exit(1)
 	}
 
@@ -44,7 +44,7 @@ func main() {
 		bytes.NewBuffer(cliHelp),
 		clo_delegates.Values)
 	if err != nil {
-		_ = ns.EndWithError(err)
+		_ = err
 		os.Exit(1)
 	}
 
@@ -74,7 +74,7 @@ func main() {
 	})
 
 	if err := defs.AssertCommandsHaveHandlers(); err != nil {
-		_ = ns.EndWithError(err)
+		_ = err
 		os.Exit(1)
 	}
 
@@ -104,7 +104,7 @@ func main() {
 	//fmt.Println(uniqueRoles)
 
 	if err := defs.Serve(os.Args[1:]); err != nil {
-		_ = ns.EndWithError(err)
+		_ = err
 		os.Exit(1)
 	}
 }

@@ -34,7 +34,7 @@ func DownloadLitResCovers(skipExisting, force bool, artsIds ...string) error {
 		var err error
 		artsIds, err = GetRecentArts(force)
 		if err != nil {
-			return gca.EndWithError(err)
+			return err
 		}
 	}
 
@@ -46,7 +46,7 @@ func DownloadLitResCovers(skipExisting, force bool, artsIds ...string) error {
 
 	absCoversDir, err := pathways.GetAbsDir(data.Covers)
 	if err != nil {
-		return gca.EndWithError(err)
+		return err
 	}
 
 	for _, id := range artsIds {

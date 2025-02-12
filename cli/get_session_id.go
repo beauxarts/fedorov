@@ -20,18 +20,18 @@ func GetSessionId(hc *http.Client) (string, error) {
 	if hc == nil {
 		absCookiesFilename, err := data.AbsCookiesFilename()
 		if err != nil {
-			return "", gsia.EndWithError(err)
+			return "", err
 		}
 
 		hc, err = coost.NewHttpClientFromFile(absCookiesFilename)
 		if err != nil {
-			return "", gsia.EndWithError(err)
+			return "", err
 		}
 	}
 
 	sessionId, err := litres_integration.GetSessionId(hc)
 	if err != nil {
-		return "", gsia.EndWithError(err)
+		return "", err
 	}
 
 	gsia.EndWithResult(sessionId)

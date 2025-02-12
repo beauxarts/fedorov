@@ -24,36 +24,36 @@ func HasArts(sessionId string, hc *http.Client) error {
 		var err error
 		hc, err = getHttpClient()
 		if err != nil {
-			return haa.EndWithError(err)
+			return err
 		}
 	}
 
 	req, err := http.NewRequest(http.MethodGet,
 		litres_integration.UserStatsUrl().String(), nil)
 	if err != nil {
-		return haa.EndWithError(err)
+		return err
 	}
 
 	addHeaders(req, sessionId)
 
 	resp, err := hc.Do(req)
 	if err != nil {
-		return haa.EndWithError(err)
+		return err
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return haa.EndWithError(errors.New(resp.Status))
+		return errors.New(resp.Status)
 	}
 
 	var userStats litres_integration.UserStats
 	if err := json.NewDecoder(resp.Body).Decode(&userStats); err != nil {
-		return haa.EndWithError(err)
+		return err
 	}
 
 	switch received := userStats.Received(); received {
 	case 0:
-		return haa.EndWithError(errors.New("no arts found. If this is not expected - please update cookie.txt"))
+		return errors.New("no arts found. If this is not expected - please update cookie.txt")
 	default:
 		haa.EndWithResult("found %d art(s)", received)
 	}

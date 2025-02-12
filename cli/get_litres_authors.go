@@ -49,7 +49,7 @@ func GetLitResAuthors(authorTypes []litres_integration.AuthorType, hc *http.Clie
 		var err error
 		personsIds, err = getPersonsIds(force)
 		if err != nil {
-			return glaa.EndWithError(err)
+			return err
 		}
 	}
 
@@ -59,7 +59,7 @@ func GetLitResAuthors(authorTypes []litres_integration.AuthorType, hc *http.Clie
 		var err error
 		hc, err = getHttpClient()
 		if err != nil {
-			return glaa.EndWithError(err)
+			return err
 		}
 	}
 
@@ -67,7 +67,7 @@ func GetLitResAuthors(authorTypes []litres_integration.AuthorType, hc *http.Clie
 
 	for _, at := range authorTypes {
 		if err := getSetAuthorType(dc, at, force, personsIds...); err != nil {
-			return glaa.EndWithError(err)
+			return err
 		}
 	}
 
@@ -107,12 +107,12 @@ func getSetAuthorType(dc *dolo.Client, at litres_integration.AuthorType, force b
 
 	absAuthorTypeDir, err := data.AbsAuthorTypeDir(at)
 	if err != nil {
-		return gsat.EndWithError(err)
+		return err
 	}
 
 	kv, err := kevlar.New(absAuthorTypeDir, kevlar.JsonExt)
 	if err != nil {
-		return gsat.EndWithError(err)
+		return err
 	}
 
 	newIds := make([]string, 0, len(ids))
