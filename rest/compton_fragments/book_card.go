@@ -49,8 +49,8 @@ func BookCard(r compton.Registrar, id string, hydrated bool, rdx redux.Readable)
 
 	repColor := ""
 	if rc, ok := rdx.GetLastVal(data.RepListImageColorProperty, id); ok {
+		bc.SetAttribute("style", "--c-rep:"+rc)
 		repColor = rc
-		compton.SetTint(bc, repColor)
 	}
 
 	posterUrl := "/list_cover?id=" + id

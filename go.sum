@@ -8,6 +8,8 @@ github.com/boggydigital/clo v1.0.7 h1:y7RSbGbuAdqGY/WHm34ws8nYQDmlptuXbjf2mzzrDu
 github.com/boggydigital/clo v1.0.7/go.mod h1:InpSSK4uBJOtOdv32DM9BYCA28MuJGb7iRFow24ubUI=
 github.com/boggydigital/compton v0.2.47 h1:xnCBYuZ3iH4YwgaEFSAUTC5p1tpSptwSiWxH/qWL9xM=
 github.com/boggydigital/compton v0.2.47/go.mod h1:C9YHlnIHQrcwv6NJzDnQ3kxFpIQNICGI1xKEU53BFMc=
+github.com/boggydigital/compton v0.2.49 h1:4STzLcCCd/SdnLAK6iJKys9BwzoEVqrSiroVKI0eeX8=
+github.com/boggydigital/compton v0.2.49/go.mod h1:HlmmP+GU4Pg/LnOhtxlvldhZeNHHilBIF1W1Mhv69t4=
 github.com/boggydigital/coost v0.3.10 h1:F2ouJCRaUIgDGHEgX4T1nN4XdfS/9qrn/kvWq0c05cg=
 github.com/boggydigital/coost v0.3.10/go.mod h1:hDXR+PHEu2R/V5Va/GKzFEOwAtbr32JM1Bw+tC91aN0=
 github.com/boggydigital/dolo v0.2.21 h1:6GKTXjBGtyOQIt4itxuvtUFxP88TypPX5eZAck5UYBg=
@@ -28,6 +30,8 @@ github.com/boggydigital/nod v0.1.23 h1:+eHKIB/Y5NUIHM8VrvPOFzbDrN1jFi7KiFXe4JItD
 github.com/boggydigital/nod v0.1.23/go.mod h1:jfTSJmcIjL2QwRp3Mi5CnleOzrYL9f67SFPzW09xqoo=
 github.com/boggydigital/nod v0.1.25 h1:D7wMe9EyaNrUeUJdSrK1Ui7j8YINGZuUeZyhoOG9XjA=
 github.com/boggydigital/nod v0.1.25/go.mod h1:jfTSJmcIjL2QwRp3Mi5CnleOzrYL9f67SFPzW09xqoo=
+github.com/boggydigital/nod v0.1.26 h1:zLMCMO7WfEpnuHGGNnqA4wWPCUTxlzmW5G/v6xFaHwY=
+github.com/boggydigital/nod v0.1.26/go.mod h1:jfTSJmcIjL2QwRp3Mi5CnleOzrYL9f67SFPzW09xqoo=
 github.com/boggydigital/pathways v0.1.15 h1:oQwqikyCKBIvoQwUthivHyT2oseQu9zzuO4A2FnwHFo=
 github.com/boggydigital/pathways v0.1.15/go.mod h1:z7Ip2VdIJg+xhEUsfOhc9oDy31YVDAUZKlipP1AWhE0=
 github.com/boggydigital/redux v0.1.3 h1:QlorWy9kEPgEf6aA8hlojb14Uu5GInCKZG9NEUeycNQ=

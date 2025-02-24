@@ -28,7 +28,7 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 
 	// tinting document background color to the representative product color
 	if repColor, ok := rdx.GetLastVal(data.RepItemImageColorProperty, id); ok && repColor != issa.NeutralRepColor {
-		compton.SetTint(p, repColor)
+		p.SetAttribute("style", "--c-rep:"+repColor)
 	}
 
 	appNav := compton_fragments.AppNavLinks(p, "")
