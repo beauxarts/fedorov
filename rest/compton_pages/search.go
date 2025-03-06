@@ -26,9 +26,9 @@ func Search(query map[string][]string, ids []string, from, to int, rdx redux.Rea
 
 	pageStack.Append(compton.FICenter(p, appNav, searchLinks))
 
-	filterSearchHeading := compton.DSTitle(p, filterSearchTitle)
+	//filterSearchHeading := compton.DSTitle(p, filterSearchTitle)
 
-	filterSearchDetails := compton.DSLarge(p, filterSearchHeading, len(query) == 0).
+	filterSearchDetails := compton.DSLarge(p, filterSearchTitle, len(query) == 0).
 		BackgroundColor(color.Highlight).
 		SummaryMarginBlockEnd(size.Normal).
 		DetailsMarginBlockEnd(size.Unset).
@@ -41,7 +41,7 @@ func Search(query map[string][]string, ids []string, from, to int, rdx redux.Rea
 			compton_data.ManyItemsSinglePage,
 			compton_data.ManyItemsManyPages)
 
-		filterSearchDetails.AppendSummary(cf.TitleElement(p, from, to, len(ids)))
+		filterSearchDetails.SetLabelText(cf.Title(from, to, len(ids)))
 	}
 
 	var queryFrow *compton.FrowElement

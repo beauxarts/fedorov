@@ -15,8 +15,6 @@ import (
 	"strings"
 )
 
-const colorBlendClass = "color-blend"
-
 const aprtcdUnicode = "&#x2935;" // ARROW POINTING RIGHTWARDS THEN CURVING DOWNWARDS
 
 func Book(id string, hasSections []string, rdx redux.Readable) compton.PageElement {
@@ -32,10 +30,8 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 	}
 
 	appNav := compton_fragments.AppNavLinks(p, "")
-	appNav.AddClass(colorBlendClass)
 
 	showToc := compton.InputValue(p, input_types.Button, compton.SectionLinksTitle)
-	showToc.AddClass(colorBlendClass)
 
 	topLevelNav := []compton.Element{appNav, showToc}
 
@@ -51,7 +47,6 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 	}
 
 	productTitle := compton.Heading(1)
-	productTitle.AddClass(colorBlendClass)
 	productTitle.Append(compton.Fspan(p, title).TextAlign(align.Center))
 
 	fmtLabels := compton_fragments.FormatLabels(id, rdx)
@@ -77,21 +72,20 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 	for ii, section := range hasSections {
 
 		sectionTitle := compton_data.SectionTitles[section]
-		summaryHeading := compton.DSTitle(p, sectionTitle)
-		detailsSummary := compton.DSLarge(p, summaryHeading, false).
+		//summaryHeading := compton.DSTitle(p, sectionTitle)
+		detailsSummary := compton.DSLarge(p, sectionTitle, false).
 			BackgroundColor(color.Highlight).
 			ForegroundColor(color.Foreground).
 			MarkerColor(color.Gray).
 			SummaryMarginBlockEnd(size.Normal).
 			DetailsMarginBlockEnd(size.Unset)
-		detailsSummary.AddClassSummary(colorBlendClass)
 		detailsSummary.SetId(sectionTitle)
 		detailsSummary.SetTabIndex(ii + 1)
 
 		switch section {
 		case compton_data.ReviewsSection:
-			if ratingAvg := compton_fragments.RatingAvg(p, id, rdx); ratingAvg != nil {
-				detailsSummary.AppendSummary(ratingAvg)
+			if ratingAvg := compton_fragments.RatingAvg(id, rdx); ratingAvg != "" {
+				detailsSummary.SetLabelText(ratingAvg)
 			}
 		}
 

@@ -33,9 +33,9 @@ func Latest(ids []string, total int, rdx redux.Readable) compton.PageElement {
 	if len(ids) == total {
 		title = "Все книги"
 	}
-	lpTitle := compton.DSTitle(p, title)
+	//lpTitle := compton.DSTitle(p, title)
 
-	latestPurchases := compton.DSLarge(p, lpTitle, true).
+	latestPurchases := compton.DSLarge(p, title, true).
 		BackgroundColor(color.Highlight).
 		SummaryMarginBlockEnd(size.Normal).
 		DetailsMarginBlockEnd(size.Unset).
@@ -46,7 +46,7 @@ func Latest(ids []string, total int, rdx redux.Readable) compton.PageElement {
 		compton_data.ManyItemsSinglePage,
 		compton_data.ManyItemsManyPages)
 
-	latestPurchases.AppendSummary(cf.TitleElement(p, 0, len(ids), total))
+	latestPurchases.SetLabelText(cf.Title(0, len(ids), total))
 
 	pageStack.Append(latestPurchases)
 
