@@ -86,6 +86,8 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 		case compton_data.ReviewsSection:
 			if ratingAvg := compton_fragments.RatingAvg(id, rdx); ratingAvg != "" {
 				detailsSummary.SetLabelText(ratingAvg)
+				detailsSummary.SetLabelBackgroundColor(color.Background)
+				detailsSummary.SetLabelForegroundColor(color.Foreground)
 			}
 		}
 

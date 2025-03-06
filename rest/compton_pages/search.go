@@ -42,6 +42,8 @@ func Search(query map[string][]string, ids []string, from, to int, rdx redux.Rea
 			compton_data.ManyItemsManyPages)
 
 		filterSearchDetails.SetLabelText(cf.Title(from, to, len(ids)))
+		filterSearchDetails.SetLabelBackgroundColor(color.Background)
+		filterSearchDetails.SetLabelForegroundColor(color.Foreground)
 	}
 
 	var queryFrow *compton.FrowElement

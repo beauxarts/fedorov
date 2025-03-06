@@ -47,6 +47,8 @@ func Latest(ids []string, total int, rdx redux.Readable) compton.PageElement {
 		compton_data.ManyItemsManyPages)
 
 	latestPurchases.SetLabelText(cf.Title(0, len(ids), total))
+	latestPurchases.SetLabelBackgroundColor(color.Background)
+	latestPurchases.SetLabelForegroundColor(color.Foreground)
 
 	pageStack.Append(latestPurchases)
 
