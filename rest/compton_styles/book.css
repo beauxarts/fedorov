@@ -1,7 +1,7 @@
 @scope (.book-cover) {
     :scope {
 
-        box-shadow: 0 0 var(--s-xl) var(--c-rep);
+        box-shadow: 0 0 var(--s-l) var(--c-rep);
 
         & img {
             --w: 400px;
