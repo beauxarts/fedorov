@@ -2,6 +2,7 @@
     :scope {
 
         box-shadow: 0 0 var(--s-l) var(--c-rep);
+        outline: var(--s-xxxs) solid var(--c-rep);
 
         & img {
             --w: 400px;
