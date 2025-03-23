@@ -33,7 +33,7 @@ func DownloadType(r compton.Registrar, id string, dt *litres_integration.ArtsFil
 	downloadLinkStack.Append(filename)
 
 	row := compton.Frow(r).
-		FontSize(size.Small)
+		FontSize(size.XSmall)
 
 	row.IconColor(compton.Circle, typeColors[dt.Type()]).
 		PropVal("Тип", dt.TypeDescription()).

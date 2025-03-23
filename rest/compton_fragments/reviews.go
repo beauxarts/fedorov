@@ -24,7 +24,7 @@ func Reviews(r compton.Registrar, artsReviews *litres_integration.ArtsReviews) c
 	for ii, review := range artsReviews.Payload.Data {
 
 		metadataFrow := compton.Frow(r).
-			FontSize(size.Small)
+			FontSize(size.XSmall)
 		if review.ItemRating != nil {
 			ir := strconv.Itoa(*review.ItemRating)
 			metadataFrow.PropVal("Оценка", ir)
@@ -38,7 +38,7 @@ func Reviews(r compton.Registrar, artsReviews *litres_integration.ArtsReviews) c
 		stack.Append(compton.PreText(review.Text))
 
 		likesFrow := compton.Frow(r).
-			FontSize(size.Small)
+			FontSize(size.XSmall)
 
 		if review.LikesCount > 0 {
 			likesFrow.PropVal("Оценили", strconv.Itoa(review.LikesCount))

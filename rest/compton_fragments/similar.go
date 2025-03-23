@@ -54,7 +54,7 @@ func Similar(r compton.Registrar, id string, artsSimilar *litres_integration.Art
 			FontWeight(font_weight.Bolder)
 
 		linkLabels := compton.Labels(r, FormatLabels(id, rdx)...).
-			FontSize(size.XSmall).
+			FontSize(size.XXSmall).
 			RowGap(size.XSmall).
 			ColumnGap(size.XSmall)
 

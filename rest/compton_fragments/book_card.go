@@ -68,7 +68,7 @@ func BookCard(r compton.Registrar, id string, hydrated bool, rdx redux.Readable)
 	}
 
 	if labels := compton.Labels(r, FormatLabels(id, rdx)...).
-		FontSize(size.XSmall).
+		FontSize(size.XXXSmall).
 		ColumnGap(size.XXSmall).
 		RowGap(size.XXSmall); labels != nil {
 		bc.AppendLabels(labels)

@@ -50,19 +50,19 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 	productTitle.Append(compton.Fspan(p, title).TextAlign(align.Center))
 
 	fmtLabels := compton_fragments.FormatLabels(id, rdx)
-	productLabels := compton.Labels(p, fmtLabels...).FontSize(size.Small).RowGap(size.XSmall).ColumnGap(size.XSmall)
+	productLabels := compton.Labels(p, fmtLabels...).FontSize(size.XSmall).RowGap(size.XSmall).ColumnGap(size.XSmall)
 	pageStack.Append(compton.FICenter(p, productTitle, productLabels))
 
 	if subtitle, ok := rdx.GetLastVal(data.SubtitleProperty, id); ok {
 		productSubtitle := compton.Fspan(p, subtitle).
 			ForegroundColor(color.Gray).
-			FontSize(size.Small).
+			FontSize(size.XSmall).
 			TextAlign(align.Center)
 		pageStack.Append(productSubtitle)
 	}
 
 	summaryRow := compton.Frow(p).
-		FontSize(size.Small)
+		FontSize(size.XSmall)
 	properties, values := compton_fragments.SummarizeBookProperties(id, rdx)
 	for _, p := range properties {
 		summaryRow.PropVal(compton_data.PropertyTitles[p], strings.Join(values[p], ", "))
