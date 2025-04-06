@@ -19,6 +19,8 @@
     }
 }
 
-.color-blend {
-    opacity: 0.8
+details.larger {
+    & summary {
+        --bg: color-mix(in display-p3, var(--c-rep) var(--cma), var(--c-highlight))
+    }
 }
