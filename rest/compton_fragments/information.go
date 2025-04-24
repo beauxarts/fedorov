@@ -23,7 +23,7 @@ type formattedProperty struct {
 }
 
 func Information(r compton.Registrar, id string, rdx redux.Readable) compton.Element {
-	grid := compton.GridItems(r).JustifyContent(align.Center)
+	grid := compton.GridItems(r).JustifyContent(align.Center).RowGap(size.Normal)
 
 	artType := litres_integration.ArtTypeText
 	if ats, ok := rdx.GetLastVal(data.ArtTypeProperty, id); ok {
@@ -256,8 +256,9 @@ func propertyTitleValues(r compton.Registrar, property string, fmtProperty forma
 
 	tv := compton.TitleValues(r, compton_data.PropertyTitles[property]).
 		SetLinksTarget(compton.LinkTargetTop).
-		ForegroundColor(color.Gray).
-		TitleForegroundColor(color.Foreground)
+		ForegroundColor(color.Foreground).
+		TitleForegroundColor(color.Gray).
+		RowGap(size.XSmall)
 
 	if len(fmtProperty.values) > 0 {
 
