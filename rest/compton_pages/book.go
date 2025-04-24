@@ -8,6 +8,7 @@ import (
 	"github.com/boggydigital/compton"
 	"github.com/boggydigital/compton/consts/align"
 	"github.com/boggydigital/compton/consts/color"
+	"github.com/boggydigital/compton/consts/direction"
 	"github.com/boggydigital/compton/consts/input_types"
 	"github.com/boggydigital/compton/consts/size"
 	"github.com/boggydigital/issa"
@@ -46,12 +47,10 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 		pageStack.Append(compton.FICenter(p, cover))
 	}
 
-	productTitle := compton.Heading(1)
+	productTitle := compton.Heading(2)
 	productTitle.Append(compton.Fspan(p, title).TextAlign(align.Center))
 
-	fmtLabels := compton_fragments.FormatLabels(id, rdx)
-	productLabels := compton.Labels(p, fmtLabels...).FontSize(size.XSmall).RowGap(size.XSmall).ColumnGap(size.XSmall)
-	pageStack.Append(compton.FICenter(p, productTitle, productLabels))
+	pageStack.Append(productTitle)
 
 	if subtitle, ok := rdx.GetLastVal(data.SubtitleProperty, id); ok {
 		productSubtitle := compton.Fspan(p, subtitle).
@@ -72,7 +71,6 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 	for ii, section := range hasSections {
 
 		sectionTitle := compton_data.SectionTitles[section]
-		//summaryHeading := compton.DSTitle(p, sectionTitle)
 		detailsSummary := compton.DSLarge(p, sectionTitle, false).
 			BackgroundColor(color.Highlight).
 			ForegroundColor(color.Foreground).
@@ -83,11 +81,18 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 		detailsSummary.SetTabIndex(ii + 1)
 
 		switch section {
+		case compton_data.InformationSection:
+			productBadges := compton.FlexItems(p, direction.Row).ColumnGap(size.XSmall)
+			for _, fmtBadge := range compton_fragments.FormatBadges(id, rdx) {
+				badge := compton.Badge(p, fmtBadge.Title, fmtBadge.Color, color.Highlight)
+				badge.AddClass(fmtBadge.Class)
+				productBadges.Append(badge)
+			}
+			detailsSummary.AppendBadges(productBadges)
 		case compton_data.ReviewsSection:
 			if ratingAvg := compton_fragments.RatingAvg(id, rdx); ratingAvg != "" {
-				detailsSummary.SetLabelText(ratingAvg)
-				detailsSummary.SetLabelBackgroundColor(color.Background)
-				detailsSummary.SetLabelForegroundColor(color.Foreground)
+				ratingBadge := compton.Badge(p, ratingAvg, color.Background, color.Foreground)
+				detailsSummary.AppendBadges(ratingBadge)
 			}
 		}
 

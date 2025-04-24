@@ -5,6 +5,9 @@ import (
 	"github.com/beauxarts/fedorov/rest/compton_data"
 	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/compton"
+	"github.com/boggydigital/compton/consts/align"
+	"github.com/boggydigital/compton/consts/color"
+	"github.com/boggydigital/compton/consts/direction"
 	"github.com/boggydigital/compton/consts/size"
 	"github.com/boggydigital/redux"
 	"strings"
@@ -67,12 +70,24 @@ func BookCard(r compton.Registrar, id string, hydrated bool, rdx redux.Readable)
 		bc.AppendTitle("[БЕЗ НАЗВАНИЯ]")
 	}
 
-	if labels := compton.Labels(r, FormatLabels(id, rdx)...).
-		FontSize(size.XXXSmall).
+	bookBadges := compton.FlexItems(r, direction.Row).
+		RowGap(size.XXSmall).
 		ColumnGap(size.XXSmall).
-		RowGap(size.XXSmall); labels != nil {
-		bc.AppendLabels(labels)
+		JustifyContent(align.Start)
+
+	for _, fmtBadge := range FormatBadges(id, rdx) {
+		badge := compton.SmallBadge(r, fmtBadge.Title, fmtBadge.Color, color.Highlight)
+		badge.AddClass(fmtBadge.Class)
+		bookBadges.Append(badge)
 	}
+	//if labels := compton.Labels(r, FormatLabels(id, rdx)...).
+	//	FontSize(size.XXXSmall).
+	//	ColumnGap(size.XXSmall).
+	//	RowGap(size.XXSmall); labels != nil {
+	//	bc.AppendLabels(labels)
+	//}
+
+	bc.AppendBadges(bookBadges)
 
 	properties, values := SummarizeBookProperties(id, rdx)
 	for _, p := range properties {

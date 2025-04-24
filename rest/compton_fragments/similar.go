@@ -53,12 +53,16 @@ func Similar(r compton.Registrar, id string, artsSimilar *litres_integration.Art
 			ForegroundColor(linkColor).
 			FontWeight(font_weight.Bolder)
 
-		linkLabels := compton.Labels(r, FormatLabels(id, rdx)...).
-			FontSize(size.XXXSmall).
-			RowGap(size.XSmall).
-			ColumnGap(size.XSmall)
+		linkBadges := compton.FlexItems(r, direction.Row).
+			RowGap(size.XXSmall).
+			ColumnGap(size.XXSmall)
 
-		linkTitleRow.Append(linkTitle, linkLabels)
+		for _, fmtBadge := range FormatBadges(artId, rdx) {
+			badge := compton.SmallBadge(r, fmtBadge.Title, fmtBadge.Color, color.Highlight)
+			linkBadges.Append(badge)
+		}
+
+		linkTitleRow.Append(linkTitle, linkBadges)
 
 		linkStack.Append(linkTitleRow)
 

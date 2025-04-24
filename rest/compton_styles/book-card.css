@@ -1,4 +1,0 @@
-issa-image {
-    --c-outline: color-mix(in display-p3, var(--c-rep) var(--cma), transparent);
-    outline: var(--s-xxxs) solid var(--c-outline)
-}
