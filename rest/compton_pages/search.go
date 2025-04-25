@@ -26,8 +26,6 @@ func Search(query map[string][]string, ids []string, from, to int, rdx redux.Rea
 
 	pageStack.Append(compton.FICenter(p, appNav, searchLinks))
 
-	//filterSearchHeading := compton.DSTitle(p, filterSearchTitle)
-
 	filterSearchDetails := compton.DSLarge(p, filterSearchTitle, len(query) == 0).
 		BackgroundColor(color.Highlight).
 		SummaryMarginBlockEnd(size.Normal).
@@ -74,9 +72,13 @@ func Search(query map[string][]string, ids []string, from, to int, rdx redux.Rea
 		query["from"] = []string{strconv.Itoa(to)}
 		enq := compton_data.EncodeQuery(query)
 
-		href := "/search?" + enq
+		nextPageNavLink := compton.NavLinks(p)
+		nextPageNavLink.AppendSubmitLink(p, &compton.NavTarget{
+			Href:  "/search?" + enq,
+			Title: "След. страница",
+		})
 
-		pageStack.Append(compton_fragments.Button(p, "След. страница", href))
+		pageStack.Append(nextPageNavLink)
 	}
 
 	pageStack.Append(compton.Br(),

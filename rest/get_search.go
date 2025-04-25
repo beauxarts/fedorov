@@ -97,23 +97,3 @@ func GetSearch(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 }
-
-//func getDigests(properties ...string) map[string][]string {
-//	digests := make(map[string][]string)
-//	for _, p := range properties {
-//		dv := make(map[string]interface{})
-//		for _, id := range rdx.Keys(p) {
-//			values, ok := rdx.GetAllValues(p, id)
-//			if !ok {
-//				continue
-//			}
-//			for _, v := range values {
-//				dv[v] = nil
-//			}
-//		}
-//		sortedDv := maps.Keys(dv)
-//		sort.Strings(sortedDv)
-//		digests[p] = sortedDv
-//	}
-//	return digests
-//}
