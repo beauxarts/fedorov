@@ -1,9 +1,5 @@
 @scope (.book-cover) {
     :scope {
-
-        --c-outline: color-mix(in display-p3, var(--c-rep) var(--cma), transparent);
-        outline: var(--s-xxs) solid var(--c-outline);
-
         & img {
             --w: 400px;
         }
