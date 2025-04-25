@@ -53,7 +53,7 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 	productTitle := compton.Heading(2)
 	productTitle.Append(compton.Fspan(p, title).TextAlign(align.Center))
 
-	pageStack.Append(productTitle)
+	pageStack.Append(compton.FICenter(p, productTitle))
 
 	if subtitle, ok := rdx.GetLastVal(data.SubtitleProperty, id); ok {
 		productSubtitle := compton.Fspan(p, subtitle).
