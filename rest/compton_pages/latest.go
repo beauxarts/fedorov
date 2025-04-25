@@ -5,7 +5,6 @@ import (
 	"github.com/beauxarts/fedorov/rest/compton_fragments"
 	"github.com/boggydigital/compton"
 	"github.com/boggydigital/compton/consts/color"
-	"github.com/boggydigital/compton/consts/input_types"
 	"github.com/boggydigital/compton/consts/size"
 	"github.com/boggydigital/redux"
 )
@@ -19,12 +18,15 @@ func Latest(ids []string, total int, rdx redux.Readable) compton.PageElement {
 
 	appNav := compton_fragments.AppNavLinks(p, compton_data.AppNavLatest)
 
-	showAllLink := compton.A("/latest?all")
-	showAllLink.Append(compton.InputValue(p, input_types.Button, "Показать все"))
+	showAllNavLinks := compton.NavLinks(p)
+	showAllNavLinks.AppendLink(p, &compton.NavTarget{
+		Href:  "/latest?all",
+		Title: "Показать все",
+	})
 
 	topNav := compton.FICenter(p, appNav)
 	if len(ids) < total {
-		topNav.Append(showAllLink)
+		topNav.Append(showAllNavLinks)
 	}
 
 	pageStack.Append(topNav)
@@ -55,7 +57,7 @@ func Latest(ids []string, total int, rdx redux.Readable) compton.PageElement {
 	latestPurchases.Append(booksList)
 
 	if len(ids) < total {
-		pageStack.Append(compton.FICenter(p, showAllLink))
+		pageStack.Append(compton.FICenter(p, showAllNavLinks))
 	}
 
 	pageStack.Append(compton.Br(),

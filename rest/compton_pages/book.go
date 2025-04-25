@@ -9,7 +9,6 @@ import (
 	"github.com/boggydigital/compton/consts/align"
 	"github.com/boggydigital/compton/consts/color"
 	"github.com/boggydigital/compton/consts/direction"
-	"github.com/boggydigital/compton/consts/input_types"
 	"github.com/boggydigital/compton/consts/size"
 	"github.com/boggydigital/issa"
 	"github.com/boggydigital/redux"
@@ -32,12 +31,16 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 
 	appNav := compton_fragments.AppNavLinks(p, "")
 
-	showToc := compton.InputValue(p, input_types.Button, compton.SectionLinksTitle)
+	showTocNavLinks := compton.NavLinks(p)
+	showTocLink := showTocNavLinks.AppendLink(p, &compton.NavTarget{
+		Href:   "#",
+		Symbol: compton.DownwardArrow,
+	})
 
-	topLevelNav := []compton.Element{appNav, showToc}
+	topLevelNav := []compton.Element{appNav, showTocNavLinks}
 
 	if bookSectionsLinks := compton.SectionsLinks(p, hasSections, compton_data.SectionTitles); bookSectionsLinks != nil {
-		pageStack.Append(compton.Attach(p, showToc, bookSectionsLinks))
+		pageStack.Append(compton.Attach(p, showTocLink, bookSectionsLinks))
 		topLevelNav = append(topLevelNav, bookSectionsLinks)
 	}
 
