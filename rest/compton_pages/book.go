@@ -76,7 +76,6 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 		sectionTitle := compton_data.SectionTitles[section]
 		detailsSummary := compton.DSLarge(p, sectionTitle, false).
 			BackgroundColor(color.Highlight).
-			ForegroundColor(color.Foreground).
 			MarkerColor(color.Gray).
 			SummaryMarginBlockEnd(size.Normal).
 			DetailsMarginBlockEnd(size.Unset)

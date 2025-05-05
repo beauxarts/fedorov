@@ -19,6 +19,8 @@ func Search(query map[string][]string, ids []string, from, to int, rdx redux.Rea
 	p, pageStack := compton_fragments.AppPage(compton_data.AppNavSearch)
 	p.AppendSpeculationRules("/book?id=*")
 
+	p.SetAttribute("style", "--c-rep:var(--c-background)")
+
 	appNav := compton_fragments.AppNavLinks(p, compton_data.AppNavSearch)
 
 	searchScope := compton_data.SearchScopeFromQuery(query)

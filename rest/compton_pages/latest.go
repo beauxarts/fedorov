@@ -16,6 +16,8 @@ func Latest(ids []string, total int, rdx redux.Readable) compton.PageElement {
 	p, pageStack := compton_fragments.AppPage(compton_data.AppNavLatest)
 	p.AppendSpeculationRules("/book?id=*")
 
+	p.SetAttribute("style", "--c-rep:var(--c-background)")
+
 	appNav := compton_fragments.AppNavLinks(p, compton_data.AppNavLatest)
 
 	showAllNavLinks := compton.NavLinks(p)
