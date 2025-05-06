@@ -9,6 +9,7 @@ import (
 	"github.com/boggydigital/clo"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/pathways"
+	"log"
 	"os"
 )
 
@@ -35,8 +36,7 @@ func main() {
 		data.DefaultFedorovRootDir,
 		data.RelToAbsDirs,
 		data.AllAbsDirs...); err != nil {
-		_ = err
-		os.Exit(1)
+		log.Fatalln(err)
 	}
 
 	defs, err := clo.Load(
@@ -44,8 +44,7 @@ func main() {
 		bytes.NewBuffer(cliHelp),
 		clo_delegates.Values)
 	if err != nil {
-		_ = err
-		os.Exit(1)
+		log.Fatalln(err)
 	}
 
 	clo.HandleFuncs(map[string]clo.Handler{
@@ -73,38 +72,11 @@ func main() {
 		"version":                    cli.VersionHandler,
 	})
 
-	if err := defs.AssertCommandsHaveHandlers(); err != nil {
-		_ = err
-		os.Exit(1)
+	if err = defs.AssertCommandsHaveHandlers(); err != nil {
+		log.Fatalln(err)
 	}
 
-	//for _, id := range rdx.Keys(data.GenresIdsProperty) {
-	//
-	//	if genres, ok := rdx.GetAllValues(data.GenresIdsProperty, id); ok {
-	//		fmt.Print(id)
-	//		for _, genre := range genres {
-	//			if genreName, sure := rdx.GetLastVal(data.GenreNameProperty, genre); sure {
-	//				fmt.Print(genreName)
-	//			}
-	//		}
-	//		fmt.Println()
-	//	}
-	//}
-
-	//uniqueRoles := make(map[string]int)
-	//
-	//for _, id := range rdx.Keys(data.PersonsRolesProperty) {
-	//	if roles, ok := rdx.GetAllValues(data.PersonsRolesProperty, id); ok {
-	//		for _, role := range roles {
-	//			uniqueRoles[role] = uniqueRoles[role] + 1
-	//		}
-	//	}
-	//}
-	//
-	//fmt.Println(uniqueRoles)
-
-	if err := defs.Serve(os.Args[1:]); err != nil {
-		_ = err
-		os.Exit(1)
+	if err = defs.Serve(os.Args[1:]); err != nil {
+		log.Fatalln(err)
 	}
 }

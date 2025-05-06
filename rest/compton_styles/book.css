@@ -1,15 +1,16 @@
-@scope (.book-cover) {
-    :scope {
-        & img {
-            --w: 400px;
-        }
-    }
+issa-image.book-cover {
+    border-radius: var(--s-s);
 
-    @media only screen and (max-width: 800px) {
-        :scope {
-            & img {
-                max-width: 100%;
-            }
+    & img {
+        --w: 400px;
+        border-radius: var(--s-s);
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    issa-image.book-cover {
+        & img {
+            max-width: 100%;
         }
     }
 }
