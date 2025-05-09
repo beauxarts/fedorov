@@ -12,10 +12,14 @@ import (
 	"github.com/boggydigital/compton/consts/size"
 	"github.com/boggydigital/issa"
 	"github.com/boggydigital/redux"
+	"slices"
 	"strings"
 )
 
-const aprtcdUnicode = "&#x2935;" // ARROW POINTING RIGHTWARDS THEN CURVING DOWNWARDS
+var openSections = []string{
+	compton_data.InformationSection,
+	compton_data.FilesSection,
+}
 
 func Book(id string, hasSections []string, rdx redux.Readable) compton.PageElement {
 
@@ -74,7 +78,7 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 	for ii, section := range hasSections {
 
 		sectionTitle := compton_data.SectionTitles[section]
-		detailsSummary := compton.DSLarge(p, sectionTitle, false).
+		detailsSummary := compton.DSLarge(p, sectionTitle, slices.Contains(openSections, section)).
 			BackgroundColor(color.Highlight).
 			MarkerColor(color.Gray).
 			SummaryMarginBlockEnd(size.Normal).

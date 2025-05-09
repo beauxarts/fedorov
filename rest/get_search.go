@@ -90,6 +90,11 @@ func GetSearch(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	if len(ids) == 1 {
+		http.Redirect(w, r, "/book?id="+ids[0], http.StatusPermanentRedirect)
+		return
+	}
+
 	if p := compton_pages.Search(query, ids, from, to, rdx); p != nil {
 		if err := p.WriteResponse(w); err != nil {
 			http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
