@@ -14,6 +14,11 @@ const (
 	SizeMax CoverSize = ""
 )
 
+var (
+	CoverSizesDesc = []CoverSize{SizeMax, Size415, Size250}
+	CoverSizesAsc  = []CoverSize{Size250, Size415, SizeMax}
+)
+
 func AllCoverSizes() []CoverSize {
 	return []CoverSize{
 		Size250,

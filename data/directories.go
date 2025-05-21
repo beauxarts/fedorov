@@ -8,7 +8,7 @@ import (
 	"strconv"
 )
 
-const DefaultFedorovRootDir = "/var/lib/fedorov"
+const DefaultRootDir = "/var/lib/fedorov"
 
 const (
 	Backups   pathways.AbsDir = "backups"

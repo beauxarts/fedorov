@@ -4,6 +4,8 @@ import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/litres_integration"
 	"github.com/boggydigital/coost"
+	"github.com/boggydigital/pathways"
+	"github.com/boggydigital/redux"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -64,39 +66,44 @@ func Sync(force bool) error {
 		return err
 	}
 
-	if err := GetLitResSeries(litres_integration.AllSeriesTypes(), hc, force, recentSeriesIds...); err != nil {
+	if err = GetLitResSeries(litres_integration.AllSeriesTypes(), hc, force, recentSeriesIds...); err != nil {
 		return err
 	}
 
-	if err := GetLitresContents(hc, force, recentArtsIds...); err != nil {
+	if err = GetLitresContents(hc, force, recentArtsIds...); err != nil {
 		return err
 	}
 
-	if err := Cascade(); err != nil {
+	if err = Cascade(); err != nil {
 		return err
 	}
 
-	if err := DownloadLitResBooks(hc, force, recentArtsIds...); err != nil {
+	if err = DownloadLitResBooks(hc, force, recentArtsIds...); err != nil {
 		return err
 	}
 
-	if err := DownloadLitResCovers(true, force, recentArtsIds...); err != nil {
+	if err = DownloadLitResCovers(true, force, recentArtsIds...); err != nil {
 		return err
 	}
 
-	if err := GetVideosMetadata(force); err != nil {
+	if err = GetVideosMetadata(force); err != nil {
 		return err
 	}
 
-	if err := Dehydrate(force, recentArtsIds...); err != nil {
+	if err = Dehydrate(force, recentArtsIds...); err != nil {
 		return err
 	}
 
-	if err := Backup(); err != nil {
+	if err = Backup(); err != nil {
 		return err
 	}
 
-	rdx, err := data.NewReduxWriter(data.SyncCompletedProperty)
+	reduxDir, err := pathways.GetAbsRelDir(data.Redux)
+	if err != nil {
+		return err
+	}
+
+	rdx, err := redux.NewWriter(reduxDir, data.SyncCompletedProperty)
 	if err != nil {
 		return err
 	}

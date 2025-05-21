@@ -31,7 +31,12 @@ func GetLitresContents(hc *http.Client, force bool, ids ...string) error {
 	dlca := nod.NewProgress("downloading litres contents...")
 	defer dlca.Done()
 
-	rdx, err := data.NewReduxReader(data.ContentsUrlProperty)
+	reduxDir, err := pathways.GetAbsRelDir(data.Redux)
+	if err != nil {
+		return err
+	}
+
+	rdx, err := redux.NewReader(reduxDir, data.ContentsUrlProperty)
 	if err != nil {
 		return err
 	}

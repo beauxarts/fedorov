@@ -8,6 +8,8 @@ import (
 	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/kevlar_dolo"
 	"github.com/boggydigital/nod"
+	"github.com/boggydigital/pathways"
+	"github.com/boggydigital/redux"
 	"maps"
 	"net/http"
 	"net/url"
@@ -77,7 +79,12 @@ func GetLitResSeries(seriesTypes []litres_integration.SeriesType, hc *http.Clien
 func getSeriesIds(force bool, artsIds ...string) ([]string, error) {
 	series := make(map[string]interface{})
 
-	rdx, err := data.NewReduxReader(data.ArtsOperationsOrderProperty, data.SeriesIdProperty)
+	reduxDir, err := pathways.GetAbsRelDir(data.Redux)
+	if err != nil {
+		return nil, err
+	}
+
+	rdx, err := redux.NewReader(reduxDir, data.ArtsOperationsOrderProperty, data.SeriesIdProperty)
 	if err != nil {
 		return nil, err
 	}

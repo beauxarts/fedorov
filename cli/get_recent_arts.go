@@ -3,6 +3,8 @@ package cli
 import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/boggydigital/nod"
+	"github.com/boggydigital/pathways"
+	"github.com/boggydigital/redux"
 	"net/url"
 	"slices"
 	"strings"
@@ -22,7 +24,12 @@ func GetRecentArts(force bool) ([]string, error) {
 	graa := nod.Begin("getting recent arts...")
 	defer graa.Done()
 
-	rdx, err := data.NewReduxReader(data.ArtsOperationsEventTimeProperty)
+	reduxDir, err := pathways.GetAbsRelDir(data.Redux)
+	if err != nil {
+		return nil, err
+	}
+
+	rdx, err := redux.NewReader(reduxDir, data.ArtsOperationsEventTimeProperty)
 	if err != nil {
 		return nil, err
 	}

@@ -4,6 +4,7 @@ import (
 	"crypto/sha256"
 	"github.com/beauxarts/fedorov/data"
 	"github.com/boggydigital/middleware"
+	"github.com/boggydigital/pathways"
 	"github.com/boggydigital/redux"
 )
 
@@ -23,7 +24,12 @@ func Init() error {
 
 	var err error
 
-	if rdx, err = data.NewReduxReader(data.ReduxProperties()...); err != nil {
+	reduxDir, err := pathways.GetAbsRelDir(data.Redux)
+	if err != nil {
+		return err
+	}
+
+	if rdx, err = redux.NewReader(reduxDir, data.ReduxProperties()...); err != nil {
 		return err
 	}
 

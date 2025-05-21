@@ -5,6 +5,7 @@ import (
 	"github.com/beauxarts/fedorov/litres_integration"
 	"github.com/boggydigital/issa"
 	"github.com/boggydigital/nod"
+	"github.com/boggydigital/pathways"
 	"github.com/boggydigital/redux"
 	_ "image/jpeg"
 	"net/url"
@@ -32,7 +33,12 @@ func Dehydrate(force bool, artsIds ...string) error {
 	properties := data.DehydratedProperties()
 	properties = append(properties, data.ArtsOperationsOrderProperty)
 
-	rdx, err := data.NewReduxWriter(properties...)
+	reduxDir, err := pathways.GetAbsRelDir(data.Redux)
+	if err != nil {
+		return err
+	}
+
+	rdx, err := redux.NewWriter(reduxDir, properties...)
 	if err != nil {
 		return err
 	}
@@ -49,7 +55,7 @@ func Dehydrate(force bool, artsIds ...string) error {
 		data.DehydratedItemImageProperty,
 		data.DehydratedItemImageModifiedProperty,
 		data.RepItemImageColorProperty,
-		data.CoverSizesDesc,
+		litres_integration.CoverSizesDesc,
 		force,
 		artsIds...); err != nil {
 		return err
@@ -60,7 +66,7 @@ func Dehydrate(force bool, artsIds ...string) error {
 		data.DehydratedListImageProperty,
 		data.DehydratedListImageModifiedProperty,
 		data.RepListImageColorProperty,
-		data.CoverSizesAsc,
+		litres_integration.CoverSizesAsc,
 		force,
 		artsIds...); err != nil {
 		return err

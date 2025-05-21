@@ -1,10 +1,10 @@
 package rest
 
 import (
-	"github.com/beauxarts/fedorov/data"
+	"github.com/beauxarts/fedorov/litres_integration"
 	"net/http"
 )
 
 func GetBookCover(w http.ResponseWriter, r *http.Request) {
-	getCover(data.CoverSizesDesc, w, r)
+	getCover(litres_integration.CoverSizesDesc, w, r)
 }

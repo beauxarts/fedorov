@@ -3,6 +3,7 @@ package cli
 import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/boggydigital/nod"
+	"github.com/boggydigital/pathways"
 	"github.com/boggydigital/redux"
 	"net/url"
 )
@@ -16,16 +17,21 @@ func Cascade() error {
 	ca := nod.Begin("cascading reductions...")
 	defer ca.Done()
 
-	rdx, err := data.NewReduxWriter(data.ReduxProperties()...)
+	reduxDir, err := pathways.GetAbsRelDir(data.Redux)
 	if err != nil {
 		return err
 	}
 
-	if err := cascadePersonsRolesProperties(rdx); err != nil {
+	rdx, err := redux.NewWriter(reduxDir, data.ReduxProperties()...)
+	if err != nil {
 		return err
 	}
 
-	if err := cascadeIdNameProperties(rdx); err != nil {
+	if err = cascadePersonsRolesProperties(rdx); err != nil {
+		return err
+	}
+
+	if err = cascadeIdNameProperties(rdx); err != nil {
 		return err
 	}
 

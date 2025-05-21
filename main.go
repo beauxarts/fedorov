@@ -33,7 +33,7 @@ func main() {
 
 	if err := pathways.Setup(
 		dirsOverrideFilename,
-		data.DefaultFedorovRootDir,
+		data.DefaultRootDir,
 		data.RelToAbsDirs,
 		data.AllAbsDirs...); err != nil {
 		log.Fatalln(err)

@@ -30,13 +30,17 @@ func DownloadLitResBooks(hc *http.Client, force bool, artsIds ...string) error {
 	da := nod.NewProgress("downloading LitRes books...")
 	defer da.Done()
 
-	rdx, err := data.NewReduxReader(
+	reduxDir, err := pathways.GetAbsRelDir(data.Redux)
+	if err != nil {
+		return err
+	}
+
+	rdx, err := redux.NewReader(reduxDir,
 		data.ArtsOperationsOrderProperty,
 		data.TitleProperty,
 		data.PersonsIdsProperty,
 		data.PersonsRolesProperty,
-		data.PersonFullNameProperty,
-	)
+		data.PersonFullNameProperty)
 	if err != nil {
 		return err
 	}

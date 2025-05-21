@@ -6,6 +6,8 @@ import (
 	"github.com/beauxarts/fedorov/litres_integration"
 	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/nod"
+	"github.com/boggydigital/pathways"
+	"github.com/boggydigital/redux"
 	"net/url"
 	"strconv"
 )
@@ -57,7 +59,12 @@ func ReduceLitResOperations() error {
 		roa.Increment()
 	}
 
-	rdx, err := data.NewReduxWriter(
+	reduxDir, err := pathways.GetAbsRelDir(data.Redux)
+	if err != nil {
+		return err
+	}
+
+	rdx, err := redux.NewWriter(reduxDir,
 		data.ArtsOperationsOrderProperty,
 		data.ArtsOperationsEventTimeProperty,
 		data.ArtFourthPresentProperty)
