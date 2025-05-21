@@ -2,7 +2,7 @@ package clo_delegates
 
 import (
 	"fmt"
-	"github.com/beauxarts/scrinium/litres_integration"
+	"github.com/beauxarts/fedorov/litres_integration"
 )
 
 var Values = map[string]func() []string{

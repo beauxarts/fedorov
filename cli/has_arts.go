@@ -3,7 +3,7 @@ package cli
 import (
 	"encoding/json"
 	"errors"
-	"github.com/beauxarts/scrinium/litres_integration"
+	"github.com/beauxarts/fedorov/litres_integration"
 	"github.com/boggydigital/nod"
 	"net/http"
 	"net/url"

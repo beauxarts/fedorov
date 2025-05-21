@@ -3,8 +3,8 @@ package rest
 import (
 	"encoding/xml"
 	"github.com/beauxarts/fedorov/data"
+	"github.com/beauxarts/fedorov/litres_integration"
 	"github.com/beauxarts/fedorov/rest/compton_pages"
-	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/pathways"

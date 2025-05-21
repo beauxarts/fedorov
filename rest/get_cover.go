@@ -3,7 +3,7 @@ package rest
 import (
 	"fmt"
 	"github.com/beauxarts/fedorov/data"
-	"github.com/beauxarts/scrinium/litres_integration"
+	"github.com/beauxarts/fedorov/litres_integration"
 	"github.com/boggydigital/nod"
 	"net/http"
 	"os"

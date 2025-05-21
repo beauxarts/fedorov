@@ -3,8 +3,8 @@ package compton_fragments
 import (
 	"fmt"
 	"github.com/beauxarts/fedorov/data"
+	"github.com/beauxarts/fedorov/litres_integration"
 	"github.com/beauxarts/fedorov/rest/compton_data"
-	"github.com/beauxarts/scrinium/litres_integration"
 	"github.com/boggydigital/compton"
 	"github.com/boggydigital/compton/consts/align"
 	"github.com/boggydigital/compton/consts/color"

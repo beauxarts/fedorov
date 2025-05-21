@@ -1,7 +1,7 @@
 package compton_fragments
 
 import (
-	"github.com/beauxarts/scrinium/litres_integration"
+	"github.com/beauxarts/fedorov/litres_integration"
 	"github.com/boggydigital/compton"
 	"github.com/boggydigital/compton/consts/color"
 	"github.com/boggydigital/compton/consts/direction"

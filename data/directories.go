@@ -2,7 +2,7 @@ package data
 
 import (
 	"fmt"
-	"github.com/beauxarts/scrinium/litres_integration"
+	"github.com/beauxarts/fedorov/litres_integration"
 	"github.com/boggydigital/pathways"
 	"path/filepath"
 	"strconv"

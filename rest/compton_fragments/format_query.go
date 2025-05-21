@@ -2,8 +2,8 @@ package compton_fragments
 
 import (
 	"github.com/beauxarts/fedorov/data"
+	"github.com/beauxarts/fedorov/litres_integration"
 	"github.com/beauxarts/fedorov/rest/compton_data"
-	"github.com/beauxarts/scrinium/litres_integration"
 	"slices"
 )
 

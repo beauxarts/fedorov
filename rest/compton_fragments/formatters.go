@@ -2,7 +2,7 @@ package compton_fragments
 
 import (
 	"fmt"
-	"github.com/beauxarts/scrinium/litres_integration"
+	"github.com/beauxarts/fedorov/litres_integration"
 	"strconv"
 	"time"
 )
