@@ -1,12 +1,11 @@
 package cli
 
 import (
+	"errors"
 	"fmt"
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/litres_integration"
-	"github.com/boggydigital/dolo"
 	"github.com/boggydigital/kevlar"
-	"github.com/boggydigital/kevlar_dolo"
 	"github.com/boggydigital/nod"
 	"net/http"
 	"net/url"
@@ -62,10 +61,10 @@ func GetLitResArts(artsTypes []litres_integration.ArtsType, hc *http.Client, for
 		}
 	}
 
-	dc := dolo.NewClient(hc, dolo.Defaults())
+	//dc := dolo.NewClient(hc, dolo.Defaults())
 
 	for _, at := range artsTypes {
-		if err := getSetArtsType(dc, at, force, artsIds...); err != nil {
+		if err := getSetArtsType(hc, at, force, artsIds...); err != nil {
 			return err
 		}
 	}
@@ -73,7 +72,7 @@ func GetLitResArts(artsTypes []litres_integration.ArtsType, hc *http.Client, for
 	return nil
 }
 
-func getSetArtsType(dc *dolo.Client, at litres_integration.ArtsType, force bool, ids ...string) error {
+func getSetArtsType(hc *http.Client, at litres_integration.ArtsType, force bool, ids ...string) error {
 	gsat := nod.NewProgress(" %s...", at)
 	defer gsat.Done()
 
@@ -95,23 +94,38 @@ func getSetArtsType(dc *dolo.Client, at litres_integration.ArtsType, force bool,
 		newIds = append(newIds, id)
 	}
 
-	indexSetter := kevlar_dolo.NewIndexSetter(kv, newIds...)
-	urls := make([]*url.URL, 0, len(newIds))
+	gsat.TotalInt(len(newIds))
+
+	errs := make(map[string]error)
 	for _, id := range newIds {
-		urls = append(urls, litres_integration.ArtsTypeUrl(at, id))
-	}
-
-	result := "done"
-
-	if errs := dc.GetSet(urls, indexSetter, gsat, force); len(errs) > 0 {
-		errIds := make([]string, 0, len(errs))
-		for ii := range errs {
-			errIds = append(errIds, newIds[ii])
+		if err = getSetData(id, litres_integration.ArtsTypeUrl(at, id), hc, kv); err != nil {
+			errs[id] = err
 		}
-		result = fmt.Sprintf("GetSet error ids: %s", strings.Join(errIds, ","))
+		gsat.Increment()
 	}
 
-	gsat.EndWithResult(result)
+	if len(errs) > 0 {
+		errStrs := make([]string, 0, len(errs))
+		for id, err := range errs {
+			errStrs = append(errStrs, fmt.Sprintf("%s: %s", id, err.Error()))
+		}
+		gsat.EndWithResult("errors: " + strings.Join(errStrs, ","))
+	}
 
 	return nil
+}
+
+func getSetData(id string, u *url.URL, hc *http.Client, kv kevlar.KeyValues) error {
+
+	resp, err := hc.Get(u.String())
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return errors.New(resp.Status)
+	}
+
+	return kv.Set(id, resp.Body)
 }

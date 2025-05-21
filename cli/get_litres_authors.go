@@ -4,9 +4,7 @@ import (
 	"fmt"
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/litres_integration"
-	"github.com/boggydigital/dolo"
 	"github.com/boggydigital/kevlar"
-	"github.com/boggydigital/kevlar_dolo"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/pathways"
 	"github.com/boggydigital/redux"
@@ -65,10 +63,8 @@ func GetLitResAuthors(authorTypes []litres_integration.AuthorType, hc *http.Clie
 		}
 	}
 
-	dc := dolo.NewClient(hc, dolo.Defaults())
-
 	for _, at := range authorTypes {
-		if err := getSetAuthorType(dc, at, force, personsIds...); err != nil {
+		if err := getSetAuthorType(hc, at, force, personsIds...); err != nil {
 			return err
 		}
 	}
@@ -106,7 +102,7 @@ func getPersonsIds(force bool, artsIds ...string) ([]string, error) {
 	return slices.Collect(maps.Keys(persons)), nil
 }
 
-func getSetAuthorType(dc *dolo.Client, at litres_integration.AuthorType, force bool, ids ...string) error {
+func getSetAuthorType(hc *http.Client, at litres_integration.AuthorType, force bool, ids ...string) error {
 	gsat := nod.NewProgress(" %s...", at)
 	defer gsat.Done()
 
@@ -128,23 +124,23 @@ func getSetAuthorType(dc *dolo.Client, at litres_integration.AuthorType, force b
 		newIds = append(newIds, id)
 	}
 
-	indexSetter := kevlar_dolo.NewIndexSetter(kv, newIds...)
-	urls := make([]*url.URL, 0, len(newIds))
+	gsat.TotalInt(len(newIds))
+
+	errs := make(map[string]error)
 	for _, id := range newIds {
-		urls = append(urls, litres_integration.AuthorUrl(at, id))
-	}
-
-	result := "done"
-
-	if errs := dc.GetSet(urls, indexSetter, gsat, force); len(errs) > 0 {
-		errIds := make([]string, 0, len(errs))
-		for ii := range errs {
-			errIds = append(errIds, newIds[ii])
+		if err = getSetData(id, litres_integration.AuthorUrl(at, id), hc, kv); err != nil {
+			errs[id] = err
 		}
-		result = fmt.Sprintf("GetSet error ids: %s", strings.Join(errIds, ","))
+		gsat.Increment()
 	}
 
-	gsat.EndWithResult(result)
+	if len(errs) > 0 {
+		errStrs := make([]string, 0, len(errs))
+		for id, err := range errs {
+			errStrs = append(errStrs, fmt.Sprintf("%s: %s", id, err.Error()))
+		}
+		gsat.EndWithResult("errors: " + strings.Join(errStrs, ","))
+	}
 
 	return nil
 }

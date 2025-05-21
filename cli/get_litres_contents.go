@@ -4,9 +4,7 @@ import (
 	"fmt"
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/litres_integration"
-	"github.com/boggydigital/dolo"
 	"github.com/boggydigital/kevlar"
-	"github.com/boggydigital/kevlar_dolo"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/pathways"
 	"github.com/boggydigital/redux"
@@ -57,9 +55,7 @@ func GetLitresContents(hc *http.Client, force bool, ids ...string) error {
 		}
 	}
 
-	dc := dolo.NewClient(hc, dolo.Defaults())
-
-	if err := getSetContents(dc, force, rdx, ids...); err != nil {
+	if err = getSetContents(hc, force, rdx, ids...); err != nil {
 		return err
 	}
 
@@ -67,7 +63,7 @@ func GetLitresContents(hc *http.Client, force bool, ids ...string) error {
 
 }
 
-func getSetContents(dc *dolo.Client, force bool, rdx redux.Readable, ids ...string) error {
+func getSetContents(hc *http.Client, force bool, rdx redux.Readable, ids ...string) error {
 
 	gsc := nod.NewProgress(" contents...")
 	defer gsc.Done()
@@ -94,28 +90,25 @@ func getSetContents(dc *dolo.Client, force bool, rdx redux.Readable, ids ...stri
 		newIds = append(newIds, id)
 	}
 
-	// filtering ids to only those that actually have contents-url
-	filteredIds := make([]string, 0)
-	urls := make([]*url.URL, 0, len(newIds))
+	gsc.TotalInt(len(newIds))
+
+	errs := make(map[string]error)
 	for _, id := range newIds {
 		if path, ok := rdx.GetLastVal(data.ContentsUrlProperty, id); ok && path != "" {
-			urls = append(urls, litres_integration.ContentsUrl(path))
-			filteredIds = append(filteredIds, id)
+			if err = getSetData(id, litres_integration.ContentsUrl(path), hc, kv); err != nil {
+				errs[id] = err
+			}
 		}
+		gsc.Increment()
 	}
 
-	indexSetter := kevlar_dolo.NewIndexSetter(kv, filteredIds...)
-	result := "done"
-
-	if errs := dc.GetSet(urls, indexSetter, gsc, force); len(errs) > 0 {
-		errIds := make([]string, 0, len(errs))
-		for ii := range errs {
-			errIds = append(errIds, newIds[ii])
+	if len(errs) > 0 {
+		errStrs := make([]string, 0, len(errs))
+		for id, err := range errs {
+			errStrs = append(errStrs, fmt.Sprintf("%s: %s", id, err.Error()))
 		}
-		result = fmt.Sprintf("GetSet error ids: %s", strings.Join(errIds, ","))
+		gsc.EndWithResult("errors: " + strings.Join(errStrs, ","))
 	}
-
-	gsc.EndWithResult(result)
 
 	return nil
 }

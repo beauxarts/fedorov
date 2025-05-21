@@ -10,7 +10,6 @@ require (
 	github.com/boggydigital/dolo v0.2.22
 	github.com/boggydigital/issa v0.1.23
 	github.com/boggydigital/kevlar v0.6.7
-	github.com/boggydigital/kevlar_dolo v0.1.11
 	github.com/boggydigital/match_node v0.1.19
 	github.com/boggydigital/middleware v0.1.17
 	github.com/boggydigital/nod v0.1.29
