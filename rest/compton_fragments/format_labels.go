@@ -42,9 +42,9 @@ func formatBadge(id, property string, rdx redux.Readable) []compton.FormattedBad
 	case data.ArtTypeProperty:
 		at := litres_integration.ParseArtType(val)
 		badge := compton.FormattedBadge{
-			Title: artTypeBadges[at],
-			Color: artTypeColors[at],
-			Class: property,
+			Title:      artTypeBadges[at],
+			Background: artTypeColors[at],
+			Class:      property,
 		}
 		badges = append(badges, badge)
 	case data.LitresLabelsProperty:
@@ -58,9 +58,9 @@ func formatBadge(id, property string, rdx redux.Readable) []compton.FormattedBad
 	case data.ArtFourthPresentProperty:
 		if val == "true" {
 			label := compton.FormattedBadge{
-				Title: compton_data.PropertyTitles[data.ArtFourthPresentProperty],
-				Color: color.Purple,
-				Class: property,
+				Title:      compton_data.PropertyTitles[data.ArtFourthPresentProperty],
+				Background: color.Purple,
+				Class:      property,
 			}
 			badges = append(badges, label)
 		}

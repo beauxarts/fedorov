@@ -90,7 +90,7 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 		case compton_data.InformationSection:
 			productBadges := compton.FlexItems(p, direction.Row).ColumnGap(size.XSmall)
 			for _, fmtBadge := range compton_fragments.FormatBadges(id, rdx) {
-				badge := compton.Badge(p, fmtBadge.Title, fmtBadge.Color, color.Highlight)
+				badge := compton.Badge(p, fmtBadge.Title, fmtBadge.Background, color.Highlight)
 				badge.AddClass(fmtBadge.Class)
 				productBadges.Append(badge)
 			}

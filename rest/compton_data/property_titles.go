@@ -53,5 +53,10 @@ var PropertyTitles = map[string]string{
 }
 
 var ShortPropertyTitles = map[string]string{
-	data.IllustratorsProperty: "Иллюстр.",
+	data.AuthorsProperty:               "Авт.",
+	data.IllustratorsProperty:          "Илл.",
+	data.ReadersProperty:               "Чит.",
+	data.TranslatorsProperty:           "Пер.",
+	data.DateWrittenAtProperty:         "Нап.",
+	data.CurrentPagesOrSecondsProperty: "Объ.",
 }

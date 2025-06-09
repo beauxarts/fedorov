@@ -58,7 +58,7 @@ func Similar(r compton.Registrar, id string, artsSimilar *litres_integration.Art
 			ColumnGap(size.XXSmall)
 
 		for _, fmtBadge := range FormatBadges(artId, rdx) {
-			badge := compton.SmallBadge(r, fmtBadge.Title, fmtBadge.Color, color.Highlight)
+			badge := compton.SmallBadge(r, fmtBadge.Title, fmtBadge.Background, color.Highlight)
 			linkBadges.Append(badge)
 		}
 
