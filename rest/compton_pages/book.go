@@ -56,6 +56,7 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 
 	productTitle := compton.Heading(2)
 	productTitle.Append(compton.Fspan(p, title).TextAlign(align.Center))
+	productTitle.SetAttribute("style", "view-transition-name:product-title-"+id)
 
 	pageStack.Append(compton.FICenter(p, productTitle))
 
