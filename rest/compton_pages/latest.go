@@ -25,6 +25,7 @@ func Latest(ids []string, total int, rdx redux.Readable) compton.PageElement {
 		Href:  "/latest?all",
 		Title: "Показать все",
 	})
+	showAllNavLinks.SetAttribute("style", "view-transition-name:secondary-nav")
 
 	topNav := compton.FICenter(p, appNav)
 	if len(ids) < total {
@@ -57,10 +58,6 @@ func Latest(ids []string, total int, rdx redux.Readable) compton.PageElement {
 
 	booksList := compton_fragments.BooksList(p, ids, 0, len(ids), rdx)
 	latestPurchases.Append(booksList)
-
-	if len(ids) < total {
-		pageStack.Append(compton.FICenter(p, showAllNavLinks))
-	}
 
 	pageStack.Append(compton.Br(),
 		compton.Footer(p, "Tokyo", "https://github.com/beauxarts", "🇯🇵"))

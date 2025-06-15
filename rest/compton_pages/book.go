@@ -36,6 +36,7 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 	appNav := compton_fragments.AppNavLinks(p, "")
 
 	showTocNavLinks := compton.NavLinks(p)
+	showTocNavLinks.SetAttribute("style", "view-transition-name:secondary-nav")
 	showTocLink := showTocNavLinks.AppendLink(p, &compton.NavTarget{
 		Href:   "#",
 		Symbol: compton.DownwardArrow,
@@ -71,8 +72,9 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 	summaryRow := compton.Frow(p).
 		FontSize(size.XSmall)
 	properties, values := compton_fragments.SummarizeBookProperties(id, rdx)
-	for _, p := range properties {
-		summaryRow.PropVal(compton_data.PropertyTitles[p], strings.Join(values[p], ", "))
+	for _, property := range properties {
+		pv := summaryRow.PropVal(compton_data.PropertyTitles[property], strings.Join(values[property], ", "))
+		pv.SetAttribute("style", "view-transition-name:"+property+id)
 	}
 	pageStack.Append(compton.FICenter(p, summaryRow))
 
@@ -90,6 +92,7 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 		switch section {
 		case compton_data.InformationSection:
 			productBadges := compton.FlexItems(p, direction.Row).ColumnGap(size.XSmall)
+			productBadges.SetAttribute("style", "view-transition-name:book-badges-"+id)
 			for _, fmtBadge := range compton_fragments.FormatBadges(id, rdx) {
 				badge := compton.Badge(p, fmtBadge.Title, fmtBadge.Background, color.Highlight)
 				badge.AddClass(fmtBadge.Class)

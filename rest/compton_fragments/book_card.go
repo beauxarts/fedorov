@@ -75,24 +75,20 @@ func BookCard(r compton.Registrar, id string, hydrated bool, rdx redux.Readable)
 		ColumnGap(size.XXSmall).
 		JustifyContent(align.Start).
 		Width(size.FullWidth)
+	bookBadges.SetAttribute("style", "view-transition-name:book-badges-"+id)
 
 	for _, fmtBadge := range FormatBadges(id, rdx) {
 		badge := compton.SmallBadge(r, fmtBadge.Title, fmtBadge.Background, color.Highlight)
 		badge.AddClass(fmtBadge.Class)
 		bookBadges.Append(badge)
 	}
-	//if labels := compton.Labels(r, FormatLabels(id, rdx)...).
-	//	FontSize(size.XXXSmall).
-	//	ColumnGap(size.XXSmall).
-	//	RowGap(size.XXSmall); labels != nil {
-	//	bc.AppendLabels(labels)
-	//}
 
 	bc.AppendBadges(bookBadges)
 
 	properties, values := SummarizeBookProperties(id, rdx)
 	for _, p := range properties {
-		bc.AppendProperty(compton_data.ShortPropertyTitles[p], compton.Text(strings.Join(values[p], ", ")))
+		pp := bc.AppendProperty(compton_data.ShortPropertyTitles[p], compton.Text(strings.Join(values[p], ", ")))
+		pp.SetAttribute("style", "view-transition-name:"+p+id)
 	}
 
 	return bc
