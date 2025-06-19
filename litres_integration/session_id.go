@@ -1,6 +1,7 @@
 package litres_integration
 
 import (
+	"encoding/json"
 	"errors"
 	"github.com/boggydigital/match_node"
 	"golang.org/x/net/html"
@@ -10,11 +11,9 @@ import (
 	"strings"
 )
 
-const (
-	sessionIdMarker = "getUserDataForSSR"
-	sessionIdPfx    = sessionIdMarker + "(\\\\\\\""
-	sessionIdSfx    = "\\\\\\\")"
-)
+type nextDataBuildId struct {
+	BuildId string `json:"buildId"`
+}
 
 func GetSessionId(httpClient *http.Client) (string, error) {
 	rootUrl := &url.URL{
@@ -37,27 +36,29 @@ func GetSessionId(httpClient *http.Client) (string, error) {
 		return "", err
 	}
 
-	if sessionId := matchSessionId(doc); sessionId != "" {
-		return sessionId, nil
+	if buildId, err := matchBuildId(doc); err == nil && buildId != "" {
+		return buildId, nil
+	} else if err != nil {
+		return "", err
+	} else {
+		return "", errors.New("buildId is empty")
 	}
-
-	return "", errors.New("no session-id found")
 }
 
-func matchSessionId(doc *html.Node) string {
+func matchBuildId(doc *html.Node) (string, error) {
 
 	if ndsm := match_node.Match(doc, &nextDataScriptMatcher{}); ndsm != nil && ndsm.FirstChild != nil {
 		nextData := ndsm.FirstChild.Data
-		if strings.Contains(nextData, sessionIdMarker) {
-			if _, sessionId, ok := strings.Cut(nextData, sessionIdPfx); ok {
-				if parts := strings.Split(sessionId, sessionIdSfx); len(parts) > 0 {
-					return parts[0]
-				}
-			}
+
+		var ndBuildId nextDataBuildId
+		if err := json.NewDecoder(strings.NewReader(nextData)).Decode(&ndBuildId); err != nil {
+			return "", err
 		}
+
+		return ndBuildId.BuildId, nil
 	}
 
-	return ""
+	return "", errors.New("next data buildId not found")
 }
 
 type nextDataScriptMatcher struct {
