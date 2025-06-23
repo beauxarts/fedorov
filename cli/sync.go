@@ -27,15 +27,15 @@ func Sync(force bool) error {
 
 	sessionId, err := GetSessionId(hc)
 
-	if err := HasArts(sessionId, hc); err != nil {
+	if err = HasArts(sessionId, hc); err != nil {
 		return err
 	}
 
-	if err := GetLitResOperations(sessionId, hc); err != nil {
+	if err = GetLitResOperations(sessionId, hc); err != nil {
 		return err
 	}
 
-	if err := ReduceLitResOperations(); err != nil {
+	if err = ReduceLitResOperations(); err != nil {
 		return err
 	}
 
@@ -44,11 +44,11 @@ func Sync(force bool) error {
 		return err
 	}
 
-	if err := GetLitResArts(litres_integration.AllArtsTypes(), hc, force, recentArtsIds...); err != nil {
+	if err = GetLitResArts(litres_integration.AllArtsTypes(), hc, force, recentArtsIds...); err != nil {
 		return err
 	}
 
-	if err := ReduceLitResArtsDetails(); err != nil {
+	if err = ReduceLitResArtsDetails(); err != nil {
 		return err
 	}
 
@@ -57,7 +57,7 @@ func Sync(force bool) error {
 		return err
 	}
 
-	if err := GetLitResAuthors(litres_integration.AllAuthorTypes(), hc, force, recentPersonsIds...); err != nil {
+	if err = GetLitResAuthors(litres_integration.AllAuthorTypes(), hc, force, recentPersonsIds...); err != nil {
 		return err
 	}
 
@@ -78,19 +78,19 @@ func Sync(force bool) error {
 		return err
 	}
 
-	if err = DownloadLitResBooks(hc, force, recentArtsIds...); err != nil {
-		return err
-	}
-
 	if err = DownloadLitResCovers(true, force, recentArtsIds...); err != nil {
 		return err
 	}
 
-	if err = GetVideosMetadata(force); err != nil {
+	if err = Dehydrate(force, recentArtsIds...); err != nil {
 		return err
 	}
 
-	if err = Dehydrate(force, recentArtsIds...); err != nil {
+	if err = DownloadLitResBooks(hc, force, recentArtsIds...); err != nil {
+		return err
+	}
+
+	if err = GetVideosMetadata(force); err != nil {
 		return err
 	}
 
