@@ -1,8 +1,9 @@
 package cli
 
 import (
-	"fmt"
+	"github.com/boggydigital/nod"
 	"net/url"
+	"runtime/debug"
 )
 
 var (
@@ -10,10 +11,24 @@ var (
 )
 
 func VersionHandler(_ *url.URL) error {
+	va := nod.Begin("checking fedorov version...")
+	defer va.Done()
+
 	if GitTag == "" {
-		fmt.Println("unknown version")
+		summary := make(map[string][]string)
+		if bi, ok := debug.ReadBuildInfo(); ok {
+			values := []string{bi.Main.Version, bi.Main.Path, bi.GoVersion}
+			for _, value := range values {
+				if value != "" {
+					summary["version info:"] = append(summary["version info:"], value)
+				}
+			}
+			va.EndWithSummary("", summary)
+		} else {
+			va.EndWithResult("unknown version")
+		}
 	} else {
-		fmt.Println(GitTag)
+		va.EndWithResult(GitTag)
 	}
 	return nil
 }
