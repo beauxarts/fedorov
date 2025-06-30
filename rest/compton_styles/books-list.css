@@ -1,0 +1,7 @@
+@container (max-width: 592px) {
+    .books-list {
+        & a {
+            width: 100%;
+        }
+    }
+}

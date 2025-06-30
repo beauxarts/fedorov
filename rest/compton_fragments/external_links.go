@@ -5,12 +5,14 @@ import (
 	"github.com/boggydigital/compton"
 	"github.com/boggydigital/compton/consts/align"
 	"github.com/boggydigital/compton/consts/color"
+	"github.com/boggydigital/compton/consts/direction"
+	"github.com/boggydigital/compton/consts/size"
 	"strings"
 )
 
 func ExternalLinks(r compton.Registrar, extLinks map[string][]string) compton.Element {
 
-	grid := compton.GridItems(r).JustifyContent(align.Center)
+	grid := compton.FlexItems(r, direction.Row).JustifyContent(align.Start)
 
 	for _, linkProperty := range compton_data.BookExternalLinksProperties {
 		if links, ok := extLinks[linkProperty]; ok && len(links) > 0 {
@@ -32,6 +34,7 @@ func externalLinks(r compton.Registrar, property string, links []string) compton
 	}
 	propertyTitle := compton_data.PropertyTitles[property]
 	tv := compton.TitleValues(r, propertyTitle).
+		RowGap(size.XSmall).
 		ForegroundColor(color.Cyan).
 		TitleForegroundColor(color.Foreground).
 		SetLinksTarget(compton.LinkTargetTop).
