@@ -9,7 +9,7 @@ import (
 	"github.com/boggydigital/redux"
 )
 
-const dehydratedCount = 10
+const dehydratedCount = 3
 
 func BooksList(r compton.Registrar, ids []string, from, to int, rdx redux.Readable) compton.Element {
 
