@@ -9,6 +9,7 @@ import (
 	"github.com/boggydigital/compton/consts/color"
 	"github.com/boggydigital/compton/consts/direction"
 	"github.com/boggydigital/compton/consts/size"
+	"github.com/boggydigital/issa"
 	"github.com/boggydigital/redux"
 	"strings"
 )
@@ -50,19 +51,23 @@ func SummarizeBookProperties(id string, rdx redux.Readable) ([]string, map[strin
 func BookCard(r compton.Registrar, id string, hydrated bool, rdx redux.Readable) compton.Element {
 	bc := compton.Card(r, id)
 
-	repColor := ""
+	var repColor = issa.NeutralRepColor
+	posterUrl := "/list_cover?id=" + id
+
 	if rc, ok := rdx.GetLastVal(data.RepListImageColorProperty, id); ok {
-		bc.SetAttribute("style", "--c-rep:"+rc)
 		repColor = rc
 	}
 
-	posterUrl := "/list_cover?id=" + id
-	dhSrc, _ := rdx.GetLastVal(data.DehydratedListImageProperty, id)
-	placeholderSrc := dhSrc
-	bc.AppendPoster(repColor, placeholderSrc, posterUrl, hydrated)
+	var placeholderSrc string
+	if dhSrc, ok := rdx.GetLastVal(data.DehydratedListImageProperty, id); ok {
+		placeholderSrc = dhSrc
+	}
 
-	bc.WidthPixels(80)
-	bc.HeightPixels(120)
+	bc.SetAttribute("style", "--c-rep:"+repColor)
+	poster := bc.AppendPoster(repColor, placeholderSrc, posterUrl, hydrated)
+
+	poster.WidthPixels(80)
+	poster.HeightPixels(120)
 
 	if title, ok := rdx.GetLastVal(data.TitleProperty, id); ok {
 		bc.AppendTitle(title)

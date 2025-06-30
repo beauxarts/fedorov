@@ -9,8 +9,6 @@ import (
 	"github.com/boggydigital/redux"
 )
 
-const dehydratedCount = 10
-
 func Latest(ids []string, total int, rdx redux.Readable) compton.PageElement {
 
 	p, pageStack := compton_fragments.AppPage(compton_data.AppNavLatest)
@@ -38,7 +36,6 @@ func Latest(ids []string, total int, rdx redux.Readable) compton.PageElement {
 	if len(ids) == total {
 		title = "Все книги"
 	}
-	//lpTitle := compton.DSTitle(p, title)
 
 	latestPurchases := compton.DSLarge(p, title, true).
 		BackgroundColor(color.Highlight).
