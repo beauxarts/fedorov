@@ -21,12 +21,10 @@ func Search(query map[string][]string, ids []string, from, to int, rdx redux.Rea
 
 	p.SetAttribute("style", "--c-rep:var(--c-background)")
 
-	appNav := compton_fragments.AppNavLinks(p, compton_data.AppNavSearch)
-
 	searchScope := compton_data.SearchScopeFromQuery(query)
-	searchLinks := compton_fragments.SearchLinks(p, searchScope)
 
-	pageStack.Append(compton.FICenter(p, appNav, searchLinks))
+	menuNav := compton_fragments.MenuNav(p, searchScope, "", rdx)
+	pageStack.Append(menuNav)
 
 	filterSearchDetails := compton.DSLarge(p, filterSearchTitle, len(query) == 0).
 		BackgroundColor(color.Highlight).

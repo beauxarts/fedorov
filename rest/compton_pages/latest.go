@@ -16,26 +16,29 @@ func Latest(ids []string, total int, rdx redux.Readable) compton.PageElement {
 
 	p.SetAttribute("style", "--c-rep:var(--c-background)")
 
-	appNav := compton_fragments.AppNavLinks(p, compton_data.AppNavLatest)
-
-	showAllNavLinks := compton.NavLinks(p)
-	showAllNavLinks.AppendLink(p, &compton.NavTarget{
-		Href:  "/latest?all",
-		Title: "Показать все",
-	})
-	showAllNavLinks.SetAttribute("style", "view-transition-name:secondary-nav")
-
-	topNav := compton.FICenter(p, appNav)
-	if len(ids) < total {
-		topNav.Append(showAllNavLinks)
-	}
-
-	pageStack.Append(topNav)
+	//appNav := compton_fragments.AppNavLinks(p, compton_data.AppNavLatest)
+	//
+	//showAllNavLinks := compton.NavLinks(p)
+	//showAllNavLinks.AppendLink(p, &compton.NavTarget{
+	//	Href:  "/latest?all",
+	//	Title: "Показать все",
+	//})
+	//showAllNavLinks.SetAttribute("style", "view-transition-name:secondary-nav")
+	//
+	//topNav := compton.FICenter(p, appNav)
+	//if len(ids) < total {
+	//	topNav.Append(showAllNavLinks)
+	//}
+	//
+	//pageStack.Append(topNav)
 
 	title := "Новинки"
 	if len(ids) == total {
 		title = "Все книги"
 	}
+
+	menuNav := compton_fragments.MenuNav(p, title, "", rdx)
+	pageStack.Append(menuNav)
 
 	latestPurchases := compton.DSLarge(p, title, true).
 		BackgroundColor(color.Highlight).
