@@ -17,8 +17,17 @@ const navTitleMaxChars = 30
 
 func MenuNav(r compton.Registrar, navTitle, id string, rdx redux.Readable) compton.Element {
 
-	if len(navTitle) > navTitleMaxChars {
-		navTitle = navTitle[:navTitleMaxChars] + "..."
+	var truncatedTitle string
+
+	for ii, rn := range navTitle {
+		if ii == navTitleMaxChars {
+			break
+		}
+		truncatedTitle += string(rn)
+	}
+
+	if len(navTitle) > len(truncatedTitle) {
+		navTitle = truncatedTitle + "..."
 	}
 
 	dsMenu := compton.DSSmall(r, navTitle, false).SummaryJustifySelf(align.Center)
