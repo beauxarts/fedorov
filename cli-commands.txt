@@ -67,8 +67,6 @@ get-videos-metadata
 has-arts
     session-id*
 
-migrate
-
 reduce-litres-arts-details
 
 reduce-litres-operations
