@@ -64,6 +64,7 @@ func main() {
 		"get-session-id":             cli.GetSessionIdHandler,
 		"get-videos-metadata":        cli.GetVideosMetadataHandler,
 		"has-arts":                   cli.HasArtsHandler,
+		"migrate":                    cli.MigrateHandler,
 		"reduce-litres-arts-details": cli.ReduceLitResArtsDetailsHandler,
 		"reduce-litres-operations":   cli.ReduceLitResOperationsHandler,
 		"serve":                      cli.ServeHandler,
