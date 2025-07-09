@@ -10,7 +10,7 @@ import (
 
 func Annotation(id string, rdx redux.Readable) compton.PageElement {
 
-	s := compton_fragments.ProductSection(compton_data.AnnotationSection)
+	s := compton_fragments.ProductSection(compton_data.AnnotationSection, id, rdx)
 
 	if annotation, ok := rdx.GetLastVal(data.HTMLAnnotationProperty, id); ok {
 

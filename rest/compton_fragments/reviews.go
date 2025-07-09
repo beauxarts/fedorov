@@ -17,7 +17,7 @@ func Reviews(r compton.Registrar, artsReviews *litres_integration.ArtsReviews) c
 
 	if len(artsReviews.Payload.Data) == 0 {
 		stack.Append(compton.Fspan(r, "Для данной книги пока нет отзывов").
-			ForegroundColor(color.Gray).
+			ForegroundColor(color.RepGray).
 			TextAlign(align.Center))
 	}
 

@@ -8,7 +8,7 @@ import (
 )
 
 func Information(id string, rdx redux.Readable) compton.PageElement {
-	s := compton_fragments.ProductSection(compton_data.InformationSection)
+	s := compton_fragments.ProductSection(compton_data.InformationSection, id, rdx)
 	if info := compton_fragments.Information(s, id, rdx); info != nil {
 		s.Append(info)
 	}

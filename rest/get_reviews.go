@@ -1,8 +1,6 @@
 package rest
 
 import (
-	"github.com/beauxarts/fedorov/data"
-	"github.com/beauxarts/fedorov/litres_integration"
 	"github.com/beauxarts/fedorov/rest/compton_pages"
 	"github.com/boggydigital/nod"
 	"net/http"
@@ -25,19 +23,7 @@ func GetReviews(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	raReader, err := data.NewArtsReader(litres_integration.ArtsTypeReviews)
-	if err != nil {
-		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
-		return
-	}
-
-	artsReviews, err := raReader.ArtsReviews(id)
-	if err != nil {
-		http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
-		return
-	}
-
-	if p := compton_pages.Reviews(artsReviews); p != nil {
+	if p := compton_pages.Reviews(id, rdx); p != nil {
 		if err = p.WriteResponse(w); err != nil {
 			http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		}

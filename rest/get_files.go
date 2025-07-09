@@ -23,7 +23,7 @@ func GetFiles(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if p := compton_pages.Files(id); p != nil {
+	if p := compton_pages.Files(id, rdx); p != nil {
 		if err := p.WriteResponse(w); err != nil {
 			http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		}

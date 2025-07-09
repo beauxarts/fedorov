@@ -18,7 +18,7 @@ var (
 )
 
 func ExternalLinks(id string, rdx redux.Readable) compton.PageElement {
-	s := compton_fragments.ProductSection(compton_data.ExternalLinksSection)
+	s := compton_fragments.ProductSection(compton_data.ExternalLinksSection, id, rdx)
 	if links := compton_fragments.ExternalLinks(s, externalLinks(id, rdx)); links != nil {
 		s.Append(links)
 	}

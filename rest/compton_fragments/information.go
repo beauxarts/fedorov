@@ -57,28 +57,10 @@ func formatProperty(id, property string, at litres_integration.ArtType, rdx redu
 		for _, seriesId := range seriesIds {
 			seriesName, _ := rdx.GetLastVal(data.SeriesNameProperty, seriesId)
 			seriesNames = append(seriesNames, seriesName)
-
-			//seriesArtCount, _ := rdx.GetLastVal(data.SeriesArtsCountProperty, seriesId)
-			//seriesArtCounts = append(seriesArtCounts, seriesArtCount)
 		}
 	}
 
 	values, _ := rdx.GetAllValues(property, id)
-	//firstValue := ""
-	//if len(values) > 0 {
-	//	firstValue = values[0]
-	//}
-	//seriesNames := make([]string, 0)
-	//
-	//seriesIds, _ := rdx.GetAllValues(data.SeriesIdProperty, id)
-	//for _, seriesId := range seriesIds {
-	//	if seriesName, ok := rdx.GetLastVal(data.SeriesNameProperty, seriesId); ok {
-	//		seriesNames = append(seriesNames, seriesName)
-	//	}
-	//}
-	//
-	//seriesArtOrder, _ := rdx.GetAllValues(data.SeriesArtOrderProperty, id)
-	//fmt.Println(seriesNames, seriesArtOrder)
 
 	for ii, value := range values {
 		switch property {
@@ -111,16 +93,6 @@ func formatProperty(id, property string, at litres_integration.ArtType, rdx redu
 			fmtProperty.values[value] = noHref()
 		case data.CurrentPagesOrSecondsProperty:
 			value = fmtCurrentPagesOrSeconds(value, at)
-			//switch at {
-			//case litres_integration.ArtTypeText:
-			//	fallthrough
-			//case litres_integration.ArtTypePDF:
-			//	value += " стр"
-			//case litres_integration.ArtTypeAudio:
-			//	if vi, err := strconv.ParseInt(value, 10, 32); err == nil {
-			//		value = fmtSeconds(int(vi))
-			//	}
-			//}
 			fmtProperty.values[value] = noHref()
 		case data.SeriesProperty:
 			if ii < len(seriesNames) {
@@ -130,78 +102,8 @@ func formatProperty(id, property string, at litres_integration.ArtType, rdx redu
 						value += " " + seriesArtOrder[ii]
 					}
 				}
-				//if ii < len(seriesArtCounts) {
-				//	if seriesArtOrder[ii] != "0" {
-				//		value += " из " + seriesArtCounts[ii]
-				//	}
-				//}
 				fmtProperty.values[value] = searchHref(data.SeriesProperty, seriesNames[ii])
 			}
-		//case vangogh_local_data.WishlistedProperty:
-		//	if owned {
-		//		break
-		//	}
-		//	title := "No"
-		//	if value == vangogh_local_data.TrueValue {
-		//		title = "Yes"
-		//	}
-		//	fmtProperty.values[title] = searchHref(property, value)
-		//case vangogh_local_data.IncludesGamesProperty:
-		//	fallthrough
-		//case vangogh_local_data.IsIncludedByGamesProperty:
-		//	fallthrough
-		//case vangogh_local_data.RequiresGamesProperty:
-		//	fallthrough
-		//case vangogh_local_data.IsRequiredByGamesProperty:
-		//	refTitle := value
-		//	if rtp, ok := rdx.GetLastVal(vangogh_local_data.TitleProperty, value); ok {
-		//		refTitle = rtp
-		//	}
-		//	fmtProperty.values[refTitle] = "/product?id=" + value
-		//case vangogh_local_data.GOGOrderDateProperty:
-		//	jtd := justTheDate(value)
-		//	fmtProperty.values[jtd] = searchHref(property, jtd)
-		//case vangogh_local_data.LanguageCodeProperty:
-		//	fmtProperty.values[compton_data.FormatLanguage(value)] = searchHref(property, value)
-		//case vangogh_local_data.RatingProperty:
-		//	fmtProperty.values[fmtGOGRating(value)] = noHref()
-		//case vangogh_local_data.TagIdProperty:
-		//	tagName := value
-		//	if tnp, ok := rdx.GetLastVal(vangogh_local_data.TagNameProperty, value); ok {
-		//		tagName = tnp
-		//	}
-		//	fmtProperty.values[tagName] = searchHref(property, tagName)
-		//case vangogh_local_data.PriceProperty:
-		//	if !isFree {
-		//		if isDiscounted && !owned {
-		//			if bpp, ok := rdx.GetLastVal(vangogh_local_data.BasePriceProperty, id); ok {
-		//				fmtProperty.values["Base: "+bpp] = noHref()
-		//			}
-		//			fmtProperty.values["Sale: "+value] = noHref()
-		//		} else {
-		//			fmtProperty.values[value] = noHref()
-		//		}
-		//	}
-		//case vangogh_local_data.HLTBHoursToCompleteMainProperty:
-		//	fallthrough
-		//case vangogh_local_data.HLTBHoursToCompletePlusProperty:
-		//	fallthrough
-		//case vangogh_local_data.HLTBHoursToComplete100Property:
-		//	ct := strings.TrimLeft(value, "0") + " hrs"
-		//	fmtProperty.values[ct] = noHref()
-		//case vangogh_local_data.HLTBReviewScoreProperty:
-		//	if value != "0" {
-		//		fmtProperty.values[fmtHLTBRating(value)] = noHref()
-		//	}
-		//case vangogh_local_data.DiscountPercentageProperty:
-		//	fmtProperty.values[value] = noHref()
-		//case vangogh_local_data.PublishersProperty:
-		//	fallthrough
-		//case vangogh_local_data.DevelopersProperty:
-		//	fmtProperty.values[value] = grdSortedSearchHref(property, value)
-		//case vangogh_local_data.EnginesBuildsProperty:
-		//	fmtProperty.values[value] = noHref()
-		//
 		default:
 			fmtProperty.values[value] = searchHref(property, value)
 		}
@@ -209,36 +111,6 @@ func formatProperty(id, property string, at litres_integration.ArtType, rdx redu
 
 	// format actions, class
 	switch property {
-	//case vangogh_local_data.OwnedProperty:
-	//	if res, ok := rdx.GetLastVal(vangogh_local_data.ValidationResultProperty, id); ok {
-	//		fmtProperty.class = res
-	//	}
-	//case vangogh_local_data.WishlistedProperty:
-	//	if !owned {
-	//		switch firstValue {
-	//		case vangogh_local_data.TrueValue:
-	//			fmtProperty.actions["Remove"] = "/wishlist/remove?id=" + id
-	//		case vangogh_local_data.FalseValue:
-	//			fmtProperty.actions["Add"] = "/wishlist/add?id=" + id
-	//		}
-	//	}
-	//case vangogh_local_data.TagIdProperty:
-	//	if owned {
-	//		fmtProperty.actions["Edit"] = "/tags/edit?id=" + id
-	//	}
-	//case vangogh_local_data.LocalTagsProperty:
-	//	fmtProperty.actions["Edit"] = "/local-tags/edit?id=" + id
-	//case vangogh_local_data.SteamReviewScoreDescProperty:
-	//	fmtProperty.class = reviewClass(firstValue)
-	//case vangogh_local_data.RatingProperty:
-	//	fmtProperty.class = reviewClass(fmtGOGRating(firstValue))
-	//case vangogh_local_data.HLTBReviewScoreProperty:
-	//	fmtProperty.class = reviewClass(fmtHLTBRating(firstValue))
-	//case vangogh_local_data.SteamDeckAppCompatibilityCategoryProperty:
-	//	fmtProperty.class = firstValue
-	//	if firstValue != "" {
-	//		fmtProperty.actions["&darr;"] = "#Steam Deck"
-	//	}
 	}
 
 	return fmtProperty
@@ -256,17 +128,16 @@ func propertyTitleValues(r compton.Registrar, property string, fmtProperty forma
 
 	tv := compton.TitleValues(r, compton_data.PropertyTitles[property]).
 		SetLinksTarget(compton.LinkTargetTop).
-		ForegroundColor(color.Foreground).
-		TitleForegroundColor(color.Gray).
+		ForegroundColor(color.RepForeground).
+		TitleForegroundColor(color.RepGray).
 		RowGap(size.XSmall)
 
 	if len(fmtProperty.values) > 0 {
 
-		if len(fmtProperty.values) < 4 {
+		if len(fmtProperty.values) < 2 {
 			tv.AppendLinkValues(fmtProperty.values)
 		} else {
 			summaryTitle := fmt.Sprintf("%d штук(и)", len(fmtProperty.values))
-			//summaryElement := compton.Fspan(r, summaryTitle).
 			//	ForegroundColor(color.Foreground)
 			ds := compton.DSSmall(r, summaryTitle, false).
 				SummaryMarginBlockEnd(size.Normal).

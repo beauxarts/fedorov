@@ -7,10 +7,11 @@ import (
 	"github.com/beauxarts/fedorov/rest/compton_fragments"
 	"github.com/boggydigital/compton"
 	"github.com/boggydigital/compton/consts/direction"
+	"github.com/boggydigital/redux"
 )
 
-func Files(id string) compton.PageElement {
-	s := compton_fragments.ProductSection(compton_data.FilesSection)
+func Files(id string, rdx redux.Readable) compton.PageElement {
+	s := compton_fragments.ProductSection(compton_data.FilesSection, id, rdx)
 
 	filesReader, err := data.NewArtsReader(litres_integration.ArtsTypeFiles)
 	if err != nil {

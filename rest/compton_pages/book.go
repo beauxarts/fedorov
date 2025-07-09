@@ -49,7 +49,7 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 
 	if subtitle, ok := rdx.GetLastVal(data.SubtitleProperty, id); ok {
 		productSubtitle := compton.Fspan(p, subtitle).
-			ForegroundColor(color.Gray).
+			ForegroundColor(color.RepGray).
 			FontSize(size.XSmall).
 			TextAlign(align.Center)
 		pageStack.Append(productSubtitle)
@@ -68,8 +68,8 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 
 		sectionTitle := compton_data.SectionTitles[section]
 		detailsSummary := compton.DSLarge(p, sectionTitle, slices.Contains(openSections, section)).
-			BackgroundColor(color.Highlight).
-			MarkerColor(color.Gray).
+			BackgroundColor(color.RepHighlight).
+			MarkerColor(color.RepGray).
 			SummaryMarginBlockEnd(size.Normal).
 			DetailsMarginBlockEnd(size.Unset)
 		detailsSummary.SetId(sectionTitle)
@@ -87,7 +87,7 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 			detailsSummary.AppendBadges(productBadges)
 		case compton_data.ReviewsSection:
 			if ratingAvg := compton_fragments.RatingAvg(id, rdx); ratingAvg != "" {
-				ratingBadge := compton.Badge(p, ratingAvg, color.Background, color.Foreground)
+				ratingBadge := compton.Badge(p, ratingAvg, color.Background, color.RepForeground)
 				detailsSummary.AppendBadges(ratingBadge)
 			}
 		}

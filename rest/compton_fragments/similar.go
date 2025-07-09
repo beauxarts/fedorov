@@ -21,7 +21,7 @@ func Similar(r compton.Registrar, id string, artsSimilar *litres_integration.Art
 
 	if artsSimilar == nil || len(artsSimilar.Payload.Data) == 0 {
 		stack.Append(compton.Fspan(r, "Для данной книги пока нет сходных книг").
-			ForegroundColor(color.Gray).
+			ForegroundColor(color.RepGray).
 			TextAlign(align.Center))
 		return stack
 	}
@@ -34,7 +34,7 @@ func Similar(r compton.Registrar, id string, artsSimilar *litres_integration.Art
 		artId := strconv.Itoa(art.Id)
 		if rdx.HasKey(data.TitleProperty, artId) {
 			linkHref = "/book?id=" + artId
-			linkColor = color.Foreground
+			linkColor = color.RepForeground
 		}
 
 		link := compton.A(linkHref)
@@ -58,7 +58,7 @@ func Similar(r compton.Registrar, id string, artsSimilar *litres_integration.Art
 			ColumnGap(size.XXSmall)
 
 		for _, fmtBadge := range FormatBadges(artId, rdx) {
-			badge := compton.SmallBadge(r, fmtBadge.Title, fmtBadge.Background, color.Highlight)
+			badge := compton.SmallBadge(r, fmtBadge.Title, fmtBadge.Background, color.RepHighlight)
 			linkBadges.Append(badge)
 		}
 
