@@ -9,6 +9,7 @@ import (
 	"github.com/boggydigital/compton/consts/align"
 	"github.com/boggydigital/compton/consts/color"
 	"github.com/boggydigital/compton/consts/direction"
+	"github.com/boggydigital/compton/consts/loading"
 	"github.com/boggydigital/compton/consts/size"
 	"github.com/boggydigital/issa"
 	"github.com/boggydigital/redux"
@@ -34,22 +35,7 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 	}
 
 	appNav := compton_fragments.AppNavLinks(p, "")
-
-	showTocNavLinks := compton.NavLinks(p)
-	showTocNavLinks.SetAttribute("style", "view-transition-name:secondary-nav")
-	showTocLink := showTocNavLinks.AppendLink(p, &compton.NavTarget{
-		Href:   "#",
-		Symbol: compton.DownwardArrow,
-	})
-
-	topLevelNav := []compton.Element{appNav, showTocNavLinks}
-
-	if bookSectionsLinks := compton.SectionsLinks(p, hasSections, compton_data.SectionTitles); bookSectionsLinks != nil {
-		pageStack.Append(compton.Attach(p, showTocLink, bookSectionsLinks))
-		topLevelNav = append(topLevelNav, bookSectionsLinks)
-	}
-
-	pageStack.Append(compton.FICenter(p, topLevelNav...))
+	pageStack.Append(compton.FICenter(p, appNav))
 
 	if cover := compton_fragments.BookCover(p, id, rdx); cover != nil {
 		pageStack.Append(compton.FICenter(p, cover))
@@ -106,7 +92,7 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 			}
 		}
 
-		ifh := compton.IframeExpandHost(p, section, "/"+section+"?id="+id)
+		ifh := compton.IframeExpandHost(p, section, "/"+section+"?id="+id, loading.Lazy)
 		detailsSummary.Append(ifh)
 
 		pageStack.Append(detailsSummary)
