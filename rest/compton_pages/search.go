@@ -22,9 +22,6 @@ func Search(query map[string][]string, ids []string, from, to int, rdx redux.Rea
 	p.SetAttribute("style", "--c-rep:var(--c-background)")
 
 	searchScope := compton_data.SearchScopeFromQuery(query)
-	if searchScope == "" {
-		searchScope = "Поиск"
-	}
 
 	menuNav := compton_fragments.MenuNav(p, searchScope, "", rdx)
 	pageStack.Append(menuNav)
