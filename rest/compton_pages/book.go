@@ -87,7 +87,7 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 			detailsSummary.AppendBadges(productBadges)
 		case compton_data.ReviewsSection:
 			if ratingAvg := compton_fragments.RatingAvg(id, rdx); ratingAvg != "" {
-				ratingBadge := compton.Badge(p, ratingAvg, color.Background, color.RepForeground)
+				ratingBadge := compton.BadgeText(p, ratingAvg, color.RepForeground)
 				detailsSummary.AppendBadges(ratingBadge)
 			}
 		}
