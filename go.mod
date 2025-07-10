@@ -22,5 +22,5 @@ require (
 require (
 	github.com/boggydigital/busan v0.1.1 // indirect
 	github.com/boggydigital/wits v0.2.3 // indirect
-	golang.org/x/image v0.28.0 // indirect
+	golang.org/x/image v0.29.0 // indirect
 )
