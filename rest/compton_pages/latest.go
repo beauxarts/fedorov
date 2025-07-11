@@ -12,7 +12,7 @@ import (
 func Latest(ids []string, total int, rdx redux.Readable) compton.PageElement {
 
 	p, pageStack := compton_fragments.AppPage(compton_data.AppNavLatest)
-	p.AppendSpeculationRules("/book?id=*")
+	p.AppendSpeculationRules(compton.SpeculationRulesConservativeEagerness, "/*")
 
 	p.SetAttribute("style", "--c-rep:var(--c-background)")
 

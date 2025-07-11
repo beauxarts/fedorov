@@ -17,7 +17,7 @@ const filterSearchTitle = "Фильтр и поиск"
 func Search(query map[string][]string, ids []string, from, to int, rdx redux.Readable) compton.PageElement {
 
 	p, pageStack := compton_fragments.AppPage(compton_data.AppNavSearch)
-	p.AppendSpeculationRules("/book?id=*")
+	p.AppendSpeculationRules(compton.SpeculationRulesConservativeEagerness, "/*")
 
 	p.SetAttribute("style", "--c-rep:var(--c-background)")
 
