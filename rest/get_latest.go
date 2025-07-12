@@ -26,7 +26,8 @@ func GetLatest(w http.ResponseWriter, r *http.Request) {
 
 	if ahop, ok := rdx.GetAllValues(data.ArtsOperationsOrderProperty, data.ArtsOperationsOrderProperty); ok {
 		total = len(ahop)
-		if !all {
+
+		if !all && len(ahop) > latestBooksLimit {
 			ahop = ahop[:latestBooksLimit]
 		}
 		ids = ahop
