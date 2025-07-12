@@ -99,7 +99,7 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 	}
 
 	pageStack.Append(compton.Br(),
-		compton.Footer(p, "Tokyo", "https://github.com/beauxarts", "🇯🇵"))
+		compton.Footer(p, "東京からこんにちは", "https://github.com/beauxarts"))
 
 	return p
 }

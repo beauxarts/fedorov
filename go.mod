@@ -1,11 +1,11 @@
 module github.com/beauxarts/fedorov
 
-go 1.24.4
+go 1.24.5
 
 require (
 	github.com/boggydigital/backups v0.1.6
 	github.com/boggydigital/clo v1.0.7
-	github.com/boggydigital/compton v0.3.59
+	github.com/boggydigital/compton v0.3.63
 	github.com/boggydigital/coost v0.3.10
 	github.com/boggydigital/dolo v0.2.22
 	github.com/boggydigital/issa v0.1.23

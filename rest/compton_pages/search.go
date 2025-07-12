@@ -84,7 +84,7 @@ func Search(query map[string][]string, ids []string, from, to int, rdx redux.Rea
 	}
 
 	pageStack.Append(compton.Br(),
-		compton.Footer(p, "Tokyo", "https://github.com/beauxarts", "🇯🇵"))
+		compton.Footer(p, "東京からこんにちは", "https://github.com/beauxarts"))
 
 	return p
 }

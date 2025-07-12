@@ -57,7 +57,7 @@ func Latest(ids []string, total int, rdx redux.Readable) compton.PageElement {
 	latestPurchases.Append(booksList)
 
 	pageStack.Append(compton.Br(),
-		compton.Footer(p, "Tokyo", "https://github.com/beauxarts", "🇯🇵"))
+		compton.Footer(p, "東京からこんにちは", "https://github.com/beauxarts"))
 
 	return p
 }
