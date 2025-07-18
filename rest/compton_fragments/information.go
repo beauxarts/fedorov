@@ -11,10 +11,10 @@ import (
 	"github.com/boggydigital/compton/consts/direction"
 	"github.com/boggydigital/compton/consts/size"
 	"github.com/boggydigital/redux"
-	"maps"
-	"slices"
 	"strings"
 )
+
+const propertyValuesLimit = 2
 
 type formattedProperty struct {
 	values  map[string]string
@@ -134,27 +134,7 @@ func propertyTitleValues(r compton.Registrar, property string, fmtProperty forma
 
 	if len(fmtProperty.values) > 0 {
 
-		if len(fmtProperty.values) < 2 {
-			tv.AppendLinkValues(fmtProperty.values)
-		} else {
-			summaryTitle := fmt.Sprintf("%d штук(и)", len(fmtProperty.values))
-			//	ForegroundColor(color.Foreground)
-			ds := compton.DSSmall(r, summaryTitle, false).
-				SummaryMarginBlockEnd(size.Normal).
-				DetailsMarginBlockEnd(size.Small)
-			row := compton.FlexItems(r, direction.Row).
-				JustifyContent(align.Start)
-			keys := maps.Keys(fmtProperty.values)
-			sortedKeys := slices.Sorted(keys)
-			for _, link := range sortedKeys {
-				href := fmtProperty.values[link]
-				anchor := compton.AText(link, href)
-				anchor.SetAttribute("target", "_top")
-				row.Append(anchor)
-			}
-			ds.Append(row)
-			tv.AppendValues(ds)
-		}
+		tv.AppendLinkValues(propertyValuesLimit, fmtProperty.values)
 
 		if fmtProperty.class != "" {
 			tv.AddClass(fmtProperty.class)
@@ -165,7 +145,7 @@ func propertyTitleValues(r compton.Registrar, property string, fmtProperty forma
 		for ac, acHref := range fmtProperty.actions {
 			actionLink := compton.A(acHref)
 			actionLink.Append(compton.Fspan(r, ac).ForegroundColor(color.Blue))
-			tv.AppendValues(actionLink)
+			tv.Append(actionLink)
 		}
 	}
 

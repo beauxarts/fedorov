@@ -10,6 +10,8 @@ import (
 	"strings"
 )
 
+const linkValuesLimit = 2
+
 func ExternalLinks(r compton.Registrar, extLinks map[string][]string) compton.Element {
 
 	grid := compton.FlexItems(r, direction.Row).JustifyContent(align.Start)
@@ -38,6 +40,6 @@ func externalLinks(r compton.Registrar, property string, links []string) compton
 		ForegroundColor(color.Cyan).
 		TitleForegroundColor(color.RepForeground).
 		SetLinksTarget(compton.LinkTargetTop).
-		AppendLinkValues(linksHrefs)
+		AppendLinkValues(linkValuesLimit, linksHrefs)
 	return tv
 }
