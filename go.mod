@@ -1,11 +1,11 @@
 module github.com/beauxarts/fedorov
 
-go 1.24.5
+go 1.25.0
 
 require (
 	github.com/boggydigital/backups v0.1.6
 	github.com/boggydigital/clo v1.0.7
-	github.com/boggydigital/compton v0.3.81
+	github.com/boggydigital/compton v0.3.87
 	github.com/boggydigital/coost v0.3.11
 	github.com/boggydigital/dolo v0.2.23
 	github.com/boggydigital/issa v0.1.23
@@ -16,11 +16,11 @@ require (
 	github.com/boggydigital/pathways v0.1.15
 	github.com/boggydigital/redux v0.1.9
 	github.com/boggydigital/yet_urls v0.1.57
-	golang.org/x/net v0.42.0
+	golang.org/x/net v0.43.0
 )
 
 require (
 	github.com/boggydigital/busan v0.1.1 // indirect
 	github.com/boggydigital/wits v0.2.3 // indirect
-	golang.org/x/image v0.29.0 // indirect
+	golang.org/x/image v0.30.0 // indirect
 )
