@@ -1,13 +1,15 @@
 package compton_fragments
 
 import (
+	"net/url"
+	"strconv"
+
 	"github.com/beauxarts/fedorov/litres_integration"
 	"github.com/boggydigital/compton"
 	"github.com/boggydigital/compton/consts/color"
 	"github.com/boggydigital/compton/consts/direction"
 	"github.com/boggydigital/compton/consts/font_weight"
 	"github.com/boggydigital/compton/consts/size"
-	"strconv"
 )
 
 var typeColors = map[string]color.Color{
@@ -23,7 +25,8 @@ func DownloadType(r compton.Registrar, id string, dt *litres_integration.ArtsFil
 	downloadStack := compton.FlexItems(r, direction.Column).RowGap(size.Small)
 	downloadStack.AddClass("download-type")
 
-	downloadLink := compton.A("/file?id=" + id + "&file=" + dt.TypeFilename())
+	dtfUrl := url.PathEscape(dt.TypeFilename())
+	downloadLink := compton.A("/file?id=" + id + "&file=" + dtfUrl)
 
 	downloadLinkStack := compton.FlexItems(r, direction.Column).RowGap(size.Small)
 	downloadLink.Append(downloadLinkStack)
