@@ -1,9 +1,10 @@
 package rest
 
 import (
+	"net/http"
+
 	"github.com/beauxarts/fedorov/rest/compton_pages"
 	"github.com/boggydigital/nod"
-	"net/http"
 )
 
 func GetFiles(w http.ResponseWriter, r *http.Request) {
@@ -24,7 +25,7 @@ func GetFiles(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if p := compton_pages.Files(id, rdx); p != nil {
-		if err := p.WriteResponse(w); err != nil {
+		if err = p.WriteResponse(w); err != nil {
 			http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 		}
 	}

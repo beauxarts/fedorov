@@ -3,14 +3,15 @@ package main
 import (
 	"bytes"
 	_ "embed"
+	"log"
+	"os"
+
 	"github.com/beauxarts/fedorov/cli"
 	"github.com/beauxarts/fedorov/clo_delegates"
 	"github.com/beauxarts/fedorov/data"
 	"github.com/boggydigital/clo"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/pathways"
-	"log"
-	"os"
 )
 
 const (
@@ -36,7 +37,7 @@ func main() {
 		data.DefaultRootDir,
 		data.RelToAbsDirs,
 		data.AllAbsDirs...); err != nil {
-		log.Fatalln(err)
+		log.Fatalln(nod.Error(err))
 	}
 
 	defs, err := clo.Load(
@@ -44,7 +45,7 @@ func main() {
 		bytes.NewBuffer(cliHelp),
 		clo_delegates.Values)
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatalln(nod.Error(err))
 	}
 
 	clo.HandleFuncs(map[string]clo.Handler{
@@ -72,10 +73,10 @@ func main() {
 	})
 
 	if err = defs.AssertCommandsHaveHandlers(); err != nil {
-		log.Fatalln(err)
+		log.Fatalln(nod.Error(err))
 	}
 
 	if err = defs.Serve(os.Args[1:]); err != nil {
-		log.Fatalln(err)
+		log.Fatalln(nod.Error(err))
 	}
 }
