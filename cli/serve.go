@@ -2,11 +2,12 @@ package cli
 
 import (
 	"fmt"
-	"github.com/beauxarts/fedorov/rest"
-	"github.com/boggydigital/nod"
 	"net/http"
 	"net/url"
 	"strconv"
+
+	"github.com/beauxarts/fedorov/rest"
+	"github.com/boggydigital/nod"
 )
 
 func ServeHandler(u *url.URL) error {
@@ -42,14 +43,13 @@ func Serve(port int, stderr bool) error {
 		nod.DisableOutput(nod.StdOut)
 	}
 
-	sa := nod.Begin("serving at port %d...", port)
-	defer sa.Done()
-
+	ia := nod.Begin("initializing server...")
 	if err := rest.Init(); err != nil {
 		return err
 	}
+	ia.Done()
 
-	rest.HandleFuncs(port)
+	rest.HandleFuncs()
 
 	return http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
 }

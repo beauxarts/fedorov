@@ -1,9 +1,10 @@
 package rest
 
 import (
+	"net/http"
+
 	"github.com/boggydigital/middleware"
 	"github.com/boggydigital/nod"
-	"net/http"
 )
 
 const (
@@ -16,11 +17,7 @@ var (
 	Log  = nod.RequestLog
 )
 
-var port int
-
-func HandleFuncs(p int) {
-
-	port = p
+func HandleFuncs() {
 
 	patternHandlers := map[string]http.Handler{
 		"GET /manifest.json": Log(http.HandlerFunc(GetManifest)),

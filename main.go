@@ -76,7 +76,7 @@ func main() {
 		log.Fatalln(nod.Error(err))
 	}
 
-	if err = defs.Serve(os.Args[1:]); err != nil {
+	if err = defs.ParseServe(os.Args[1:]); err != nil {
 		log.Fatalln(nod.Error(err))
 	}
 }
