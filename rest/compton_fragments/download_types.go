@@ -31,7 +31,7 @@ func DownloadType(r compton.Registrar, id string, dt *litres_integration.ArtsFil
 	downloadLinkStack := compton.FlexItems(r, direction.Column).RowGap(size.Small)
 	downloadLink.Append(downloadLinkStack)
 
-	filename := compton.Fspan(r, dt.TypeFilenameSansExt()).FontWeight(font_weight.Bolder)
+	filename := compton.Fspan(r, dt.TypeFilename()).FontWeight(font_weight.Bolder)
 	filename.AddClass("filename")
 	downloadLinkStack.Append(filename)
 

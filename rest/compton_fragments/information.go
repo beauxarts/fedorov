@@ -2,6 +2,8 @@ package compton_fragments
 
 import (
 	"fmt"
+	"strings"
+
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/litres_integration"
 	"github.com/beauxarts/fedorov/rest/compton_data"
@@ -11,7 +13,6 @@ import (
 	"github.com/boggydigital/compton/consts/direction"
 	"github.com/boggydigital/compton/consts/size"
 	"github.com/boggydigital/redux"
-	"strings"
 )
 
 const propertyValuesLimit = 2

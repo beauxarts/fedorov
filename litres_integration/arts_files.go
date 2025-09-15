@@ -2,7 +2,6 @@ package litres_integration
 
 import (
 	"net/url"
-	"path"
 	"path/filepath"
 	"slices"
 	"strconv"
@@ -97,10 +96,6 @@ func (afd *ArtsFilesData) TypeDescription() string {
 		return td
 	}
 	return afdt
-}
-
-func (afd *ArtsFilesData) TypeFilenameSansExt() string {
-	return strings.TrimSuffix(afd.Filename, path.Ext(afd.Filename))
 }
 
 func (afd *ArtsFilesData) TypeFilename() string {
