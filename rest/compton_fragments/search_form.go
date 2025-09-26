@@ -1,6 +1,9 @@
 package compton_fragments
 
 import (
+	"slices"
+	"strings"
+
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/litres_integration"
 	"github.com/beauxarts/fedorov/rest/compton_data"
@@ -10,8 +13,6 @@ import (
 	"github.com/boggydigital/compton/consts/size"
 	"github.com/boggydigital/redux"
 	"golang.org/x/net/html/atom"
-	"slices"
-	"strings"
 )
 
 func SearchForm(r compton.Registrar, query map[string][]string, searchQuery *compton.FrowElement, rdx redux.Readable) compton.Element {
@@ -51,7 +52,7 @@ func searchInputs(r compton.Registrar, query map[string][]string, container comp
 		title := compton_data.PropertyTitles[property]
 		value := strings.Join(query[property], ", ")
 		titleInput := compton.TISearchValue(r, title, property, value)
-		titleInput.RowGap(size.XSmall)
+		titleInput.RowGap(size.XSmall).Width(size.XXXLarge)
 
 		if ii == 0 {
 			if input := titleInput.GetFirstElementByTagName(atom.Input); input != nil {
