@@ -1,13 +1,14 @@
 package compton_fragments
 
 import (
+	"strings"
+
 	"github.com/beauxarts/fedorov/rest/compton_data"
 	"github.com/boggydigital/compton"
 	"github.com/boggydigital/compton/consts/align"
 	"github.com/boggydigital/compton/consts/color"
 	"github.com/boggydigital/compton/consts/direction"
 	"github.com/boggydigital/compton/consts/size"
-	"strings"
 )
 
 const linkValuesLimit = 2
@@ -40,6 +41,7 @@ func externalLinks(r compton.Registrar, property string, links []string) compton
 		ForegroundColor(color.Cyan).
 		TitleForegroundColor(color.RepForeground).
 		SetLinksTarget(compton.LinkTargetTop).
-		AppendLinkValues(linkValuesLimit, linksHrefs)
+		AppendLinkValues(linkValuesLimit, linksHrefs).
+		Width(size.XXXLarge)
 	return tv
 }

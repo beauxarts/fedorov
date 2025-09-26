@@ -131,7 +131,8 @@ func propertyTitleValues(r compton.Registrar, property string, fmtProperty forma
 		SetLinksTarget(compton.LinkTargetTop).
 		ForegroundColor(color.RepForeground).
 		TitleForegroundColor(color.RepGray).
-		RowGap(size.XSmall)
+		RowGap(size.XSmall).
+		Width(size.XXXLarge)
 
 	if len(fmtProperty.values) > 0 {
 
