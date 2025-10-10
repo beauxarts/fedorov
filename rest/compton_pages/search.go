@@ -1,15 +1,16 @@
 package compton_pages
 
 import (
+	"maps"
+	"slices"
+	"strconv"
+
 	"github.com/beauxarts/fedorov/rest/compton_data"
 	"github.com/beauxarts/fedorov/rest/compton_fragments"
 	"github.com/boggydigital/compton"
 	"github.com/boggydigital/compton/consts/color"
 	"github.com/boggydigital/compton/consts/size"
 	"github.com/boggydigital/redux"
-	"maps"
-	"slices"
-	"strconv"
 )
 
 const filterSearchTitle = "Фильтр и поиск"
@@ -83,8 +84,7 @@ func Search(query map[string][]string, ids []string, from, to int, rdx redux.Rea
 		pageStack.Append(nextPageNavLink)
 	}
 
-	pageStack.Append(compton.Br(),
-		compton.Footer(p, "東京からこんにちは", "https://github.com/beauxarts"))
+	pageStack.Append(compton.Br(), compton.FICenter(p, compton_fragments.GitHubLink(p)))
 
 	return p
 }

@@ -1,6 +1,9 @@
 package compton_pages
 
 import (
+	"slices"
+	"strings"
+
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/rest/compton_data"
 	"github.com/beauxarts/fedorov/rest/compton_fragments"
@@ -13,8 +16,6 @@ import (
 	"github.com/boggydigital/compton/consts/size"
 	"github.com/boggydigital/issa"
 	"github.com/boggydigital/redux"
-	"slices"
-	"strings"
 )
 
 var openSections = []string{
@@ -98,8 +99,7 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 		pageStack.Append(detailsSummary)
 	}
 
-	pageStack.Append(compton.Br(),
-		compton.Footer(p, "東京からこんにちは", "https://github.com/beauxarts"))
+	pageStack.Append(compton.Br(), compton.FICenter(p, compton_fragments.GitHubLink(p)))
 
 	return p
 }

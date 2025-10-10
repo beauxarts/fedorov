@@ -56,8 +56,7 @@ func Latest(ids []string, total int, rdx redux.Readable) compton.PageElement {
 	booksList := compton_fragments.BooksList(p, ids, 0, len(ids), rdx)
 	latestPurchases.Append(booksList)
 
-	pageStack.Append(compton.Br(),
-		compton.Footer(p, "東京からこんにちは", "https://github.com/beauxarts"))
+	pageStack.Append(compton.Br(), compton.FICenter(p, compton_fragments.GitHubLink(p)))
 
 	return p
 }
