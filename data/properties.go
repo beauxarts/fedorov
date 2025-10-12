@@ -74,6 +74,9 @@ const (
 	ReadersProperty      = "readers"
 	TranslatorsProperty  = "translators"
 
+	// free arts properties
+	FreeArtsProperty = "free-arts"
+
 	// arts files properties
 
 	// local properties

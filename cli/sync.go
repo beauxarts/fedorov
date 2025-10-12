@@ -1,15 +1,16 @@
 package cli
 
 import (
+	"net/http"
+	"net/url"
+	"strconv"
+	"time"
+
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/litres_integration"
 	"github.com/boggydigital/coost"
 	"github.com/boggydigital/pathways"
 	"github.com/boggydigital/redux"
-	"net/http"
-	"net/url"
-	"strconv"
-	"time"
 )
 
 func SyncHandler(u *url.URL) error {
@@ -42,6 +43,15 @@ func Sync(force bool) error {
 	recentArtsIds, err := GetRecentArts(force)
 	if err != nil {
 		return err
+	}
+
+	freeArtsIds, err := getFreeArts()
+	if err != nil {
+		return err
+	}
+
+	for freeArtId := range freeArtsIds {
+		recentArtsIds = append(recentArtsIds, freeArtId)
 	}
 
 	if err = GetLitResArts(litres_integration.AllArtsTypes(), hc, force, recentArtsIds...); err != nil {

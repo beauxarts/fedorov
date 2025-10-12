@@ -23,6 +23,10 @@ download-litres-covers
     force
     skip-existing
 
+free-arts
+    add^&
+    remove&
+
 get-litres-arts
     id^&
     arts-type*&={arts-types^}

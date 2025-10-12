@@ -54,6 +54,7 @@ func main() {
 		"dehydrate":                  cli.DehydrateHandler,
 		"download-litres-books":      cli.DownloadLitResBooksHandler,
 		"download-litres-covers":     cli.DownloadLitResCoversHandler,
+		"free-arts":                  cli.FreeArtsHandler,
 		"get-litres-arts":            cli.GetLitResArtsHandler,
 		"get-litres-authors":         cli.GetLitResAuthorsHandler,
 		"get-litres-contents":        cli.GetLitResContentsHandler,
