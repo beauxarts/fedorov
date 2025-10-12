@@ -3,7 +3,9 @@ package cli
 import (
 	"encoding/json"
 	"net/url"
+	"sort"
 	"strconv"
+	"time"
 
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/litres_integration"
@@ -33,8 +35,7 @@ func ReduceLitResOperations() error {
 	}
 
 	totalPages := kv.Len()
-	artsOperationsOrder := make([]string, 0, totalPages*litres_integration.OperationsLimit)
-	artsOperationsEventTimes := make(map[string][]string, totalPages*litres_integration.OperationsLimit)
+	artsOperationsDates := make(map[string][]string, totalPages*litres_integration.OperationsLimit)
 	artsFourthPresent := make(map[string][]string, totalPages*litres_integration.OperationsLimit)
 
 	for p := 1; p <= totalPages; p++ {
@@ -48,8 +49,7 @@ func ReduceLitResOperations() error {
 				}
 				for _, art := range dt.SpecificData.Arts {
 					artId := strconv.Itoa(art.Id)
-					artsOperationsOrder = append(artsOperationsOrder, artId)
-					artsOperationsEventTimes[artId] = []string{dt.Date}
+					artsOperationsDates[artId] = []string{dt.Date}
 					artsFourthPresent[artId] = []string{strconv.FormatBool(fourthPresent)}
 				}
 			}
@@ -68,7 +68,13 @@ func ReduceLitResOperations() error {
 	rdx, err := redux.NewWriter(reduxDir,
 		data.ArtsOperationsOrderProperty,
 		data.ArtsOperationsEventTimeProperty,
-		data.ArtFourthPresentProperty)
+		data.ArtFourthPresentProperty,
+		data.FreeArtsProperty)
+	if err != nil {
+		return err
+	}
+
+	latestArtsIds, err := getLatestOperationsFreeArts(artsOperationsDates, rdx)
 	if err != nil {
 		return err
 	}
@@ -76,11 +82,11 @@ func ReduceLitResOperations() error {
 	sra := nod.Begin(" saving redux...")
 	defer sra.Done()
 
-	if err = rdx.ReplaceValues(data.ArtsOperationsOrderProperty, data.ArtsOperationsOrderProperty, artsOperationsOrder...); err != nil {
+	if err = rdx.ReplaceValues(data.ArtsOperationsOrderProperty, data.ArtsOperationsOrderProperty, latestArtsIds...); err != nil {
 		return err
 	}
 
-	if err = rdx.BatchReplaceValues(data.ArtsOperationsEventTimeProperty, artsOperationsEventTimes); err != nil {
+	if err = rdx.BatchReplaceValues(data.ArtsOperationsEventTimeProperty, artsOperationsDates); err != nil {
 		return err
 	}
 
@@ -105,4 +111,41 @@ func getArtsOperations(p int, kv kevlar.KeyValues) (*litres_integration.Operatio
 	}
 
 	return &ops, nil
+}
+
+func getLatestOperationsFreeArts(artsOperationsDates map[string][]string, rdx redux.Readable) ([]string, error) {
+
+	artsOperationsTimes := make(map[string]time.Time)
+
+	for artId, dates := range artsOperationsDates {
+		for _, date := range dates {
+			if dt, err := time.Parse("2006-01-02T15:04:04", date); err != nil {
+				return nil, err
+			} else {
+				artsOperationsTimes[artId] = dt
+			}
+		}
+	}
+
+	for artId := range rdx.Keys(data.FreeArtsProperty) {
+		if date, ok := rdx.GetLastVal(data.FreeArtsProperty, artId); ok && date != "" {
+			if dt, err := time.Parse(time.RFC3339, date); err != nil {
+				return nil, err
+			} else {
+				artsOperationsTimes[artId] = dt
+			}
+		}
+	}
+
+	latestArtsIds := make([]string, 0, len(artsOperationsTimes))
+
+	for artId := range artsOperationsTimes {
+		latestArtsIds = append(latestArtsIds, artId)
+	}
+
+	sort.SliceStable(latestArtsIds, func(i, j int) bool {
+		return artsOperationsTimes[latestArtsIds[i]].After(artsOperationsTimes[latestArtsIds[j]])
+	})
+
+	return latestArtsIds, nil
 }
