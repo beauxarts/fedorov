@@ -35,8 +35,6 @@ services:
       - /docker/fedorov/covers:/var/lib/fedorov/covers
       # downloads dir (cold storage)
       - /docker/fedorov/downloads:/var/lib/fedorov/downloads
-      # imported dir (cold storage)
-      - /docker/fedorov/_imported:/var/lib/fedorov/_imported
       # sharing timezone from the host
       - /etc/localtime:/etc/localtime:ro
     ports:

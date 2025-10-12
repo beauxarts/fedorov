@@ -24,8 +24,6 @@ VOLUME /var/lib/fedorov/input
 VOLUME /var/lib/fedorov/covers
 #downloads
 VOLUME /var/lib/fedorov/downloads
-#imported
-VOLUME /var/lib/fedorov/_imported
 
 ENTRYPOINT ["/usr/bin/fedorov"]
 CMD ["serve","-port", "1510", "-stderr"]
