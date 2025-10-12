@@ -23,7 +23,6 @@ services:
       # - FV_SERVE_ADMIN-PASSWORD=ADMIN-PASSWORD
       # - FV_SERVE_SHARED-USERNAME=SHARED-USERNAME
       # - FV_SERVE_SHARED-PASSWORD=SHARED-PASSWORD
-      # - FV_WEBHOOK-URL=http://FEDOROV-ADDRESS/prerender
     volumes:
       # backups (cold storage)
       - /docker/fedorov/backups:/var/lib/fedorov/backups
