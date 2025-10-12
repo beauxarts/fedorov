@@ -2,14 +2,15 @@ package cli
 
 import (
 	"encoding/json"
+	"net/url"
+	"strconv"
+
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/litres_integration"
 	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/pathways"
 	"github.com/boggydigital/redux"
-	"net/url"
-	"strconv"
 )
 
 func ReduceLitResOperationsHandler(_ *url.URL) error {
@@ -75,15 +76,15 @@ func ReduceLitResOperations() error {
 	sra := nod.Begin(" saving redux...")
 	defer sra.Done()
 
-	if err := rdx.ReplaceValues(data.ArtsOperationsOrderProperty, data.ArtsOperationsOrderProperty, artsOperationsOrder...); err != nil {
+	if err = rdx.ReplaceValues(data.ArtsOperationsOrderProperty, data.ArtsOperationsOrderProperty, artsOperationsOrder...); err != nil {
 		return err
 	}
 
-	if err := rdx.BatchReplaceValues(data.ArtsOperationsEventTimeProperty, artsOperationsEventTimes); err != nil {
+	if err = rdx.BatchReplaceValues(data.ArtsOperationsEventTimeProperty, artsOperationsEventTimes); err != nil {
 		return err
 	}
 
-	if err := rdx.BatchReplaceValues(data.ArtFourthPresentProperty, artsFourthPresent); err != nil {
+	if err = rdx.BatchReplaceValues(data.ArtFourthPresentProperty, artsFourthPresent); err != nil {
 		return err
 	}
 

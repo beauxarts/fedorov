@@ -5,6 +5,7 @@ import (
 	"iter"
 	"net/url"
 	"strings"
+	"time"
 
 	"github.com/beauxarts/fedorov/data"
 	"github.com/boggydigital/nod"
@@ -12,30 +13,25 @@ import (
 	"github.com/boggydigital/redux"
 )
 
-func FreeArtsHandler(u *url.URL) error {
+func AddFreeArtsHandler(u *url.URL) error {
 
 	q := u.Query()
 
-	var add []string
-	if q.Has("add") {
-		add = strings.Split(q.Get("add"), ",")
+	var ids []string
+	if q.Has("id") {
+		ids = strings.Split(q.Get("id"), ",")
 	}
 
-	var remove []string
-	if q.Has("remove") {
-		remove = strings.Split(q.Get("remove"), ",")
-	}
-
-	return FreeArts(add, remove)
+	return AddFreeArts(ids...)
 }
 
-func FreeArts(add []string, remove []string) error {
+func AddFreeArts(ids ...string) error {
 
-	faa := nod.Begin("managing free arts...")
-	defer faa.Done()
+	afaa := nod.Begin("adding free arts...")
+	defer afaa.Done()
 
-	if len(add) == 0 && len(remove) == 0 {
-		return errors.New("free-arts requires ids to add or remove")
+	if len(ids) == 0 {
+		return errors.New("add-free-arts requires ids to add")
 	}
 
 	reduxDir, err := pathways.GetAbsRelDir(data.Redux)
@@ -48,20 +44,12 @@ func FreeArts(add []string, remove []string) error {
 		return err
 	}
 
-	if err = rdx.CutKeys(data.FreeArtsProperty, remove...); err != nil {
-		return err
+	freeArtsAdded := make(map[string][]string)
+	for _, artId := range ids {
+		freeArtsAdded[artId] = []string{time.Now().UTC().Format(time.RFC3339)}
 	}
 
-	if len(add) == 0 {
-		return nil
-	}
-
-	addedFreeArts := make(map[string][]string)
-	for _, artId := range add {
-		addedFreeArts[artId] = []string{artId}
-	}
-
-	if err = rdx.BatchAddValues(data.FreeArtsProperty, addedFreeArts); err != nil {
+	if err = rdx.BatchReplaceValues(data.FreeArtsProperty, freeArtsAdded); err != nil {
 		return err
 	}
 

@@ -6,6 +6,9 @@
 # {} - placeholder values
 # {^} - placeholder values, first value is default
 
+add-free-arts
+    id^&
+
 backup
 
 cascade
@@ -22,10 +25,6 @@ download-litres-covers
     id^&
     force
     skip-existing
-
-free-arts
-    add^&
-    remove&
 
 get-litres-arts
     id^&
