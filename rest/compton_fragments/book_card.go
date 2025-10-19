@@ -78,6 +78,7 @@ func BookCard(r compton.Registrar, id string, hydrated bool, rdx redux.Readable)
 
 	bookBadges := compton.FlexItems(r, direction.Row).
 		RowGap(size.XSmall).
+		FontSize(size.XXXSmall).
 		ColumnGap(size.XSmall).
 		JustifyContent(align.Start).
 		Width(size.FullWidth)

@@ -59,6 +59,7 @@ func Similar(r compton.Registrar, id string, artsSimilar *litres_integration.Art
 
 		linkBadges := compton.FlexItems(r, direction.Row).
 			RowGap(size.XXSmall).
+			FontSize(size.XXXSmall).
 			ColumnGap(size.XXSmall).
 			AlignItems(align.Center)
 
