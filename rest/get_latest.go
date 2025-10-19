@@ -1,10 +1,11 @@
 package rest
 
 import (
+	"net/http"
+
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/rest/compton_pages"
 	"github.com/boggydigital/nod"
-	"net/http"
 )
 
 const latestBooksLimit = 60
@@ -34,7 +35,7 @@ func GetLatest(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if p := compton_pages.Latest(ids, total, rdx); p != nil {
-		if err := p.WriteResponse(w); err != nil {
+		if err = p.WriteResponse(w); err != nil {
 			http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
 			return
 		}

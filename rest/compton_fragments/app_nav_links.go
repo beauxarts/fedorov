@@ -13,7 +13,7 @@ func AppNavLinks(r compton.Registrar, current string) compton.Element {
 	appNavLinks.AppendLink(r, &compton.NavTarget{
 		Href:     "/latest",
 		Title:    compton_data.AppNavLatest,
-		Symbol:   compton.Stack,
+		Symbol:   compton.Bookmark,
 		Selected: current == compton_data.AppNavLatest,
 	})
 
