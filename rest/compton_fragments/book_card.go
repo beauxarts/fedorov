@@ -1,6 +1,8 @@
 package compton_fragments
 
 import (
+	"strings"
+
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/litres_integration"
 	"github.com/beauxarts/fedorov/rest/compton_data"
@@ -11,7 +13,6 @@ import (
 	"github.com/boggydigital/compton/consts/size"
 	"github.com/boggydigital/issa"
 	"github.com/boggydigital/redux"
-	"strings"
 )
 
 func SummarizeBookProperties(id string, rdx redux.Readable) ([]string, map[string][]string) {
@@ -76,15 +77,14 @@ func BookCard(r compton.Registrar, id string, hydrated bool, rdx redux.Readable)
 	}
 
 	bookBadges := compton.FlexItems(r, direction.Row).
-		RowGap(size.XXSmall).
-		ColumnGap(size.XXSmall).
+		RowGap(size.XSmall).
+		ColumnGap(size.XSmall).
 		JustifyContent(align.Start).
 		Width(size.FullWidth)
 	bookBadges.SetAttribute("style", "view-transition-name:book-badges-"+id)
 
 	for _, fmtBadge := range FormatBadges(id, rdx) {
-		badge := compton.SmallBadge(r, fmtBadge.Title, fmtBadge.Background, color.Highlight)
-		badge.AddClass(fmtBadge.Class)
+		badge := compton.BadgeText(r, fmtBadge.Title, color.RepForeground)
 		bookBadges.Append(badge)
 	}
 

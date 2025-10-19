@@ -2,6 +2,9 @@ package compton_fragments
 
 import (
 	"fmt"
+	"strconv"
+	"strings"
+
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/litres_integration"
 	"github.com/boggydigital/compton"
@@ -11,8 +14,6 @@ import (
 	"github.com/boggydigital/compton/consts/font_weight"
 	"github.com/boggydigital/compton/consts/size"
 	"github.com/boggydigital/redux"
-	"strconv"
-	"strings"
 )
 
 func Similar(r compton.Registrar, id string, artsSimilar *litres_integration.ArtsSimilar, rdx redux.Readable) compton.Element {
@@ -40,13 +41,16 @@ func Similar(r compton.Registrar, id string, artsSimilar *litres_integration.Art
 		link := compton.A(linkHref)
 		link.SetAttribute("target", "_top")
 
-		linkStack := compton.FlexItems(r, direction.Column).RowGap(size.Small)
+		linkStack := compton.FlexItems(r, direction.Column).
+			RowGap(size.Small).
+			AlignContent(align.Center)
 
 		linkTitleRow := compton.FlexItems(r, direction.Row).
 			ColumnGap(size.Small).
 			RowGap(size.Small).
 			JustifyContent(align.Center).
-			AlignItems(align.Center)
+			AlignItems(align.Center).
+			AlignContent(align.Center)
 
 		linkTitle := compton.Fspan(r, art.Title).
 			TextAlign(align.Center).
@@ -55,10 +59,11 @@ func Similar(r compton.Registrar, id string, artsSimilar *litres_integration.Art
 
 		linkBadges := compton.FlexItems(r, direction.Row).
 			RowGap(size.XXSmall).
-			ColumnGap(size.XXSmall)
+			ColumnGap(size.XXSmall).
+			AlignItems(align.Center)
 
 		for _, fmtBadge := range FormatBadges(artId, rdx) {
-			badge := compton.SmallBadge(r, fmtBadge.Title, fmtBadge.Background, color.RepHighlight)
+			badge := compton.BadgeText(r, fmtBadge.Title, color.RepGray)
 			linkBadges.Append(badge)
 		}
 

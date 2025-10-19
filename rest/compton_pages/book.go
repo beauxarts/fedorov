@@ -78,17 +78,16 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 
 		switch section {
 		case compton_data.InformationSection:
-			productBadges := compton.FlexItems(p, direction.Row).ColumnGap(size.XSmall)
+			productBadges := compton.FlexItems(p, direction.Row).ColumnGap(size.Small)
 			productBadges.SetAttribute("style", "view-transition-name:book-badges-"+id)
 			for _, fmtBadge := range compton_fragments.FormatBadges(id, rdx) {
-				badge := compton.Badge(p, fmtBadge.Title, fmtBadge.Background, color.Highlight)
-				badge.AddClass(fmtBadge.Class)
+				badge := compton.BadgeText(p, fmtBadge.Title, color.RepGray)
 				productBadges.Append(badge)
 			}
 			detailsSummary.AppendBadges(productBadges)
 		case compton_data.ReviewsSection:
 			if ratingAvg := compton_fragments.RatingAvg(id, rdx); ratingAvg != "" {
-				ratingBadge := compton.BadgeText(p, ratingAvg, color.RepForeground)
+				ratingBadge := compton.BadgeText(p, ratingAvg, color.RepGray)
 				detailsSummary.AppendBadges(ratingBadge)
 			}
 		}
