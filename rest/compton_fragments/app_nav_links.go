@@ -11,17 +11,17 @@ func AppNavLinks(r compton.Registrar, current string) compton.Element {
 	appNavLinks.SetAttribute("style", "view-transition-name:primary-nav")
 
 	appNavLinks.AppendLink(r, &compton.NavTarget{
-		Href:     "/latest",
-		Title:    compton_data.AppNavLatest,
-		Symbol:   compton.Bookmark,
-		Selected: current == compton_data.AppNavLatest,
+		Href:        "/latest",
+		Title:       compton_data.AppNavLatest,
+		IconElement: compton.SvgUse(r, compton.Bookmark),
+		Selected:    current == compton_data.AppNavLatest,
 	})
 
 	appNavLinks.AppendLink(r, &compton.NavTarget{
-		Href:     "/search",
-		Title:    compton_data.AppNavSearch,
-		Symbol:   compton.Search,
-		Selected: current == compton_data.AppNavSearch,
+		Href:        "/search",
+		Title:       compton_data.AppNavSearch,
+		IconElement: compton.SvgUse(r, compton.Search),
+		Selected:    current == compton_data.AppNavSearch,
 	})
 
 	return appNavLinks

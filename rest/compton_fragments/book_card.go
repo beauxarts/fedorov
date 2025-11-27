@@ -7,10 +7,6 @@ import (
 	"github.com/beauxarts/fedorov/litres_integration"
 	"github.com/beauxarts/fedorov/rest/compton_data"
 	"github.com/boggydigital/compton"
-	"github.com/boggydigital/compton/consts/align"
-	"github.com/boggydigital/compton/consts/color"
-	"github.com/boggydigital/compton/consts/direction"
-	"github.com/boggydigital/compton/consts/size"
 	"github.com/boggydigital/issa"
 	"github.com/boggydigital/redux"
 )
@@ -76,20 +72,7 @@ func BookCard(r compton.Registrar, id string, hydrated bool, rdx redux.Readable)
 		bc.AppendTitle("[БЕЗ НАЗВАНИЯ]")
 	}
 
-	bookBadges := compton.FlexItems(r, direction.Row).
-		RowGap(size.XSmall).
-		FontSize(size.XXXSmall).
-		ColumnGap(size.XSmall).
-		JustifyContent(align.Start).
-		Width(size.FullWidth)
-	bookBadges.SetAttribute("style", "view-transition-name:book-badges-"+id)
-
-	for _, fmtBadge := range FormatBadges(id, rdx) {
-		badge := compton.BadgeText(r, fmtBadge.Title, color.RepForeground)
-		bookBadges.Append(badge)
-	}
-
-	bc.AppendBadges(bookBadges)
+	bc.AppendBadges(compton.Badges(r, FormatBadges(id, rdx)...))
 
 	properties, values := SummarizeBookProperties(id, rdx)
 	for _, p := range properties {

@@ -38,7 +38,7 @@ func DownloadType(r compton.Registrar, id string, dt *litres_integration.ArtsFil
 	row := compton.Frow(r).
 		FontSize(size.XSmall)
 
-	row.IconColor(compton.Circle, typeColors[dt.Type()])
+	row.IconColor(compton.CirclePositive, typeColors[dt.Type()])
 	row.PropVal("Тип", dt.TypeDescription())
 	row.PropVal("Формат", dt.Type())
 	row.PropVal("Размер", fmtBytes(dt.Size))

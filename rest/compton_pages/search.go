@@ -42,8 +42,12 @@ func Search(query map[string][]string, ids []string, from, to int, rdx redux.Rea
 			compton_data.ManyItemsSinglePage,
 			compton_data.ManyItemsManyPages)
 
-		resultsBadge := compton.BadgeText(p, cf.Title(from, to, len(ids)), color.Foreground).FontSize(size.XXSmall)
-		filterSearchDetails.AppendBadges(resultsBadge)
+		resultsBadge := compton.FormattedBadge{
+			Title: cf.Title(from, to, len(ids)),
+			Icon:  compton.NoSymbol,
+			Color: color.Foreground,
+		}
+		filterSearchDetails.AppendBadges(compton.Badges(p, resultsBadge))
 	}
 
 	var queryFrow *compton.FrowElement
