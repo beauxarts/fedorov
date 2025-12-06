@@ -23,7 +23,7 @@ func Latest(ids []string, total int, rdx redux.Readable) compton.PageElement {
 		Href:  "/latest?all",
 		Title: "Показать все",
 	})
-	showAllNavLinks.SetAttribute("style", "view-transition-name:secondary-nav")
+	//showAllNavLinks.SetAttribute("style", "view-transition-name:secondary-nav")
 
 	topNav := compton.FICenter(p, appNav)
 	if len(ids) < total {

@@ -76,8 +76,8 @@ func BookCard(r compton.Registrar, id string, hydrated bool, rdx redux.Readable)
 
 	properties, values := SummarizeBookProperties(id, rdx)
 	for _, p := range properties {
-		pp := bc.AppendProperty(compton_data.ShortPropertyTitles[p], compton.Text(strings.Join(values[p], ", ")))
-		pp.SetAttribute("style", "view-transition-name:"+p+id)
+		bc.AppendProperty(compton_data.ShortPropertyTitles[p], compton.Text(strings.Join(values[p], ", ")))
+		//pp.SetAttribute("style", "view-transition-name:"+p+id)
 	}
 
 	return bc

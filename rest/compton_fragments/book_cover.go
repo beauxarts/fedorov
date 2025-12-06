@@ -29,7 +29,7 @@ func BookCover(r compton.Registrar, id string, rdx redux.Readable) compton.Eleme
 	}
 
 	cover.AddClass("book-cover")
-	cover.SetAttribute("style", "view-transition-name:product-image-"+id)
+	//cover.SetAttribute("style", "view-transition-name:product-image-"+id)
 
 	return cover
 }

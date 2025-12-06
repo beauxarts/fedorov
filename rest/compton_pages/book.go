@@ -44,7 +44,7 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 
 	productTitle := compton.Heading(2)
 	productTitle.Append(compton.Fspan(p, title).TextAlign(align.Center))
-	productTitle.SetAttribute("style", "view-transition-name:product-title-"+id)
+	//productTitle.SetAttribute("style", "view-transition-name:product-title-"+id)
 
 	pageStack.Append(compton.FICenter(p, productTitle))
 
@@ -60,8 +60,8 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 		FontSize(size.XSmall)
 	properties, values := compton_fragments.SummarizeBookProperties(id, rdx)
 	for _, property := range properties {
-		pv := summaryRow.PropVal(compton_data.PropertyTitles[property], strings.Join(values[property], ", "))
-		pv.SetAttribute("style", "view-transition-name:"+property+id)
+		summaryRow.PropVal(compton_data.PropertyTitles[property], strings.Join(values[property], ", "))
+		//pv.SetAttribute("style", "view-transition-name:"+property+id)
 	}
 	pageStack.Append(compton.FICenter(p, summaryRow))
 
@@ -79,7 +79,7 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 		switch section {
 		case compton_data.InformationSection:
 			productBadges := compton.FlexItems(p, direction.Row).ColumnGap(size.Small).FontSize(size.XXSmall)
-			productBadges.SetAttribute("style", "view-transition-name:book-badges-"+id)
+			//productBadges.SetAttribute("style", "view-transition-name:book-badges-"+id)
 			productBadges.Append(compton.Badges(p, compton_fragments.FormatBadges(id, rdx)...))
 			detailsSummary.AppendBadges(productBadges)
 		case compton_data.ReviewsSection:

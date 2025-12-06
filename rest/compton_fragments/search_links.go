@@ -8,20 +8,21 @@ import (
 func SearchLinks(r compton.Registrar, current string) compton.Element {
 
 	searchNavLinks := compton.NavLinks(r)
-	searchNavLinks.SetAttribute("style", "view-transition-name:secondary-nav")
+	//searchNavLinks.SetAttribute("style", "view-transition-name:secondary-nav")
 
 	searchScopes := compton_data.SearchScopes()
 
 	for _, scope := range compton_data.SearchOrder {
 
-		searchLink := searchNavLinks.AppendLink(r, &compton.NavTarget{
+		searchNavLinks.AppendLink(r, &compton.NavTarget{
+			//searchLink := searchNavLinks.AppendLink(r, &compton.NavTarget{
 			Href:     "/search?" + searchScopes[scope],
 			Title:    scope,
 			Selected: current == scope,
 		})
-		if current == scope {
-			searchLink.SetAttribute("style", "view-transition-name:current-search-link")
-		}
+		//if current == scope {
+		//	searchLink.SetAttribute("style", "view-transition-name:current-search-link")
+		//}
 	}
 
 	return searchNavLinks
