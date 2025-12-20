@@ -3,7 +3,7 @@ module github.com/beauxarts/fedorov
 go 1.25.0
 
 require (
-	github.com/boggydigital/backups v0.1.6
+	github.com/boggydigital/backups v0.1.7
 	github.com/boggydigital/clo v1.0.8
 	github.com/boggydigital/compton v0.4.56
 	github.com/boggydigital/coost v0.3.11
