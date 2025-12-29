@@ -85,15 +85,18 @@ func AbsCookiesFilename() (string, error) {
 
 func InitPathways() error {
 
+	var setExists bool
 	if _, err := os.Stat(setPathwaysFilename); err == nil {
-		if Pwd, err = pathways.ReadSet(setPathwaysFilename); err != nil {
-			return err
-		}
-	} else {
-		if Pwd, err = pathways.NewRoot(rootPathwaysDir); err != nil {
-			return err
-		}
+		setExists = true
 	}
 
-	return nil
+	var err error
+	switch setExists {
+	case true:
+		Pwd, err = pathways.ReadSet(setPathwaysFilename)
+	default:
+		Pwd, err = pathways.NewRoot(rootPathwaysDir)
+	}
+
+	return err
 }
