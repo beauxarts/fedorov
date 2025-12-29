@@ -2,17 +2,17 @@ package cli
 
 import (
 	"fmt"
-	"github.com/beauxarts/fedorov/data"
-	"github.com/beauxarts/fedorov/litres_integration"
-	"github.com/boggydigital/kevlar"
-	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pathways"
-	"github.com/boggydigital/redux"
 	"maps"
 	"net/http"
 	"net/url"
 	"slices"
 	"strings"
+
+	"github.com/beauxarts/fedorov/data"
+	"github.com/beauxarts/fedorov/litres_integration"
+	"github.com/boggydigital/kevlar"
+	"github.com/boggydigital/nod"
+	"github.com/boggydigital/redux"
 )
 
 func GetLitResAuthorsHandler(u *url.URL) error {
@@ -75,10 +75,7 @@ func GetLitResAuthors(authorTypes []litres_integration.AuthorType, hc *http.Clie
 func getPersonsIds(force bool, artsIds ...string) ([]string, error) {
 	persons := make(map[string]interface{})
 
-	reduxDir, err := pathways.GetAbsRelDir(data.Redux)
-	if err != nil {
-		return nil, err
-	}
+	reduxDir := data.Pwd.AbsRelDirPath(data.Redux, data.Metadata)
 
 	rdx, err := redux.NewReader(reduxDir, data.ArtsOperationsOrderProperty, data.PersonsIdsProperty)
 	if err != nil {
@@ -106,10 +103,7 @@ func getSetAuthorType(hc *http.Client, at litres_integration.AuthorType, force b
 	gsat := nod.NewProgress(" %s...", at)
 	defer gsat.Done()
 
-	absAuthorTypeDir, err := data.AbsAuthorTypeDir(at)
-	if err != nil {
-		return err
-	}
+	absAuthorTypeDir := data.AbsAuthorTypeDir(at)
 
 	kv, err := kevlar.New(absAuthorTypeDir, kevlar.JsonExt)
 	if err != nil {

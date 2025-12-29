@@ -11,11 +11,6 @@ import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/boggydigital/clo"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pathways"
-)
-
-const (
-	dirsOverrideFilename = "directories.txt"
 )
 
 var (
@@ -32,11 +27,7 @@ func main() {
 	ns := nod.NewProgress("fedorov is serving your DRM-free books")
 	defer ns.Done()
 
-	if err := pathways.Setup(
-		dirsOverrideFilename,
-		data.DefaultRootDir,
-		data.RelToAbsDirs,
-		data.AllAbsDirs...); err != nil {
+	if err := data.InitPathways(); err != nil {
 		log.Fatalln(nod.Error(err))
 	}
 
@@ -66,6 +57,7 @@ func main() {
 		"get-session-id":             cli.GetSessionIdHandler,
 		"get-videos-metadata":        cli.GetVideosMetadataHandler,
 		"has-arts":                   cli.HasArtsHandler,
+		"import-cookies":             cli.ImportCookiesHandler,
 		"reduce-litres-arts-details": cli.ReduceLitResArtsDetailsHandler,
 		"reduce-litres-operations":   cli.ReduceLitResOperationsHandler,
 		"serve":                      cli.ServeHandler,

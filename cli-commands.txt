@@ -70,6 +70,9 @@ get-videos-metadata
 has-arts
     session-id*
 
+import-cookies
+    cookies^*
+
 reduce-litres-arts-details
 
 reduce-litres-operations

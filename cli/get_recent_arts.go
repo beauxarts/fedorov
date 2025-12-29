@@ -1,14 +1,14 @@
 package cli
 
 import (
-	"github.com/beauxarts/fedorov/data"
-	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pathways"
-	"github.com/boggydigital/redux"
 	"net/url"
 	"slices"
 	"strings"
 	"time"
+
+	"github.com/beauxarts/fedorov/data"
+	"github.com/boggydigital/nod"
+	"github.com/boggydigital/redux"
 )
 
 const recentDays = 1
@@ -24,10 +24,7 @@ func GetRecentArts(force bool) ([]string, error) {
 	graa := nod.Begin("getting recent arts...")
 	defer graa.Done()
 
-	reduxDir, err := pathways.GetAbsRelDir(data.Redux)
-	if err != nil {
-		return nil, err
-	}
+	reduxDir := data.Pwd.AbsRelDirPath(data.Redux, data.Metadata)
 
 	rdx, err := redux.NewReader(reduxDir, data.ArtsOperationsEventTimeProperty)
 	if err != nil {

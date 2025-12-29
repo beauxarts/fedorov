@@ -1,16 +1,16 @@
 package cli
 
 import (
-	"github.com/beauxarts/fedorov/data"
-	"github.com/beauxarts/fedorov/litres_integration"
-	"github.com/boggydigital/dolo"
-	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pathways"
 	"net/url"
 	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
+
+	"github.com/beauxarts/fedorov/data"
+	"github.com/beauxarts/fedorov/litres_integration"
+	"github.com/boggydigital/dolo"
+	"github.com/boggydigital/nod"
 )
 
 func DownloadLitResCoversHandler(u *url.URL) error {
@@ -44,10 +44,7 @@ func DownloadLitResCovers(skipExisting, force bool, artsIds ...string) error {
 
 	dc := dolo.DefaultClient
 
-	absCoversDir, err := pathways.GetAbsDir(data.Covers)
-	if err != nil {
-		return err
-	}
+	absCoversDir := data.Pwd.AbsDirPath(data.Covers)
 
 	for _, id := range artsIds {
 

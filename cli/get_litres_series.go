@@ -2,17 +2,17 @@ package cli
 
 import (
 	"fmt"
-	"github.com/beauxarts/fedorov/data"
-	"github.com/beauxarts/fedorov/litres_integration"
-	"github.com/boggydigital/kevlar"
-	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pathways"
-	"github.com/boggydigital/redux"
 	"maps"
 	"net/http"
 	"net/url"
 	"slices"
 	"strings"
+
+	"github.com/beauxarts/fedorov/data"
+	"github.com/beauxarts/fedorov/litres_integration"
+	"github.com/boggydigital/kevlar"
+	"github.com/boggydigital/nod"
+	"github.com/boggydigital/redux"
 )
 
 func GetLitResSeriesHandler(u *url.URL) error {
@@ -75,10 +75,7 @@ func GetLitResSeries(seriesTypes []litres_integration.SeriesType, hc *http.Clien
 func getSeriesIds(force bool, artsIds ...string) ([]string, error) {
 	series := make(map[string]interface{})
 
-	reduxDir, err := pathways.GetAbsRelDir(data.Redux)
-	if err != nil {
-		return nil, err
-	}
+	reduxDir := data.Pwd.AbsRelDirPath(data.Redux, data.Metadata)
 
 	rdx, err := redux.NewReader(reduxDir, data.ArtsOperationsOrderProperty, data.SeriesIdProperty)
 	if err != nil {
@@ -106,10 +103,7 @@ func getSetSeriesType(hc *http.Client, st litres_integration.SeriesType, force b
 	gsst := nod.NewProgress(" %s...", st)
 	defer gsst.Done()
 
-	absSeriesTypeDir, err := data.AbsSeriesTypeDir(st)
-	if err != nil {
-		return err
-	}
+	absSeriesTypeDir := data.AbsSeriesTypeDir(st)
 
 	kv, err := kevlar.New(absSeriesTypeDir, kevlar.JsonExt)
 	if err != nil {

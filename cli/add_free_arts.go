@@ -9,7 +9,6 @@ import (
 
 	"github.com/beauxarts/fedorov/data"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pathways"
 	"github.com/boggydigital/redux"
 )
 
@@ -34,10 +33,7 @@ func AddFreeArts(ids ...string) error {
 		return errors.New("add-free-arts requires ids to add")
 	}
 
-	reduxDir, err := pathways.GetAbsRelDir(data.Redux)
-	if err != nil {
-		return err
-	}
+	reduxDir := data.Pwd.AbsRelDirPath(data.Redux, data.Metadata)
 
 	rdx, err := redux.NewWriter(reduxDir, data.FreeArtsProperty)
 	if err != nil {
@@ -60,10 +56,7 @@ func getFreeArts() (iter.Seq[string], error) {
 	gfaa := nod.Begin("getting free arts...")
 	defer gfaa.Done()
 
-	reduxDir, err := pathways.GetAbsRelDir(data.Redux)
-	if err != nil {
-		return nil, err
-	}
+	reduxDir := data.Pwd.AbsRelDirPath(data.Redux, data.Metadata)
 
 	rdx, err := redux.NewWriter(reduxDir, data.FreeArtsProperty)
 	if err != nil {

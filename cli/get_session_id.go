@@ -1,12 +1,11 @@
 package cli
 
 import (
-	"github.com/beauxarts/fedorov/data"
-	"github.com/beauxarts/fedorov/litres_integration"
-	"github.com/boggydigital/coost"
-	"github.com/boggydigital/nod"
 	"net/http"
 	"net/url"
+
+	"github.com/beauxarts/fedorov/litres_integration"
+	"github.com/boggydigital/nod"
 )
 
 func GetSessionIdHandler(u *url.URL) error {
@@ -18,13 +17,8 @@ func GetSessionId(hc *http.Client) (string, error) {
 	defer gsia.Done()
 
 	if hc == nil {
-		absCookiesFilename, err := data.AbsCookiesFilename()
-		if err != nil {
-			return "", err
-		}
-
-		hc, err = coost.NewHttpClientFromFile(absCookiesFilename)
-		if err != nil {
+		var err error
+		if hc, err = getHttpClient(); err != nil {
 			return "", err
 		}
 	}

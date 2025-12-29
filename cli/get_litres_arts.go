@@ -3,13 +3,14 @@ package cli
 import (
 	"errors"
 	"fmt"
+	"net/http"
+	"net/url"
+	"strings"
+
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/litres_integration"
 	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/nod"
-	"net/http"
-	"net/url"
-	"strings"
 )
 
 func GetLitResArtsHandler(u *url.URL) error {
@@ -76,10 +77,7 @@ func getSetArtsType(hc *http.Client, at litres_integration.ArtsType, force bool,
 	gsat := nod.NewProgress(" %s...", at)
 	defer gsat.Done()
 
-	absArtsTypeDir, err := data.AbsArtsTypeDir(at)
-	if err != nil {
-		return err
-	}
+	absArtsTypeDir := data.AbsArtsTypeDir(at)
 
 	kv, err := kevlar.New(absArtsTypeDir, kevlar.JsonExt)
 	if err != nil {

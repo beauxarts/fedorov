@@ -2,12 +2,13 @@ package rest
 
 import (
 	"fmt"
-	"github.com/beauxarts/fedorov/data"
-	"github.com/beauxarts/fedorov/litres_integration"
-	"github.com/boggydigital/nod"
 	"net/http"
 	"os"
 	"strconv"
+
+	"github.com/beauxarts/fedorov/data"
+	"github.com/beauxarts/fedorov/litres_integration"
+	"github.com/boggydigital/nod"
 )
 
 func getCover(sizes []litres_integration.CoverSize, w http.ResponseWriter, r *http.Request) {
@@ -21,11 +22,7 @@ func getCover(sizes []litres_integration.CoverSize, w http.ResponseWriter, r *ht
 
 	if id, err := strconv.ParseInt(idstr, 10, 64); err == nil {
 		for _, size := range sizes {
-			coverPath, err := data.AbsCoverImagePath(id, size)
-			if err != nil {
-				http.Error(w, nod.Error(err).Error(), http.StatusInternalServerError)
-				return
-			}
+			coverPath := data.AbsCoverImagePath(id, size)
 			if _, err := os.Stat(coverPath); err == nil {
 				w.Header().Set("Cache-Control", "max-age=31536000")
 				http.ServeFile(w, r, coverPath)

@@ -3,12 +3,13 @@ package litres_integration
 import (
 	"encoding/json"
 	"errors"
-	"github.com/boggydigital/match_node"
-	"golang.org/x/net/html"
-	"golang.org/x/net/html/atom"
 	"net/http"
 	"net/url"
 	"strings"
+
+	"github.com/boggydigital/match_node"
+	"golang.org/x/net/html"
+	"golang.org/x/net/html/atom"
 )
 
 type nextDataPageProps struct {

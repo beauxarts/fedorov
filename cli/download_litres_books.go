@@ -1,17 +1,17 @@
 package cli
 
 import (
-	"github.com/beauxarts/fedorov/data"
-	"github.com/beauxarts/fedorov/litres_integration"
-	"github.com/boggydigital/dolo"
-	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pathways"
-	"github.com/boggydigital/redux"
 	"net/http"
 	"net/url"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/beauxarts/fedorov/data"
+	"github.com/beauxarts/fedorov/litres_integration"
+	"github.com/boggydigital/dolo"
+	"github.com/boggydigital/nod"
+	"github.com/boggydigital/redux"
 )
 
 func DownloadLitResBooksHandler(u *url.URL) error {
@@ -30,10 +30,7 @@ func DownloadLitResBooks(hc *http.Client, force bool, artsIds ...string) error {
 	da := nod.NewProgress("downloading LitRes books...")
 	defer da.Done()
 
-	reduxDir, err := pathways.GetAbsRelDir(data.Redux)
-	if err != nil {
-		return err
-	}
+	reduxDir := data.Pwd.AbsRelDirPath(data.Redux, data.Metadata)
 
 	rdx, err := redux.NewReader(reduxDir,
 		data.ArtsOperationsOrderProperty,
@@ -68,10 +65,7 @@ func DownloadLitResBooks(hc *http.Client, force bool, artsIds ...string) error {
 
 	dc := dolo.NewClient(hc, dolo.Defaults())
 
-	absDownloadsDir, err := pathways.GetAbsDir(data.Downloads)
-	if err != nil {
-		return err
-	}
+	absDownloadsDir := data.Pwd.AbsDirPath(data.Downloads)
 
 	for _, id := range artsIds {
 

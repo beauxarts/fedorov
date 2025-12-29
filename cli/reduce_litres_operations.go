@@ -11,7 +11,6 @@ import (
 	"github.com/beauxarts/fedorov/litres_integration"
 	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pathways"
 	"github.com/boggydigital/redux"
 )
 
@@ -24,10 +23,7 @@ func ReduceLitResOperations() error {
 	roa := nod.NewProgress("reducing operations...")
 	defer roa.Done()
 
-	absLitResOperationsDir, err := data.AbsDataTypeDir(litres_integration.LitResOperations)
-	if err != nil {
-		return err
-	}
+	absLitResOperationsDir := data.AbsDataTypeDir(litres_integration.LitResOperations)
 
 	kv, err := kevlar.New(absLitResOperationsDir, kevlar.JsonExt)
 	if err != nil {
@@ -60,10 +56,7 @@ func ReduceLitResOperations() error {
 		roa.Increment()
 	}
 
-	reduxDir, err := pathways.GetAbsRelDir(data.Redux)
-	if err != nil {
-		return err
-	}
+	reduxDir := data.Pwd.AbsRelDirPath(data.Redux, data.Metadata)
 
 	rdx, err := redux.NewWriter(reduxDir,
 		data.ArtsOperationsOrderProperty,

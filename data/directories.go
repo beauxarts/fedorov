@@ -2,13 +2,18 @@ package data
 
 import (
 	"fmt"
-	"github.com/beauxarts/fedorov/litres_integration"
-	"github.com/boggydigital/pathways"
+	"os"
 	"path/filepath"
 	"strconv"
+
+	"github.com/beauxarts/fedorov/litres_integration"
+	"github.com/boggydigital/pathways"
 )
 
-const DefaultRootDir = "/var/lib/fedorov"
+const (
+	setPathwaysFilename = "directories.txt"
+	rootPathwaysDir     = "/var/lib/fedorov"
+)
 
 const (
 	Backups   pathways.AbsDir = "backups"
@@ -18,74 +23,44 @@ const (
 	Downloads pathways.AbsDir = "downloads"
 )
 
-var AllAbsDirs = []pathways.AbsDir{
-	Backups,
-	Metadata,
-	Input,
-	Covers,
-	Downloads,
-}
-
 const (
-	Redux    pathways.RelDir = "_redux"
-	Contents pathways.RelDir = "contents"
+	Redux    pathways.RelDir = "_redux"   // Metadata
+	Contents pathways.RelDir = "contents" // Metadata
 )
 
-var RelToAbsDirs = map[pathways.RelDir]pathways.AbsDir{
-	Redux:    Metadata,
-	Contents: Metadata,
-}
+var Pwd pathways.Pathway
 
 const (
-	relCookiesFilename = "cookies.txt"
-
-	DefaultCoverExt = ".jpg"
+	relCookiesFilename = "cookies_litres_ru.json"
+	DefaultCoverExt    = ".jpg"
 )
 
-func AbsDataTypeDir(stringer fmt.Stringer) (string, error) {
-	absMetadataDir, err := pathways.GetAbsDir(Metadata)
-	if err != nil {
-		return "", err
-	}
-	return filepath.Join(absMetadataDir, stringer.String()), nil
+func AbsDataTypeDir(stringer fmt.Stringer) string {
+	return filepath.Join(Pwd.AbsDirPath(Metadata), stringer.String())
 }
 
-func absStringerDir(stringer fmt.Stringer) (string, error) {
-	absMetadataDir, err := pathways.GetAbsDir(Metadata)
-	if err != nil {
-		return "", err
-	}
-	return filepath.Join(absMetadataDir, stringer.String()), nil
+func absStringerDir(stringer fmt.Stringer) string {
+	return filepath.Join(Pwd.AbsDirPath(Metadata), stringer.String())
 }
 
-func AbsArtsTypeDir(at litres_integration.ArtsType) (string, error) {
+func AbsArtsTypeDir(at litres_integration.ArtsType) string {
 	return absStringerDir(at)
 }
 
-func AbsSeriesTypeDir(st litres_integration.SeriesType) (string, error) {
+func AbsSeriesTypeDir(st litres_integration.SeriesType) string {
 	return absStringerDir(st)
 }
 
-func AbsAuthorTypeDir(at litres_integration.AuthorType) (string, error) {
+func AbsAuthorTypeDir(at litres_integration.AuthorType) string {
 	return absStringerDir(at)
 }
 
-func AbsFileDownloadPath(id int64, file string) (string, error) {
-	absDownloadsDir, err := pathways.GetAbsDir(Downloads)
-	if err != nil {
-		return "", err
-	}
-
-	return filepath.Join(absDownloadsDir, strconv.FormatInt(id, 10), file), nil
+func AbsFileDownloadPath(id int64, file string) string {
+	return filepath.Join(Pwd.AbsDirPath(Downloads), strconv.FormatInt(id, 10), file)
 }
 
-func AbsCoverImagePath(id int64, size litres_integration.CoverSize) (string, error) {
-	absCoverDir, err := pathways.GetAbsDir(Covers)
-	if err != nil {
-		return "", err
-	}
-
-	return filepath.Join(absCoverDir, RelCoverFilename(strconv.FormatInt(id, 10), size)), nil
+func AbsCoverImagePath(id int64, size litres_integration.CoverSize) string {
+	return filepath.Join(Pwd.AbsDirPath(Covers), RelCoverFilename(strconv.FormatInt(id, 10), size))
 }
 
 func RelCoverFilename(id string, size litres_integration.CoverSize) string {
@@ -105,10 +80,20 @@ func RelCoverFilename(id string, size litres_integration.CoverSize) string {
 }
 
 func AbsCookiesFilename() (string, error) {
-	absInputDir, err := pathways.GetAbsDir(Input)
-	if err != nil {
-		return "", err
+	return filepath.Join(Pwd.AbsDirPath(Input), relCookiesFilename), nil
+}
+
+func InitPathways() error {
+
+	if _, err := os.Stat(setPathwaysFilename); err == nil {
+		if Pwd, err = pathways.ReadSet(setPathwaysFilename); err != nil {
+			return err
+		}
+	} else {
+		if Pwd, err = pathways.NewRoot(rootPathwaysDir); err != nil {
+			return err
+		}
 	}
 
-	return filepath.Join(absInputDir, relCookiesFilename), nil
+	return nil
 }

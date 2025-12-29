@@ -1,17 +1,17 @@
 package cli
 
 import (
-	"github.com/beauxarts/fedorov/data"
-	"github.com/beauxarts/fedorov/litres_integration"
-	"github.com/boggydigital/issa"
-	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pathways"
-	"github.com/boggydigital/redux"
 	_ "image/jpeg"
 	"net/url"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/beauxarts/fedorov/data"
+	"github.com/beauxarts/fedorov/litres_integration"
+	"github.com/boggydigital/issa"
+	"github.com/boggydigital/nod"
+	"github.com/boggydigital/redux"
 )
 
 func DehydrateHandler(u *url.URL) error {
@@ -33,10 +33,7 @@ func Dehydrate(force bool, artsIds ...string) error {
 	properties := data.DehydratedProperties()
 	properties = append(properties, data.ArtsOperationsOrderProperty)
 
-	reduxDir, err := pathways.GetAbsRelDir(data.Redux)
-	if err != nil {
-		return err
-	}
+	reduxDir := data.Pwd.AbsRelDirPath(data.Redux, data.Metadata)
 
 	rdx, err := redux.NewWriter(reduxDir, properties...)
 	if err != nil {
@@ -105,10 +102,7 @@ func dehydrateImages(
 
 		for _, size := range sizes {
 
-			acp, err := data.AbsCoverImagePath(id, size)
-			if err != nil {
-				return err
-			}
+			acp := data.AbsCoverImagePath(id, size)
 			if dhi, rc, err := issa.DehydrateImageRepColor(acp); err == nil {
 				dehydratedImages[idStr] = []string{dhi}
 				dehydratedImageModified[idStr] = []string{strconv.FormatInt(time.Now().Unix(), 10)}

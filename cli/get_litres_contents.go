@@ -2,15 +2,15 @@ package cli
 
 import (
 	"fmt"
+	"net/http"
+	"net/url"
+	"strings"
+
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/litres_integration"
 	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pathways"
 	"github.com/boggydigital/redux"
-	"net/http"
-	"net/url"
-	"strings"
 )
 
 func GetLitResContentsHandler(u *url.URL) error {
@@ -29,10 +29,7 @@ func GetLitresContents(hc *http.Client, force bool, ids ...string) error {
 	dlca := nod.NewProgress("downloading litres contents...")
 	defer dlca.Done()
 
-	reduxDir, err := pathways.GetAbsRelDir(data.Redux)
-	if err != nil {
-		return err
-	}
+	reduxDir := data.Pwd.AbsRelDirPath(data.Redux, data.Metadata)
 
 	rdx, err := redux.NewReader(reduxDir, data.ContentsUrlProperty)
 	if err != nil {
@@ -72,10 +69,7 @@ func getSetContents(hc *http.Client, force bool, rdx redux.Readable, ids ...stri
 		return err
 	}
 
-	absContentsDir, err := pathways.GetAbsRelDir(data.Contents)
-	if err != nil {
-		return err
-	}
+	absContentsDir := data.Pwd.AbsRelDirPath(data.Contents, data.Metadata)
 
 	kv, err := kevlar.New(absContentsDir, kevlar.XmlExt)
 	if err != nil {

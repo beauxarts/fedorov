@@ -1,15 +1,16 @@
 package cli
 
 import (
+	"errors"
 	"net/http"
 	"net/url"
+	"os"
 	"strconv"
 	"time"
 
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/litres_integration"
 	"github.com/boggydigital/coost"
-	"github.com/boggydigital/pathways"
 	"github.com/boggydigital/redux"
 )
 
@@ -108,10 +109,7 @@ func Sync(force bool) error {
 		return err
 	}
 
-	reduxDir, err := pathways.GetAbsRelDir(data.Redux)
-	if err != nil {
-		return err
-	}
+	reduxDir := data.Pwd.AbsRelDirPath(data.Redux, data.Metadata)
 
 	rdx, err := redux.NewWriter(reduxDir, data.SyncCompletedProperty)
 	if err != nil {
@@ -125,15 +123,22 @@ func Sync(force bool) error {
 }
 
 func getHttpClient() (*http.Client, error) {
+
 	absCookiesFilename, err := data.AbsCookiesFilename()
+
 	if err != nil {
 		return nil, err
 	}
 
-	hc, err := coost.NewHttpClientFromFile(absCookiesFilename)
-	if err != nil {
+	jar, err := coost.Read(litres_integration.DefaultUrl(), absCookiesFilename)
+	if os.IsNotExist(err) {
+		return nil, errors.New("cookies file not found, use import-cookies command to add")
+	} else if err != nil {
 		return nil, err
 	}
 
-	return hc, err
+	hc := http.DefaultClient
+	hc.Jar = jar
+
+	return hc, nil
 }

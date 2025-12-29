@@ -2,14 +2,14 @@ package cli
 
 import (
 	"fmt"
+	"net/url"
+	"strconv"
+
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/litres_integration"
 	"github.com/beauxarts/fedorov/rest/compton_data"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pathways"
 	"github.com/boggydigital/redux"
-	"net/url"
-	"strconv"
 )
 
 func ReduceLitResArtsDetailsHandler(_ *url.URL) error {
@@ -58,10 +58,7 @@ func ReduceLitResArtsDetails() error {
 	wra := nod.NewProgress("writing redux values...")
 	defer wra.Done()
 
-	reduxDir, err := pathways.GetAbsRelDir(data.Redux)
-	if err != nil {
-		return err
-	}
+	reduxDir := data.Pwd.AbsRelDirPath(data.Redux, data.Metadata)
 
 	rdx, err := redux.NewWriter(reduxDir, data.ReduxProperties()...)
 	if err != nil {

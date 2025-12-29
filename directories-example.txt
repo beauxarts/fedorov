@@ -1,10 +1,5 @@
-backups
-    /var/lib/fedorov/backups
-metadata
-    /var/lib/fedorov/metadata
-input
-    /var/lib/fedorov
-covers
-    /var/lib/fedorov/covers
-downloads
-    /var/lib/fedorov/downloads
+backups=/var/lib/fedorov/backups
+metadata=/var/lib/fedorov/metadata
+input=/var/lib/fedorov
+covers=/var/lib/fedorov/covers
+downloads=/var/lib/fedorov/downloads

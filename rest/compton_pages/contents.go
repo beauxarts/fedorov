@@ -2,26 +2,22 @@ package compton_pages
 
 import (
 	"encoding/xml"
+	"os"
+
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/litres_integration"
 	"github.com/beauxarts/fedorov/rest/compton_data"
 	"github.com/beauxarts/fedorov/rest/compton_fragments"
 	"github.com/boggydigital/compton"
 	"github.com/boggydigital/kevlar"
-	"github.com/boggydigital/pathways"
 	"github.com/boggydigital/redux"
-	"os"
 )
 
 func Contents(id string, rdx redux.Readable) compton.PageElement {
 
 	s := compton_fragments.ProductSection(compton_data.ContentsSection, id, rdx)
 
-	contentsDir, err := pathways.GetAbsRelDir(data.Contents)
-	if err != nil {
-		s.Error(err)
-		return s
-	}
+	contentsDir := data.Pwd.AbsRelDirPath(data.Contents, data.Metadata)
 
 	contReader, err := kevlar.New(contentsDir, kevlar.XmlExt)
 	if err != nil {

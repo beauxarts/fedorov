@@ -1,11 +1,11 @@
 package cli
 
 import (
+	"net/url"
+
 	"github.com/beauxarts/fedorov/data"
 	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pathways"
 	"github.com/boggydigital/redux"
-	"net/url"
 )
 
 func CascadeHandler(_ *url.URL) error {
@@ -17,10 +17,7 @@ func Cascade() error {
 	ca := nod.Begin("cascading reductions...")
 	defer ca.Done()
 
-	reduxDir, err := pathways.GetAbsRelDir(data.Redux)
-	if err != nil {
-		return err
-	}
+	reduxDir := data.Pwd.AbsRelDirPath(data.Redux, data.Metadata)
 
 	rdx, err := redux.NewWriter(reduxDir, data.ReduxProperties()...)
 	if err != nil {

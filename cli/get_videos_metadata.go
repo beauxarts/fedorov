@@ -1,13 +1,13 @@
 package cli
 
 import (
-	"github.com/beauxarts/fedorov/data"
-	"github.com/boggydigital/nod"
-	"github.com/boggydigital/pathways"
-	"github.com/boggydigital/redux"
-	"github.com/boggydigital/yet_urls/youtube_urls"
 	"net/http"
 	"net/url"
+
+	"github.com/beauxarts/fedorov/data"
+	"github.com/boggydigital/nod"
+	"github.com/boggydigital/redux"
+	"github.com/boggydigital/yet_urls/youtube_urls"
 )
 
 const limitVideoRequests = 1000
@@ -23,10 +23,7 @@ func GetVideosMetadata(force bool) error {
 	gvma := nod.NewProgress("getting video metadata...")
 	defer gvma.Done()
 
-	rp, err := pathways.GetAbsRelDir(data.Redux)
-	if err != nil {
-		return err
-	}
+	rp := data.Pwd.AbsRelDirPath(data.Redux, data.Metadata)
 
 	rdx, err := redux.NewWriter(rp, data.ReduxProperties()...)
 	if err != nil {

@@ -1,5 +1,7 @@
 package litres_integration
 
+import "net/url"
+
 const (
 	httpsScheme = "https"
 
@@ -30,3 +32,10 @@ const (
 
 	operationsPath = foundationApiPath + "/users/me/operations"
 )
+
+func DefaultUrl() *url.URL {
+	return &url.URL{
+		Scheme: httpsScheme,
+		Host:   LitResHost,
+	}
+}

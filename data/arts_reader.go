@@ -3,10 +3,11 @@ package data
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/beauxarts/fedorov/litres_integration"
-	"github.com/boggydigital/kevlar"
 	"io"
 	"iter"
+
+	"github.com/beauxarts/fedorov/litres_integration"
+	"github.com/boggydigital/kevlar"
 )
 
 type ArtsReader struct {
@@ -16,15 +17,13 @@ type ArtsReader struct {
 
 func NewArtsReader(at litres_integration.ArtsType) (*ArtsReader, error) {
 
-	absArtsTypeDir, err := AbsArtsTypeDir(at)
-	if err != nil {
-		return nil, err
-	}
+	absArtsTypeDir := AbsArtsTypeDir(at)
 
 	atr := &ArtsReader{
 		artsType: at,
 	}
 
+	var err error
 	atr.keyValues, err = kevlar.New(absArtsTypeDir, kevlar.JsonExt)
 	if err != nil {
 		return nil, err

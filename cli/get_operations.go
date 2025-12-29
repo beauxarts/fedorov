@@ -4,14 +4,15 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
-	"github.com/beauxarts/fedorov/data"
-	"github.com/beauxarts/fedorov/litres_integration"
-	"github.com/boggydigital/kevlar"
-	"github.com/boggydigital/nod"
 	"io"
 	"net/http"
 	"net/url"
 	"strconv"
+
+	"github.com/beauxarts/fedorov/data"
+	"github.com/beauxarts/fedorov/litres_integration"
+	"github.com/boggydigital/kevlar"
+	"github.com/boggydigital/nod"
 )
 
 func GetLitResOperationsHandler(u *url.URL) error {
@@ -24,10 +25,7 @@ func GetLitResOperations(sessionId string, hc *http.Client) error {
 	goa := nod.Begin("fetching LitRes operations...")
 	defer goa.Done()
 
-	absLitResOperationsDir, err := data.AbsDataTypeDir(litres_integration.LitResOperations)
-	if err != nil {
-		return err
-	}
+	absLitResOperationsDir := data.AbsDataTypeDir(litres_integration.LitResOperations)
 
 	kv, err := kevlar.New(absLitResOperationsDir, kevlar.JsonExt)
 	if err != nil {
