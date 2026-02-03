@@ -33,8 +33,8 @@ var typeDescriptions = map[string]string{
 }
 
 var preferredDownloadTypes = []string{
-	"mobi.prc",
-	"azw3",
+	//"mobi.prc",
+	//"azw3",
 	"epub",
 	"audio/m4b",
 	"application/pdf",
