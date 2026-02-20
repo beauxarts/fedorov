@@ -22,8 +22,8 @@ type ArtsReviewsData struct {
 }
 
 type ArtsReviews struct {
-	Status  int         `json:"status"`
-	Error   interface{} `json:"error"`
+	Status  int `json:"status"`
+	Error   any `json:"error"`
 	Payload struct {
 		Pagination ArtsPagination    `json:"pagination"`
 		Data       []ArtsReviewsData `json:"data"`

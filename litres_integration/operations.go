@@ -12,8 +12,8 @@ type OperationMoney struct {
 }
 
 type Operations struct {
-	Status  int         `json:"status"`
-	Error   interface{} `json:"error"`
+	Status  int `json:"status"`
+	Error   any `json:"error"`
 	Payload struct {
 		Pagination struct {
 			NextPage     *string `json:"next_page"`
@@ -25,7 +25,7 @@ type Operations struct {
 			MoneyMovementType int    `json:"money_movement_type"`
 			SpecificData      struct {
 				OperationType      string         `json:"operation_type"`
-				Money              OperationMoney `json:"money,omitempty"`
+				Money              OperationMoney `json:"money"`
 				HasReceipt         bool           `json:"has_receipt"`
 				PaymentSystemId    int            `json:"payment_system_id,omitempty"`
 				IsAppliedPromoCode bool           `json:"is_applied_promocode,omitempty"`

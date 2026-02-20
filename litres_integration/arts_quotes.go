@@ -18,8 +18,8 @@ type ArtsQuotesData struct {
 }
 
 type ArtsQuotes struct {
-	Status  int         `json:"status"`
-	Error   interface{} `json:"error"`
+	Status  int `json:"status"`
+	Error   any `json:"error"`
 	Payload struct {
 		Pagination ArtsPagination   `json:"pagination"`
 		Data       []ArtsQuotesData `json:"data"`

@@ -70,8 +70,8 @@ type ArtsFilesData struct {
 }
 
 type ArtsFiles struct {
-	Status  int         `json:"status"`
-	Error   interface{} `json:"error"`
+	Status  int `json:"status"`
+	Error   any `json:"error"`
 	Payload struct {
 		Data []ArtsFilesData `json:"data"`
 	} `json:"payload"`

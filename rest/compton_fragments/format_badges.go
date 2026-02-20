@@ -21,8 +21,8 @@ var artTypeBadges = map[litres_integration.ArtType]string{
 	litres_integration.ArtTypePDF:   "PDF",
 }
 
-func FormatBadges(id string, rdx redux.Readable) []compton.FormattedBadge {
-	fmtBadges := make([]compton.FormattedBadge, 0)
+func FormatBadges(id string, rdx redux.Readable) []*compton.FormattedBadge {
+	fmtBadges := make([]*compton.FormattedBadge, 0)
 
 	for _, p := range compton_data.LabelProperties {
 		fmtBadges = append(fmtBadges, formatBadge(id, p, rdx)...)
@@ -31,9 +31,9 @@ func FormatBadges(id string, rdx redux.Readable) []compton.FormattedBadge {
 	return fmtBadges
 }
 
-func formatBadge(id, property string, rdx redux.Readable) []compton.FormattedBadge {
+func formatBadge(id, property string, rdx redux.Readable) []*compton.FormattedBadge {
 
-	badges := make([]compton.FormattedBadge, 0)
+	badges := make([]*compton.FormattedBadge, 0)
 
 	val, _ := rdx.GetLastVal(property, id)
 	values, _ := rdx.GetAllValues(property, id)
@@ -41,27 +41,27 @@ func formatBadge(id, property string, rdx redux.Readable) []compton.FormattedBad
 	switch property {
 	case data.ArtTypeProperty:
 		at := litres_integration.ParseArtType(val)
-		badge := compton.FormattedBadge{
+		badge := new(compton.FormattedBadge{
 			Title: artTypeBadges[at],
 			//Color: artTypeColors[at],
 			//Class:      property,
-		}
+		})
 		badges = append(badges, badge)
 	case data.LitresLabelsProperty:
 		for _, value := range values {
-			label := compton.FormattedBadge{
+			label := new(compton.FormattedBadge{
 				Title: value,
 				//Class: property,
-			}
+			})
 			badges = append(badges, label)
 		}
 	case data.ArtFourthPresentProperty:
 		if val == "true" {
-			label := compton.FormattedBadge{
+			label := new(compton.FormattedBadge{
 				Title: compton_data.PropertyTitles[data.ArtFourthPresentProperty],
 				//Background: color.Purple,
 				//Class:      property,
-			}
+			})
 			badges = append(badges, label)
 		}
 	}

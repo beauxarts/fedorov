@@ -219,8 +219,8 @@ type ArtsDetailsData struct {
 }
 
 type ArtsDetails struct {
-	Status  int         `json:"status"`
-	Error   interface{} `json:"error"`
+	Status  int `json:"status"`
+	Error   any `json:"error"`
 	Payload struct {
 		Data ArtsDetailsData `json:"data"`
 	} `json:"payload"`

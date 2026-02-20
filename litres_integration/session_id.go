@@ -23,8 +23,8 @@ type nextDataPageProps struct {
 type initialStateBrowser struct {
 	Browser struct {
 		Screen struct {
-			Width  interface{} `json:"width"`
-			Height interface{} `json:"height"`
+			Width  any `json:"width"`
+			Height any `json:"height"`
 		} `json:"screen"`
 		UrlParams struct {
 		} `json:"urlParams"`

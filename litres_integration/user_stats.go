@@ -1,8 +1,8 @@
 package litres_integration
 
 type UserStats struct {
-	Status  int         `json:"status"`
-	Error   interface{} `json:"error"`
+	Status  int `json:"status"`
+	Error   any `json:"error"`
 	Payload struct {
 		Data struct {
 			InProgress     int `json:"in_progress"`

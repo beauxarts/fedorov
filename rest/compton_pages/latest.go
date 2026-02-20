@@ -48,11 +48,11 @@ func Latest(ids []string, total int, rdx redux.Readable) compton.PageElement {
 		compton_data.ManyItemsSinglePage,
 		compton_data.ManyItemsManyPages)
 
-	latestBadge := compton.FormattedBadge{
+	latestBadge := new(compton.FormattedBadge{
 		Title: cf.Title(0, len(ids), total),
 		Icon:  compton.NoSymbol,
 		Color: color.Foreground,
-	}
+	})
 	latestPurchases.AppendBadges(compton.Badges(p, latestBadge))
 
 	pageStack.Append(latestPurchases)

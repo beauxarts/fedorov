@@ -56,7 +56,7 @@ func (ar *ArtsReader) Since(ts int64, mts ...kevlar.MutationType) iter.Seq2[stri
 	return ar.keyValues.Since(ts, mts...)
 }
 
-func (ar *ArtsReader) readValue(id string, val interface{}) error {
+func (ar *ArtsReader) readValue(id string, val any) error {
 	spReadCloser, err := ar.keyValues.Get(id)
 	if err != nil {
 		return err
@@ -100,7 +100,7 @@ func (ar *ArtsReader) ArtsReviews(id string) (artsReviews *litres_integration.Ar
 	return artsReviews, err
 }
 
-func (ar *ArtsReader) ReadValue(id string) (interface{}, error) {
+func (ar *ArtsReader) ReadValue(id string) (any, error) {
 	switch ar.artsType {
 	case litres_integration.ArtsTypeDetails:
 		return ar.ArtsDetails(id)
