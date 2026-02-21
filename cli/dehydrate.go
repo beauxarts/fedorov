@@ -47,7 +47,7 @@ func Dehydrate(force bool, artsIds ...string) error {
 		}
 	}
 
-	if err := dehydrateImages(
+	if err = dehydrateImages(
 		rdx,
 		data.DehydratedItemImageProperty,
 		data.DehydratedItemImageModifiedProperty,
@@ -58,7 +58,7 @@ func Dehydrate(force bool, artsIds ...string) error {
 		return err
 	}
 
-	if err := dehydrateImages(
+	if err = dehydrateImages(
 		rdx,
 		data.DehydratedListImageProperty,
 		data.DehydratedListImageModifiedProperty,

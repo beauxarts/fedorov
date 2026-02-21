@@ -2,6 +2,7 @@ package cli
 
 import (
 	"fmt"
+	"maps"
 	"net/url"
 	"strconv"
 
@@ -47,9 +48,7 @@ func ReduceLitResArtsDetails() error {
 		}
 
 		for p, iv := range getDetailedPropertyValues(ad) {
-			for i, v := range iv {
-				propertyIdValues[p][i] = v
-			}
+			maps.Copy(propertyIdValues[p], iv)
 		}
 
 		rlaa.Increment()

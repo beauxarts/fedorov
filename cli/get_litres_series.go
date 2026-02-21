@@ -73,7 +73,7 @@ func GetLitResSeries(seriesTypes []litres_integration.SeriesType, hc *http.Clien
 }
 
 func getSeriesIds(force bool, artsIds ...string) ([]string, error) {
-	series := make(map[string]interface{})
+	series := make(map[string]any)
 
 	reduxDir := data.Pwd.AbsRelDirPath(data.Redux, data.Metadata)
 

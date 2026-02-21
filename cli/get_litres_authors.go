@@ -73,7 +73,7 @@ func GetLitResAuthors(authorTypes []litres_integration.AuthorType, hc *http.Clie
 }
 
 func getPersonsIds(force bool, artsIds ...string) ([]string, error) {
-	persons := make(map[string]interface{})
+	persons := make(map[string]any)
 
 	reduxDir := data.Pwd.AbsRelDirPath(data.Redux, data.Metadata)
 

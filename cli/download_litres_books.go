@@ -132,7 +132,7 @@ func authorsFullNames(id string, rdx redux.Readable) ([]string, error) {
 	if pids, ok := rdx.GetAllValues(data.PersonsIdsProperty, id); ok && len(pids) > 0 {
 		if prs, sure := rdx.GetAllValues(data.PersonsRolesProperty, id); sure && len(prs) == len(pids) {
 
-			for i := 0; i < len(prs); i++ {
+			for i := range prs {
 				if prs[i] != "author" {
 					continue
 				}
