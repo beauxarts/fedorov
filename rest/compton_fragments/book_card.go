@@ -49,11 +49,7 @@ func BookCard(r compton.Registrar, id string, rdx redux.Readable) compton.Elemen
 
 	posterUrl := "/list_cover?id=" + id
 
-	poster := bc.AppendImage(posterUrl)
-
-	poster.SetAttribute("width", "80px")
-	poster.SetAttribute("height", "120px")
-	poster.SetAttribute("style", "width:80px;height:120px")
+	bc.AppendImage(posterUrl, 80, 120)
 
 	if title, ok := rdx.GetLastVal(data.TitleProperty, id); ok {
 		bc.AppendTitle(title)
