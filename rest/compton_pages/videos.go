@@ -1,6 +1,8 @@
 package compton_pages
 
 import (
+	"net/url"
+
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/rest/compton_data"
 	"github.com/beauxarts/fedorov/rest/compton_fragments"
@@ -8,12 +10,11 @@ import (
 	"github.com/boggydigital/compton/consts/color"
 	"github.com/boggydigital/compton/consts/direction"
 	"github.com/boggydigital/redux"
-	"net/url"
 )
 
 func Videos(id string, rdx redux.Readable) compton.PageElement {
 
-	s := compton_fragments.ProductSection(compton_data.VideosSection, id, rdx)
+	s := compton_fragments.ProductSection(compton_data.VideosSection)
 
 	var videoIds []string
 	if vids, ok := rdx.GetAllValues(data.YouTubeVideosProperty, id); ok {
@@ -46,7 +47,7 @@ func Videos(id string, rdx redux.Readable) compton.PageElement {
 
 	if len(videoIds) == 0 {
 		fs := compton.Fspan(s, "Для данной книги нет видео").
-			ForegroundColor(color.RepGray)
+			ForegroundColor(color.Gray)
 		pageStack.Append(compton.FICenter(s, fs))
 	}
 

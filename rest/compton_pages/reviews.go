@@ -11,7 +11,7 @@ import (
 
 func Reviews(id string, rdx redux.Readable) compton.PageElement {
 
-	s := compton_fragments.ProductSection(compton_data.ReviewsSection, id, rdx)
+	s := compton_fragments.ProductSection(compton_data.ReviewsSection)
 
 	raReader, err := data.NewArtsReader(litres_integration.ArtsTypeReviews)
 	if err != nil {

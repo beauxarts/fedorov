@@ -11,7 +11,7 @@ import (
 )
 
 func Files(id string, rdx redux.Readable) compton.PageElement {
-	s := compton_fragments.ProductSection(compton_data.FilesSection, id, rdx)
+	s := compton_fragments.ProductSection(compton_data.FilesSection)
 
 	filesReader, err := data.NewArtsReader(litres_integration.ArtsTypeFiles)
 	if err != nil {

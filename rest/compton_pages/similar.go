@@ -10,7 +10,7 @@ import (
 )
 
 func Similar(id string, rdx redux.Readable) compton.PageElement {
-	s := compton_fragments.ProductSection(compton_data.SimilarSection, id, rdx)
+	s := compton_fragments.ProductSection(compton_data.SimilarSection)
 
 	saReader, err := data.NewArtsReader(litres_integration.ArtsTypeSimilar)
 	if err != nil {

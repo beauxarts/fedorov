@@ -7,7 +7,6 @@ import (
 	"github.com/beauxarts/fedorov/litres_integration"
 	"github.com/beauxarts/fedorov/rest/compton_data"
 	"github.com/boggydigital/compton"
-	"github.com/boggydigital/issa"
 	"github.com/boggydigital/redux"
 )
 
@@ -45,26 +44,16 @@ func SummarizeBookProperties(id string, rdx redux.Readable) ([]string, map[strin
 	return properties, values
 }
 
-func BookCard(r compton.Registrar, id string, hydrated bool, rdx redux.Readable) compton.Element {
+func BookCard(r compton.Registrar, id string, rdx redux.Readable) compton.Element {
 	bc := compton.Card(r, id)
 
-	var repColor = issa.NeutralRepColor
 	posterUrl := "/list_cover?id=" + id
 
-	if rc, ok := rdx.GetLastVal(data.RepListImageColorProperty, id); ok {
-		repColor = rc
-	}
+	poster := bc.AppendImage(posterUrl)
 
-	var placeholderSrc string
-	if dhSrc, ok := rdx.GetLastVal(data.DehydratedListImageProperty, id); ok {
-		placeholderSrc = dhSrc
-	}
-
-	bc.SetAttribute("style", "--c-rep:"+repColor)
-	poster := bc.AppendPoster(repColor, placeholderSrc, posterUrl, hydrated)
-
-	poster.WidthPixels(80)
-	poster.HeightPixels(120)
+	poster.SetAttribute("width", "80px")
+	poster.SetAttribute("height", "120px")
+	poster.SetAttribute("style", "width:80px;height:120px")
 
 	if title, ok := rdx.GetLastVal(data.TitleProperty, id); ok {
 		bc.AppendTitle(title)
@@ -77,7 +66,6 @@ func BookCard(r compton.Registrar, id string, hydrated bool, rdx redux.Readable)
 	properties, values := SummarizeBookProperties(id, rdx)
 	for _, p := range properties {
 		bc.AppendProperty(compton_data.ShortPropertyTitles[p], compton.Text(strings.Join(values[p], ", ")))
-		//pp.SetAttribute("style", "view-transition-name:"+p+id)
 	}
 
 	return bc

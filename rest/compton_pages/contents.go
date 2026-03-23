@@ -15,7 +15,7 @@ import (
 
 func Contents(id string, rdx redux.Readable) compton.PageElement {
 
-	s := compton_fragments.ProductSection(compton_data.ContentsSection, id, rdx)
+	s := compton_fragments.ProductSection(compton_data.ContentsSection)
 
 	contentsDir := data.Pwd.AbsRelDirPath(data.Contents, data.Metadata)
 

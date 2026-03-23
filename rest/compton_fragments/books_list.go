@@ -9,8 +9,6 @@ import (
 	"github.com/boggydigital/redux"
 )
 
-const dehydratedCount = 3
-
 func BooksList(r compton.Registrar, ids []string, from, to int, rdx redux.Readable) compton.Element {
 
 	r.RegisterStyles(compton_styles.Styles, "books-list.css")
@@ -22,7 +20,7 @@ func BooksList(r compton.Registrar, ids []string, from, to int, rdx redux.Readab
 		id := ids[ii]
 		productLink := compton.A("/book?id=" + id)
 
-		if productCard := BookCard(r, id, ii-from < dehydratedCount, rdx); productCard != nil {
+		if productCard := BookCard(r, id, rdx); productCard != nil {
 			productLink.Append(productCard)
 			productCards.Append(productLink)
 		}

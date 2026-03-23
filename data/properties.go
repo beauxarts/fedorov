@@ -88,13 +88,6 @@ const (
 	DescendingProperty = "desc"
 	// sync events
 	SyncCompletedProperty = "sync-completed"
-	// dehydrated images
-	DehydratedListImageProperty         = "dehydrated-list-image"
-	DehydratedListImageModifiedProperty = "dehydrated-list-image-modified"
-	DehydratedItemImageProperty         = "dehydrated-item-image"
-	DehydratedItemImageModifiedProperty = "dehydrated-item-image-modified"
-	RepItemImageColorProperty           = "rep-item-image-color"
-	RepListImageColorProperty           = "rep-list-image-color"
 
 	// Litres links
 	LitresBookLinksProperty         = "litres-book-links"
@@ -187,17 +180,6 @@ func VideoProperties() []string {
 	}
 }
 
-func DehydratedProperties() []string {
-	return []string{
-		DehydratedItemImageProperty,
-		DehydratedItemImageModifiedProperty,
-		RepItemImageColorProperty,
-		DehydratedListImageProperty,
-		DehydratedListImageModifiedProperty,
-		RepListImageColorProperty,
-	}
-}
-
 func OperationsProperties() []string {
 	return []string{
 		ArtsOperationsOrderProperty,
@@ -211,7 +193,6 @@ func ReduxProperties() []string {
 	properties = append(properties, PersonsRolesProperties()...)
 	properties = append(properties, IdNameProperties()...)
 	properties = append(properties, VideoProperties()...)
-	properties = append(properties, DehydratedProperties()...)
 	properties = append(properties, OperationsProperties()...)
 	properties = append(properties, []string{
 		SyncCompletedProperty,

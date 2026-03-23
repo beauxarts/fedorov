@@ -93,10 +93,6 @@ func Sync(force bool) error {
 		return err
 	}
 
-	if err = Dehydrate(force, recentArtsIds...); err != nil {
-		return err
-	}
-
 	if err = DownloadLitResBooks(hc, force, recentArtsIds...); err != nil {
 		return err
 	}

@@ -13,10 +13,6 @@ backup
 
 cascade
 
-dehydrate
-    arts-id^&
-    force
-
 download-litres-books
     id^&
     force

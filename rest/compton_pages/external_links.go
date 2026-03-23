@@ -2,14 +2,15 @@ package compton_pages
 
 import (
 	"fmt"
+	"net/url"
+	"strconv"
+
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/litres_integration"
 	"github.com/beauxarts/fedorov/rest/compton_data"
 	"github.com/beauxarts/fedorov/rest/compton_fragments"
 	"github.com/boggydigital/compton"
 	"github.com/boggydigital/redux"
-	"net/url"
-	"strconv"
 )
 
 var (
@@ -18,7 +19,7 @@ var (
 )
 
 func ExternalLinks(id string, rdx redux.Readable) compton.PageElement {
-	s := compton_fragments.ProductSection(compton_data.ExternalLinksSection, id, rdx)
+	s := compton_fragments.ProductSection(compton_data.ExternalLinksSection)
 	if links := compton_fragments.ExternalLinks(s, externalLinks(id, rdx)); links != nil {
 		s.Append(links)
 	}

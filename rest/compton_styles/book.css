@@ -1,16 +1,10 @@
-issa-image.book-cover {
+.book-cover {
     border-radius: var(--s-s);
-
-    & img {
-        --w: 400px;
-        border-radius: var(--s-s);
-    }
+    width: 400px;
 }
 
 @media only screen and (max-width: 800px) {
-    issa-image.book-cover {
-        & img {
-            max-width: 100%;
-        }
+    .book-cover {
+        max-width: 100%;
     }
 }

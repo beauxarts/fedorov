@@ -1,14 +1,15 @@
 package compton_fragments
 
 import (
+	"strconv"
+	"strings"
+
 	"github.com/beauxarts/fedorov/litres_integration"
 	"github.com/boggydigital/compton"
 	"github.com/boggydigital/compton/consts/align"
 	"github.com/boggydigital/compton/consts/color"
 	"github.com/boggydigital/compton/consts/direction"
 	"github.com/boggydigital/compton/consts/size"
-	"strconv"
-	"strings"
 )
 
 func Reviews(r compton.Registrar, artsReviews *litres_integration.ArtsReviews) compton.Element {
@@ -17,7 +18,7 @@ func Reviews(r compton.Registrar, artsReviews *litres_integration.ArtsReviews) c
 
 	if len(artsReviews.Payload.Data) == 0 {
 		stack.Append(compton.Fspan(r, "Для данной книги пока нет отзывов").
-			ForegroundColor(color.RepGray).
+			ForegroundColor(color.Gray).
 			TextAlign(align.Center))
 	}
 

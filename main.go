@@ -43,7 +43,6 @@ func main() {
 		"add-free-arts":              cli.AddFreeArtsHandler,
 		"backup":                     cli.BackupHandler,
 		"cascade":                    cli.CascadeHandler,
-		"dehydrate":                  cli.DehydrateHandler,
 		"download-litres-books":      cli.DownloadLitResBooksHandler,
 		"download-litres-covers":     cli.DownloadLitResCoversHandler,
 		"get-litres-arts":            cli.GetLitResArtsHandler,

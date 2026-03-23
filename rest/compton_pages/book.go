@@ -14,7 +14,6 @@ import (
 	"github.com/boggydigital/compton/consts/direction"
 	"github.com/boggydigital/compton/consts/loading"
 	"github.com/boggydigital/compton/consts/size"
-	"github.com/boggydigital/issa"
 	"github.com/boggydigital/redux"
 )
 
@@ -30,15 +29,10 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 	p, pageStack := compton_fragments.AppPage(title)
 	p.RegisterStyles(compton_styles.Styles, "book.css")
 
-	// tinting document background color to the representative product color
-	if repColor, ok := rdx.GetLastVal(data.RepItemImageColorProperty, id); ok && repColor != issa.NeutralRepColor {
-		p.SetAttribute("style", "--c-rep:"+repColor)
-	}
-
 	appNav := compton_fragments.AppNavLinks(p, "")
 	pageStack.Append(compton.FICenter(p, appNav))
 
-	if cover := compton_fragments.BookCover(p, id, rdx); cover != nil {
+	if cover := compton_fragments.BookCover(id, rdx); cover != nil {
 		pageStack.Append(compton.FICenter(p, cover))
 	}
 
@@ -50,7 +44,7 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 
 	if subtitle, ok := rdx.GetLastVal(data.SubtitleProperty, id); ok {
 		productSubtitle := compton.Fspan(p, subtitle).
-			ForegroundColor(color.RepGray).
+			ForegroundColor(color.Gray).
 			FontSize(size.XSmall).
 			TextAlign(align.Center)
 		pageStack.Append(productSubtitle)
@@ -69,8 +63,8 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 
 		sectionTitle := compton_data.SectionTitles[section]
 		detailsSummary := compton.DSLarge(p, sectionTitle, slices.Contains(openSections, section)).
-			BackgroundColor(color.RepHighlight).
-			MarkerColor(color.RepGray).
+			BackgroundColor(color.Highlight).
+			MarkerColor(color.Gray).
 			SummaryMarginBlockEnd(size.Normal).
 			DetailsMarginBlockEnd(size.Unset)
 		detailsSummary.SetId(sectionTitle)
@@ -79,7 +73,6 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 		switch section {
 		case compton_data.InformationSection:
 			productBadges := compton.FlexItems(p, direction.Row).ColumnGap(size.Small).FontSize(size.XXSmall)
-			//productBadges.SetAttribute("style", "view-transition-name:book-badges-"+id)
 			productBadges.Append(compton.Badges(p, compton_fragments.FormatBadges(id, rdx)...))
 			detailsSummary.AppendBadges(productBadges)
 		case compton_data.ReviewsSection:
@@ -87,7 +80,7 @@ func Book(id string, hasSections []string, rdx redux.Readable) compton.PageEleme
 				ratingBadge := new(compton.FormattedBadge{
 					Title: ratingAvg,
 					Icon:  compton.NoSymbol,
-					Color: color.RepGray,
+					Color: color.Gray,
 				})
 				detailsSummary.AppendBadges(compton.Badges(p, ratingBadge))
 			}

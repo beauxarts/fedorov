@@ -22,7 +22,7 @@ func Similar(r compton.Registrar, id string, artsSimilar *litres_integration.Art
 
 	if artsSimilar == nil || len(artsSimilar.Payload.Data) == 0 {
 		stack.Append(compton.Fspan(r, "Для данной книги пока нет сходных книг").
-			ForegroundColor(color.RepGray).
+			ForegroundColor(color.Gray).
 			TextAlign(align.Center))
 		return stack
 	}
@@ -35,7 +35,7 @@ func Similar(r compton.Registrar, id string, artsSimilar *litres_integration.Art
 		artId := strconv.Itoa(art.Id)
 		if rdx.HasKey(data.TitleProperty, artId) {
 			linkHref = "/book?id=" + artId
-			linkColor = color.RepForeground
+			linkColor = color.Foreground
 		}
 
 		link := compton.A(linkHref)

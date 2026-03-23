@@ -15,7 +15,7 @@ func Contents(r compton.Registrar, contents *litres_integration.Contents) compto
 
 	if contents == nil {
 		stack.Append(compton.Fspan(r, "Для данной книги оглавление не найдено").
-			ForegroundColor(color.RepGray).
+			ForegroundColor(color.Gray).
 			TextAlign(align.Center))
 		return stack
 	}
