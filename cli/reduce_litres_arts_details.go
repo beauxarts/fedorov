@@ -102,6 +102,7 @@ func getDetailedPropertyValues(ad *litres_integration.ArtsDetails) (pkv map[stri
 		data.PublisherUrlProperty,
 		data.RightholderNameProperty,
 		data.RightholderUrlProperty,
+		data.KidsRatedProperty,
 	}
 	pkv = make(map[string]map[string][]string)
 	for _, p := range properties {
@@ -155,6 +156,13 @@ func getDetailedPropertyValues(ad *litres_integration.ArtsDetails) (pkv map[stri
 			pkv[data.RightholderNameProperty][rid] = []string{rh.Name}
 			pkv[data.RightholderUrlProperty][rid] = []string{rh.Url}
 		}
+	}
+
+	aid := fmtInt(ad.Payload.Data.Id)
+	if ad.Payload.Data.MinAge <= 12 {
+		pkv[data.KidsRatedProperty][aid] = []string{"true"}
+	} else {
+		pkv[data.KidsRatedProperty][aid] = []string{"false"}
 	}
 
 	return pkv

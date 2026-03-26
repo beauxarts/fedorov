@@ -77,11 +77,8 @@ const (
 	// free arts properties
 	FreeArtsProperty = "free-arts"
 
-	// arts files properties
-
-	// local properties
-	//LocalTagsProperty     = "local-tags"
-	//BookCompletedProperty = "book-completed"
+	// computed properties
+	KidsRatedProperty = "kids-rated"
 
 	// sorting
 	SortProperty       = "sort"
@@ -188,12 +185,19 @@ func OperationsProperties() []string {
 	}
 }
 
+func ComputedProperties() []string {
+	return []string{
+		KidsRatedProperty,
+	}
+}
+
 func ReduxProperties() []string {
 	properties := ArtsDetailsProperties()
 	properties = append(properties, PersonsRolesProperties()...)
 	properties = append(properties, IdNameProperties()...)
 	properties = append(properties, VideoProperties()...)
 	properties = append(properties, OperationsProperties()...)
+	properties = append(properties, ComputedProperties()...)
 	properties = append(properties, []string{
 		SyncCompletedProperty,
 	}...)

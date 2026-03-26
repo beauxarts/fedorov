@@ -6,6 +6,8 @@ var SearchProperties = []string{
 	data.TitleProperty,
 	data.HTMLAnnotationProperty,
 
+	data.KidsRatedProperty,
+
 	data.AuthorsProperty,
 	data.ReadersProperty,
 	data.TranslatorsProperty,
