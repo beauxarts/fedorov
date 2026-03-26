@@ -145,6 +145,7 @@ func ArtsDetailsProperties() []string {
 		RightholdersIdsProperty,
 		RightholderNameProperty,
 		RightholderUrlProperty,
+		KidsRatedProperty,
 	}
 }
 
@@ -185,19 +186,12 @@ func OperationsProperties() []string {
 	}
 }
 
-func ComputedProperties() []string {
-	return []string{
-		KidsRatedProperty,
-	}
-}
-
 func ReduxProperties() []string {
 	properties := ArtsDetailsProperties()
 	properties = append(properties, PersonsRolesProperties()...)
 	properties = append(properties, IdNameProperties()...)
 	properties = append(properties, VideoProperties()...)
 	properties = append(properties, OperationsProperties()...)
-	properties = append(properties, ComputedProperties()...)
 	properties = append(properties, []string{
 		SyncCompletedProperty,
 	}...)
