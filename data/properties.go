@@ -16,6 +16,8 @@ const (
 	ArtFourthPresentProperty      = "art-fourth-present"
 	PriceProperty                 = "price"
 	MinAgeProperty                = "min-age"
+	KidsRatedProperty             = "kids-rated"
+	AdultsRatedProperty           = "adults-rated"
 	LastUpdatedAtProperty         = "last-updated-at"
 	LastReleasedAtProperty        = "last-released-at"
 	AvailableFromProperty         = "available-from"
@@ -77,9 +79,6 @@ const (
 	// free arts properties
 	FreeArtsProperty = "free-arts"
 
-	// computed properties
-	KidsRatedProperty = "kids-rated"
-
 	// sorting
 	SortProperty       = "sort"
 	DescendingProperty = "desc"
@@ -105,6 +104,8 @@ func ArtsDetailsProperties() []string {
 		ArtTypeProperty,
 		PriceProperty,
 		MinAgeProperty,
+		KidsRatedProperty,
+		AdultsRatedProperty,
 		LastUpdatedAtProperty,
 		LastReleasedAtProperty,
 		AvailableFromProperty,
@@ -145,7 +146,6 @@ func ArtsDetailsProperties() []string {
 		RightholdersIdsProperty,
 		RightholderNameProperty,
 		RightholderUrlProperty,
-		KidsRatedProperty,
 	}
 }
 

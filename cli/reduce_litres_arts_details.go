@@ -158,13 +158,6 @@ func getDetailedPropertyValues(ad *litres_integration.ArtsDetails) (pkv map[stri
 		}
 	}
 
-	aid := fmtInt(ad.Payload.Data.Id)
-	if ad.Payload.Data.MinAge <= 12 {
-		pkv[data.KidsRatedProperty][aid] = []string{"true"}
-	} else {
-		pkv[data.KidsRatedProperty][aid] = []string{"false"}
-	}
-
 	return pkv
 }
 
@@ -175,6 +168,18 @@ func getArtsDetailsPropertyValues(ad *litres_integration.ArtsDetails, property s
 		val = add.Title
 	case data.SubtitleProperty:
 		val = add.Subtitle
+	case data.KidsRatedProperty:
+		if add.MinAge <= 12 {
+			val = "true"
+		} else {
+			val = "false"
+		}
+	case data.AdultsRatedProperty:
+		if add.MinAge >= 12 {
+			val = "true"
+		} else {
+			val = "false"
+		}
 	case data.CoverUrlProperty:
 		val = add.CoverUrl
 	case data.CoverAspectRatioProperty:
