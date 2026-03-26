@@ -23,4 +23,5 @@ var BinaryProperties = []string{
 	data.DescendingProperty,
 	data.ArtFourthPresentProperty,
 	data.KidsRatedProperty,
+	data.AdultsRatedProperty,
 }
