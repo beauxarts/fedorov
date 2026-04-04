@@ -5,7 +5,7 @@ go 1.26.1
 require (
 	github.com/boggydigital/backups v0.1.7
 	github.com/boggydigital/clo v1.0.8
-	github.com/boggydigital/compton v0.4.69
+	github.com/boggydigital/compton v0.4.71
 	github.com/boggydigital/coost v0.4.1
 	github.com/boggydigital/dolo v0.2.24
 	github.com/boggydigital/kevlar v0.6.10
