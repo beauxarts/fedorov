@@ -42,6 +42,7 @@ var preferredDownloadTypes = []string{
 }
 
 var preferredEncodingTypes = []string{
+	"additional_materials_mp3",
 	"mobile_version_mp4",
 	"zip_with_mp3",
 	"pdf_book",
