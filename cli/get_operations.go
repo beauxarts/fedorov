@@ -77,13 +77,13 @@ func getOperationsPage(page int, sessionId string, hc *http.Client, kv kevlar.Ke
 
 	tr := io.TeeReader(resp.Body, buf)
 
-	if err := kv.Set(strconv.Itoa(page), tr); err != nil {
+	if err = kv.Set(strconv.Itoa(page), tr); err != nil {
 		return false, err
 	}
 
 	var ops litres_integration.Operations
 
-	if err := json.NewDecoder(buf).Decode(&ops); err != nil {
+	if err = json.NewDecoder(buf).Decode(&ops); err != nil {
 		return false, err
 	}
 
