@@ -5,6 +5,7 @@ import (
 	"net/url"
 
 	"github.com/beauxarts/fedorov/data"
+	"github.com/boggydigital/camino"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/redux"
 	"github.com/boggydigital/yet_urls/youtube_urls"
@@ -23,7 +24,7 @@ func GetVideosMetadata(force bool) error {
 	gvma := nod.NewProgress("getting video metadata...")
 	defer gvma.Done()
 
-	rp := data.Pwd.AbsRelDirPath(data.Redux, data.Metadata)
+	rp := camino.GetRel(data.Redux, data.Metadata)
 
 	rdx, err := redux.NewWriter(rp, data.ReduxProperties()...)
 	if err != nil {

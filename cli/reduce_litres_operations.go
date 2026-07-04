@@ -9,6 +9,7 @@ import (
 
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/litres_integration"
+	"github.com/boggydigital/camino"
 	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/redux"
@@ -56,7 +57,7 @@ func ReduceLitResOperations() error {
 		roa.Increment()
 	}
 
-	reduxDir := data.Pwd.AbsRelDirPath(data.Redux, data.Metadata)
+	reduxDir := camino.GetRel(data.Redux, data.Metadata)
 
 	rdx, err := redux.NewWriter(reduxDir,
 		data.ArtsOperationsOrderProperty,

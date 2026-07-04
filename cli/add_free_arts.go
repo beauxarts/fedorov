@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/beauxarts/fedorov/data"
+	"github.com/boggydigital/camino"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/redux"
 )
@@ -33,7 +34,7 @@ func AddFreeArts(ids ...string) error {
 		return errors.New("add-free-arts requires ids to add")
 	}
 
-	reduxDir := data.Pwd.AbsRelDirPath(data.Redux, data.Metadata)
+	reduxDir := camino.GetRel(data.Redux, data.Metadata)
 
 	rdx, err := redux.NewWriter(reduxDir, data.FreeArtsProperty)
 	if err != nil {
@@ -56,7 +57,7 @@ func getFreeArts() (iter.Seq[string], error) {
 	gfaa := nod.Begin("getting free arts...")
 	defer gfaa.Done()
 
-	reduxDir := data.Pwd.AbsRelDirPath(data.Redux, data.Metadata)
+	reduxDir := camino.GetRel(data.Redux, data.Metadata)
 
 	rdx, err := redux.NewWriter(reduxDir, data.FreeArtsProperty)
 	if err != nil {

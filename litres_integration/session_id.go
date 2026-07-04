@@ -7,7 +7,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/boggydigital/match_node"
+	"github.com/boggydigital/camino"
 	"golang.org/x/net/html"
 	"golang.org/x/net/html/atom"
 )
@@ -76,7 +76,7 @@ func GetSessionId(httpClient *http.Client) (string, error) {
 
 func matchSessionId(doc *html.Node) (string, error) {
 
-	if ndsm := match_node.Match(doc, &nextDataScriptMatcher{}); ndsm != nil && ndsm.FirstChild != nil {
+	if ndsm := camino.Match(doc, &nextDataScriptMatcher{}); ndsm != nil && ndsm.FirstChild != nil {
 		nextData := ndsm.FirstChild.Data
 
 		var ndPageProps nextDataPageProps

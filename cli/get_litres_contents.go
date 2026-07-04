@@ -8,6 +8,7 @@ import (
 
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/litres_integration"
+	"github.com/boggydigital/camino"
 	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/redux"
@@ -29,7 +30,7 @@ func GetLitresContents(hc *http.Client, force bool, ids ...string) error {
 	dlca := nod.NewProgress("downloading litres contents...")
 	defer dlca.Done()
 
-	reduxDir := data.Pwd.AbsRelDirPath(data.Redux, data.Metadata)
+	reduxDir := camino.GetRel(data.Redux, data.Metadata)
 
 	rdx, err := redux.NewReader(reduxDir, data.ContentsUrlProperty)
 	if err != nil {
@@ -69,7 +70,7 @@ func getSetContents(hc *http.Client, force bool, rdx redux.Readable, ids ...stri
 		return err
 	}
 
-	absContentsDir := data.Pwd.AbsRelDirPath(data.Contents, data.Metadata)
+	absContentsDir := camino.GetRel(data.Contents, data.Metadata)
 
 	kv, err := kevlar.New(absContentsDir, kevlar.XmlExt)
 	if err != nil {

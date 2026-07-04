@@ -9,6 +9,7 @@ import (
 
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/litres_integration"
+	"github.com/boggydigital/camino"
 	"github.com/boggydigital/dolo"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/redux"
@@ -30,7 +31,7 @@ func DownloadLitResBooks(hc *http.Client, force bool, artsIds ...string) error {
 	da := nod.NewProgress("downloading LitRes books...")
 	defer da.Done()
 
-	reduxDir := data.Pwd.AbsRelDirPath(data.Redux, data.Metadata)
+	reduxDir := camino.GetRel(data.Redux, data.Metadata)
 
 	rdx, err := redux.NewReader(reduxDir,
 		data.ArtsOperationsOrderProperty,
@@ -65,7 +66,7 @@ func DownloadLitResBooks(hc *http.Client, force bool, artsIds ...string) error {
 
 	dc := dolo.NewClient(hc, dolo.Defaults())
 
-	absDownloadsDir := data.Pwd.AbsDirPath(data.Downloads)
+	absDownloadsDir := camino.GetAbs(data.Downloads)
 
 	for _, id := range artsIds {
 

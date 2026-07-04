@@ -4,6 +4,7 @@ import (
 	"net/url"
 
 	"github.com/beauxarts/fedorov/data"
+	"github.com/boggydigital/camino"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/redux"
 )
@@ -17,7 +18,7 @@ func Cascade() error {
 	ca := nod.Begin("cascading reductions...")
 	defer ca.Done()
 
-	reduxDir := data.Pwd.AbsRelDirPath(data.Redux, data.Metadata)
+	reduxDir := camino.GetRel(data.Redux, data.Metadata)
 
 	rdx, err := redux.NewWriter(reduxDir, data.ReduxProperties()...)
 	if err != nil {

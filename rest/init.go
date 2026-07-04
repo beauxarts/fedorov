@@ -4,6 +4,7 @@ import (
 	"crypto/sha256"
 
 	"github.com/beauxarts/fedorov/data"
+	"github.com/boggydigital/camino"
 	"github.com/boggydigital/middleware"
 	"github.com/boggydigital/redux"
 )
@@ -24,7 +25,7 @@ func Init() error {
 
 	var err error
 
-	reduxDir := data.Pwd.AbsRelDirPath(data.Redux, data.Metadata)
+	reduxDir := camino.GetRel(data.Redux, data.Metadata)
 
 	if rdx, err = redux.NewReader(reduxDir, data.ReduxProperties()...); err != nil {
 		return err

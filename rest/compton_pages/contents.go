@@ -8,6 +8,7 @@ import (
 	"github.com/beauxarts/fedorov/litres_integration"
 	"github.com/beauxarts/fedorov/rest/compton_data"
 	"github.com/beauxarts/fedorov/rest/compton_fragments"
+	"github.com/boggydigital/camino"
 	"github.com/boggydigital/compton"
 	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/redux"
@@ -17,7 +18,7 @@ func Contents(id string, rdx redux.Readable) compton.PageElement {
 
 	s := compton_fragments.ProductSection(compton_data.ContentsSection)
 
-	contentsDir := data.Pwd.AbsRelDirPath(data.Contents, data.Metadata)
+	contentsDir := camino.GetRel(data.Contents, data.Metadata)
 
 	contReader, err := kevlar.New(contentsDir, kevlar.XmlExt)
 	if err != nil {

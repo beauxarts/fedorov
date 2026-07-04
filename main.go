@@ -27,7 +27,7 @@ func main() {
 	ns := nod.NewProgress("fedorov is serving your DRM-free books")
 	defer ns.Done()
 
-	if err := data.InitPathways(); err != nil {
+	if err := data.InitFedorovCamino(); err != nil {
 		log.Fatalln(nod.Error(err))
 	}
 

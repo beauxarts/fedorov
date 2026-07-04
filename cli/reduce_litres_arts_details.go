@@ -9,6 +9,7 @@ import (
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/litres_integration"
 	"github.com/beauxarts/fedorov/rest/compton_data"
+	"github.com/boggydigital/camino"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/redux"
 )
@@ -57,7 +58,7 @@ func ReduceLitResArtsDetails() error {
 	wra := nod.NewProgress("writing redux values...")
 	defer wra.Done()
 
-	reduxDir := data.Pwd.AbsRelDirPath(data.Redux, data.Metadata)
+	reduxDir := camino.GetRel(data.Redux, data.Metadata)
 
 	rdx, err := redux.NewWriter(reduxDir, data.ReduxProperties()...)
 	if err != nil {

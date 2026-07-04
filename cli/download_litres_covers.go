@@ -9,6 +9,7 @@ import (
 
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/litres_integration"
+	"github.com/boggydigital/camino"
 	"github.com/boggydigital/dolo"
 	"github.com/boggydigital/nod"
 )
@@ -44,7 +45,7 @@ func DownloadLitResCovers(skipExisting, force bool, artsIds ...string) error {
 
 	dc := dolo.DefaultClient
 
-	absCoversDir := data.Pwd.AbsDirPath(data.Covers)
+	absCoversDir := camino.GetAbs(data.Covers)
 
 	for _, id := range artsIds {
 

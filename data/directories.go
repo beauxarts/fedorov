@@ -1,34 +1,51 @@
 package data
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
 	"strconv"
 
 	"github.com/beauxarts/fedorov/litres_integration"
-	"github.com/boggydigital/pathways"
+	"github.com/boggydigital/camino"
 )
 
 const (
-	setPathwaysFilename = "directories.txt"
-	rootPathwaysDir     = "/var/lib/fedorov"
+	directoriesFilename = "directories.txt"
+	fedorovRootDir      = "/var/lib/fedorov"
 )
 
 const (
-	Backups   pathways.AbsDir = "backups"
-	Metadata  pathways.AbsDir = "metadata"
-	Input     pathways.AbsDir = "input"
-	Covers    pathways.AbsDir = "covers"
-	Downloads pathways.AbsDir = "downloads"
+	Backups camino.AbsDir = iota
+	Metadata
+	Input
+	Covers
+	Downloads
 )
+
+var absDirNames = map[camino.AbsDir]string{
+	Backups:   "backups",
+	Metadata:  "metadata",
+	Input:     "input",
+	Covers:    "covers",
+	Downloads: "downloads",
+}
 
 const (
-	Redux    pathways.RelDir = "_redux"   // Metadata
-	Contents pathways.RelDir = "contents" // Metadata
+	Redux camino.RelDir = iota
+	Contents
 )
 
-var Pwd pathways.Pathway
+var relDirNames = map[camino.RelDir]string{
+	Redux:    "_redux",
+	Contents: "contents",
+}
+
+var relAbsParents = map[camino.RelDir][]camino.AbsDir{
+	Redux:    {Metadata},
+	Contents: {Metadata},
+}
 
 const (
 	relCookiesFilename = "cookies_litres_ru.json"
@@ -36,11 +53,11 @@ const (
 )
 
 func AbsDataTypeDir(stringer fmt.Stringer) string {
-	return filepath.Join(Pwd.AbsDirPath(Metadata), stringer.String())
+	return filepath.Join(camino.GetAbs(Metadata), stringer.String())
 }
 
 func absStringerDir(stringer fmt.Stringer) string {
-	return filepath.Join(Pwd.AbsDirPath(Metadata), stringer.String())
+	return filepath.Join(camino.GetAbs(Metadata), stringer.String())
 }
 
 func AbsArtsTypeDir(at litres_integration.ArtsType) string {
@@ -56,11 +73,11 @@ func AbsAuthorTypeDir(at litres_integration.AuthorType) string {
 }
 
 func AbsFileDownloadPath(id int64, file string) string {
-	return filepath.Join(Pwd.AbsDirPath(Downloads), strconv.FormatInt(id, 10), file)
+	return filepath.Join(camino.GetAbs(Downloads), strconv.FormatInt(id, 10), file)
 }
 
 func AbsCoverImagePath(id int64, size litres_integration.CoverSize) string {
-	return filepath.Join(Pwd.AbsDirPath(Covers), RelCoverFilename(strconv.FormatInt(id, 10), size))
+	return filepath.Join(camino.GetAbs(Covers), RelCoverFilename(strconv.FormatInt(id, 10), size))
 }
 
 func RelCoverFilename(id string, size litres_integration.CoverSize) string {
@@ -80,23 +97,45 @@ func RelCoverFilename(id string, size litres_integration.CoverSize) string {
 }
 
 func AbsCookiesFilename() (string, error) {
-	return filepath.Join(Pwd.AbsDirPath(Input), relCookiesFilename), nil
+	return filepath.Join(camino.GetAbs(Input), relCookiesFilename), nil
 }
 
-func InitPathways() error {
+func InitFedorovCamino() error {
 
-	var setExists bool
-	if _, err := os.Stat(setPathwaysFilename); err == nil {
-		setExists = true
+	var overrides map[string]string
+
+	if _, err := os.Stat(directoriesFilename); err == nil {
+		if overrides, err = camino.ReadOverrides(directoriesFilename); err != nil {
+			return err
+		}
 	}
 
-	var err error
-	switch setExists {
-	case true:
-		Pwd, err = pathways.ReadSet(setPathwaysFilename)
-	default:
-		Pwd, err = pathways.NewRoot(rootPathwaysDir)
+	fads := make(map[camino.AbsDir]string)
+
+	for ad := range absDirNames {
+		var apd string
+		var ok bool
+
+		if apd, ok = absDirNames[ad]; !ok {
+			return errors.New("fedorov abs dir path not set")
+		}
+
+		var dir string
+		if dir, ok = overrides[apd]; !ok {
+			fads[ad] = filepath.Join(fedorovRootDir, apd)
+		} else {
+			fads[ad] = dir
+		}
 	}
 
-	return err
+	vrds := make(map[camino.RelDir]string)
+
+	for vrp := range relAbsParents {
+		var ok bool
+		if vrds[vrp], ok = relDirNames[vrp]; !ok {
+			return errors.New("fedorov rel dir path not set")
+		}
+	}
+
+	return camino.Register(fads, relDirNames, relAbsParents)
 }

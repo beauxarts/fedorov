@@ -10,6 +10,7 @@ import (
 
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/litres_integration"
+	"github.com/boggydigital/camino"
 	"github.com/boggydigital/coost"
 	"github.com/boggydigital/redux"
 )
@@ -105,7 +106,7 @@ func Sync(force bool) error {
 		return err
 	}
 
-	reduxDir := data.Pwd.AbsRelDirPath(data.Redux, data.Metadata)
+	reduxDir := camino.GetRel(data.Redux, data.Metadata)
 
 	rdx, err := redux.NewWriter(reduxDir, data.SyncCompletedProperty)
 	if err != nil {

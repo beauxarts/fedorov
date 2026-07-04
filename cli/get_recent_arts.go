@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/beauxarts/fedorov/data"
+	"github.com/boggydigital/camino"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/redux"
 )
@@ -24,7 +25,7 @@ func GetRecentArts(force bool) ([]string, error) {
 	graa := nod.Begin("getting recent arts...")
 	defer graa.Done()
 
-	reduxDir := data.Pwd.AbsRelDirPath(data.Redux, data.Metadata)
+	reduxDir := camino.GetRel(data.Redux, data.Metadata)
 
 	rdx, err := redux.NewReader(reduxDir, data.ArtsOperationsEventTimeProperty)
 	if err != nil {

@@ -10,6 +10,7 @@ import (
 
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/litres_integration"
+	"github.com/boggydigital/camino"
 	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/redux"
@@ -75,7 +76,7 @@ func GetLitResSeries(seriesTypes []litres_integration.SeriesType, hc *http.Clien
 func getSeriesIds(force bool, artsIds ...string) ([]string, error) {
 	series := make(map[string]any)
 
-	reduxDir := data.Pwd.AbsRelDirPath(data.Redux, data.Metadata)
+	reduxDir := camino.GetRel(data.Redux, data.Metadata)
 
 	rdx, err := redux.NewReader(reduxDir, data.ArtsOperationsOrderProperty, data.SeriesIdProperty)
 	if err != nil {

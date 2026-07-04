@@ -10,6 +10,7 @@ import (
 
 	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/litres_integration"
+	"github.com/boggydigital/camino"
 	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/nod"
 	"github.com/boggydigital/redux"
@@ -75,7 +76,7 @@ func GetLitResAuthors(authorTypes []litres_integration.AuthorType, hc *http.Clie
 func getPersonsIds(force bool, artsIds ...string) ([]string, error) {
 	persons := make(map[string]any)
 
-	reduxDir := data.Pwd.AbsRelDirPath(data.Redux, data.Metadata)
+	reduxDir := camino.GetRel(data.Redux, data.Metadata)
 
 	rdx, err := redux.NewReader(reduxDir, data.ArtsOperationsOrderProperty, data.PersonsIdsProperty)
 	if err != nil {
