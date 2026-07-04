@@ -1,5 +1,7 @@
 github.com/boggydigital/camino v0.2.14 h1:yN4PwtdU5rtDTIV2F2p5wvLNBOwqNsJW4C5PoZ+hLJY=
 github.com/boggydigital/camino v0.2.14/go.mod h1:UuW3eJP/wrm1VkNPvvNETKisvQymCD1d2a8KIe6J6cI=
+github.com/boggydigital/camino v0.2.15 h1:s6+2uW3EAlDgNk25nszkUKRzdKlH+3YqFZm65P8hcqw=
+github.com/boggydigital/camino v0.2.15/go.mod h1:UuW3eJP/wrm1VkNPvvNETKisvQymCD1d2a8KIe6J6cI=
 github.com/boggydigital/clo v1.0.8 h1:/E+xA4e+tvQrtSmMHN/DeKaVEhiSI2aHDx63dJ98lCU=
 github.com/boggydigital/clo v1.0.8/go.mod h1:InpSSK4uBJOtOdv32DM9BYCA28MuJGb7iRFow24ubUI=
 github.com/boggydigital/compton v0.4.78 h1:jZr9MoYXfuL+FmmjXegaYv11yn4C+kl/KmTlVmcOsfc=

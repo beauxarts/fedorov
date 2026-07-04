@@ -3,7 +3,7 @@ module github.com/beauxarts/fedorov
 go 1.26.3
 
 require (
-	github.com/boggydigital/camino v0.2.14
+	github.com/boggydigital/camino v0.2.15
 	github.com/boggydigital/clo v1.0.8
 	github.com/boggydigital/compton v0.4.79
 	github.com/boggydigital/coost v0.4.1

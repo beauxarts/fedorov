@@ -1,7 +1,6 @@
 package data
 
 import (
-	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -110,32 +109,7 @@ func InitFedorovCamino() error {
 		}
 	}
 
-	fads := make(map[camino.AbsDir]string)
+	fedorovAbsPaths := camino.ResolveAbsPaths(fedorovRootDir, absDirNames, overrides)
 
-	for ad := range absDirNames {
-		var apd string
-		var ok bool
-
-		if apd, ok = absDirNames[ad]; !ok {
-			return errors.New("fedorov abs dir path not set")
-		}
-
-		var dir string
-		if dir, ok = overrides[apd]; !ok {
-			fads[ad] = filepath.Join(fedorovRootDir, apd)
-		} else {
-			fads[ad] = dir
-		}
-	}
-
-	vrds := make(map[camino.RelDir]string)
-
-	for vrp := range relAbsParents {
-		var ok bool
-		if vrds[vrp], ok = relDirNames[vrp]; !ok {
-			return errors.New("fedorov rel dir path not set")
-		}
-	}
-
-	return camino.Register(fads, relDirNames, relAbsParents)
+	return camino.Register(fedorovAbsPaths, relDirNames, relAbsParents)
 }
