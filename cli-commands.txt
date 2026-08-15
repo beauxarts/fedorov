@@ -74,6 +74,7 @@ reduce-litres-arts-details
 reduce-litres-operations
 
 sync
+    session-id
     force
 
 serve

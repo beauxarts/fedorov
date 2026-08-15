@@ -65,7 +65,8 @@ func GetSessionId(httpClient *http.Client) (string, error) {
 		return "", err
 	}
 
-	if sessionId, err := matchSessionId(doc); err == nil && sessionId != "" {
+	var sessionId string
+	if sessionId, err = matchSessionId(doc); err == nil && sessionId != "" {
 		return sessionId, nil
 	} else if err != nil {
 		return "", err

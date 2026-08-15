@@ -16,19 +16,28 @@ import (
 )
 
 func SyncHandler(u *url.URL) error {
-	force := u.Query().Has("force")
 
-	return Sync(force)
+	q := u.Query()
+
+	sessionId := q.Get("session-id")
+	force := q.Has("force")
+
+	return Sync(sessionId, force)
 }
 
-func Sync(force bool) error {
+func Sync(sessionId string, force bool) error {
 
 	hc, err := getHttpClient()
 	if err != nil {
 		return err
 	}
 
-	sessionId, err := GetSessionId(hc)
+	if sessionId == "" {
+		sessionId, err = GetSessionId(hc)
+		if err != nil {
+			return err
+		}
+	}
 
 	if err = HasArts(sessionId, hc); err != nil {
 		return err
