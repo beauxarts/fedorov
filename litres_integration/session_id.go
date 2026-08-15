@@ -1,7 +1,6 @@
 package litres_integration
 
 import (
-	"encoding/json"
 	"errors"
 	"net/http"
 	"net/url"
@@ -12,37 +11,7 @@ import (
 	"golang.org/x/net/html/atom"
 )
 
-type nextDataPageProps struct {
-	Props struct {
-		PageProps struct {
-			InitialState string `json:"initialState"`
-		} `json:"pageProps"`
-	} `json:"props"`
-}
-
-type initialStateBrowser struct {
-	Browser struct {
-		Screen struct {
-			Width  any `json:"width"`
-			Height any `json:"height"`
-		} `json:"screen"`
-		UrlParams struct {
-		} `json:"urlParams"`
-		Pda        bool   `json:"pda"`
-		ClientHost string `json:"clientHost"`
-		Headers    struct {
-			ClientHost      string `json:"client-host"`
-			UiCurrency      string `json:"ui-currency"`
-			UiLanguageCode  string `json:"Ui-Language-Code"`
-			SafemodeEnabled string `json:"Safemode-Enabled"`
-			XRequestId      string `json:"x-request-id"`
-			Basket          string `json:"Basket"`
-			Wishlist        string `json:"Wishlist"`
-			SessionId       string `json:"Session-Id"`
-		} `json:"headers"`
-		IsRobot bool `json:"isRobot"`
-	} `json:"browser"`
-}
+const getUserDataForSsr = "getUserDataForSSR"
 
 func GetSessionId(httpClient *http.Client) (string, error) {
 	rootUrl := &url.URL{
@@ -77,40 +46,27 @@ func GetSessionId(httpClient *http.Client) (string, error) {
 
 func matchSessionId(doc *html.Node) (string, error) {
 
-	if ndsm := camino.Match(doc, &nextDataScriptMatcher{}); ndsm != nil && ndsm.FirstChild != nil {
-		nextData := ndsm.FirstChild.Data
-
-		var ndPageProps nextDataPageProps
-		if err := json.NewDecoder(strings.NewReader(nextData)).Decode(&ndPageProps); err != nil {
-			return "", err
+	if ndsm := camino.Match(doc, &getUserDataForSsrScriptMatcher{}); ndsm != nil && ndsm.FirstChild != nil {
+		if _, firstPass, ok := strings.Cut(ndsm.FirstChild.Data, getUserDataForSsr); ok {
+			if secondPass, _, sure := strings.Cut(firstPass, ":"); sure {
+				sessionId := strings.Trim(secondPass, "(\\\")")
+				return sessionId, nil
+			}
 		}
-
-		initialState := ndPageProps.Props.PageProps.InitialState
-
-		var isBrowser initialStateBrowser
-		if err := json.NewDecoder(strings.NewReader(initialState)).Decode(&isBrowser); err != nil {
-			return "", err
-		}
-
-		return isBrowser.Browser.Headers.SessionId, nil
 	}
 
 	return "", errors.New("next data buildId not found")
 }
 
-type nextDataScriptMatcher struct {
+type getUserDataForSsrScriptMatcher struct {
 }
 
-func (ndsm *nextDataScriptMatcher) Match(node *html.Node) bool {
+func (sm *getUserDataForSsrScriptMatcher) Match(node *html.Node) bool {
 	if node.DataAtom == atom.Script &&
-		len(node.Attr) > 0 {
+		node.FirstChild != nil &&
+		len(node.FirstChild.Data) > 0 {
 
-		for _, attr := range node.Attr {
-			if attr.Key == "id" &&
-				attr.Val == "__NEXT_DATA__" {
-				return true
-			}
-		}
+		return strings.Contains(node.FirstChild.Data, getUserDataForSsr)
 
 	}
 	return false
