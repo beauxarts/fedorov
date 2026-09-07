@@ -111,5 +111,5 @@ func InitFedorovCamino() error {
 
 	fedorovAbsPaths := camino.ResolveAbsPaths(fedorovRootDir, absDirNames, overrides)
 
-	return camino.Register(fedorovAbsPaths, relDirNames, relAbsParents)
+	return camino.Register(fedorovAbsPaths, relDirNames, relAbsParents, len(overrides) == 0)
 }
