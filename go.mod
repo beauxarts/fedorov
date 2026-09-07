@@ -1,9 +1,9 @@
 module github.com/beauxarts/fedorov
 
-go 1.27.0
+go 1.27.1
 
 require (
-	github.com/boggydigital/camino v0.2.19
+	github.com/boggydigital/camino v0.2.20
 	github.com/boggydigital/clo v1.0.8
 	github.com/boggydigital/compton v0.4.80
 	github.com/boggydigital/coost v0.4.3
@@ -12,7 +12,7 @@ require (
 	github.com/boggydigital/middleware v0.1.17
 	github.com/boggydigital/nod v0.1.30
 	github.com/boggydigital/redux v0.1.12
-	github.com/boggydigital/yet_urls v0.1.65
+	github.com/boggydigital/yet_urls v0.1.66
 	golang.org/x/net v0.58.0
 )
 

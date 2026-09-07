@@ -1,5 +1,7 @@
 github.com/boggydigital/camino v0.2.19 h1:mAwgurNO7anUlBJmC4yhhZ4bpasiwa9b7soMCu9UjDg=
 github.com/boggydigital/camino v0.2.19/go.mod h1:UuW3eJP/wrm1VkNPvvNETKisvQymCD1d2a8KIe6J6cI=
+github.com/boggydigital/camino v0.2.20 h1:RLGaHHMs4OtAqJtiar7Yw3Iu6zpa69tUGRMxZuZStLU=
+github.com/boggydigital/camino v0.2.20/go.mod h1:UuW3eJP/wrm1VkNPvvNETKisvQymCD1d2a8KIe6J6cI=
 github.com/boggydigital/clo v1.0.8 h1:/E+xA4e+tvQrtSmMHN/DeKaVEhiSI2aHDx63dJ98lCU=
 github.com/boggydigital/clo v1.0.8/go.mod h1:InpSSK4uBJOtOdv32DM9BYCA28MuJGb7iRFow24ubUI=
 github.com/boggydigital/compton v0.4.80 h1:NJcnzT+YqLv68jj2VmE82ARQGJCtjx8GHT20sPgLflo=
@@ -22,5 +24,7 @@ github.com/boggydigital/wits v0.2.3 h1:Z0eB+QlIA18fJmblyV6ZJQ/swPYSFhOxfgMXOQz4/
 github.com/boggydigital/wits v0.2.3/go.mod h1:aR/z0vfMLtg0b4hcts0qiSTZcA51O8A2N3U9laqd2Lc=
 github.com/boggydigital/yet_urls v0.1.65 h1:NJvF3i/pW3AwCQx8MOdCVol974VuFZnK204CXq7Grik=
 github.com/boggydigital/yet_urls v0.1.65/go.mod h1:CQ/o9+Ra4aFqgw/QsA7DE7KFTcozlY1A7oSLUcHAJgI=
+github.com/boggydigital/yet_urls v0.1.66 h1:vXDQQMHjXEm7+TSZ7A3RJ+F1v0/cmAlJd5OAk14Wht4=
+github.com/boggydigital/yet_urls v0.1.66/go.mod h1:CQ/o9+Ra4aFqgw/QsA7DE7KFTcozlY1A7oSLUcHAJgI=
 golang.org/x/net v0.58.0 h1:ynWG7rqYi4ccpTEuPZ2QGWHktVEM9DMCj9yzDE0Q7To=
 golang.org/x/net v0.58.0/go.mod h1:YwCddHnFlT7eLQqVprV19OnhLGtc5xOKgE0RyqgfWAU=
