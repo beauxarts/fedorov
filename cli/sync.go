@@ -33,7 +33,7 @@ func Sync(sessionId string, force bool) error {
 	}
 
 	if sessionId == "" {
-		sessionId, err = GetSessionId(hc)
+		sessionId, err = GetSessionId()
 		if err != nil {
 			return err
 		}

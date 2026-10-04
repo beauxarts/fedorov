@@ -1,33 +1,43 @@
 package cli
 
 import (
-	"net/http"
+	"errors"
 	"net/url"
+	"os"
 
+	"github.com/beauxarts/fedorov/data"
 	"github.com/beauxarts/fedorov/litres_integration"
+	"github.com/boggydigital/coost"
 	"github.com/boggydigital/nod"
 )
 
-func GetSessionIdHandler(u *url.URL) error {
-	_, err := GetSessionId(nil)
+func GetSessionIdHandler(_ *url.URL) error {
+	_, err := GetSessionId()
 	return err
 }
-func GetSessionId(hc *http.Client) (string, error) {
+func GetSessionId() (string, error) {
 	gsia := nod.Begin("getting session-id...")
 	defer gsia.Done()
 
-	if hc == nil {
-		var err error
-		if hc, err = getHttpClient(); err != nil {
-			return "", err
-		}
-	}
+	absCookiesFilename, err := data.AbsCookiesFilename()
 
-	sessionId, err := litres_integration.GetSessionId(hc)
 	if err != nil {
 		return "", err
 	}
 
-	gsia.EndWithResult(sessionId)
-	return sessionId, nil
+	jar, err := coost.Read(litres_integration.DefaultUrl(), absCookiesFilename)
+	if os.IsNotExist(err) {
+		return "", errors.New("cookies file not found, use import-cookies command to add")
+	} else if err != nil {
+		return "", err
+	}
+
+	for _, cookie := range jar.Cookies(litres_integration.DefaultUrl()) {
+		if cookie.Name == "SID" {
+			gsia.EndWithResult(cookie.Value)
+			return cookie.Value, nil
+		}
+	}
+
+	return "", errors.New("sessionId is empty")
 }
