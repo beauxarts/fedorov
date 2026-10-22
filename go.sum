@@ -28,3 +28,5 @@ github.com/boggydigital/yet_urls v0.1.66 h1:vXDQQMHjXEm7+TSZ7A3RJ+F1v0/cmAlJd5OA
 github.com/boggydigital/yet_urls v0.1.66/go.mod h1:CQ/o9+Ra4aFqgw/QsA7DE7KFTcozlY1A7oSLUcHAJgI=
 golang.org/x/net v0.58.0 h1:ynWG7rqYi4ccpTEuPZ2QGWHktVEM9DMCj9yzDE0Q7To=
 golang.org/x/net v0.58.0/go.mod h1:YwCddHnFlT7eLQqVprV19OnhLGtc5xOKgE0RyqgfWAU=
+golang.org/x/net v0.61.0 h1:RR+6j/BTBCrggOLugxa+66R8FvoN6MHlzDlZIbN9YFw=
+golang.org/x/net v0.61.0/go.mod h1:WgDCOTH8iwtB66T4/GfI94AHo/hhdb7Hah9NDseQfiI=
